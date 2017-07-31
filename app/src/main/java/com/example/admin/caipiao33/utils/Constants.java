@@ -5,7 +5,7 @@ public interface Constants
 
     //    String URL = "https://cp89.c-p-a-p-p.net";
     //    String URL = "http://f83appand.com";
-    String URL = "http://5xcai.c-p-a-p-p.com/";
+    String URL = "https://cp89.c-p-a-p-p.net/android1/";
     //    String URL = "http://cp89.c-p-a-p-p.net";
     String SHARE_MENU = "caipiao33";
     String SHARE_TOKEN = "token";
