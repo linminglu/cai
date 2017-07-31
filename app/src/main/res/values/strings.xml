@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">五星彩</string>
+
+    <string name="s_network_error_or_page_not_find">网页找不到或者网络异常</string>
+    <string name="s_refresh_page">刷新页面</string>
+    <string name="requesting">请求中</string>
+
+    <string name="action_back">返回</string>
+
+</resources>
