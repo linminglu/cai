@@ -7,4 +7,32 @@
 
     <string name="action_back">返回</string>
 
+    <!-- loading -->
+    <string name="loading">正在加载中...</string>
+    <string name="reloading">点击重新加载</string>
+
+    <string name="main_tab_homepage">首页</string>
+    <string name="main_tab_goucai">购彩</string>
+    <string name="main_tab_kaijiang">开奖</string>
+    <string name="main_tab_zoushi">走势</string>
+    <string name="main_tab_user">我的</string>
+    <string name="pressargin">再按一次退出</string>
+
+    <!--dialog常用词汇-->
+    <string name="dialog_networkerror">服务器数据加载失败！</string>
+    <string name="dialog_ok">确定</string>
+    <string name="dialog_cancel">取消</string>
+    <string name="dialog_prompt">提示</string>
+    <string name="dialog_tips">提示</string>
+
+    <!-- 版本控制 -->
+    <string name="update">版本更新！</string>
+    <string name="newUpdateAvailable">发现新版本,是否立即下载？</string>
+    <string name="dialogPositiveButton">立即下载</string>
+    <string name="dialogNegativeButton">以后再说</string>
+    <string name="app_no_new_update">没有发现新版本</string>
+    <string name="download_progress">正在下载:%1$d%%</string>
+    <string name="downloading">后台正在下载最新版本！</string>
+    <string name="download_success">下载完成，点击安装</string>
+    <string name="download_error">下载过程中出现网络异常！</string>
 </resources>

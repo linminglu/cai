@@ -24,4 +24,6 @@ public interface Constants
     /*jzp start*/ int REQUEST_ENTERPRISE = 1001;
     int REQUEST_SELECT_PHOTO = 1002;
     int REQUEST_PHOTO_PREVIEW = 1003;
+
+    String UPDATEACTION = "com.example.admin.caipiao33.update";
 }

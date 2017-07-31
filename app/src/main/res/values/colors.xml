@@ -12,4 +12,8 @@
     <color name="yellow_press">#ffffa912</color>
     <color name="green">#59BBFF</color>
     <color name="layout_title_bg">#C30D23</color>
+    <color name="black">#222222</color>
+
+    <color name="red">#35a3d4</color>
+
 </resources>
