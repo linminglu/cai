@@ -2,6 +2,8 @@ package com.example.admin.caipiao33;
 
 import android.support.v4.app.Fragment;
 
+import com.example.admin.caipiao33.httputils.HttpUtil;
+import com.example.admin.caipiao33.httputils.MyResponseListener;
 import com.example.admin.caipiao33.views.LoadingLayout;
 import com.example.admin.caipiao33.wheelview.ProgressDialogBar;
 
@@ -70,5 +72,31 @@ public class BaseFragment extends Fragment
         {
             mLoadingLayout.setOnLoadingError(getActivity(), null);
         }
+    }
+
+    /**
+     * 重新确认baseUrl
+     */
+    public void reconfirmBaseUrl() {
+        HttpUtil.requestFirst("index", String.class, getActivity(), new MyResponseListener<String>()
+        {
+            @Override
+            public void onSuccess(String result)
+            {
+                HttpUtil.changeBaseUrl(result);
+            }
+
+            @Override
+            public void onFailed(int code, String msg)
+            {
+
+            }
+
+            @Override
+            public void onFinish()
+            {
+
+            }
+        }, null);
     }
 }

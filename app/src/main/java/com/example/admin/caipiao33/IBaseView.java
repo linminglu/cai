@@ -1,8 +1,9 @@
 package com.example.admin.caipiao33;
 
 /**
- * Created by mac on 2016/3/24.
+ * Created by mac on 2017/2/9.
  */
+
 public interface IBaseView
 {
     BaseActivity getBaseActivity();
@@ -29,4 +30,6 @@ public interface IBaseView
     void hideLoadingLayout();
 
     void showLoadingLayoutError();
+
+    void showErrorMsg(String msg);
 }

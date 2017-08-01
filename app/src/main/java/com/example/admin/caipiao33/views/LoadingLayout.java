@@ -13,7 +13,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.admin.caipiao33.R;
-import com.example.admin.caipiao33.wheelview.CircularProgress;
 
 
 /**

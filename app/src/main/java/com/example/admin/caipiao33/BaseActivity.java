@@ -13,6 +13,8 @@ import android.view.MotionEvent;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bugtags.library.Bugtags;
+import com.example.admin.caipiao33.httputils.HttpUtil;
+import com.example.admin.caipiao33.httputils.MyResponseListener;
 import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.views.LoadingLayout;
 import com.example.admin.caipiao33.wheelview.ProgressDialogBar;
@@ -33,7 +35,6 @@ public class BaseActivity extends AppCompatActivity implements IBaseView
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        getSupportActionBar().hide();
         IntentFilter updatefilter = new IntentFilter();
         updatefilter.addAction(Constants.UPDATEACTION);
         registerReceiver(updatebroadcast, updatefilter);
@@ -114,6 +115,12 @@ public class BaseActivity extends AppCompatActivity implements IBaseView
     }
 
     @Override
+    public void showErrorMsg(String msg)
+    {
+
+    }
+
+    @Override
     protected void onResume()
     {
         isShow = true;
@@ -177,4 +184,30 @@ public class BaseActivity extends AppCompatActivity implements IBaseView
             }
         }
     };
+
+    /**
+     * 重新确认baseUrl
+     */
+    public void reconfirmBaseUrl() {
+        HttpUtil.requestFirst("index", String.class, this, new MyResponseListener<String>()
+        {
+            @Override
+            public void onSuccess(String result)
+            {
+                HttpUtil.changeBaseUrl(result);
+            }
+
+            @Override
+            public void onFailed(int code, String msg)
+            {
+
+            }
+
+            @Override
+            public void onFinish()
+            {
+
+            }
+        }, null);
+    }
 }

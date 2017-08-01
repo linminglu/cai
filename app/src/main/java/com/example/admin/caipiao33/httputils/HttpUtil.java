@@ -43,6 +43,7 @@ public class HttpUtil
 {
     private static final int DEFAULT_TIMEOUT = 30;
     private static Retrofit retrofit;
+    private static Retrofit retrofitBase;
     private static SSLContext sslContext;
 
     static
@@ -53,11 +54,12 @@ public class HttpUtil
         builder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         builder.sslSocketFactory(sslContext.getSocketFactory());
 
-        retrofit = new Retrofit.Builder().client(builder.build())
+        retrofitBase = new Retrofit.Builder().client(builder.build())
                 .baseUrl(Constants.URL)
                 .addConverterFactory(MyGsonConverterFactory.create())
                 //                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
+        retrofit = retrofitBase;
     }
 
     public static void changeBaseUrl(String url)
@@ -170,22 +172,8 @@ public class HttpUtil
         post(map, null, clazz, mActivity, listener, intent);
     }
 
-    public static void post(TreeMap<String, String> map, TreeMap<String, File> fileMap, final Type clazz, final Activity mActivity, final MyResponseListener listener, final Intent intent) // 带参数，获取json对象或者数组
+    public static void postBase(Call<String> call, TreeMap<String, String> map, TreeMap<String, File> fileMap, final Type clazz, final Activity mActivity, final MyResponseListener listener, final Intent intent) // 带参数，获取json对象或者数组
     {
-        Call<String> call;
-        TreeMap<String, String> params;
-        CommonPostService commonPostService = retrofit.create(CommonPostService.class);
-        if (map != null)
-        {
-            call = commonPostService.getLogin1(map.get("data"));
-        }
-        else
-        {
-            call = commonPostService.getHomePage();
-        }
-
-        KLog.d(map);
-
         call.enqueue(new Callback<String>()
         {
             @Override
@@ -212,8 +200,10 @@ public class HttpUtil
                     int code = object.getInt("status");
                     if (code == Constants.SUCCESSCODE)
                     {
+                        String token = object.optString("token");
+                        String data = object.optString("data");
                         //                        String result = CreateCode.parseContent(object.optString("result"));
-                        KLog.d(result);
+                        KLog.d(data);
                         if (null == clazz)
                         {
                             listener.onSuccess(null);
@@ -221,16 +211,16 @@ public class HttpUtil
                         }
                         else if (clazz == String.class)
                         {
-                            listener.onSuccess(result);
+                            listener.onSuccess(data);
                             return;
                         }
-                        Object o = new Gson().fromJson(result, clazz);
+                        Object o = new Gson().fromJson(data, clazz);
                         listener.onSuccess(o);
                     }
                     else
                     {
                         KLog.d(object.toString());
-                        listener.onFailed(code, object.getString("msg"));
+                        listener.onFailed(code, object.getString("description"));
                         return;
                     }
                 }
@@ -262,6 +252,34 @@ public class HttpUtil
                 listener.onFailed(errorNo, strMsg);
             }
         });
+    }
+
+    public static void post(TreeMap<String, String> map, TreeMap<String, File> fileMap, final Type clazz, final Activity mActivity, final MyResponseListener listener, final Intent intent) // 带参数，获取json对象或者数组
+    {
+        Call<String> call;
+        TreeMap<String, String> params;
+        CommonPostService commonPostService = retrofit.create(CommonPostService.class);
+        if (map != null)
+        {
+            call = commonPostService.getLogin1(map.get("data"));
+        }
+        else
+        {
+            call = commonPostService.getHomePage();
+        }
+
+        KLog.d(map);
+
+        postBase(call, map, fileMap, clazz, mActivity, listener, intent);
+    }
+
+    public static void requestFirst(String name, final Type clazz, final Activity mActivity, final MyResponseListener listener, final Intent intent) // 带参数，获取json对象或者数组
+    {
+        Call<String> call;
+        FirstService firstService = retrofit.create(FirstService.class);
+        call = firstService.getFirstRepos(name);
+        KLog.e("requestFirst: " + call.request().url().toString());
+        postBase(call, null, null, clazz, mActivity, listener, intent);
     }
 
 }

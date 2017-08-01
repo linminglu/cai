@@ -35,4 +35,9 @@
     <string name="downloading">后台正在下载最新版本！</string>
     <string name="download_success">下载完成，点击安装</string>
     <string name="download_error">下载过程中出现网络异常！</string>
+
+    <!-- HomePage -->
+    <string name="home_page">主页</string>
+    <string name="s_hot_type">热门彩种</string>
+    <string name="s_new_win">最新中奖榜</string>
 </resources>

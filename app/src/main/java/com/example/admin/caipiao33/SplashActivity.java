@@ -7,8 +7,11 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.example.admin.caipiao33.httputils.HttpUtil;
+import com.example.admin.caipiao33.httputils.MyResponseListener;
 
-public class SplashActivity extends Activity
+
+public class SplashActivity extends BaseActivity
 {
     private Handler handler = new Handler();
     private ImageView mImageView;
@@ -23,8 +26,8 @@ public class SplashActivity extends Activity
         mImageView = (ImageView) findViewById(R.id.splash_iv);
 
         mImageView.setVisibility(View.VISIBLE);
+        reconfirmBaseUrl();
         handler.postDelayed(initRunnbale, 500);
-
     }
 
     @Override

@@ -8,7 +8,7 @@
     android:gravity="center"
     android:orientation="horizontal">
 
-    <com.dianji.dianjimall.view.CircularProgress
+    <com.example.admin.caipiao33.views.CircularProgress
         android:id="@+id/loading_pb"
         android:layout_width="15dp"
         android:layout_height="15dp"
