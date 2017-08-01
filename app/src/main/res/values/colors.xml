@@ -14,6 +14,21 @@
     <color name="layout_title_bg">#C30D23</color>
     <color name="black">#222222</color>
 
-    <color name="red">#35a3d4</color>
+
+    <color name="layout_background">#ffe0e0e0</color>
+
+    <color name="light_black">#333333</color>
+    <color name="shen_black">#000000</color>
+    <color name="shen_red">#ff00aaf0</color>
+    <color name="shen_grey">#666666</color>
+    <color name="shen_white">#ffffff</color>
+    <color name="xian_color">#c9c9c9</color>
+    <color name="orange">#ff00aaf0</color>
+    <color name="light_orange">#ff8000</color>
+
+    <color name="ban_beijing">#cccccc</color>
+
+
+    <color name="red">#C30D23</color>
 
 </resources>

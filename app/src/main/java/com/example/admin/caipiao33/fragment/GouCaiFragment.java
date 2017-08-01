@@ -27,6 +27,7 @@ public class GouCaiFragment extends BaseFragment implements View.OnClickListener
     //若Fragement定义有带参构造函数，则一定要定义public的默认的构造函数
     public GouCaiFragment()
     {
+
     }
 
     @Override
