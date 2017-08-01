@@ -45,6 +45,7 @@ public class HttpUtil
     private static Retrofit retrofit;
     private static Retrofit retrofitBase;
     private static SSLContext sslContext;
+    public static String mNewUrl;
 
     static
     {
@@ -68,7 +69,7 @@ public class HttpUtil
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         builder.sslSocketFactory(sslContext.getSocketFactory());
-
+        mNewUrl = url;
         retrofit = new Retrofit.Builder().client(builder.build())
                 .baseUrl(url)
                 .addConverterFactory(MyGsonConverterFactory.create())

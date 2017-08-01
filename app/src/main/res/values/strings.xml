@@ -40,6 +40,5 @@
     <string name="home_page">主页</string>
     <string name="s_hot_type">热门彩种</string>
     <string name="s_new_win">最新中奖榜</string>
-
-
+    <string name="s_more_type">更多彩种</string>
 </resources>

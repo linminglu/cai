@@ -19,6 +19,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.admin.caipiao33.R;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -407,7 +409,6 @@ public class MyBanner extends RelativeLayout
                     mImageCycleViewListener.onImageClick(position % mAdList.size(), v);
                 }
             });
-            imageView.setTag(imageUrl);
             container.addView(imageView);
             mImageCycleViewListener.displayImage(imageUrl, imageView);
             return imageView;

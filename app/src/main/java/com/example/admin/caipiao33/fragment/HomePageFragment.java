@@ -17,12 +17,15 @@ import com.example.admin.caipiao33.MainActivity;
 import com.example.admin.caipiao33.R;
 import com.example.admin.caipiao33.bean.HomePageBean;
 import com.example.admin.caipiao33.contract.IHomePageContract;
+import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.presenter.HomePagePresenter;
 import com.example.admin.caipiao33.utils.MyImageLoader;
+import com.example.admin.caipiao33.views.LoadingLayout;
 import com.example.admin.caipiao33.views.banner.ImageCycleViewListener;
 import com.example.admin.caipiao33.views.banner.MyBanner;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -94,12 +97,10 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
     ImageView iv8;
     @BindView(R.id.tv_8)
     TextView tv8;
-    @BindView(R.id.ll_3_2)
-    LinearLayout ll32;
     @BindView(R.id.iv_9)
     ImageView iv9;
-    @BindView(R.id.tv_9)
-    TextView tv9;
+    @BindView(R.id.ll_3_2)
+    LinearLayout ll32;
     @BindView(R.id.ll_3_3)
     LinearLayout ll33;
     @BindView(R.id.ll_3)
@@ -107,6 +108,19 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
     @BindView(R.id.swipeRefreshLayout)
     SwipeRefreshLayout swipeRefreshLayout;
     Unbinder unbinder;
+    @BindView(R.id.ll_func_1)
+    LinearLayout llFunc1;
+    @BindView(R.id.ll_func_2)
+    LinearLayout llFunc2;
+    @BindView(R.id.ll_func_3)
+    LinearLayout llFunc3;
+    @BindView(R.id.ll_func_4)
+    LinearLayout llFunc4;
+    @BindView(R.id.tv_9)
+    TextView tv9;
+    @BindView(R.id.loadingLayout)
+    LoadingLayout loadingLayout;
+    Unbinder unbinder1;
     private MainActivity mainActivity;
     private LayoutInflater mInflater;
     private View parentView;
@@ -125,8 +139,7 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
 
         }
     };
-    private HomePageBean mHomePageBean;
-
+    private List<ViewHolder> mHotType;
 
     //若Fragement定义有带参构造函数，则一定要定义public的默认的构造函数
     public HomePageFragment()
@@ -142,6 +155,7 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
         mPresenter = new HomePagePresenter(this);
         initView();
         mPresenter.loadData();
+        unbinder1 = ButterKnife.bind(this, parentView);
         return parentView;
     }
 
@@ -149,6 +163,17 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
     {
         unbinder = ButterKnife.bind(this, parentView);
         myBanner.setSwipeRefresh(swipeRefreshLayout);
+        mLoadingLayout = (LoadingLayout) parentView.findViewById(R.id.loadingLayout);
+        mHotType = new ArrayList<>();
+        mHotType.add(new ViewHolder(iv1, tv1));
+        mHotType.add(new ViewHolder(iv2, tv2));
+        mHotType.add(new ViewHolder(iv3, tv3));
+        mHotType.add(new ViewHolder(iv4, tv4));
+        mHotType.add(new ViewHolder(iv5, tv5));
+        mHotType.add(new ViewHolder(iv6, tv6));
+        mHotType.add(new ViewHolder(iv7, tv7));
+        mHotType.add(new ViewHolder(iv8, tv8));
+        MyImageLoader.displayResourceImage(R.mipmap.logo_more_yellow, iv9, getBaseActivity());
     }
 
     @Override
@@ -171,14 +196,16 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void updateHomePage(HomePageBean bean)
     {
-//        this.mHomePageBean = bean;
-//        /**设置数据*/
-//        myBanner.setImageResources(bean.getScrollImg(), mAdCycleViewListener);
-//        ArrayList<String> urls = new ArrayList<>();
-//        for (HomePageBean.BannerBean bean : bean.getBanner())
-//        {
-//            urls.add(bean.getImage_url());
-//        }
+        /**设置数据*/
+        myBanner.setImageResources(bean.getScrollImg(), mAdCycleViewListener);
+        tvScroll.setText(bean.getScrollNotice());
+        for (int i = 0; i < bean.getTypeList().size(); i++)
+        {
+            HomePageBean.TypeListBean typeListBean = bean.getTypeList().get(i);
+            ViewHolder viewHolder = mHotType.get(i);
+            MyImageLoader.displayImage(HttpUtil.mNewUrl + typeListBean.getPic(), viewHolder.iv, getBaseActivity());
+            viewHolder.tv.setText(typeListBean.getName());
+        }
     }
 
     @Override
@@ -188,7 +215,7 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
         unbinder.unbind();
     }
 
-    @OnClick({R.id.tv_scroll, R.id.ll_1_1, R.id.ll_1_2, R.id.ll_1_3, R.id.ll_2_1, R.id.ll_2_2, R.id.ll_2_3, R.id.ll_3_1, R.id.ll_3_2, R.id.ll_3_3})
+    @OnClick({R.id.tv_scroll, R.id.ll_1_1, R.id.ll_1_2, R.id.ll_1_3, R.id.ll_2_1, R.id.ll_2_2, R.id.ll_2_3, R.id.ll_3_1, R.id.ll_3_2, R.id.ll_3_3, R.id.ll_func_1, R.id.ll_func_2, R.id.ll_func_3, R.id.ll_func_4})
     public void onViewClicked(View view)
     {
         switch (view.getId())
@@ -213,6 +240,26 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
                 break;
             case R.id.ll_3_3:
                 break;
+            case R.id.ll_func_1:
+            break;
+            case R.id.ll_func_2:
+                break;
+            case R.id.ll_func_3:
+                break;
+            case R.id.ll_func_4:
+                break;
+        }
+    }
+
+    private class ViewHolder
+    {
+        ImageView iv;
+        TextView tv;
+
+        public ViewHolder(ImageView iv, TextView tv)
+        {
+            this.iv = iv;
+            this.tv = tv;
         }
     }
 }

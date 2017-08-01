@@ -163,4 +163,20 @@ public class MyImageLoader
             imageView.setImageResource(R.mipmap.photo_error);
         }
     }
+
+    public static void displayResourceImage(int id, ImageView imageView, Context context)
+    {
+        if (null == imageView)
+        {
+            return;
+        }
+        if (0 != id && context != null)
+        {
+            Glide.with(context).load(id).placeholder(R.mipmap.icon).into(imageView);
+        }
+        else
+        {
+            imageView.setImageResource(R.mipmap.photo_error);
+        }
+    }
 }
