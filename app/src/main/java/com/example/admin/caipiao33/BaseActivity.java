@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
+import android.view.View;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -115,6 +116,33 @@ public class BaseActivity extends AppCompatActivity implements IBaseView
     }
 
     @Override
+    public void showLoadingLayout4Ami(View view)
+    {
+        if (null != mLoadingLayout)
+        {
+            mLoadingLayout.setOnStartLoading(view);
+        }
+    }
+
+    @Override
+    public void hideLoadingLayout4Ami(View view)
+    {
+        if (null != mLoadingLayout)
+        {
+            mLoadingLayout.setOnStopLoading(this, view);
+        }
+    }
+
+    @Override
+    public void showLoadingLayoutError4Ami(View view)
+    {
+        if (null != mLoadingLayout)
+        {
+            mLoadingLayout.setOnLoadingError(this, view);
+        }
+    }
+
+    @Override
     public void showErrorMsg(String msg)
     {
 
@@ -188,7 +216,8 @@ public class BaseActivity extends AppCompatActivity implements IBaseView
     /**
      * 重新确认baseUrl
      */
-    public void reconfirmBaseUrl() {
+    public void reconfirmBaseUrl()
+    {
         HttpUtil.requestFirst("index", String.class, this, new MyResponseListener<String>()
         {
             @Override

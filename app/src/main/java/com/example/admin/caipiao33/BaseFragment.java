@@ -1,6 +1,7 @@
 package com.example.admin.caipiao33;
 
 import android.support.v4.app.Fragment;
+import android.view.View;
 
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.httputils.MyResponseListener;
@@ -74,10 +75,35 @@ public class BaseFragment extends Fragment
         }
     }
 
+    public void showLoadingLayout4Ami(View view)
+    {
+        if (null != mLoadingLayout)
+        {
+            mLoadingLayout.setOnStartLoading(view);
+        }
+    }
+
+    public void hideLoadingLayout4Ami(View view)
+    {
+        if (null != mLoadingLayout)
+        {
+            mLoadingLayout.setOnStopLoading(getActivity(), view);
+        }
+    }
+
+    public void showLoadingLayoutError4Ami(View view)
+    {
+        if (null != mLoadingLayout)
+        {
+            mLoadingLayout.setOnLoadingError(getActivity(), view);
+        }
+    }
+
     /**
      * 重新确认baseUrl
      */
-    public void reconfirmBaseUrl() {
+    public void reconfirmBaseUrl()
+    {
         HttpUtil.requestFirst("index", String.class, getActivity(), new MyResponseListener<String>()
         {
             @Override

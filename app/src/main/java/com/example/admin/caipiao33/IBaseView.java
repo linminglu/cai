@@ -1,5 +1,7 @@
 package com.example.admin.caipiao33;
 
+import android.view.View;
+
 /**
  * Created by mac on 2017/2/9.
  */
@@ -30,6 +32,12 @@ public interface IBaseView
     void hideLoadingLayout();
 
     void showLoadingLayoutError();
+
+    void showLoadingLayout4Ami(View view);
+
+    void hideLoadingLayout4Ami(View view);
+
+    void showLoadingLayoutError4Ami(View view);
 
     void showErrorMsg(String msg);
 }

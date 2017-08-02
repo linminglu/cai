@@ -241,7 +241,7 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
             case R.id.ll_3_3:
                 break;
             case R.id.ll_func_1:
-            break;
+                break;
             case R.id.ll_func_2:
                 break;
             case R.id.ll_func_3:
