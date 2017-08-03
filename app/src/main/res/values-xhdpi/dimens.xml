@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 通用的左右两边的间距 -->
+    <dimen name="common_margin">15dp</dimen>
+    <!-- 通用的分割线高度 -->
+    <dimen name="common_divider_line">0.8dp</dimen>
+
+    <!-- font sizes -->
+    <dimen name="font_big">40sp</dimen>
+    <dimen name="font_larger">22sp</dimen>
+    <dimen name="font_large">16sp</dimen>
+    <dimen name="font_normal">14sp</dimen>
+    <dimen name="font_small">12sp</dimen>
+    <dimen name="font_smaller">10sp</dimen>
+
+    <!-- 按键文字的大小 -->
+    <dimen name="button_font_size">18sp</dimen>
+
+    <dimen name="item_margin">5dp</dimen>
+</resources>

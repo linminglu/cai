@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_selected="true">
+        <shape>
+            <gradient android:angle="270" android:endColor="@color/red" android:startColor="@color/red"/>
+
+            <!--<size android:width="320dp" android:height="60dp"/>-->
+
+            <corners android:radius="3dp"/>
+        </shape>
+    </item>
+    <item android:state_pressed="true">
+        <shape>
+            <gradient android:angle="270" android:endColor="@color/red" android:startColor="@color/red"/>
+
+            <!--<size android:width="320dp" android:height="60dp"/>-->
+
+            <corners android:radius="3dp"/>
+        </shape>
+    </item>
+    <item android:state_checkable="true">
+        <shape>
+            <gradient android:angle="270" android:endColor="@color/red" android:startColor="@color/red"/>
+
+            <!--<size android:width="320dp" android:height="60dp"/>-->
+
+            <corners android:radius="3dp"/>
+        </shape>
+    </item>
+    <item android:state_checked="true">
+        <shape>
+            <gradient android:angle="270" android:endColor="@color/red" android:startColor="@color/red"/>
+
+            <!--<size android:width="320dp" android:height="60dp"/>-->
+
+            <corners android:radius="3dp"/>
+        </shape>
+    </item>
+    <item android:state_enabled="true">
+        <shape>
+            <gradient android:angle="270" android:endColor="@color/red" android:startColor="@color/red"/>
+
+            <!--<size android:width="320dp" android:height="60dp"/>-->
+
+            <corners android:radius="3dp"/>
+        </shape>
+    </item>
+    <item android:state_enabled="false">
+        <shape>
+            <gradient android:angle="270" android:endColor="@color/middle_gray" android:startColor="@color/middle_gray"/>
+
+            <!--<size android:width="320dp" android:height="60dp"/>-->
+
+            <corners android:radius="3dp"/>
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <gradient android:angle="270" android:endColor="@color/green" android:startColor="@color/green"/>
+
+            <!--<size android:width="320dp" android:height="60dp"/>-->
+
+            <corners android:radius="3dp"/>
+        </shape>
+    </item>
+
+</selector>

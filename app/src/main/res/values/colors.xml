@@ -3,7 +3,6 @@
     <color name="colorPrimary">#C30D23</color>
     <color name="colorPrimaryDark">#C30D23</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="middle_gray">#999999</color>
     <color name="blue">#ff008DEF</color>
     <color name="white">#ffffffff</color>
     <color name="blue_press">#ff0090DA</color>
@@ -12,23 +11,42 @@
     <color name="yellow_press">#ffffa912</color>
     <color name="green">#59BBFF</color>
     <color name="layout_title_bg">#C30D23</color>
-    <color name="black">#222222</color>
 
 
     <color name="layout_background">#ffe0e0e0</color>
 
     <color name="light_black">#333333</color>
-    <color name="shen_black">#000000</color>
     <color name="shen_red">#ff00aaf0</color>
-    <color name="shen_grey">#666666</color>
-    <color name="shen_white">#ffffff</color>
     <color name="xian_color">#c9c9c9</color>
     <color name="orange">#ff00aaf0</color>
     <color name="light_orange">#ff8000</color>
 
     <color name="ban_beijing">#cccccc</color>
 
-
     <color name="red">#C30D23</color>
+
+    <!-- color-->
+    <color name="gray">#f8f8f8</color>
+    <color name="gray_order">#f7f9f8</color>
+    <color name="dark_gray">#666666</color>
+    <color name="middle_gray">#999999</color>
+    <color name="light_gray">#d7d7d7</color>
+    <color name="light_gray_transparent">#88d7d7d7</color>
+    <color name="light_gray_button">#bfbfbf</color>
+    <color name="transparent_gray">#99222222</color>
+    <color name="transparent_red">#80e4393c</color>
+
+    <color name="black">#222222</color>
+    <color name="line">#e6e6e6</color>
+    <color name="transparent">#00000000</color>
+    <color name="shen_black">#000000</color>
+    <color name="shen_grey">#666666</color>
+    <color name="shen_grey_button">#aaaaaa</color>
+    <color name="shen_white">#ffffff</color>
+    <color name="unChecked">#ff999999</color>
+    <color name="shoppingcar_remaining_tvback">#7F000000</color>
+
+    <color name="c_tab_underline">#e5e5e5</color>
+    <color name="c_tab_text_unseletor">#99ffffff</color>
 
 </resources>

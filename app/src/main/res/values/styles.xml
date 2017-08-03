@@ -20,4 +20,16 @@
         <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
     </style>
 
+    <!-- 密码CheckBox -->
+    <style name="PassWordCheckBox" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/selector_password</item>
+    </style>
+
+    <style name="button">
+        <item name="android:textColor">@drawable/button_textcolor</item>
+        <item name="android:background">@drawable/button_bg</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/button_font_size</item>
+    </style>
+
 </resources>
