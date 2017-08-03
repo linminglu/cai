@@ -41,6 +41,12 @@
     <string name="s_hot_type">热门彩种</string>
     <string name="s_new_win">最新中奖榜</string>
     <string name="s_more_type">更多彩种</string>
+    <string name="s_promotions">优惠活动</string>
+    <string name="s_win_text">喜中%1$s元</string>
+    <string name="s_win_type">购买%1$s</string>
+
+    <!-- 购彩大厅 -->
+    <string name="s_goucai_dating">购彩大厅</string>
 
     <!-- 登录页面 -->
     <string name="s_register_now">立即注册</string>
@@ -56,8 +62,5 @@
     <string name="s_bind">绑定</string>
     <string name="s_bind_mobile">绑定手机</string>
     <string name="s_login_status_failed">您还未登录或登录状态超时，是否跳转到登录界面？</string>
-    <string name="s_promotions">优惠活动</string>
-    <string name="s_win_text">喜中%1$s元</string>
-    <string name="s_win_type">购买%1$s</string>
 
 </resources>
