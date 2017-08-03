@@ -175,7 +175,7 @@
             android:layout_weight="1"
             android:clickable="true"
             android:focusable="true"
-            android:src="@mipmap/login_state_weixin_img"/>
+            android:src="@drawable/login_state_weixin_img"/>
 
         <ImageView
             android:id="@+id/login_weibo_img"
@@ -184,7 +184,7 @@
             android:layout_weight="1"
             android:clickable="true"
             android:focusable="true"
-            android:src="@mipmap/login_state_weibo_img"
+            android:src="@drawable/login_state_weibo_img"
             android:visibility="gone"
             />
 
@@ -195,7 +195,7 @@
             android:layout_weight="1"
             android:clickable="true"
             android:focusable="true"
-            android:src="@mipmap/login_state_qq_img"
+            android:src="@drawable/login_state_qq_img"
             android:visibility="gone"
             />
     </LinearLayout>
