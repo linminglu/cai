@@ -165,85 +165,69 @@ public class WebActivity extends Activity
             public void onSuccess(String result)
             {
                 KLog.d(LOG_TAG, result);
-                try
+                mUrl = result;
+                if (isFirst)
                 {
-                    JSONObject date = new JSONObject(result);
-                    int status = date.optInt("status");
-                    if (status == 200)
+                    if (StringUtils.isEmpty2(UserConfig.getInstance()
+                            .getToken(WebActivity.this)))
                     {
-                        mUrl = date.optString("data");
-                        if (isFirst)
-                        {
-                            if (StringUtils.isEmpty2(UserConfig.getInstance()
-                                    .getToken(WebActivity.this)))
-                            {
-                                webView.loadUrl(mUrl);
-                                HttpUtil.changeBaseUrl(mUrl);
-                                KLog.d(LOG_TAG, mUrl);
-                            }
-                            else
-                            {
-                                TreeMap<String, String> map = new TreeMap<>();
-                                map.put("data", UserConfig.getInstance()
-                                        .getToken(WebActivity.this));
-                                showLoadingDialog(true);
-                                HttpUtil.post(map, null, String.class, WebActivity.this, new MyResponseListener<String>()
-                                {
-                                    @Override
-                                    public void onSuccess(String result)
-                                    {
-                                        KLog.d(LOG_TAG, result);
-                                    }
-
-                                    @Override
-                                    public void onFailed(int code, String msg)
-                                    {
-                                        KLog.d(LOG_TAG, msg);
-                                    }
-
-                                    @Override
-                                    public void onFinish()
-                                    {
-                                        webView.loadUrl(mUrl);
-                                    }
-                                }, null);
-                            }
-                        }
-                        else
-                        {
-                            TreeMap<String, String> map = new TreeMap<>();
-                            map.put("data", UserConfig.getInstance().getToken(WebActivity.this));
-                            showLoadingDialog(true);
-                            HttpUtil.post(map, null, String.class, WebActivity.this, new MyResponseListener<String>()
-                            {
-                                @Override
-                                public void onSuccess(String result)
-                                {
-                                    KLog.d(LOG_TAG, result);
-                                }
-
-                                @Override
-                                public void onFailed(int code, String msg)
-                                {
-                                    KLog.d(LOG_TAG, msg);
-                                }
-
-                                @Override
-                                public void onFinish()
-                                {
-                                    hideLoadingDialog();
-                                }
-                            }, null);
-                        }
+                        webView.loadUrl(mUrl);
+                        HttpUtil.changeBaseUrl(mUrl);
+                        KLog.d(LOG_TAG, mUrl);
                     }
                     else
                     {
-                        Toast.makeText(WebActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
+                        TreeMap<String, String> map = new TreeMap<>();
+                        map.put("data", UserConfig.getInstance()
+                                .getToken(WebActivity.this));
+                        showLoadingDialog(true);
+                        HttpUtil.post(map, null, String.class, WebActivity.this, new MyResponseListener<String>()
+                        {
+                            @Override
+                            public void onSuccess(String result)
+                            {
+                                KLog.d(LOG_TAG, result);
+                            }
+
+                            @Override
+                            public void onFailed(int code, String msg)
+                            {
+                                KLog.d(LOG_TAG, msg);
+                            }
+
+                            @Override
+                            public void onFinish()
+                            {
+                                webView.loadUrl(mUrl);
+                            }
+                        }, null);
                     }
                 }
-                catch (JSONException e)
+                else
                 {
-                    e.printStackTrace();
+                    TreeMap<String, String> map = new TreeMap<>();
+                    map.put("data", UserConfig.getInstance().getToken(WebActivity.this));
+                    showLoadingDialog(true);
+                    HttpUtil.post(map, null, String.class, WebActivity.this, new MyResponseListener<String>()
+                    {
+                        @Override
+                        public void onSuccess(String result)
+                        {
+                            KLog.d(LOG_TAG, result);
+                        }
+
+                        @Override
+                        public void onFailed(int code, String msg)
+                        {
+                            KLog.d(LOG_TAG, msg);
+                        }
+
+                        @Override
+                        public void onFinish()
+                        {
+                            hideLoadingDialog();
+                        }
+                    }, null);
                 }
             }
 

@@ -1,7 +1,6 @@
 package com.example.admin.caipiao33.presenter;
 
-import com.example.admin.caipiao33.bean.HomePageBean;
-import com.example.admin.caipiao33.contract.IHomePageContract;
+import com.example.admin.caipiao33.contract.IPromotionsContract;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.httputils.MyResponseListener;
 
@@ -9,11 +8,11 @@ import com.example.admin.caipiao33.httputils.MyResponseListener;
  * Created by mac on 2017/8/1.
  */
 
-public class HomePagePresenter implements IHomePageContract.Presenter
+public class PromotionsPresenter implements IPromotionsContract.Presenter
 {
-    private final IHomePageContract.View mView;
+    private final IPromotionsContract.View mView;
 
-    public HomePagePresenter(IHomePageContract.View view) {
+    public PromotionsPresenter(IPromotionsContract.View view) {
         this.mView = view;
     }
 
@@ -21,10 +20,10 @@ public class HomePagePresenter implements IHomePageContract.Presenter
     public void loadData()
     {
         mView.showLoadingLayout();
-        baseRequest(new MyResponseListener<HomePageBean>()
+        baseRequest(new MyResponseListener<String>()
         {
             @Override
-            public void onSuccess(HomePageBean result)
+            public void onSuccess(String result)
             {
                 mView.hideLoadingLayout();
                 mView.updateHomePage(result);
@@ -47,10 +46,10 @@ public class HomePagePresenter implements IHomePageContract.Presenter
     @Override
     public void refreshData()
     {
-        baseRequest(new MyResponseListener<HomePageBean>()
+        baseRequest(new MyResponseListener<String>()
         {
             @Override
-            public void onSuccess(HomePageBean result)
+            public void onSuccess(String result)
             {
                 mView.updateHomePage(result);
             }
@@ -69,7 +68,8 @@ public class HomePagePresenter implements IHomePageContract.Presenter
         });
     }
 
-    private void baseRequest(MyResponseListener listener){
-        HttpUtil.requestFirst("index", HomePageBean.class, mView.getBaseActivity(), listener, null);
+    private void baseRequest(MyResponseListener listener) {
+        HttpUtil.requestFirst("activity", String.class, mView.getBaseActivity(), listener, null);
     }
+
 }

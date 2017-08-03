@@ -1,6 +1,7 @@
 package com.example.admin.caipiao33.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.example.admin.caipiao33.BaseActivity;
 import com.example.admin.caipiao33.BaseFragment;
 import com.example.admin.caipiao33.MainActivity;
+import com.example.admin.caipiao33.PromotionsActivity;
 import com.example.admin.caipiao33.R;
 import com.example.admin.caipiao33.bean.HomePageBean;
 import com.example.admin.caipiao33.contract.IHomePageContract;
@@ -120,7 +122,6 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
     TextView tv9;
     @BindView(R.id.loadingLayout)
     LoadingLayout loadingLayout;
-    Unbinder unbinder1;
     private MainActivity mainActivity;
     private LayoutInflater mInflater;
     private View parentView;
@@ -155,7 +156,6 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
         mPresenter = new HomePagePresenter(this);
         initView();
         mPresenter.loadData();
-        unbinder1 = ButterKnife.bind(this, parentView);
         return parentView;
     }
 
@@ -174,6 +174,22 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
         mHotType.add(new ViewHolder(iv7, tv7));
         mHotType.add(new ViewHolder(iv8, tv8));
         MyImageLoader.displayResourceImage(R.mipmap.logo_more_yellow, iv9, getBaseActivity());
+        mLoadingLayout.setOnReloadingListener(new LoadingLayout.OnReloadingListener()
+        {
+            @Override
+            public void onReload(View v)
+            {
+                mPresenter.loadData();
+            }
+        });
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
+        {
+            @Override
+            public void onRefresh()
+            {
+                mPresenter.refreshData();
+            }
+        });
     }
 
     @Override
@@ -209,6 +225,12 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
     }
 
     @Override
+    public void hideRefreshing()
+    {
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
     public void onDestroyView()
     {
         super.onDestroyView();
@@ -238,17 +260,25 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
                 break;
             case R.id.ll_3_2:
                 break;
-            case R.id.ll_3_3:
+            case R.id.ll_3_3: // 更多彩种
+                ((MainActivity)getActivity()).tabSwitchCenter(GouCaiFragment.class);
                 break;
-            case R.id.ll_func_1:
+            case R.id.ll_func_1: // 存/取款
                 break;
-            case R.id.ll_func_2:
+            case R.id.ll_func_2: // 投注记录
                 break;
-            case R.id.ll_func_3:
+            case R.id.ll_func_3: // 优惠活动
+                toPromotions();
                 break;
-            case R.id.ll_func_4:
+            case R.id.ll_func_4: // 在线客服
                 break;
         }
+    }
+
+    // 跳转到优惠活动
+    private void toPromotions()
+    {
+        startActivity(new Intent(getActivity(), PromotionsActivity.class));
     }
 
     private class ViewHolder
