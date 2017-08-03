@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:paddingBottom="@dimen/d_win_text_layout_padding_top"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="@dimen/d_win_text_layout_padding_top">
+
+    <TextView
+        android:id="@+id/tv_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@mipmap/index_jiangzhang"
+        android:drawablePadding="5dp"
+        android:textSize="@dimen/d_win_text_size"
+        android:padding="@dimen/d_win_text_padding"
+        android:text="精华"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:id="@+id/tv_center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="100dp"
+        android:layout_marginRight="5dp"
+        android:maxLines="1"
+        android:padding="@dimen/d_win_text_padding"
+        android:textSize="@dimen/d_win_text_size"
+        android:text="213"
+        android:textColor="@color/red"/>
+
+    <TextView
+        android:id="@+id/tv_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:padding="@dimen/d_win_text_padding"
+        android:textSize="@dimen/d_win_text_size"
+        android:text="精华"/>
+</RelativeLayout>

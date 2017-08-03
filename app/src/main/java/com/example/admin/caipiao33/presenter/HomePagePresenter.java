@@ -69,6 +69,32 @@ public class HomePagePresenter implements IHomePageContract.Presenter
         });
     }
 
+    @Override
+    public void toAskService()
+    {
+        mView.showLoadingDialog();
+        HttpUtil.requestFirst("kefu", String.class, mView.getBaseActivity(), new MyResponseListener<String>()
+        {
+            @Override
+            public void onSuccess(String result)
+            {
+                mView.updateServiceUrl(result);
+            }
+
+            @Override
+            public void onFailed(int code, String msg)
+            {
+
+            }
+
+            @Override
+            public void onFinish()
+            {
+                mView.hideLoadingDialog();
+            }
+        }, null);
+    }
+
     private void baseRequest(MyResponseListener listener){
         HttpUtil.requestFirst("index", HomePageBean.class, mView.getBaseActivity(), listener, null);
     }

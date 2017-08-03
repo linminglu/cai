@@ -42,5 +42,7 @@
     <string name="s_new_win">最新中奖榜</string>
     <string name="s_more_type">更多彩种</string>
     <string name="s_promotions">优惠活动</string>
+    <string name="s_win_text">喜中%1$s元</string>
+    <string name="s_win_type">购买%1$s</string>
 
 </resources>

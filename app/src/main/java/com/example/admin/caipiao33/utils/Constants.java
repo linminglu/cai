@@ -26,4 +26,7 @@ public interface Constants
     int REQUEST_PHOTO_PREVIEW = 1003;
 
     String UPDATEACTION = "com.example.admin.caipiao33.update";
+
+    String EXTRA_URL = "extra_url";
+    String EXTRA_TITLE = "extra_title";
 }

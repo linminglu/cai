@@ -4,4 +4,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <dimen name="d_home_page_banner_height">150dp</dimen>
+    <dimen name="d_win_text_size">14sp</dimen>
+    <dimen name="d_win_text_padding">3dp</dimen>
+    <dimen name="d_win_text_layout_padding_top">2dp</dimen>
 </resources>

@@ -13,10 +13,12 @@ public interface IHomePageContract
     interface View extends IBaseView {
         void updateHomePage(HomePageBean bean);
         void hideRefreshing();
+        void updateServiceUrl(String url);
     }
 
     interface Presenter extends IBasePresenter {
         void loadData();
         void refreshData();
+        void toAskService();
     }
 }

@@ -18,11 +18,6 @@ public class Tools
         swipeLayout.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light, android.R.color.holo_orange_light, android.R.color.holo_green_light);
     }
 
-    public static int dp2px(Context context, int dpValue)
-    {
-        return (int) context.getResources().getDisplayMetrics().density * dpValue;
-    }
-
     /**
      * <功能详细描述>判断网络是否可用<br>
      *

@@ -35,7 +35,8 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:scrollbars="none">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -47,27 +48,24 @@
                     android:layout_height="@dimen/d_home_page_banner_height">
                 </com.example.admin.caipiao33.views.banner.MyBanner>
 
-                <RelativeLayout
+                <TextView
+                    android:id="@+id/tv_scroll"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    >
+                    android:padding="10dp"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:ellipsize="marquee"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:drawableLeft="@mipmap/ilabandex"
+                    android:drawableRight="@mipmap/index_pic_08"
+                    android:drawablePadding="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:singleLine="true"
+                    android:maxLines="1"/>
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:src="@mipmap/ilabandex"
-                        />
-
-                    <TextView
-                        android:id="@+id/tv_scroll"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:maxLines="1"/>
-
-
-                </RelativeLayout>
+                <include layout="@layout/item_line"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -145,6 +143,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
+                    android:background="@color/layout_background"
                     android:text="@string/s_hot_type"/>
 
                 <include layout="@layout/item_line"/>
@@ -161,7 +160,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:gravity="center_horizontal"
-                        android:padding="5dp"
+                        android:padding="10dp"
                         android:layout_weight="1">
 
                         <ImageView
@@ -186,7 +185,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:gravity="center_horizontal"
-                        android:padding="5dp"
+                        android:padding="10dp"
                         android:layout_weight="1">
 
                         <ImageView
@@ -211,7 +210,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:gravity="center_horizontal"
-                        android:padding="5dp"
+                        android:padding="10dp"
                         android:layout_weight="1">
 
                         <ImageView
@@ -244,7 +243,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:gravity="center_horizontal"
-                        android:padding="5dp"
+                        android:padding="10dp"
                         android:layout_weight="1">
 
                         <ImageView
@@ -269,7 +268,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:gravity="center_horizontal"
-                        android:padding="5dp"
+                        android:padding="10dp"
                         android:layout_weight="1">
 
                         <ImageView
@@ -294,7 +293,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:gravity="center_horizontal"
-                        android:padding="5dp"
+                        android:padding="10dp"
                         android:layout_weight="1">
 
                         <ImageView
@@ -327,7 +326,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:gravity="center_horizontal"
-                        android:padding="5dp"
+                        android:padding="10dp"
                         android:layout_weight="1">
 
                         <ImageView
@@ -352,7 +351,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:gravity="center_horizontal"
-                        android:padding="5dp"
+                        android:padding="10dp"
                         android:layout_weight="1">
 
                         <ImageView
@@ -377,7 +376,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:gravity="center_horizontal"
-                        android:padding="5dp"
+                        android:padding="10dp"
                         android:layout_weight="1">
 
                         <ImageView
@@ -403,13 +402,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
+                    android:background="@color/layout_background"
                     android:text="@string/s_new_win"/>
 
-                <View
+                <com.example.admin.caipiao33.views.banner.MyVerticalBanner
+                    android:id="@+id/myVerticalBanner"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp">
+                    android:layout_height="wrap_content">
 
-                </View>
+                </com.example.admin.caipiao33.views.banner.MyVerticalBanner>
             </LinearLayout>
 
         </ScrollView>
@@ -423,5 +424,14 @@
         android:layout_height="match_parent">
 
     </com.example.admin.caipiao33.views.LoadingLayout>
+
+    <TextView
+        android:id="@+id/tv_calc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/d_win_text_size"
+        android:text="123"
+        android:visibility="invisible"
+        />
 
 </RelativeLayout>

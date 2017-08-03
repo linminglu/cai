@@ -1,0 +1,13 @@
+<!--<RelativeLayout android:id="@+id/ad_rl"-->
+<!---->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="match_parent">-->
+
+<com.example.admin.caipiao33.views.banner.VerticalViewPager
+    android:id="@+id/adv_pager"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+</com.example.admin.caipiao33.views.banner.VerticalViewPager>
+
+    <!--</RelativeLayout>-->

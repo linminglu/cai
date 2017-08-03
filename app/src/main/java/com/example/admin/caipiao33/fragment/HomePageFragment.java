@@ -2,6 +2,7 @@ package com.example.admin.caipiao33.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
@@ -17,14 +18,19 @@ import com.example.admin.caipiao33.BaseFragment;
 import com.example.admin.caipiao33.MainActivity;
 import com.example.admin.caipiao33.PromotionsActivity;
 import com.example.admin.caipiao33.R;
+import com.example.admin.caipiao33.WebUrlActivity;
 import com.example.admin.caipiao33.bean.HomePageBean;
 import com.example.admin.caipiao33.contract.IHomePageContract;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.presenter.HomePagePresenter;
+import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.MyImageLoader;
+import com.example.admin.caipiao33.utils.ResourcesUtil;
+import com.example.admin.caipiao33.utils.Tools;
 import com.example.admin.caipiao33.views.LoadingLayout;
 import com.example.admin.caipiao33.views.banner.ImageCycleViewListener;
 import com.example.admin.caipiao33.views.banner.MyBanner;
+import com.example.admin.caipiao33.views.banner.MyVerticalBanner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -122,6 +128,10 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
     TextView tv9;
     @BindView(R.id.loadingLayout)
     LoadingLayout loadingLayout;
+    @BindView(R.id.myVerticalBanner)
+    MyVerticalBanner myVerticalBanner;
+    @BindView(R.id.tv_calc)
+    TextView tvCalc;
     private MainActivity mainActivity;
     private LayoutInflater mInflater;
     private View parentView;
@@ -137,7 +147,7 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
         @Override
         public void onImageClick(int position, View imageView)
         {
-
+            toPromotions();
         }
     };
     private List<ViewHolder> mHotType;
@@ -222,6 +232,12 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
             MyImageLoader.displayImage(HttpUtil.mNewUrl + typeListBean.getPic(), viewHolder.iv, getBaseActivity());
             viewHolder.tv.setText(typeListBean.getName());
         }
+        List<HomePageBean.WinListBean> winList = bean.getWinList();
+        myVerticalBanner.setNewsData(winList);
+        ViewGroup.LayoutParams layoutParams = myVerticalBanner.getLayoutParams();
+        if (null != layoutParams) {
+            layoutParams.height = (tvCalc.getMeasuredHeight() + 2 * ResourcesUtil.getDip(getResources(), R.dimen.d_win_text_padding) + 2 * ResourcesUtil.getDip(getResources(), R.dimen.d_win_text_layout_padding_top)) * 5;
+        }
     }
 
     @Override
@@ -231,18 +247,25 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
     }
 
     @Override
+    public void updateServiceUrl(String url)
+    {
+        toWebUrlActivity(url, "在线客服");
+    }
+
+    @Override
     public void onDestroyView()
     {
         super.onDestroyView();
         unbinder.unbind();
     }
 
-    @OnClick({R.id.tv_scroll, R.id.ll_1_1, R.id.ll_1_2, R.id.ll_1_3, R.id.ll_2_1, R.id.ll_2_2, R.id.ll_2_3, R.id.ll_3_1, R.id.ll_3_2, R.id.ll_3_3, R.id.ll_func_1, R.id.ll_func_2, R.id.ll_func_3, R.id.ll_func_4})
+    @OnClick({R.id.tv_scroll, R.id.ll_1_1, R.id.ll_1_2, R.id.ll_1_3, R.id.ll_2_1, R.id.ll_2_2, R.id.ll_2_3, R.id.ll_3_1, R.id.ll_3_2, R.id.ll_3_3, R.id.ll_func_1, R.id.ll_func_2, R.id.ll_func_3, R.id.ll_func_4, R.id.myVerticalBanner})
     public void onViewClicked(View view)
     {
         switch (view.getId())
         {
-            case R.id.tv_scroll:
+            case R.id.tv_scroll: // 滚动的公告
+                toWebUrlActivity(HttpUtil.mNewUrl + "/api/systemNotice", "公告");
                 break;
             case R.id.ll_1_1:
                 break;
@@ -271,14 +294,28 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
                 toPromotions();
                 break;
             case R.id.ll_func_4: // 在线客服
+                mPresenter.toAskService();
+                break;
+            case R.id.myVerticalBanner:
+                toWebUrlActivity(HttpUtil.mNewUrl + "/api/win/list", "最新中奖榜");
                 break;
         }
+    }
+
+    // 跳转到网页
+    private void toWebUrlActivity(String url, String title)
+    {
+        Intent intent = new Intent(getActivity(), WebUrlActivity.class);
+        intent.putExtra(Constants.EXTRA_URL, url);
+        intent.putExtra(Constants.EXTRA_TITLE, title);
+        startActivity(intent);
     }
 
     // 跳转到优惠活动
     private void toPromotions()
     {
-        startActivity(new Intent(getActivity(), PromotionsActivity.class));
+        toWebUrlActivity(HttpUtil.mNewUrl + "/api/activity", "优惠活动");
+//        startActivity(new Intent(getActivity(), PromotionsActivity.class));
     }
 
     private class ViewHolder
