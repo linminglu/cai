@@ -7,13 +7,13 @@
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/toolbar"
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:theme="@style/AppTheme.AppBarOverlay"
+        android:background="?attr/colorPrimary"
         android:gravity="center"
-        android:background="?attr/colorPrimary">
+        android:theme="@style/AppTheme.AppBarOverlay">
 
         <TextView
             android:id="@+id/tv_title"
@@ -40,7 +40,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="50dp"
-            android:src="@drawable/network_non"/>
+            android:src="@mipmap/network_non"/>
 
         <TextView
             android:id="@+id/textView3"
@@ -58,8 +58,8 @@
             android:layout_below="@+id/textView3"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="25dp"
-            android:textColor="@color/red"
-            android:text="@string/s_refresh_page"/>
+            android:text="@string/s_refresh_page"
+            android:textColor="@color/red"/>
     </RelativeLayout>
 
     <ProgressBar
@@ -74,7 +74,7 @@
         android:id="@+id/protocol_webView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layerType="hardware"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true"
+        android:layerType="hardware"/>
 
 </LinearLayout>

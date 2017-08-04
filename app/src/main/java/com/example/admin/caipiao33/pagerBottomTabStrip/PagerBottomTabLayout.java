@@ -45,7 +45,7 @@ public class PagerBottomTabLayout extends FrameLayout implements TabStripLinsten
     private void init(Context context)
     {
         mContext = context;
-        setBackgroundResource(R.drawable.tabbar_bg);
+        setBackgroundResource(R.mipmap.tabbar_bg);
     }
 
     @Override

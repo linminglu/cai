@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/tab_shoppingcart_check" android:state_pressed="true"></item>
-    <item android:drawable="@drawable/tab_shoppingcart_check" android:state_checked="true"></item>
-    <item android:drawable="@drawable/tab_shoppingcart_no"></item>
+    <item android:drawable="@mipmap/tab_kaijiang_check" android:state_pressed="true"></item>
+    <item android:drawable="@mipmap/tab_kaijiang_check" android:state_checked="true"></item>
+    <item android:drawable="@mipmap/tab_kaijiang_no"></item>
 </selector>

@@ -50,7 +50,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="175dp"
-                    android:background="@drawable/user_bg"
+                    android:background="@mipmap/user_bg"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -64,7 +64,7 @@
                             android:layout_width="75dp"
                             android:layout_height="75dp"
                             android:layout_marginLeft="15dp"
-                            android:src="@drawable/geren_tou">
+                            android:src="@mipmap/geren_tou">
                         </com.example.admin.caipiao33.views.CircleImageView>
 
 
