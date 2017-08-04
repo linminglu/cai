@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/iv"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_title"
+        android:text="123"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:layout_toRightOf="@+id/iv"
+        android:maxLines="1"
+        />
+
+    <TextView
+        android:id="@+id/tv_index"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/red"
+        android:textSize="16sp"
+        android:layout_alignParentRight="true"
+        android:text="123"
+        android:maxLines="1"
+        />
+
+    <TextView
+        android:id="@+id/tv_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/red"
+        android:textSize="16sp"
+        android:layout_toRightOf="@+id/iv"
+        android:layout_centerVertical="true"
+        android:text="1 2 3 "
+        android:drawableRight="@mipmap/index_pic_08"
+        />
+
+    <TextView
+        android:id="@+id/tv_remain_index"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/middle_gray"
+        android:textSize="14sp"
+        android:layout_toRightOf="@+id/iv"
+        android:layout_alignBottom="@+id/iv"
+        android:text="sdhfkl;skfdol"
+        />
+
+    <TextView
+        android:id="@+id/tv_remain_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/middle_gray"
+        android:textSize="16sp"
+        android:layout_alignParentRight="true"
+        android:layout_alignBottom="@+id/iv"
+        android:text="123"
+        android:maxLines="1"
+        />
+
+</RelativeLayout>

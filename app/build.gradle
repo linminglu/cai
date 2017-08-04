@@ -53,8 +53,6 @@ dependencies {
     // KLog日志工具
     compile 'com.github.zhaokaiqiang.klog:library:1.5.0'
 
-    compile 'com.bugtags.library:bugtags-lib:latest.integration'
-
     compile 'com.afollestad.material-dialogs:core:0.9.3.0'
 
     compile 'org.jetbrains:annotations-java5:15.0'

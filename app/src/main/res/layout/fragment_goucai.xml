@@ -28,36 +28,71 @@
 
     </android.support.v7.widget.Toolbar>
 
-    <com.example.admin.caipiao33.views.PagerSlidingTabStrip
-        android:id="@+id/order_tab"
+    <RadioGroup
+        android:id="@+id/goucai_radioGroup"
         android:layout_width="match_parent"
-        android:layout_height="42dp"
+        android:layout_height="52dp"
         android:layout_below="@+id/toolbar"
-        android:background="@color/black"
-        android:fillViewport="false"
-        app:dividerColor="@android:color/transparent"
-        app:dividerPadding="10dp"
-        app:myTabTextColor="@color/white"
-        app:myTabUnTextColor="@color/white"
-        app:indicatorColor="@color/white"
-        app:indicatorHeight="3dp"
-        app:shouldExpand="true"
-        app:underlineColor="@color/red"
-        app:underlineHeight="42dp">
-    </com.example.admin.caipiao33.views.PagerSlidingTabStrip>
+        android:orientation="horizontal">
+        <RadioButton
+            android:id="@+id/goucai_all"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/radio_bg"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingLeft="0dp"
+            android:checked="true"
+            android:drawablePadding="3dp"
+            android:drawableTop="@mipmap/goucai_all"
+            android:text="@string/s_goucai_all"
+            android:textColor="@color/white"
+            android:textSize="13sp"/>
+
+        <RadioButton
+            android:id="@+id/goucai_gp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/radio_bg"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingLeft="0dp"
+            android:drawableTop="@mipmap/goucai_gp"
+            android:text="@string/s_goucai_gp"
+            android:textColor="@color/white"
+            android:textSize="13sp"/>
+
+        <RadioButton
+            android:id="@+id/goucai_dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/radio_bg"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingLeft="0dp"
+            android:drawableTop="@mipmap/goucai_dp"
+            android:text="@string/s_goucai_dp"
+            android:textColor="@color/white"
+            android:textSize="13sp"/>
+
+    </RadioGroup>
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/order_pager"
+        android:id="@+id/goucai_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/order_tab">
+        android:layout_below="@+id/goucai_radioGroup">
     </android.support.v4.view.ViewPager>
 
     <com.example.admin.caipiao33.views.LoadingLayout
         android:id="@+id/loadingLayout"
         android:layout_below="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="visible">
 
     </com.example.admin.caipiao33.views.LoadingLayout>
 

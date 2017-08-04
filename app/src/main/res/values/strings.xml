@@ -47,6 +47,11 @@
 
     <!-- 购彩大厅 -->
     <string name="s_goucai_dating">购彩大厅</string>
+    <string name="s_goucai_all">全部彩种</string>
+    <string name="s_goucai_gp">高频彩</string>
+    <string name="s_goucai_dp">低频彩</string>
+    <string name="s_qishu">第%1$s期</string>
+    <string name="s_qishu_jiezhi">距第%1$s期截止还有</string>
 
     <!-- 登录页面 -->
     <string name="s_register_now">立即注册</string>

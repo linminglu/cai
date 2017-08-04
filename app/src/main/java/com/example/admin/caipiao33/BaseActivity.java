@@ -13,7 +13,6 @@ import android.view.View;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.bugtags.library.Bugtags;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.httputils.MyResponseListener;
 import com.example.admin.caipiao33.utils.Constants;
@@ -153,8 +152,6 @@ public class BaseActivity extends AppCompatActivity implements IBaseView
     {
         isShow = true;
         super.onResume();
-        // Bugtags 注：回调 1
-        Bugtags.onResume(this);
     }
 
     @Override
@@ -162,16 +159,12 @@ public class BaseActivity extends AppCompatActivity implements IBaseView
     {
         isShow = false;
         super.onPause();
-        // Bugtags 注：回调 2
-        Bugtags.onPause(this);
     }
 
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev)
     {
-        // Bugtags 注：回调 3
-        Bugtags.onDispatchTouchEvent(this, ev);
         return super.dispatchTouchEvent(ev);
     }
 
