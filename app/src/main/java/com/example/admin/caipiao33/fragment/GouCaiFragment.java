@@ -59,7 +59,7 @@ public class GouCaiFragment extends BaseFragment implements IGouCaiContract.View
     private GouCaiItemFragment fragmentGP;
     private GouCaiItemFragment fragmentDP;
     private GouCaiBean mGouCaiBeant;
-    private boolean isLinearLayout = true;
+    public boolean isLinearLayout = true;
 
     //若Fragement定义有带参构造函数，则一定要定义public的默认的构造函数
     public GouCaiFragment()
@@ -97,14 +97,14 @@ public class GouCaiFragment extends BaseFragment implements IGouCaiContract.View
                             item.setIcon(R.mipmap.goucai_gride);
                         }
                         isLinearLayout = !isLinearLayout;
-//                        int currentItem = goucaiPager.getCurrentItem();
-//                        if (currentItem == 0) {
-//                            fragmentAll.updateUILayout();
-//                        } else if (currentItem == 1) {
-//                            fragmentGP.updateUILayout();
-//                        } else {
-//                            fragmentDP.updateUILayout();
-//                        }
+                        int currentItem = goucaiPager.getCurrentItem();
+                        if (currentItem == 0) {
+                            fragmentAll.updateUILayout();
+                        } else if (currentItem == 1) {
+                            fragmentGP.updateUILayout();
+                        } else {
+                            fragmentDP.updateUILayout();
+                        }
                         break;
                 }
                 return false;

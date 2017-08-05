@@ -45,10 +45,10 @@ public class GouCaiItemFragment extends LazyFragment
     Unbinder unbinder;
     private List<GouCaiBean.DataBean> mDataList;
     private int mType;
-    private boolean isLinearLayout = true;
     private MyGouCaiAdapter adapter;
     private boolean isCreate;
     private GouCaiBean mGouCaiBean;
+    private MyGouCaiGrideAdapter grideAdapter;
 
     public GouCaiItemFragment()
     {
@@ -95,6 +95,7 @@ public class GouCaiItemFragment extends LazyFragment
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
         adapter = new MyGouCaiAdapter();
+        grideAdapter = new MyGouCaiGrideAdapter();
         recyclerView.setAdapter(adapter);
         isCreate = true;
         lazyLoad();
@@ -133,20 +134,34 @@ public class GouCaiItemFragment extends LazyFragment
         {
             mDataList = mGouCaiBean.getDpc();
         }
-        if (null != adapter) {
-            adapter.notifyDataSetChanged();
+        GouCaiFragment fragment = (GouCaiFragment) getParentFragment();
+        if (fragment.isLinearLayout) {
+            RecyclerView.Adapter adapter = recyclerView.getAdapter();
+            if (adapter != null && adapter instanceof MyGouCaiAdapter) {
+                adapter.notifyDataSetChanged();
+            } else {
+                updateUILayout();
+            }
+        } else {
+            RecyclerView.Adapter adapter = recyclerView.getAdapter();
+            if (adapter != null && adapter instanceof MyGouCaiGrideAdapter) {
+                adapter.notifyDataSetChanged();
+            } else {
+                updateUILayout();
+            }
         }
     }
 
     public void updateUILayout() {
-        if (isLinearLayout) {
-            recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
-
-        } else {
+        GouCaiFragment fragment = (GouCaiFragment) getParentFragment();
+        if (fragment.isLinearLayout) {
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
+            recyclerView.setAdapter(adapter);
+        } else {
+            recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+            recyclerView.setAdapter(grideAdapter);
         }
-        isLinearLayout = !isLinearLayout;
     }
 
     @Override
@@ -209,45 +224,52 @@ public class GouCaiItemFragment extends LazyFragment
         }
     }
 
-
-    private class MyGouCaiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
+    private class MyGouCaiAdapter extends RecyclerView.Adapter<MyGouCaiViewHolder>
     {
 
         @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
+        public MyGouCaiViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
         {
-            if (isLinearLayout)
-            {
-                View view = LayoutInflater.from(getContext())
-                        .inflate(R.layout.item_linear_goucai, null);
-                return new MyGouCaiViewHolder(view);
-            }
-            else
-            {
-                View view = LayoutInflater.from(getContext())
-                        .inflate(R.layout.item_gride_goucai, null);
-                return new MyGouCaiViewHolderGride(view);
-            }
+            View view = LayoutInflater.from(getContext())
+                    .inflate(R.layout.item_linear_goucai, null);
+            return new MyGouCaiViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position)
+        public void onBindViewHolder(MyGouCaiViewHolder holder1, int position)
         {
-            if (holder instanceof MyGouCaiViewHolder)
-            {
-                MyGouCaiViewHolder holder1 = (MyGouCaiViewHolder) holder;
-                GouCaiBean.DataBean dataBean = mDataList.get(position);
-                holder1.tvTitle.setText(dataBean.getName());
-                MyImageLoader.displayImage(HttpUtil.mNewUrl + dataBean.getPic(), holder1.iv, getContext());
-                holder1.tvIndex.setText(getResources().getString(R.string.s_qishu, dataBean.getPeriod()));
-                holder1.tvRemainIndex.setText(getResources().getString(R.string.s_qishu_jiezhi, dataBean.getLastPeriod()));
-                holder1.tvResult.setText(dataBean.getLastOpen());
-            } else if (holder instanceof MyGouCaiViewHolderGride) {
-                MyGouCaiViewHolderGride holder1 = (MyGouCaiViewHolderGride) holder;
-                GouCaiBean.DataBean dataBean = mDataList.get(position);
-                holder1.tvTitle.setText(dataBean.getName());
-                MyImageLoader.displayImage(HttpUtil.mNewUrl + dataBean.getPic(), holder1.iv, getContext());
-            }
+            GouCaiBean.DataBean dataBean = mDataList.get(position);
+            holder1.tvTitle.setText(dataBean.getName());
+            MyImageLoader.displayImage(HttpUtil.mNewUrl + dataBean.getPic(), holder1.iv, getContext());
+            holder1.tvIndex.setText(getResources().getString(R.string.s_qishu, dataBean.getPeriod()));
+            holder1.tvRemainIndex.setText(getResources().getString(R.string.s_qishu_jiezhi, dataBean.getLastPeriod()));
+            holder1.tvResult.setText(dataBean.getLastOpen());
+        }
+
+        @Override
+        public int getItemCount()
+        {
+            return null == mDataList ? 0 : mDataList.size();
+        }
+    }
+
+    private class MyGouCaiGrideAdapter extends RecyclerView.Adapter<MyGouCaiViewHolderGride>
+    {
+
+        @Override
+        public MyGouCaiViewHolderGride onCreateViewHolder(ViewGroup parent, int viewType)
+        {
+            View view = LayoutInflater.from(getContext())
+                    .inflate(R.layout.item_gride_goucai, null);
+            return new MyGouCaiViewHolderGride(view);
+        }
+
+        @Override
+        public void onBindViewHolder(MyGouCaiViewHolderGride holder1, int position)
+        {
+            GouCaiBean.DataBean dataBean = mDataList.get(position);
+            holder1.tvTitle.setText(dataBean.getName());
+            MyImageLoader.displayImage(HttpUtil.mNewUrl + dataBean.getPic(), holder1.iv, getContext());
         }
 
         @Override
