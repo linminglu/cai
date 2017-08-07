@@ -25,6 +25,8 @@ import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
 
@@ -38,6 +40,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.http.PartMap;
 
 public class HttpUtil
 {
@@ -278,7 +281,10 @@ public class HttpUtil
     {
         Call<String> call;
         FirstService firstService = retrofit.create(FirstService.class);
-        call = firstService.getFirstRepos(name);
+
+        Map<String, String> map = new HashMap<>();
+        map.put("test", "hello world");
+        call = firstService.getFirstRepos(name, map);
         KLog.e("requestFirst: " + call.request().url().toString());
         postBase(call, null, null, clazz, mActivity, listener, intent);
     }
