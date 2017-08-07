@@ -1,17 +1,23 @@
 package com.example.admin.caipiao33.encryption;
 
 
+import com.example.admin.caipiao33.application.MyApplication;
+import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.P2PNative;
+import com.example.admin.caipiao33.utils.StringUtils;
+import com.example.admin.caipiao33.utils.UserConfig;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -60,7 +66,7 @@ public class CreateCode
     /**
      * Caoxiangyu 2015.10.23 参数生成json
      */
-    public static JSONObject parse2Json(TreeMap<String, String> map)
+    public static JSONObject parse2Json(HashMap<String, String> map)
     {
         JSONObject correct = new JSONObject();
         List<Map.Entry<String, String>> infoIds = new ArrayList<Map.Entry<String, String>>(map.entrySet());
@@ -81,31 +87,28 @@ public class CreateCode
     }
 
     /**
-     * Caoxiangyu 2016.3.3 手机端生成传递给服务器的参数
+     * Caoxiangyu 2017.8.7 手机端生成传递给服务器的参数
      */
-    //    public static TreeMap<String, String> getParams(TreeMap<String, String> map)
-    //    {
-    //        TreeMap<String, String> params = new TreeMap<>();
-    //        String remembertoken = UserConfig.getInstance().getRemembertoken(MyApplication.getInstance());
-    //        String token = map.remove("token");
-    //        if (!StringUtils.isEmpty2(token))
-    //        {
-    //            remembertoken = token;
-    //        }
-    //        try
-    //        {
-    //            params.put("merchantId", URLEncoder.encode(Constants.MERCHANTID, "utf-8"));//识别android还是IOS
-    //            params.put("sign", URLEncoder.encode(map != null ? getSign(map) : getSign(null)));
-    //            params.put("params", URLEncoder.encode(map != null ? parseContent4Php(parse2Json(map).toString()) : null));
-    //            params.put("version", URLEncoder.encode(DataTools.getVersion(MyApplication.getInstance())));
-    //            params.put("token", URLEncoder.encode(StringUtils.isEmpty2(remembertoken) ? "" : remembertoken));
-    //        }
-    //        catch (UnsupportedEncodingException e)
-    //        {
-    //            e.printStackTrace();
-    //        }
-    //        return params;
-    //    }
+    public static HashMap<String, String> getParams(HashMap<String, String> map)
+    {
+        HashMap<String, String> params = new HashMap<>();
+        if (map == null)
+        {
+            map = new HashMap<>();
+        }
+        String remembertoken = UserConfig.getInstance().getToken(MyApplication.getInstance());
+        String token = map.remove("token");
+
+        if (!StringUtils.isEmpty2(token))
+        {
+            remembertoken = token;
+        }
+        map.put("deviceType", Constants.MERCHANTID);
+        map.put("token", StringUtils.isEmpty2(remembertoken) ? "" : remembertoken);
+
+        params.put("data", parseContent4Php(parse2Json(map).toString()));  //传给服务器的参数
+        return params;
+    }
 
     /**
      * Caoxiangyu 2015.10.23 手机端RSA加密方法

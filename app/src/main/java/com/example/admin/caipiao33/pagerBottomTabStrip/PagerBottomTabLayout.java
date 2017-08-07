@@ -68,7 +68,6 @@ public class PagerBottomTabLayout extends FrameLayout implements TabStripLinsten
 
         LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         mPagerBottomTabStrip.setLayoutParams(lp);
-
         return mPagerBottomTabStrip.builder(PagerBottomTabLayout.this);
     }
 

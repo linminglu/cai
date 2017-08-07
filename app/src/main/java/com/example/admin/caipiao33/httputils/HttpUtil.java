@@ -206,7 +206,7 @@ public class HttpUtil
                     {
                         String token = object.optString("token");
                         String data = object.optString("data");
-                        //                        String result = CreateCode.parseContent(object.optString("result"));
+                        //                                                String result = CreateCode.parseContent(object.optString("result"));
                         KLog.d(data);
                         if (null == clazz)
                         {
@@ -282,9 +282,9 @@ public class HttpUtil
         Call<String> call;
         FirstService firstService = retrofit.create(FirstService.class);
 
-        Map<String, String> map = new HashMap<>();
+        HashMap<String, String> map = new HashMap<>();
         map.put("test", "hello world");
-        call = firstService.getFirstRepos(name, map);
+        call = firstService.getFirstRepos(name, CreateCode.getParams(map));
         KLog.e("requestFirst: " + call.request().url().toString());
         postBase(call, null, null, clazz, mActivity, listener, intent);
     }

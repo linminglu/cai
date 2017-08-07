@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,16 +22,19 @@ import com.example.admin.caipiao33.R;
 import com.example.admin.caipiao33.WebUrlActivity;
 import com.example.admin.caipiao33.bean.HomePageBean;
 import com.example.admin.caipiao33.contract.IHomePageContract;
+import com.example.admin.caipiao33.encryption.CreateCode;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.presenter.HomePagePresenter;
 import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.MyImageLoader;
+import com.example.admin.caipiao33.utils.P2PNative;
 import com.example.admin.caipiao33.utils.ResourcesUtil;
 import com.example.admin.caipiao33.utils.Tools;
 import com.example.admin.caipiao33.views.LoadingLayout;
 import com.example.admin.caipiao33.views.banner.ImageCycleViewListener;
 import com.example.admin.caipiao33.views.banner.MyBanner;
 import com.example.admin.caipiao33.views.banner.MyVerticalBanner;
+import com.socks.library.KLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -235,8 +239,10 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
         List<HomePageBean.WinListBean> winList = bean.getWinList();
         myVerticalBanner.setNewsData(winList);
         ViewGroup.LayoutParams layoutParams = myVerticalBanner.getLayoutParams();
-        if (null != layoutParams) {
-            layoutParams.height = (tvCalc.getMeasuredHeight() + 2 * ResourcesUtil.getDip(getResources(), R.dimen.d_win_text_padding) + 2 * ResourcesUtil.getDip(getResources(), R.dimen.d_win_text_layout_padding_top)) * 5;
+        if (null != layoutParams)
+        {
+            layoutParams.height = (tvCalc.getMeasuredHeight() + 2 * ResourcesUtil.getDip(getResources(), R.dimen.d_win_text_padding) + 2 * ResourcesUtil
+                    .getDip(getResources(), R.dimen.d_win_text_layout_padding_top)) * 5;
         }
     }
 
@@ -284,7 +290,7 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
             case R.id.ll_3_2:
                 break;
             case R.id.ll_3_3: // 更多彩种
-                ((MainActivity)getActivity()).tabSwitchCenter(GouCaiFragment.class);
+                ((MainActivity) getActivity()).tabSwitchCenter(GouCaiFragment.class);
                 break;
             case R.id.ll_func_1: // 存/取款
                 break;
@@ -315,7 +321,7 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
     private void toPromotions()
     {
         toWebUrlActivity(HttpUtil.mNewUrl + "/api/activity", "优惠活动");
-//        startActivity(new Intent(getActivity(), PromotionsActivity.class));
+        //        startActivity(new Intent(getActivity(), PromotionsActivity.class));
     }
 
     private class ViewHolder
