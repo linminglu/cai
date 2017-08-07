@@ -17,4 +17,6 @@ public interface FirstService
     @GET("api/{name}")
     Call<String> getFirstRepos(@Path("name") String name, @QueryMap Map<String, String> options);
 
+    @GET("api/{name}/{second}")
+    Call<String> getSecondRepos(@Path("name") String name, @Path("second") String second, @QueryMap Map<String, String> options);
 }

@@ -2,6 +2,8 @@ package com.example.admin.caipiao33.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,15 +14,23 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.admin.caipiao33.BaseFragment;
+import com.example.admin.caipiao33.BaseActivity;
 import com.example.admin.caipiao33.LazyFragment;
+import com.example.admin.caipiao33.MainActivity;
 import com.example.admin.caipiao33.R;
 import com.example.admin.caipiao33.bean.GouCaiBean;
+import com.example.admin.caipiao33.contract.IGouCaiItemContract;
 import com.example.admin.caipiao33.httputils.HttpUtil;
+import com.example.admin.caipiao33.presenter.GouCaiItemPresenter;
+import com.example.admin.caipiao33.utils.DateUtils;
 import com.example.admin.caipiao33.utils.MyImageLoader;
+import com.example.admin.caipiao33.utils.StringUtils;
+import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.utils.Tools;
 import com.example.admin.caipiao33.views.DividerItemDecoration;
+import com.socks.library.KLog;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -31,7 +41,7 @@ import butterknife.Unbinder;
  * 购彩子项目
  * 全部彩种、高频彩、低频彩
  */
-public class GouCaiItemFragment extends LazyFragment
+public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContract.View
 {
     public static final int TYPE_ALL = 0; // 全部彩种
     public static final int TYPE_GP = 1; // 高频彩
@@ -77,6 +87,81 @@ public class GouCaiItemFragment extends LazyFragment
         }
     }
 
+    private Handler mHandler = new Handler(new Handler.Callback()
+    {
+        @Override
+        public boolean handleMessage(Message msg)
+        {
+            switch (msg.what) {
+                case WHAT_REFRESH_ITEM:
+                    String obj = (String) msg.obj; // 彩票编码
+                    if (refreshList.contains(obj)) {
+                        // 表示有内容正在刷新，不用再次请求网络
+                        break;
+                    }
+                    synchronized (refreshList) {
+                        refreshList.add(obj);
+                    }
+                    mPresenter.refreshData(obj, WHAT_REFRESH_ITEM);
+                    break;
+                case WHAT_REFRESH_RESULT:
+                    String num = (String) msg.obj; // 彩票编码
+                    if (refreshList.contains(num)) {
+                        // 表示有内容正在刷新，不用再次请求网络
+                        break;
+                    }
+                    synchronized (refreshList) {
+                        refreshList.add(num);
+                    }
+                    mPresenter.refreshData(num, WHAT_REFRESH_ITEM);
+                    break;
+            }
+            return false;
+        }
+    });
+
+    private static final int LIMIT_TIME = 1000; // 定时器1秒刷新页面
+    private static final int LOOP_TIME = 5; // 定时每隔5秒请求一次开奖结果
+    private static final int WHAT_REFRESH_ITEM = 101; // 用于刷新单个项目
+    private static final int WHAT_REFRESH_RESULT = 102; // 用于刷新开奖结果
+
+    // 存储请求刷新数据的列表
+    private List<String> refreshList = new ArrayList<>();
+    private IGouCaiItemContract.Presenter mPresenter;
+    private Runnable timerRunnable = new Runnable()
+    {
+        @Override
+        public void run()
+        {
+            GouCaiFragment fragment = (GouCaiFragment) getParentFragment();
+            if (!fragment.isLinearLayout || !isVisible) {
+                mHandler.removeCallbacks(this);
+                return;
+            }
+            KLog.e("timerRunnable");
+            adapter.notifyDataSetChanged();
+            mHandler.postDelayed(this, LIMIT_TIME);
+        }
+    };
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+//        GouCaiFragment fragment = (GouCaiFragment) getParentFragment();
+//        if (fragment.isLinearLayout && isVisible) {
+//            mHandler.post(timerRunnable);
+//            return;
+//        }
+    }
+
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        mHandler.removeCallbacks(timerRunnable);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -99,6 +184,7 @@ public class GouCaiItemFragment extends LazyFragment
         recyclerView.setAdapter(adapter);
         isCreate = true;
         lazyLoad();
+        mPresenter = new GouCaiItemPresenter(this);
         return view;
     }
 
@@ -142,6 +228,7 @@ public class GouCaiItemFragment extends LazyFragment
             } else {
                 updateUILayout();
             }
+            mHandler.post(timerRunnable);
         } else {
             RecyclerView.Adapter adapter = recyclerView.getAdapter();
             if (adapter != null && adapter instanceof MyGouCaiGrideAdapter) {
@@ -186,6 +273,63 @@ public class GouCaiItemFragment extends LazyFragment
             return;
         }
         refreshRecyclerView();
+    }
+
+    @Override
+    public BaseActivity getBaseActivity()
+    {
+        return (MainActivity)getParentFragment().getActivity();
+    }
+
+    @Override
+    public void showErrorMsg(String msg)
+    {
+
+    }
+
+    @Override
+    public void updateItem(GouCaiBean.DataBean bean, int what)
+    {
+        String num = bean.getNum();
+        if (what == WHAT_REFRESH_RESULT) {
+            String lastOpen = bean.getLastOpen();
+            if (StringUtils.isEmpty(lastOpen)) {
+                if (refreshList.contains(num)) {
+                    synchronized (refreshList) {
+                        refreshList.remove(num);
+                    }
+                }
+                return;
+            }
+        }
+        for (int i = 0;i < mDataList.size(); i++ ) {
+            GouCaiBean.DataBean item = mDataList.get(i);
+            if (item.getNum().equals(num)) {
+                changeItemDataNotify(i, item, bean);
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void refreshDataFailed(String num, int what)
+    {
+        synchronized (refreshList) {
+            refreshList.remove(num);
+        }
+    }
+
+    private void changeItemDataNotify(int position, GouCaiBean.DataBean item, GouCaiBean.DataBean newData) {
+        item.setEndTime(newData.getEndTime());
+        item.setLastOpen(newData.getLastOpen());
+        item.setLastPeriod(newData.getLastPeriod());
+        item.setName(newData.getName());
+        item.setPeriod(newData.getPeriod());
+        item.setPic(newData.getPic());
+        adapter.notifyItemChanged(position);
+        synchronized (refreshList) {
+            refreshList.remove(item.getNum());
+        }
     }
 
     class MyGouCaiViewHolder extends RecyclerView.ViewHolder
@@ -243,7 +387,43 @@ public class GouCaiItemFragment extends LazyFragment
             MyImageLoader.displayImage(HttpUtil.mNewUrl + dataBean.getPic(), holder1.iv, getContext());
             holder1.tvIndex.setText(getResources().getString(R.string.s_qishu, dataBean.getPeriod()));
             holder1.tvRemainIndex.setText(getResources().getString(R.string.s_qishu_jiezhi, dataBean.getLastPeriod()));
-            holder1.tvResult.setText(dataBean.getLastOpen());
+            String lastOpen = dataBean.getLastOpen();
+            if (StringUtils.isEmpty(lastOpen)) {
+                holder1.tvResult.setText("等待开奖");
+            } else {
+                holder1.tvResult.setText(lastOpen);
+            }
+            long currentTimeMillis = System.currentTimeMillis();
+            String endTime = dataBean.getEndTime();
+            if (!StringUtils.isEmpty(endTime)) {
+                long lEndTime = Long.valueOf(endTime);
+                long temp = lEndTime - currentTimeMillis;
+                if (temp <= 0) {
+                    temp = 0;
+                }
+                long second = temp / 1000;
+                if (second <= 0) {
+                    Message msg = new Message();
+                    msg.what = WHAT_REFRESH_ITEM;
+                    msg.obj = dataBean.getNum();
+                    mHandler.sendMessage(msg);
+                    holder1.tvRemainTime.setText("");
+                } else {
+                    String timeStr = DateUtils.getHMS(second);
+                    holder1.tvRemainTime.setText(timeStr);
+                }
+
+                // 独立分支用于计时5秒发送请求开奖结果
+                if (second % LOOP_TIME == 0 && StringUtils.isEmpty(lastOpen)) {
+                    Message msg = new Message();
+                    msg.what = WHAT_REFRESH_RESULT;
+                    msg.obj = dataBean.getNum();
+                    mHandler.sendMessage(msg);
+//                    ToastUtil.show("发送请求开奖结果");
+                }
+
+            }
+
         }
 
         @Override

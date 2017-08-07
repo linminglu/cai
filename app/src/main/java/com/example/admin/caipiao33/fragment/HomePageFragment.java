@@ -8,6 +8,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -29,6 +30,7 @@ import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.MyImageLoader;
 import com.example.admin.caipiao33.utils.P2PNative;
 import com.example.admin.caipiao33.utils.ResourcesUtil;
+import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.utils.Tools;
 import com.example.admin.caipiao33.views.LoadingLayout;
 import com.example.admin.caipiao33.views.banner.ImageCycleViewListener;
@@ -179,6 +181,22 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
     private void initView()
     {
         unbinder = ButterKnife.bind(this, parentView);
+
+        toolbar.inflateMenu(R.menu.menu_homepage);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener()
+        {
+            @Override
+            public boolean onMenuItemClick(MenuItem item)
+            {
+                switch (item.getItemId()) {
+                    case R.id.action_sign:
+                        ToastUtil.show("去签到");
+                        break;
+                }
+                return false;
+            }
+        });
+
         myBanner.setSwipeRefresh(swipeRefreshLayout);
         mLoadingLayout = (LoadingLayout) parentView.findViewById(R.id.loadingLayout);
         mHotType = new ArrayList<>();
@@ -235,6 +253,9 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
         for (int i = 0; i < bean.getTypeList().size(); i++)
         {
             HomePageBean.TypeListBean typeListBean = bean.getTypeList().get(i);
+            if (i == mHotType.size()) {
+                break;
+            }
             ViewHolder viewHolder = mHotType.get(i);
             MyImageLoader.displayImage(HttpUtil.mNewUrl + typeListBean.getPic(), viewHolder.iv, getBaseActivity());
             viewHolder.tv.setText(typeListBean.getName());

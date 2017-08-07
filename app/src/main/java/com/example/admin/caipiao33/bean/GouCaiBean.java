@@ -55,7 +55,7 @@ public class GouCaiBean
          * lastPeriod : 20170803422
          */
 
-        private int num;
+        private String num;
         private String lastOpen;
         private String name;
         private String pic;
@@ -63,12 +63,12 @@ public class GouCaiBean
         private String period;
         private String lastPeriod;
 
-        public int getNum()
+        public String getNum()
         {
             return num;
         }
 
-        public void setNum(int num)
+        public void setNum(String num)
         {
             this.num = num;
         }
