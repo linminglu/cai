@@ -279,12 +279,14 @@ public class HttpUtil
 
     public static void requestFirst(String name, final Type clazz, final Activity mActivity, final MyResponseListener listener, final Intent intent) // 带参数，获取json对象或者数组
     {
+        requestFirst(name, null, clazz, mActivity, listener, intent);
+    }
+
+    public static void requestFirst(String name, HashMap<String, String> map, final Type clazz, final Activity mActivity, final MyResponseListener listener, final Intent intent) {
         Call<String> call;
         FirstService firstService = retrofit.create(FirstService.class);
-
-        HashMap<String, String> map = new HashMap<>();
-        map.put("test", "hello world");
-        call = firstService.getFirstRepos(name, CreateCode.getParams(map));
+        HashMap<String, String> params = CreateCode.getParams(map);
+        call = firstService.getFirstRepos(name, params);
         KLog.e("requestFirst: " + call.request().url().toString());
         postBase(call, null, null, clazz, mActivity, listener, intent);
     }
