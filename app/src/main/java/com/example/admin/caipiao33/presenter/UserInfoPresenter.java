@@ -7,6 +7,8 @@ import com.example.admin.caipiao33.contract.IUserContract;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.httputils.MyResponseListener;
 
+import java.util.HashMap;
+
 /**
  * Created by cxy on 2017/8/2
  */
@@ -26,13 +28,19 @@ public class UserInfoPresenter implements IUserContract.Presenter
     public void loadData()
     {
         mView.showLoadingLayout4Ami(hideView);
-        HttpUtil.requestFirst("index", HomePageBean.class, mView.getBaseActivity(), new MyResponseListener<HomePageBean>()
+
+        HashMap<String, String> map = new HashMap<>();
+        map.put("userName", "gavin");
+        map.put("password", "a123456");
+
+
+        HttpUtil.requestLogin(map, String.class, mView.getBaseActivity(), new MyResponseListener<String>()
         {
             @Override
-            public void onSuccess(HomePageBean result)
+            public void onSuccess(String result)
             {
                 mView.hideLoadingLayout4Ami(hideView);
-                mView.updateUsers(result);
+                //                mView.updateUsers(result);
             }
 
             @Override

@@ -282,11 +282,22 @@ public class HttpUtil
         requestFirst(name, null, clazz, mActivity, listener, intent);
     }
 
-    public static void requestFirst(String name, HashMap<String, String> map, final Type clazz, final Activity mActivity, final MyResponseListener listener, final Intent intent) {
+    public static void requestFirst(String name, HashMap<String, String> map, final Type clazz, final Activity mActivity, final MyResponseListener listener, final Intent intent)
+    {
         Call<String> call;
         FirstService firstService = retrofit.create(FirstService.class);
         HashMap<String, String> params = CreateCode.getParams(map);
         call = firstService.getFirstRepos(name, params);
+        KLog.e("requestFirst: " + call.request().url().toString());
+        postBase(call, null, null, clazz, mActivity, listener, intent);
+    }
+
+    public static void requestLogin(HashMap<String, String> map, final Type clazz, final Activity mActivity, final MyResponseListener listener, final Intent intent)
+    {
+        Call<String> call;
+        LoginService loginService = retrofit.create(LoginService.class);
+        HashMap<String, String> params = CreateCode.getParams(map);
+        call = loginService.getLogin(params);
         KLog.e("requestFirst: " + call.request().url().toString());
         postBase(call, null, null, clazz, mActivity, listener, intent);
     }

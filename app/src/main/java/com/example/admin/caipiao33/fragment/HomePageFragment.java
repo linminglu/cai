@@ -170,6 +170,9 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
         mPresenter = new HomePagePresenter(this);
         initView();
         mPresenter.loadData();
+
+        String s = "ttEB8PraOcdVpEUpR0Acpcf7aAAJvrqQWz/vd14MtKHwLxCWybD/Iaa78EUfxvRmocqOt8xDHX5ZV5XVgFU1l99LZj4ft9lhgmUz70OOO+M=";
+        KLog.e("asdfasdf", P2PNative.getInstance().decrypt(s));
         return parentView;
     }
 

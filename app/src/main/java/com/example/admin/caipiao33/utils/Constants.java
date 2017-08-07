@@ -17,7 +17,7 @@ public interface Constants
 
     String JSONERROR = "服务器数据解析异常";
 
-    String MERCHANTID = "1";
+    String MERCHANTID = "2";
 
     String CURR_PHOTO = "currPhoto";
     int REQUEST_CODE_2_LOGIN = 3000;

@@ -15,16 +15,9 @@ import retrofit2.http.Url;
  */
 public interface CommonPostService
 {
-    //    @POST("app")
-    //    @FormUrlEncoded
-    //    Call<String> getHomePage(@FieldMap Map<String, String> map);
 
     @GET("/")
     Call<String> getHomePage();
-
-    @POST("/common/appLogin")
-    @FormUrlEncoded
-    Call<String> getLogin(@FieldMap Map<String, String> map);
 
     @GET("/common/appLogin")
     Call<String> getLogin1(@Query("data") String data);
