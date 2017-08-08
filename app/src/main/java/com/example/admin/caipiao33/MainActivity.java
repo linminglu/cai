@@ -15,7 +15,13 @@ import com.example.admin.caipiao33.fragment.ZouShiFragment;
 import com.example.admin.caipiao33.pagerBottomTabStrip.Controller;
 import com.example.admin.caipiao33.pagerBottomTabStrip.OnTabItemSelectListener;
 import com.example.admin.caipiao33.pagerBottomTabStrip.PagerBottomTabLayout;
+import com.example.admin.caipiao33.utils.Constants;
+import com.example.admin.caipiao33.utils.StringUtils;
 import com.example.admin.caipiao33.utils.ToastUtil;
+import com.example.admin.caipiao33.utils.UserConfig;
+
+import static com.example.admin.caipiao33.utils.StringUtils.isEmpty2;
+import static com.socks.library.KLog.I;
 
 public class MainActivity extends BaseActivity
 {
@@ -146,6 +152,33 @@ public class MainActivity extends BaseActivity
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         Fragment userFragment = fm.findFragmentByTag(clazz.getName());
+        if (clazz == UserFragment.class && StringUtils.isEmpty2(UserConfig.getInstance()
+                .getToken(MainActivity.this)))
+        {
+            if (mCurFragment instanceof HomePageFragment)
+            {
+                controller.setSelect(0);
+            }
+            else if (mCurFragment instanceof GouCaiFragment)
+            {
+                controller.setSelect(1);
+            }
+            else if (mCurFragment instanceof KaiJiangFragment)
+            {
+                controller.setSelect(2);
+            }
+            else if (mCurFragment instanceof ZouShiFragment)
+            {
+                controller.setSelect(3);
+            }
+            else if (mCurFragment instanceof UserFragment)
+            {
+                controller.setSelect(4);
+            }
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivityForResult(intent, Constants.REQUEST_CODE_Main2_LOGIN);
+            return;
+        }
         if (userFragment == null)
         {
             try
@@ -167,6 +200,7 @@ public class MainActivity extends BaseActivity
         {
             ft.hide(mCurFragment);
         }
+
 
         if (userFragment != null && !userFragment.isAdded())
         {
@@ -222,6 +256,10 @@ public class MainActivity extends BaseActivity
         if (mCurFragment != null)
         {
             mCurFragment.onActivityResult(requestCode, resultCode, data);
+        }
+        if (requestCode == Constants.REQUEST_CODE_Main2_LOGIN && resultCode == Constants.REQUEST_CODE_2_LOGIN)
+        {
+            tabSwitchCenter(UserFragment.class);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

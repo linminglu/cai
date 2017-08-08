@@ -7,6 +7,7 @@ import android.content.Intent;
 import com.example.admin.caipiao33.encryption.CreateCode;
 import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.StringUtils;
+import com.example.admin.caipiao33.utils.UserConfig;
 import com.google.gson.Gson;
 import com.socks.library.KLog;
 
@@ -206,6 +207,10 @@ public class HttpUtil
                     {
                         String token = object.optString("token");
                         String data = object.optString("data");
+                        if (!StringUtils.isEmpty2(token))
+                        {
+                            UserConfig.getInstance().save(mActivity, token);
+                        }
                         //                                                String result = CreateCode.parseContent(object.optString("result"));
                         KLog.d(data);
                         if (null == clazz)
