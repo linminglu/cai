@@ -1,6 +1,7 @@
 package com.example.admin.caipiao33.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -15,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.admin.caipiao33.BaseActivity;
+import com.example.admin.caipiao33.BuyActivity;
 import com.example.admin.caipiao33.LazyFragment;
 import com.example.admin.caipiao33.MainActivity;
 import com.example.admin.caipiao33.R;
@@ -22,6 +24,7 @@ import com.example.admin.caipiao33.bean.GouCaiBean;
 import com.example.admin.caipiao33.contract.IGouCaiItemContract;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.presenter.GouCaiItemPresenter;
+import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.DateUtils;
 import com.example.admin.caipiao33.utils.MyImageLoader;
 import com.example.admin.caipiao33.utils.StringUtils;
@@ -35,6 +38,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -366,6 +370,24 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+
+        @OnClick(R.id.parent)
+        public void onViewClicked(View view) {
+            switch (view.getId()) {
+                case R.id.parent:
+                    int position = getAdapterPosition();
+                    GouCaiBean.DataBean dataBean = mDataList.get(position);
+                    toBuyActivity(dataBean.getNum());
+                    break;
+            }
+        }
+    }
+
+    private void toBuyActivity(String num)
+    {
+        Intent intent = new Intent(getActivity(), BuyActivity.class);
+        intent.putExtra(Constants.EXTRA_ROOM_ID, num);
+        startActivity(intent);
     }
 
     private class MyGouCaiAdapter extends RecyclerView.Adapter<MyGouCaiViewHolder>

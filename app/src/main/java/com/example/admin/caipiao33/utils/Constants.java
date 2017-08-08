@@ -31,4 +31,5 @@ public interface Constants
 
     String EXTRA_URL = "extra_url";
     String EXTRA_TITLE = "extra_title";
+    String EXTRA_ROOM_ID = "extra_room_id";
 }
