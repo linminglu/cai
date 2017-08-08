@@ -2,6 +2,9 @@ package com.example.admin.caipiao33.utils;
 
 import android.content.Context;
 
+import com.example.admin.caipiao33.bean.TokenBean;
+import com.google.gson.Gson;
+
 
 /**
  * 用户数据获取对象
@@ -11,6 +14,7 @@ public class UserConfig
 
     private static UserConfig mUserConfig;
     private String mToken;
+    private TokenBean mTokenBean;
 
     /**
      *
@@ -20,7 +24,24 @@ public class UserConfig
 
     }
 
-    public synchronized String getToken(Context context)
+    public synchronized TokenBean getToken(Context context)
+    {
+        Gson gson = new Gson();
+        if (StringUtils.isEmpty2(mToken))
+        {
+            try
+            {
+                mToken = decrypt(context, Constants.SHARE_TOKEN);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+        return mTokenBean = gson.fromJson(P2PNative.getInstance().decrypt(mToken), TokenBean.class);
+    }
+
+    public synchronized String getTokenString(Context context)
     {
         if (null == mToken)
         {

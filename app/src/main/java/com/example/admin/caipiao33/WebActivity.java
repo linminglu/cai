@@ -169,7 +169,7 @@ public class WebActivity extends Activity
                 if (isFirst)
                 {
                     if (StringUtils.isEmpty2(UserConfig.getInstance()
-                            .getToken(WebActivity.this)))
+                            .getTokenString(WebActivity.this)))
                     {
                         webView.loadUrl(mUrl);
                         HttpUtil.changeBaseUrl(mUrl);
@@ -178,8 +178,7 @@ public class WebActivity extends Activity
                     else
                     {
                         TreeMap<String, String> map = new TreeMap<>();
-                        map.put("data", UserConfig.getInstance()
-                                .getToken(WebActivity.this));
+                        map.put("data", UserConfig.getInstance().getTokenString(WebActivity.this));
                         showLoadingDialog(true);
                         HttpUtil.post(map, null, String.class, WebActivity.this, new MyResponseListener<String>()
                         {
@@ -206,7 +205,7 @@ public class WebActivity extends Activity
                 else
                 {
                     TreeMap<String, String> map = new TreeMap<>();
-                    map.put("data", UserConfig.getInstance().getToken(WebActivity.this));
+                    map.put("data", UserConfig.getInstance().getTokenString(WebActivity.this));
                     showLoadingDialog(true);
                     HttpUtil.post(map, null, String.class, WebActivity.this, new MyResponseListener<String>()
                     {

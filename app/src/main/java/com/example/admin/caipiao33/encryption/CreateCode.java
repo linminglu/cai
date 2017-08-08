@@ -96,7 +96,7 @@ public class CreateCode
         {
             map = new HashMap<>();
         }
-        String remembertoken = UserConfig.getInstance().getToken(MyApplication.getInstance());
+        String remembertoken = UserConfig.getInstance().getTokenString(MyApplication.getInstance());
         String token = map.remove("token");
 
         if (!StringUtils.isEmpty2(token))

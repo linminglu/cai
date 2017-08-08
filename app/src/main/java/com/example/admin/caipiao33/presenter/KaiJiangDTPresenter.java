@@ -3,23 +3,27 @@ package com.example.admin.caipiao33.presenter;
 import android.view.View;
 
 import com.example.admin.caipiao33.bean.HomePageBean;
+import com.example.admin.caipiao33.bean.KaiJiangDTBean;
 import com.example.admin.caipiao33.bean.UserInfoBean;
+import com.example.admin.caipiao33.contract.IKaiJiangContract;
 import com.example.admin.caipiao33.contract.IUserContract;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.httputils.MyResponseListener;
+import com.google.gson.reflect.TypeToken;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
  * Created by cxy on 2017/8/2
  */
 
-public class UserInfoPresenter implements IUserContract.Presenter
+public class KaiJiangDTPresenter implements IKaiJiangContract.Presenter
 {
-    private final IUserContract.View mView;
+    private final IKaiJiangContract.View mView;
     private View hideView;
 
-    public UserInfoPresenter(IUserContract.View view, View hideView)
+    public KaiJiangDTPresenter(IKaiJiangContract.View view, View hideView)
     {
         this.mView = view;
         this.hideView = hideView;
@@ -29,18 +33,15 @@ public class UserInfoPresenter implements IUserContract.Presenter
     public void loadData()
     {
         mView.showLoadingLayout4Ami(hideView);
-
-        HashMap<String, String> map = new HashMap<>();
-        map.put("type", "0");
-
-
-        HttpUtil.requestSecond("user", "amount", map, String.class, mView.getBaseActivity(), new MyResponseListener<UserInfoBean>()
+        HttpUtil.requestFirst("draw", null, new TypeToken<ArrayList<KaiJiangDTBean>>()
+        {
+        }.getType(), mView.getBaseActivity(), new MyResponseListener<ArrayList<KaiJiangDTBean>>()
         {
             @Override
-            public void onSuccess(UserInfoBean result)
+            public void onSuccess(ArrayList<KaiJiangDTBean> result)
             {
                 mView.hideLoadingLayout4Ami(hideView);
-                mView.updateUsers(result);
+                mView.update(result);
             }
 
             @Override
@@ -60,12 +61,12 @@ public class UserInfoPresenter implements IUserContract.Presenter
     @Override
     public void refreshData()
     {
-        HttpUtil.requestFirst("index", HomePageBean.class, mView.getBaseActivity(), new MyResponseListener<UserInfoBean>()
+        HttpUtil.requestFirst("index", HomePageBean.class, mView.getBaseActivity(), new MyResponseListener<ArrayList<KaiJiangDTBean>>()
         {
             @Override
-            public void onSuccess(UserInfoBean result)
+            public void onSuccess(ArrayList<KaiJiangDTBean> result)
             {
-                mView.updateUsers(result);
+                mView.update(result);
             }
 
             @Override

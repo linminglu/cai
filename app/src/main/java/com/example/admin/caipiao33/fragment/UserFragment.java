@@ -16,9 +16,11 @@ import com.example.admin.caipiao33.BaseFragment;
 import com.example.admin.caipiao33.MainActivity;
 import com.example.admin.caipiao33.R;
 import com.example.admin.caipiao33.bean.HomePageBean;
+import com.example.admin.caipiao33.bean.UserInfoBean;
 import com.example.admin.caipiao33.contract.IUserContract;
 import com.example.admin.caipiao33.presenter.UserInfoPresenter;
 import com.example.admin.caipiao33.utils.ToastUtil;
+import com.example.admin.caipiao33.utils.UserConfig;
 import com.example.admin.caipiao33.views.CircleImageView;
 import com.example.admin.caipiao33.views.LoadingLayout;
 
@@ -230,9 +232,11 @@ public class UserFragment extends BaseFragment implements View.OnClickListener, 
     }
 
     @Override
-    public void updateUsers(HomePageBean bean)
+    public void updateUsers(UserInfoBean bean)
     {
         swipeRefreshLayout.setRefreshing(false);
+        userFragmentNameTv.setText(UserConfig.getInstance().getToken(mainActivity).getMemberName());
+        userFragmentYueTv.setText(bean.getBalance() + "元");
     }
 }
 

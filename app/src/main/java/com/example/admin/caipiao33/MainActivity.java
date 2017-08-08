@@ -16,12 +16,8 @@ import com.example.admin.caipiao33.pagerBottomTabStrip.Controller;
 import com.example.admin.caipiao33.pagerBottomTabStrip.OnTabItemSelectListener;
 import com.example.admin.caipiao33.pagerBottomTabStrip.PagerBottomTabLayout;
 import com.example.admin.caipiao33.utils.Constants;
-import com.example.admin.caipiao33.utils.StringUtils;
 import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.utils.UserConfig;
-
-import static com.example.admin.caipiao33.utils.StringUtils.isEmpty2;
-import static com.socks.library.KLog.I;
 
 public class MainActivity extends BaseActivity
 {
@@ -152,8 +148,11 @@ public class MainActivity extends BaseActivity
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         Fragment userFragment = fm.findFragmentByTag(clazz.getName());
-        if (clazz == UserFragment.class && StringUtils.isEmpty2(UserConfig.getInstance()
-                .getToken(MainActivity.this)))
+        if (clazz == UserFragment.class && UserConfig.getInstance()
+                .getToken(MainActivity.this) == null || (UserConfig.getInstance()
+                .getToken(MainActivity.this) != null && UserConfig.getInstance()
+                .getToken(MainActivity.this)
+                .getIsLogin() == 0))
         {
             if (mCurFragment instanceof HomePageFragment)
             {
