@@ -2,11 +2,9 @@ package com.example.admin.caipiao33.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,12 +16,10 @@ import android.widget.TextView;
 import com.example.admin.caipiao33.BaseActivity;
 import com.example.admin.caipiao33.BaseFragment;
 import com.example.admin.caipiao33.MainActivity;
-import com.example.admin.caipiao33.PromotionsActivity;
 import com.example.admin.caipiao33.R;
 import com.example.admin.caipiao33.WebUrlActivity;
 import com.example.admin.caipiao33.bean.HomePageBean;
 import com.example.admin.caipiao33.contract.IHomePageContract;
-import com.example.admin.caipiao33.encryption.CreateCode;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.presenter.HomePagePresenter;
 import com.example.admin.caipiao33.utils.Constants;
@@ -33,6 +29,7 @@ import com.example.admin.caipiao33.utils.ResourcesUtil;
 import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.utils.Tools;
 import com.example.admin.caipiao33.views.LoadingLayout;
+import com.example.admin.caipiao33.views.ScrollingTextView;
 import com.example.admin.caipiao33.views.banner.ImageCycleViewListener;
 import com.example.admin.caipiao33.views.banner.MyBanner;
 import com.example.admin.caipiao33.views.banner.MyVerticalBanner;
@@ -60,7 +57,7 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
     @BindView(R.id.myBanner)
     MyBanner myBanner;
     @BindView(R.id.tv_scroll)
-    TextView tvScroll;
+    ScrollingTextView tvScroll;
     @BindView(R.id.iv_1)
     ImageView iv1;
     @BindView(R.id.tv_1)
@@ -225,6 +222,7 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
                 mPresenter.refreshData();
             }
         });
+        Tools.setSwipeRefreshColor(swipeRefreshLayout);
     }
 
     @Override
@@ -250,6 +248,7 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
         /**设置数据*/
         myBanner.setImageResources(bean.getScrollImg(), mAdCycleViewListener);
         tvScroll.setText(bean.getScrollNotice());
+        tvScroll.setEnabled(true);
         for (int i = 0; i < bean.getTypeList().size(); i++)
         {
             HomePageBean.TypeListBean typeListBean = bean.getTypeList().get(i);

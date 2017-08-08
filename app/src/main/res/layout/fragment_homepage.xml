@@ -31,7 +31,8 @@
         android:id="@+id/swipeRefreshLayout"
         android:layout_below="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:addStatesFromChildren="true">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -48,7 +49,7 @@
                     android:layout_height="@dimen/d_home_page_banner_height">
                 </com.example.admin.caipiao33.views.banner.MyBanner>
 
-                <TextView
+                <com.example.admin.caipiao33.views.ScrollingTextView
                     android:id="@+id/tv_scroll"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
