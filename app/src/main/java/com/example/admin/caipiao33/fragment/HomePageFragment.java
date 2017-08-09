@@ -170,7 +170,7 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
         initView();
         mPresenter.loadData();
 
-        String s = "ttEB8PraOcdVpEUpR0Acpcf7aAAJvrqQWz/vd14MtKHwLxCWybD/Iaa78EUfxvRmocqOt8xDHX5ZV5XVgFU1l99LZj4ft9lhgmUz70OOO+M=";
+        String s = "xpIzvGq0MbOAufA6w2uDq3KP5eitmt/pXLC1kIHUfkU=";
         KLog.e("asdfasdf", P2PNative.getInstance().decrypt(s));
         return parentView;
     }
@@ -185,7 +185,8 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
             @Override
             public boolean onMenuItemClick(MenuItem item)
             {
-                switch (item.getItemId()) {
+                switch (item.getItemId())
+                {
                     case R.id.action_sign:
                         ToastUtil.show("去签到");
                         break;
@@ -252,7 +253,8 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
         for (int i = 0; i < bean.getTypeList().size(); i++)
         {
             HomePageBean.TypeListBean typeListBean = bean.getTypeList().get(i);
-            if (i == mHotType.size()) {
+            if (i == mHotType.size())
+            {
                 break;
             }
             ViewHolder viewHolder = mHotType.get(i);

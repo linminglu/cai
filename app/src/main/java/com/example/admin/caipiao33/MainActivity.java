@@ -148,35 +148,60 @@ public class MainActivity extends BaseActivity
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         Fragment userFragment = fm.findFragmentByTag(clazz.getName());
-        if (clazz == UserFragment.class && UserConfig.getInstance()
-                .getToken(MainActivity.this) == null || (UserConfig.getInstance()
-                .getToken(MainActivity.this) != null && UserConfig.getInstance()
-                .getToken(MainActivity.this)
-                .getIsLogin() == 0))
+        if (clazz == UserFragment.class)
         {
-            if (mCurFragment instanceof HomePageFragment)
+            if (UserConfig.getInstance().getToken(MainActivity.this) == null)
             {
-                controller.setSelect(0);
+                if (mCurFragment instanceof HomePageFragment)
+                {
+                    controller.setSelect(0);
+                }
+                else if (mCurFragment instanceof GouCaiFragment)
+                {
+                    controller.setSelect(1);
+                }
+                else if (mCurFragment instanceof KaiJiangFragment)
+                {
+                    controller.setSelect(2);
+                }
+                else if (mCurFragment instanceof ZouShiFragment)
+                {
+                    controller.setSelect(3);
+                }
+                else if (mCurFragment instanceof UserFragment)
+                {
+                    controller.setSelect(4);
+                }
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivityForResult(intent, Constants.REQUEST_CODE_Main2_LOGIN);
+                return;
             }
-            else if (mCurFragment instanceof GouCaiFragment)
+            else if (UserConfig.getInstance().getToken(MainActivity.this).getIsLogin() == 0)
             {
-                controller.setSelect(1);
+                if (mCurFragment instanceof HomePageFragment)
+                {
+                    controller.setSelect(0);
+                }
+                else if (mCurFragment instanceof GouCaiFragment)
+                {
+                    controller.setSelect(1);
+                }
+                else if (mCurFragment instanceof KaiJiangFragment)
+                {
+                    controller.setSelect(2);
+                }
+                else if (mCurFragment instanceof ZouShiFragment)
+                {
+                    controller.setSelect(3);
+                }
+                else if (mCurFragment instanceof UserFragment)
+                {
+                    controller.setSelect(4);
+                }
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivityForResult(intent, Constants.REQUEST_CODE_Main2_LOGIN);
+                return;
             }
-            else if (mCurFragment instanceof KaiJiangFragment)
-            {
-                controller.setSelect(2);
-            }
-            else if (mCurFragment instanceof ZouShiFragment)
-            {
-                controller.setSelect(3);
-            }
-            else if (mCurFragment instanceof UserFragment)
-            {
-                controller.setSelect(4);
-            }
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-            startActivityForResult(intent, Constants.REQUEST_CODE_Main2_LOGIN);
-            return;
         }
         if (userFragment == null)
         {
@@ -194,13 +219,10 @@ public class MainActivity extends BaseActivity
             // 重复点击同一个，直接返回
             return;
         }
-
         if (mCurFragment != null && mCurFragment != userFragment)
         {
             ft.hide(mCurFragment);
         }
-
-
         if (userFragment != null && !userFragment.isAdded())
         {
             ft.add(R.id.center_frame, userFragment, clazz.getName());
@@ -211,7 +233,6 @@ public class MainActivity extends BaseActivity
         }
         ft.commitAllowingStateLoss();
         mCurFragment = userFragment;
-
     }
 
     /**
