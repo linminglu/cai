@@ -17,9 +17,11 @@ import android.widget.TextView;
 
 import com.example.admin.caipiao33.BaseActivity;
 import com.example.admin.caipiao33.BuyActivity;
+import com.example.admin.caipiao33.BuyRoomActivity;
 import com.example.admin.caipiao33.LazyFragment;
 import com.example.admin.caipiao33.MainActivity;
 import com.example.admin.caipiao33.R;
+import com.example.admin.caipiao33.bean.BuyRoomBean;
 import com.example.admin.caipiao33.bean.GouCaiBean;
 import com.example.admin.caipiao33.contract.IGouCaiItemContract;
 import com.example.admin.caipiao33.httputils.HttpUtil;
@@ -28,7 +30,6 @@ import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.DateUtils;
 import com.example.admin.caipiao33.utils.MyImageLoader;
 import com.example.admin.caipiao33.utils.StringUtils;
-import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.utils.Tools;
 import com.example.admin.caipiao33.views.DividerItemDecoration;
 import com.socks.library.KLog;
@@ -323,6 +324,42 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
         }
     }
 
+    @Override
+    public void toBuyRoom(BuyRoomBean bean, String title)
+    {
+        /**
+         * 两种情况
+         * room
+         *  -- 显示房间列表，再次选择一项进入page页面
+         * page
+         *  -- 立即购买页面
+         */
+
+        if (bean.getPage().equals("room")) {
+            Intent intent = new Intent(getActivity(), BuyRoomActivity.class);
+            intent.putExtra(Constants.EXTRA_TITLE, title);
+            intent.putExtra(Constants.EXTRA_BUY_ROOM_BEAN, bean);
+            startActivity(intent);
+        } else {
+            String roomId = bean.getRoomId();
+            String playId = null;
+            String playId1 = null;
+            List<BuyRoomBean.PlayListBean> playList = bean.getPlayList();
+            if (null != playList && playList.size() > 0) {
+                BuyRoomBean.PlayListBean playListBean = playList.get(0);
+                playId = playListBean.getPlayId();
+                playId1 = playListBean.getPlayId1();
+            }
+            Intent intent = new Intent(getActivity(), BuyActivity.class);
+            intent.putExtra(Constants.EXTRA_TITLE, title);
+            intent.putExtra(Constants.EXTRA_NUMBER, bean.getNum());
+            intent.putExtra(Constants.EXTRA_ROOM_ID, roomId);
+            intent.putExtra(Constants.EXTRA_PLAY_ID, playId);
+            intent.putExtra(Constants.EXTRA_PLAY_ID1, playId1);
+            startActivity(intent);
+        }
+    }
+
     private void changeItemDataNotify(int position, GouCaiBean.DataBean item, GouCaiBean.DataBean newData) {
         item.setEndTime(newData.getEndTime());
         item.setLastOpen(newData.getLastOpen());
@@ -377,17 +414,10 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
                 case R.id.parent:
                     int position = getAdapterPosition();
                     GouCaiBean.DataBean dataBean = mDataList.get(position);
-                    toBuyActivity(dataBean.getNum());
+                    mPresenter.requestRoomData(dataBean.getNum(), dataBean.getName());
                     break;
             }
         }
-    }
-
-    private void toBuyActivity(String num)
-    {
-        Intent intent = new Intent(getActivity(), BuyActivity.class);
-        intent.putExtra(Constants.EXTRA_ROOM_ID, num);
-        startActivity(intent);
     }
 
     private class MyGouCaiAdapter extends RecyclerView.Adapter<MyGouCaiViewHolder>

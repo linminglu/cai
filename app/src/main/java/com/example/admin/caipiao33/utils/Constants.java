@@ -32,5 +32,9 @@ public interface Constants
 
     String EXTRA_URL = "extra_url";
     String EXTRA_TITLE = "extra_title";
+    String EXTRA_NUMBER = "extra_number";
+    String EXTRA_BUY_ROOM_BEAN = "extra_buy_room_bean";
     String EXTRA_ROOM_ID = "extra_room_id";
+    String EXTRA_PLAY_ID = "extra_play_id";
+    String EXTRA_PLAY_ID1 = "extra_play_id1";
 }

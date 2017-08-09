@@ -1,5 +1,6 @@
 package com.example.admin.caipiao33.presenter;
 
+import com.example.admin.caipiao33.bean.BuyRoomBean;
 import com.example.admin.caipiao33.bean.GouCaiBean;
 import com.example.admin.caipiao33.contract.IGouCaiContract;
 import com.example.admin.caipiao33.contract.IGouCaiItemContract;
@@ -46,6 +47,34 @@ public class GouCaiItemPresenter implements IGouCaiItemContract.Presenter
             public void onFinish()
             {
 
+            }
+        }, null);
+    }
+
+    @Override
+    public void requestRoomData(String num, final String title)
+    {
+        mView.showLoadingDialog();
+        HashMap<String, String> map = new HashMap<>();
+        map.put("gid", num);
+        HttpUtil.requestFirst("buy", map, BuyRoomBean.class, mView.getBaseActivity(), new MyResponseListener<BuyRoomBean>()
+        {
+            @Override
+            public void onSuccess(BuyRoomBean result)
+            {
+                mView.toBuyRoom(result, title);
+            }
+
+            @Override
+            public void onFailed(int code, String msg)
+            {
+
+            }
+
+            @Override
+            public void onFinish()
+            {
+                mView.hideLoadingDialog();
             }
         }, null);
     }

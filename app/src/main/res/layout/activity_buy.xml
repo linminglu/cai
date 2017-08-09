@@ -8,13 +8,13 @@
     tools:context="com.example.admin.caipiao33.BuyActivity">
 
     <android.support.v7.widget.Toolbar
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/toolbar"
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:theme="@style/AppTheme.AppBarOverlay"
+        android:background="?attr/colorPrimary"
         android:gravity="center"
-        android:background="?attr/colorPrimary">
+        android:theme="@style/AppTheme.AppBarOverlay">
 
         <TextView
             android:id="@+id/toolbar_title"
@@ -28,20 +28,186 @@
 
     </android.support.v7.widget.Toolbar>
 
-    <RelativeLayout
-        android:id="@+id/center_frame"
-        android:layout_below="@+id/toolbar"
+    <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottomLinearLayout"
+        android:layout_below="@+id/toolbar">
 
-    </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
+            <TextView
+                android:id="@+id/tv_room"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:textColor="@color/dark_gray"
+                android:textSize="14sp"
+                />
+
+            <TextView
+                android:id="@+id/tv_lottery_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_room"
+                android:padding="5dp"
+                android:textColor="@color/dark_gray"
+                android:textSize="14sp"/>
+
+            <LinearLayout
+                android:id="@+id/layout_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="距离截止下注:"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:textColor="@color/red"
+                    android:textSize="16sp"
+                    />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:layout_alignBottom="@+id/layout_time"
+                android:layout_alignTop="@+id/layout_time"
+                android:layout_toLeftOf="@+id/layout_time"
+                android:background="@color/middle_gray"/>
+
+            <View
+                android:id="@+id/line1"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_below="@+id/layout_time"
+                android:background="@color/middle_gray"/>
+
+            <TextView
+                android:id="@+id/tv_index"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/line1"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                />
+
+            <TextView
+                android:id="@+id/tv_result"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_index"
+                android:padding="5dp"
+                android:textColor="@color/red"
+                android:textSize="16sp"/>
+
+            <View
+                android:id="@+id/line2"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_below="@+id/tv_result"
+                android:layout_marginTop="5dp"
+                android:background="@color/middle_gray"/>
+
+            <com.example.admin.caipiao33.views.PagerSlidingTabStrip
+                android:id="@+id/buy_tab"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:layout_below="@+id/line2"
+                android:background="@color/white"
+                android:fillViewport="false"
+                app:dividerColor="@android:color/transparent"
+                app:dividerPadding="10dp"
+                app:indicatorColor="@color/white"
+                app:indicatorHeight="3dp"
+                app:myTabTextColor="@color/red"
+                app:myTabUnTextColor="@color/c_tab_text_unseletor"
+                app:shouldExpand="true"
+                app:underlineColor="@color/red"
+                app:underlineHeight="@dimen/common_divider_line">
+            </com.example.admin.caipiao33.views.PagerSlidingTabStrip>
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/buy_pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/buy_tab">
+            </android.support.v4.view.ViewPager>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/bottomLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_gray_bg"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            android:text="@string/s_clear_options"
+            android:textSize="18sp"/>
+
+        <include layout="@layout/item_line_vertical"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_gray_bg"
+            android:paddingBottom="10dp"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:paddingTop="10dp"
+            android:text="@string/s_trend"
+            android:textSize="18sp"/>
+
+        <include layout="@layout/item_line_vertical"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/button_red_bg"
+            android:gravity="center"
+            android:paddingBottom="10dp"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:paddingTop="10dp"
+            android:text="@string/s_buy"
+            android:textColor="@color/white"
+            android:textSize="18sp"/>
+
+    </LinearLayout>
 
     <com.example.admin.caipiao33.views.LoadingLayout
         android:id="@+id/loadingLayout"
-        android:layout_below="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar">
 
     </com.example.admin.caipiao33.views.LoadingLayout>
 </RelativeLayout>

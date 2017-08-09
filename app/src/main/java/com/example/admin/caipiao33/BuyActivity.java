@@ -1,43 +1,65 @@
 package com.example.admin.caipiao33;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannedString;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.admin.caipiao33.httputils.HttpUtil;
-import com.example.admin.caipiao33.httputils.MyResponseListener;
+import com.example.admin.caipiao33.bean.BuyRoomBean;
+import com.example.admin.caipiao33.contract.IBuyContract;
+import com.example.admin.caipiao33.presenter.BuyPresenter;
 import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.views.LoadingLayout;
-
-import java.util.HashMap;
+import com.example.admin.caipiao33.views.PagerSlidingTabStrip;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
  * 调用者需要传入房间id
- *   -- Constants.EXTRA_ROOM_ID
- *
+ * 彩票类型 title -- Constants.EXTRA_TITLE
+ * 彩票编码 num -- Constants.EXTRA_NUMBER
+ * 房间id  roomid -- Constants.EXTRA_ROOM_ID
+ * 玩法id  playId -- Constants.EXTRA_PLAY_ID
+ * 玩法id1 playId1 -- Constants.EXTRA_PLAY_ID1
+ * <p>
  * 两种情况
  * room
- *  -- 显示房间列表，再次选择一项进入page页面
+ * -- 显示房间列表，再次选择一项进入page页面
  * page
- *  -- 立即购买页面
+ * -- 立即购买页面
  */
-public class BuyActivity extends BaseActivity
+public class BuyActivity extends BaseActivity implements IBuyContract.View
 {
 
     @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.center_frame)
-    RelativeLayout centerFrame;
+    @BindView(R.id.tv_room)
+    TextView tvRoom;
+    @BindView(R.id.tv_lottery_time)
+    TextView tvLotteryTime;
+    @BindView(R.id.tv_time)
+    TextView tvTime;
+    @BindView(R.id.tv_index)
+    TextView tvIndex;
+    @BindView(R.id.tv_result)
+    TextView tvResult;
+    @BindView(R.id.buy_tab)
+    PagerSlidingTabStrip buyTab;
+    @BindView(R.id.buy_pager)
+    ViewPager buyPager;
+    private String mNumber;
+    private String mTitleStr;
     private String mRoomId;
+    private String mPlayId;
+    private String mPlayId1;
+    private IBuyContract.Presenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -45,29 +67,15 @@ public class BuyActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy);
         initView();
-        mRoomId = getIntent().getStringExtra(Constants.EXTRA_ROOM_ID);
-        HashMap<String, String> map = new HashMap<>();
-        map.put("gid", mRoomId);
-        HttpUtil.requestFirst("buy", map, String.class, this, new MyResponseListener()
-        {
-            @Override
-            public void onSuccess(Object result)
-            {
+        Intent intent = getIntent();
+        mNumber = intent.getStringExtra(Constants.EXTRA_NUMBER);
+        mTitleStr = intent.getStringExtra(Constants.EXTRA_TITLE);
+        mRoomId = intent.getStringExtra(Constants.EXTRA_ROOM_ID);
+        mPlayId = intent.getStringExtra(Constants.EXTRA_PLAY_ID);
+        mPlayId1 = intent.getStringExtra(Constants.EXTRA_PLAY_ID1);
 
-            }
-
-            @Override
-            public void onFailed(int code, String msg)
-            {
-
-            }
-
-            @Override
-            public void onFinish()
-            {
-
-            }
-        }, null);
+        mPresenter = new BuyPresenter(this);
+        mPresenter.loadData(mNumber, mRoomId, mPlayId, mPlayId1);
     }
 
     private void initView()
@@ -81,7 +89,7 @@ public class BuyActivity extends BaseActivity
             @Override
             public void onReload(View v)
             {
-//                mPresenter.loadData();
+                mPresenter.loadData(mNumber, mRoomId, mPlayId, mPlayId1);
             }
         });
     }
@@ -95,5 +103,13 @@ public class BuyActivity extends BaseActivity
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void updateHomePage(BuyRoomBean bean)
+    {
+        SpannedString ss = new SpannedString(mTitleStr + bean.getRoomName() + bean.getPeriod() + "期");
+        tvRoom.setText(ss);
+
     }
 }
