@@ -34,7 +34,7 @@ public class UserInfoPresenter implements IUserContract.Presenter
         map.put("type", "0");
 
 
-        HttpUtil.requestSecond("user", "amount", map, String.class, mView.getBaseActivity(), new MyResponseListener<UserInfoBean>()
+        HttpUtil.requestSecond("user", "amount", map, UserInfoBean.class, mView.getBaseActivity(), new MyResponseListener<UserInfoBean>()
         {
             @Override
             public void onSuccess(UserInfoBean result)
@@ -60,7 +60,7 @@ public class UserInfoPresenter implements IUserContract.Presenter
     @Override
     public void refreshData()
     {
-        HttpUtil.requestFirst("index", HomePageBean.class, mView.getBaseActivity(), new MyResponseListener<UserInfoBean>()
+        HttpUtil.requestFirst("index", UserInfoBean.class, mView.getBaseActivity(), new MyResponseListener<UserInfoBean>()
         {
             @Override
             public void onSuccess(UserInfoBean result)
