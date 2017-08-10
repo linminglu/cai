@@ -59,7 +59,8 @@ public class StringUtils
      */
     public static boolean isEmpty2(String str)
     {
-        return str == null || "".equals(str.trim()) || "{}".equals(str) || "[]".equals(str);
+        return str == null || "".equals(str.trim()) || "{}".equals(str) || "[]".equals(str) || "null"
+                .equals(str);
     }
 
     /**
