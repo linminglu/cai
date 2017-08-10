@@ -32,12 +32,13 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fillViewport="true"
         android:layout_above="@+id/bottomLinearLayout"
         android:layout_below="@+id/toolbar">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/tv_room"
@@ -134,12 +135,12 @@
                 android:fillViewport="false"
                 app:dividerColor="@android:color/transparent"
                 app:dividerPadding="10dp"
-                app:indicatorColor="@color/white"
+                app:indicatorColor="@color/red"
                 app:indicatorHeight="3dp"
                 app:myTabTextColor="@color/red"
-                app:myTabUnTextColor="@color/c_tab_text_unseletor"
+                app:myTabUnTextColor="@color/middle_gray"
                 app:shouldExpand="true"
-                app:underlineColor="@color/red"
+                app:underlineColor="@color/light_gray"
                 app:underlineHeight="@dimen/common_divider_line">
             </com.example.admin.caipiao33.views.PagerSlidingTabStrip>
 

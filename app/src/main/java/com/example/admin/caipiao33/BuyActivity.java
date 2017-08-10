@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.example.admin.caipiao33.bean.BuyRoomBean;
 import com.example.admin.caipiao33.bean.GouCaiBean;
 import com.example.admin.caipiao33.contract.IBuyContract;
+import com.example.admin.caipiao33.fragment.QuickBuyFragment;
 import com.example.admin.caipiao33.presenter.BuyPresenter;
 import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.DateUtils;
@@ -159,10 +160,10 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View
                 switch (position)
                 {
                     case 0:
-//                        ff = AllOrderFragment.newInstance(Constants.ORDER_STATUS_ALL);
+                        ff = QuickBuyFragment.newInstance();
                         break;
                     case 1:
-
+                        ff = QuickBuyFragment.newInstance();
                         break;
                 }
                 return ff;

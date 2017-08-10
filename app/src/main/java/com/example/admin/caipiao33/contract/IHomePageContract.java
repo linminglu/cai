@@ -2,6 +2,7 @@ package com.example.admin.caipiao33.contract;
 
 import com.example.admin.caipiao33.IBasePresenter;
 import com.example.admin.caipiao33.IBaseView;
+import com.example.admin.caipiao33.bean.BuyRoomBean;
 import com.example.admin.caipiao33.bean.HomePageBean;
 
 /**
@@ -14,11 +15,13 @@ public interface IHomePageContract
         void updateHomePage(HomePageBean bean);
         void hideRefreshing();
         void updateServiceUrl(String url);
+        void toBuyRoom(BuyRoomBean bean, String title);
     }
 
     interface Presenter extends IBasePresenter {
         void loadData();
         void refreshData();
         void toAskService();
+        void requestRoomData(String num, String title);
     }
 }

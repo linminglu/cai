@@ -136,16 +136,16 @@ public class HomePageBean
          * pic : /assets/statics/images/icon/51.png
          */
 
-        private int num;
+        private String num;
         private String name;
         private String pic;
 
-        public int getNum()
+        public String getNum()
         {
             return num;
         }
 
-        public void setNum(int num)
+        public void setNum(String num)
         {
             this.num = num;
         }

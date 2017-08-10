@@ -15,9 +15,12 @@ import android.widget.TextView;
 
 import com.example.admin.caipiao33.BaseActivity;
 import com.example.admin.caipiao33.BaseFragment;
+import com.example.admin.caipiao33.BuyActivity;
+import com.example.admin.caipiao33.BuyRoomActivity;
 import com.example.admin.caipiao33.MainActivity;
 import com.example.admin.caipiao33.R;
 import com.example.admin.caipiao33.WebUrlActivity;
+import com.example.admin.caipiao33.bean.BuyRoomBean;
 import com.example.admin.caipiao33.bean.HomePageBean;
 import com.example.admin.caipiao33.contract.IHomePageContract;
 import com.example.admin.caipiao33.httputils.HttpUtil;
@@ -144,7 +147,7 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
         @Override
         public void displayImage(String imageURL, ImageView imageView)
         {
-            MyImageLoader.displayImage(imageURL, imageView, getBaseActivity());
+            MyImageLoader.displayImage(HttpUtil.mNewUrl + "/" + imageURL, imageView, getBaseActivity());
         }
 
         @Override
@@ -154,6 +157,7 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
         }
     };
     private List<ViewHolder> mHotType;
+    private List<HomePageBean.TypeListBean> mTypeListBeanList;
 
     //若Fragement定义有带参构造函数，则一定要定义public的默认的构造函数
     public HomePageFragment()
@@ -170,8 +174,8 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
         initView();
         mPresenter.loadData();
 
-        String s = "xpIzvGq0MbOAufA6w2uDq3KP5eitmt/pXLC1kIHUfkU=";
-        KLog.e("asdfasdf", P2PNative.getInstance().decrypt(s));
+//        String s = "xpIzvGq0MbOAufA6w2uDq3KP5eitmt/pXLC1kIHUfkU=";
+//        KLog.e("asdfasdf", P2PNative.getInstance().decrypt(s));
         return parentView;
     }
 
@@ -250,6 +254,7 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
         myBanner.setImageResources(bean.getScrollImg(), mAdCycleViewListener);
         tvScroll.setText(bean.getScrollNotice());
         tvScroll.setEnabled(true);
+        mTypeListBeanList = bean.getTypeList();
         for (int i = 0; i < bean.getTypeList().size(); i++)
         {
             HomePageBean.TypeListBean typeListBean = bean.getTypeList().get(i);
@@ -284,6 +289,42 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
     }
 
     @Override
+    public void toBuyRoom(BuyRoomBean bean, String title)
+    {
+        /**
+         * 两种情况
+         * room
+         *  -- 显示房间列表，再次选择一项进入page页面
+         * page
+         *  -- 立即购买页面
+         */
+
+        if (bean.getPage().equals("room")) {
+            Intent intent = new Intent(getActivity(), BuyRoomActivity.class);
+            intent.putExtra(Constants.EXTRA_TITLE, title);
+            intent.putExtra(Constants.EXTRA_BUY_ROOM_BEAN, bean);
+            startActivity(intent);
+        } else {
+            String roomId = bean.getRoomId();
+            String playId = null;
+            String playId1 = null;
+            List<BuyRoomBean.PlayListBean> playList = bean.getPlayList();
+            if (null != playList && playList.size() > 0) {
+                BuyRoomBean.PlayListBean playListBean = playList.get(0);
+                playId = playListBean.getPlayId();
+                playId1 = playListBean.getPlayId1();
+            }
+            Intent intent = new Intent(getActivity(), BuyActivity.class);
+            intent.putExtra(Constants.EXTRA_TITLE, title);
+            intent.putExtra(Constants.EXTRA_NUMBER, bean.getNum());
+            intent.putExtra(Constants.EXTRA_ROOM_ID, roomId);
+            intent.putExtra(Constants.EXTRA_PLAY_ID, playId);
+            intent.putExtra(Constants.EXTRA_PLAY_ID1, playId1);
+            startActivity(intent);
+        }
+    }
+
+    @Override
     public void onDestroyView()
     {
         super.onDestroyView();
@@ -299,20 +340,28 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
                 toWebUrlActivity(HttpUtil.mNewUrl + "/api/systemNotice", "公告");
                 break;
             case R.id.ll_1_1:
+                mPresenter.requestRoomData(mTypeListBeanList.get(0).getNum(), mTypeListBeanList.get(0).getName());
                 break;
             case R.id.ll_1_2:
+                mPresenter.requestRoomData(mTypeListBeanList.get(1).getNum(), mTypeListBeanList.get(1).getName());
                 break;
             case R.id.ll_1_3:
+                mPresenter.requestRoomData(mTypeListBeanList.get(2).getNum(), mTypeListBeanList.get(2).getName());
                 break;
             case R.id.ll_2_1:
+                mPresenter.requestRoomData(mTypeListBeanList.get(3).getNum(), mTypeListBeanList.get(3).getName());
                 break;
             case R.id.ll_2_2:
+                mPresenter.requestRoomData(mTypeListBeanList.get(4).getNum(), mTypeListBeanList.get(4).getName());
                 break;
             case R.id.ll_2_3:
+                mPresenter.requestRoomData(mTypeListBeanList.get(5).getNum(), mTypeListBeanList.get(5).getName());
                 break;
             case R.id.ll_3_1:
+                mPresenter.requestRoomData(mTypeListBeanList.get(6).getNum(), mTypeListBeanList.get(6).getName());
                 break;
             case R.id.ll_3_2:
+                mPresenter.requestRoomData(mTypeListBeanList.get(7).getNum(), mTypeListBeanList.get(7).getName());
                 break;
             case R.id.ll_3_3: // 更多彩种
                 ((MainActivity) getActivity()).tabSwitchCenter(GouCaiFragment.class);

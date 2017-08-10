@@ -1,9 +1,12 @@
 package com.example.admin.caipiao33.presenter;
 
+import com.example.admin.caipiao33.bean.BuyRoomBean;
 import com.example.admin.caipiao33.bean.HomePageBean;
 import com.example.admin.caipiao33.contract.IHomePageContract;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.httputils.MyResponseListener;
+
+import java.util.HashMap;
 
 /**
  * Created by mac on 2017/8/1.
@@ -97,5 +100,33 @@ public class HomePagePresenter implements IHomePageContract.Presenter
 
     private void baseRequest(MyResponseListener listener){
         HttpUtil.requestFirst("index", HomePageBean.class, mView.getBaseActivity(), listener, null);
+    }
+
+    @Override
+    public void requestRoomData(String num, final String title)
+    {
+        mView.showLoadingDialog();
+        HashMap<String, String> map = new HashMap<>();
+        map.put("gid", num);
+        HttpUtil.requestFirst("buy", map, BuyRoomBean.class, mView.getBaseActivity(), new MyResponseListener<BuyRoomBean>()
+        {
+            @Override
+            public void onSuccess(BuyRoomBean result)
+            {
+                mView.toBuyRoom(result, title);
+            }
+
+            @Override
+            public void onFailed(int code, String msg)
+            {
+
+            }
+
+            @Override
+            public void onFinish()
+            {
+                mView.hideLoadingDialog();
+            }
+        }, null);
     }
 }
