@@ -72,5 +72,10 @@
     <string name="s_clear_options">清空选项</string>
     <string name="s_trend">趋势</string>
     <string name="s_buy">投注</string>
+    <string name="s_lottery_time">开奖时间：%1$s</string>
+    <string-array name="s_array_buy">
+        <item>自选下注</item>
+        <item>快捷下注</item>
+    </string-array>
 
 </resources>
