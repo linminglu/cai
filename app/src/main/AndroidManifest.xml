@@ -63,9 +63,15 @@
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".BuyActivity">
+        <activity
+            android:name=".BuyActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".BuyRoomActivity">
+        <activity
+            android:name=".BuyRoomActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 

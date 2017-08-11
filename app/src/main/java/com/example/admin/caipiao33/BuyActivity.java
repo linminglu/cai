@@ -160,10 +160,10 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View
                 switch (position)
                 {
                     case 0:
-                        ff = QuickBuyFragment.newInstance();
+                        ff = QuickBuyFragment.newInstance(mBuyRoomBean);
                         break;
                     case 1:
-                        ff = QuickBuyFragment.newInstance();
+                        ff = QuickBuyFragment.newInstance(mBuyRoomBean);
                         break;
                 }
                 return ff;
@@ -306,7 +306,7 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View
                 Message msg = new Message();
                 msg.what = WHAT_REFRESH_ITEM;
                 mHandler.sendMessage(msg);
-                tvTime.setText("");
+                tvTime.setText("--:--:--");
             } else {
                 String timeStr = DateUtils.getHMS(second);
                 tvTime.setText(timeStr);
