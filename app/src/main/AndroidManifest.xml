@@ -66,6 +66,7 @@
         <activity
             android:name=".BuyActivity"
             android:configChanges="keyboardHidden|orientation"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait">
         </activity>
         <activity

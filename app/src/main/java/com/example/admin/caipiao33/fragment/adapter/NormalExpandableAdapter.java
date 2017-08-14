@@ -1,18 +1,26 @@
 package com.example.admin.caipiao33.fragment.adapter;
 
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.admin.caipiao33.R;
 import com.example.admin.caipiao33.bean.BuyRoomBean;
+import com.example.admin.caipiao33.fragment.QuickBuyFragment;
 import com.example.admin.caipiao33.utils.ViewHolder;
 import com.example.admin.caipiao33.views.GridView4ScrollView;
+import com.example.admin.caipiao33.views.NumberInputFilter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -23,11 +31,14 @@ public class NormalExpandableAdapter extends BaseAdapter
 {
     private final BuyRoomBean mBuyRoomBean;
     private final LayoutInflater mInflater;
+    private final int mType;
     private List<String> mCheckedList = new ArrayList<>();
+    private HashMap<String, String> mNumberMap = new HashMap<>();
 
-    public NormalExpandableAdapter(LayoutInflater inflater, BuyRoomBean bean) {
+    public NormalExpandableAdapter(LayoutInflater inflater, BuyRoomBean bean, int type) {
         this.mInflater = inflater;
         this.mBuyRoomBean = bean;
+        this.mType = type;
     }
 
     /**
@@ -36,6 +47,10 @@ public class NormalExpandableAdapter extends BaseAdapter
     public void clearChecked() {
         if (mCheckedList.size() > 0) {
             mCheckedList.clear();
+            notifyDataSetChanged();
+        }
+        if (mNumberMap.size() > 0) {
+            mNumberMap.clear();
             notifyDataSetChanged();
         }
     }
@@ -154,24 +169,89 @@ public class NormalExpandableAdapter extends BaseAdapter
         }
 
         @Override
+        public int getViewTypeCount()
+        {
+            return 2;
+        }
+
+        @Override
+        public int getItemViewType(int position)
+        {
+            return mType;
+        }
+
+        @Override
         public View getView(int position, View convertView, ViewGroup parent)
         {
-            if (null == convertView) {
-                convertView = mInflater.inflate(R.layout.item_buy_quick, null);
-            }
-            View layout = ViewHolder.get(convertView, R.id.layout);
-            TextView tvName = ViewHolder.get(convertView, R.id.tv_name);
-            TextView tvOdds = ViewHolder.get(convertView, R.id.tv_odds);
-            BuyRoomBean.PlayDetailListBean.ListBean listBean = mList.get(position);
-            tvName.setText(listBean.getPlayName());
-            tvOdds.setText(listBean.getBonus());
-            String playId = listBean.getPlayId();
-            if (mCheckedList.contains(playId)) {
-                layout.setBackgroundResource(R.drawable.liuhecai_btn_xuanzhong_02);
+            // 快捷下注的类型
+            if (getItemViewType(position) == QuickBuyFragment.TYPE_QUICK) {
+                if (null == convertView) {
+                    convertView = mInflater.inflate(R.layout.item_buy_quick, null);
+                }
+                View layout = ViewHolder.get(convertView, R.id.layout);
+                TextView tvName = ViewHolder.get(convertView, R.id.tv_name);
+                TextView tvOdds = ViewHolder.get(convertView, R.id.tv_odds);
+                BuyRoomBean.PlayDetailListBean.ListBean listBean = mList.get(position);
+                tvName.setText(listBean.getPlayName());
+                tvOdds.setText(listBean.getBonus());
+                String playId = listBean.getPlayId();
+                if (mCheckedList.contains(playId)) {
+                    layout.setBackgroundResource(R.drawable.liuhecai_btn_xuanzhong_02);
+                } else {
+                    layout.setBackgroundResource(R.drawable.liuhecai_btn_weixuan_01);
+                }
+                return convertView;
             } else {
-                layout.setBackgroundResource(R.drawable.liuhecai_btn_weixuan_01);
+                // 自选下注的类型
+                if (null == convertView) {
+                    convertView = mInflater.inflate(R.layout.item_buy_self_select, null);
+                    final EditText etNum = ViewHolder.get(convertView, R.id.et_num);
+                    etNum.setFilters(new InputFilter[]{new NumberInputFilter()});
+                    etNum.addTextChangedListener(new TextWatcher()
+                    {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after)
+                        {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count)
+                        {
+
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s)
+                        {
+                            String s1 = s.toString();
+                            String playId = (String) etNum.getTag(R.id.buy_data);
+                            if (TextUtils.isEmpty(s1)) {
+                                // 如果最新值为空，直接移除该项目
+                                if (mNumberMap.containsKey(playId)) {
+                                    mNumberMap.remove(playId);
+                                }
+                                // 原来没有保存值，最新的值也是为空的话就直接忽略
+                                return;
+                            }
+                            mNumberMap.put(playId, s1);
+                        }
+                    });
+                }
+                TextView tvName = ViewHolder.get(convertView, R.id.tv_name);
+                EditText etNum = ViewHolder.get(convertView, R.id.et_num);
+                BuyRoomBean.PlayDetailListBean.ListBean listBean = mList.get(position);
+                tvName.setText(listBean.getPlayName() + listBean.getBonus());
+
+                String playId = listBean.getPlayId();
+                etNum.setTag(R.id.buy_data, playId);
+                if (mNumberMap.containsKey(playId)) {
+                    etNum.setText(mNumberMap.get(playId));
+                } else {
+                    etNum.setText("");
+                }
+                return convertView;
             }
-            return convertView;
         }
     }
 }

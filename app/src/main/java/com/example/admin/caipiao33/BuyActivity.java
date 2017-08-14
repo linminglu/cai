@@ -160,10 +160,10 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View
                 switch (position)
                 {
                     case 0:
-                        ff = QuickBuyFragment.newInstance(mBuyRoomBean);
+                        ff = QuickBuyFragment.newInstance(mBuyRoomBean, QuickBuyFragment.TYPE_SELF_SELECT);
                         break;
                     case 1:
-                        ff = QuickBuyFragment.newInstance(mBuyRoomBean);
+                        ff = QuickBuyFragment.newInstance(mBuyRoomBean, QuickBuyFragment.TYPE_QUICK);
                         break;
                 }
                 return ff;

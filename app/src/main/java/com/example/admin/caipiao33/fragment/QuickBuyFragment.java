@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ExpandableListView;
 import android.widget.ListView;
 
 import com.example.admin.caipiao33.BaseFragment;
@@ -25,6 +24,10 @@ public class QuickBuyFragment extends BaseFragment implements View.OnClickListen
 {
 
     private static final String PLAY_DETAIL_LIST_BEAN = "playDetailListBean";
+    private static final String TYPE = "type";
+    public static final int TYPE_QUICK = 0;
+    public static final int TYPE_SELF_SELECT = 1;
+
     @BindView(R.id.listView)
     ListView listView;
     Unbinder unbinder;
@@ -32,6 +35,7 @@ public class QuickBuyFragment extends BaseFragment implements View.OnClickListen
     private View parentView;
     private BuyRoomBean mBuyRoomBean;
     private NormalExpandableAdapter adapter;
+    private int mType;
 
 
     //若Fragement定义有带参构造函数，则一定要定义public的默认的构造函数
@@ -41,11 +45,12 @@ public class QuickBuyFragment extends BaseFragment implements View.OnClickListen
 
     /**
      */
-    public static QuickBuyFragment newInstance(BuyRoomBean bean)
+    public static QuickBuyFragment newInstance(BuyRoomBean bean, int type)
     {
         QuickBuyFragment fragment = new QuickBuyFragment();
         Bundle args = new Bundle();
         args.putSerializable(PLAY_DETAIL_LIST_BEAN, bean);
+        args.putInt(TYPE, type);
         fragment.setArguments(args);
         return fragment;
     }
@@ -54,9 +59,11 @@ public class QuickBuyFragment extends BaseFragment implements View.OnClickListen
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null)
+        Bundle arguments = getArguments();
+        if (arguments != null)
         {
-            mBuyRoomBean = (BuyRoomBean) getArguments().getSerializable(PLAY_DETAIL_LIST_BEAN);
+            mBuyRoomBean = (BuyRoomBean) arguments.getSerializable(PLAY_DETAIL_LIST_BEAN);
+            mType = arguments.getInt(TYPE);
         }
     }
 
@@ -73,7 +80,7 @@ public class QuickBuyFragment extends BaseFragment implements View.OnClickListen
     private void initView()
     {
         unbinder = ButterKnife.bind(this, parentView);
-        adapter = new NormalExpandableAdapter(mInflater, mBuyRoomBean);
+        adapter = new NormalExpandableAdapter(mInflater, mBuyRoomBean, mType);
         listView.setAdapter(adapter);
     }
 
