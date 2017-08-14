@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannedString;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ import com.example.admin.caipiao33.bean.BuyRoomBean;
 import com.example.admin.caipiao33.bean.GouCaiBean;
 import com.example.admin.caipiao33.contract.IBuyContract;
 import com.example.admin.caipiao33.fragment.QuickBuyFragment;
+import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.presenter.BuyPresenter;
 import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.DateUtils;
@@ -48,7 +50,7 @@ import butterknife.OnClick;
  * page
  * -- 立即购买页面
  */
-public class BuyActivity extends BaseActivity implements IBuyContract.View
+public class BuyActivity extends BaseActivity implements IBuyContract.View, Toolbar.OnMenuItemClickListener
 {
 
     @BindView(R.id.toolbar_title)
@@ -104,6 +106,8 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View
     {
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
+        toolbar.setTitle("");
+        toolbar.setOnMenuItemClickListener(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mLoadingLayout = (LoadingLayout) findViewById(R.id.loadingLayout);
         mLoadingLayout.setOnReloadingListener(new LoadingLayout.OnReloadingListener()
@@ -325,7 +329,7 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View
     public void onViewClicked(View view)
     {
         switch (view.getId()) {
-            case R.id.tv_clear:
+            case R.id.tv_clear: // 清空选项
                 List<Fragment> fragments = fragmentManager.getFragments();
                 for (Fragment fragment : fragments) {
                     if (fragment instanceof QuickBuyFragment) {
@@ -334,10 +338,49 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View
                     }
                 }
                 break;
-            case R.id.tv_trend:
+            case R.id.tv_trend: // 趋势
+                Intent webIntent = new Intent(this, WebUrlActivity.class);
+                webIntent.putExtra(Constants.EXTRA_URL, HttpUtil.mNewUrl + "/api/trend?gid=" + mNumber);
+                webIntent.putExtra(Constants.EXTRA_TITLE, "趋势");
+                startActivity(webIntent);
                 break;
-            case R.id.tv_buy:
+            case R.id.tv_buy: // 投注
                 break;
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.menu_buy, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case R.id.action_home: // 首页
+                Intent mainIntent = new Intent(this, MainActivity.class);
+                mainIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(mainIntent);
+                break;
+            case R.id.action_record: // 投注记录
+
+                break;
+            case R.id.action_new: // 最新开奖
+
+                break;
+            case R.id.action_explain: // 玩法说明
+                Intent webIntent = new Intent(this, WebUrlActivity.class);
+                webIntent.putExtra(Constants.EXTRA_URL, HttpUtil.mNewUrl + "/api/help?gid=" + mNumber);
+                webIntent.putExtra(Constants.EXTRA_TITLE, "玩法说明");
+                startActivity(webIntent);
+                break;
+            default:
+                break;
+        }
+        return true;
     }
 }

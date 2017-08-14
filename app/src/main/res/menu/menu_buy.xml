@@ -1,0 +1,23 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_home"
+        android:orderInCategory="100"
+        android:title="首页"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_record"
+        android:orderInCategory="100"
+        android:title="投注记录"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_new"
+        android:orderInCategory="100"
+        android:title="最新开奖"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_explain"
+        android:orderInCategory="100"
+        android:title="玩法说明"
+        app:showAsAction="never"/>
+</menu>

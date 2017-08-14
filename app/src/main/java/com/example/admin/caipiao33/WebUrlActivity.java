@@ -10,6 +10,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.admin.caipiao33.utils.Constants;
 import com.socks.library.KLog;
@@ -29,6 +30,7 @@ public class WebUrlActivity extends BaseActivity
     private String mUrl;
     private String mTitle;
     private View layoutError;
+    private TextView tvTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -51,9 +53,11 @@ public class WebUrlActivity extends BaseActivity
         mTitle = getIntent().getStringExtra(Constants.EXTRA_TITLE);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle(mTitle);
+        mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        tvTitle = (TextView) findViewById(R.id.tv_title);
+        tvTitle.setText(mTitle);
 
         KLog.e(mUrl);
         webView = (WebView) findViewById(R.id.protocol_webView);
