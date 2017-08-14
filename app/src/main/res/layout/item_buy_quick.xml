@@ -5,13 +5,14 @@
               android:gravity="center">
 
     <LinearLayout
+        android:id="@+id/layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:layout_margin="10dp"
-        android:background="@drawable/liuhecai_btn_xuanzhong_02"
+        android:background="@drawable/liuhecai_btn_weixuan_01"
         android:orientation="vertical">
 
         <TextView
@@ -20,15 +21,16 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:textSize="13sp"
+            android:maxLines="1"
             />
 
         <TextView
             android:id="@+id/tv_odds"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="2dp"
             android:textColor="@color/red"
-            android:textSize="12sp"/>
+            android:textSize="12sp"
+            android:maxLines="1"/>
 
     </LinearLayout>
 

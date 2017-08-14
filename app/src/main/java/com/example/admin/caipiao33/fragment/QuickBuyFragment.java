@@ -88,5 +88,12 @@ public class QuickBuyFragment extends BaseFragment implements View.OnClickListen
         super.onDestroyView();
         unbinder.unbind();
     }
+
+    /**
+     * 清空已选中的内容
+     */
+    public void clearChecked() {
+        adapter.clearChecked();
+    }
 }
 

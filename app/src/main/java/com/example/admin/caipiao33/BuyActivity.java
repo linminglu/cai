@@ -26,13 +26,13 @@ import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.views.LoadingLayout;
 import com.example.admin.caipiao33.views.PagerSlidingTabStrip;
 import com.example.admin.caipiao33.views.ZoomOutPageTransformer;
-import com.socks.library.KLog;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 调用者需要传入房间id
@@ -134,7 +134,9 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View
         this.mBuyRoomBean = bean;
         SpannedString ss = new SpannedString(mTitleStr + bean.getRoomName() + bean.getPeriod() + "期");
         tvRoom.setText(ss);
-        tvLotteryTime.setText(getString(R.string.s_lottery_time, DateUtils.getTimeStr(Long.valueOf(bean.getEndTime()), "yyyy-MM-dd HH:mm:ss")));
+        mEndTime = bean.getEndTime();
+        mLastOpen = bean.getLastOpen();
+        tvLotteryTime.setText(getString(R.string.s_lottery_time, DateUtils.getTimeStr(Long.valueOf(StringUtils.isEmpty2(mEndTime) ? "0" : mEndTime), "yyyy-MM-dd HH:mm:ss")));
         tvIndex.setText(bean.getLastPeriod() + "期");
         String lastOpen = bean.getLastOpen();
         if (StringUtils.isEmpty(lastOpen)) {
@@ -142,8 +144,6 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View
         } else {
             tvResult.setText(lastOpen);
         }
-        mEndTime = bean.getEndTime();
-        mLastOpen = bean.getLastOpen();
         reSetPartUI();
         mHandler.post(timerRunnable);
 
@@ -282,7 +282,7 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View
                 mHandler.removeCallbacks(this);
                 return;
             }
-            KLog.e("timerRunnable");
+//            KLog.e("timerRunnable");
             reSetPartUI();
             mHandler.postDelayed(this, LIMIT_TIME);
         }
@@ -318,6 +318,26 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View
                 msg.what = WHAT_REFRESH_RESULT;
                 mHandler.sendMessage(msg);
             }
+        }
+    }
+
+    @OnClick({R.id.tv_clear, R.id.tv_buy, R.id.tv_trend})
+    public void onViewClicked(View view)
+    {
+        switch (view.getId()) {
+            case R.id.tv_clear:
+                List<Fragment> fragments = fragmentManager.getFragments();
+                for (Fragment fragment : fragments) {
+                    if (fragment instanceof QuickBuyFragment) {
+                        QuickBuyFragment qf = (QuickBuyFragment) fragment;
+                        qf.clearChecked();
+                    }
+                }
+                break;
+            case R.id.tv_trend:
+                break;
+            case R.id.tv_buy:
+                break;
         }
     }
 }
