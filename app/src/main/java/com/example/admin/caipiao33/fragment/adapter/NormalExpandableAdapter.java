@@ -1,9 +1,13 @@
 package com.example.admin.caipiao33.fragment.adapter;
 
+import android.graphics.Color;
 import android.text.Editable;
 import android.text.InputFilter;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -239,7 +243,10 @@ public class NormalExpandableAdapter extends BaseAdapter
                 TextView tvName = ViewHolder.get(convertView, R.id.tv_name);
                 EditText etNum = ViewHolder.get(convertView, R.id.et_num);
                 BuyRoomBean.PlayDetailListBean.ListBean listBean = mList.get(position);
-                tvName.setText(listBean.getPlayName() + listBean.getBonus());
+                SpannableString ss = new SpannableString(listBean.getPlayName() + " " + listBean.getBonus());
+                int start = listBean.getPlayName().length() + 1;
+                ss.setSpan(new ForegroundColorSpan(Color.parseColor("#C30D23")), start, start+listBean.getBonus().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                tvName.setText(ss);
 
                 etNum.setTag(R.id.buy_data, listBean);
                 if (mNumberMap.containsKey(listBean)) {

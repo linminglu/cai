@@ -1,6 +1,7 @@
 package com.example.admin.caipiao33;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -9,7 +10,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.SpannedString;
+import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -138,7 +142,9 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
     {
         this.mBuyRoomBean = bean;
         toolbarTitle.setText(getString(R.string.s_play_options, bean.getPlayName()));
-        SpannedString ss = new SpannedString(mTitleStr + bean.getRoomName() + bean.getPeriod() + "期");
+        SpannableString ss = new SpannableString(mTitleStr + " " + mBuyRoomBean.getRoomName() + " " + bean.getPeriod() + "期");
+        int start = mTitleStr.length() + mBuyRoomBean.getRoomName().length() + 2;
+        ss.setSpan(new ForegroundColorSpan(Color.parseColor("#C30D23")), start, start+bean.getPeriod().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         tvRoom.setText(ss);
         mEndTime = bean.getEndTime();
         mLastOpen = bean.getLastOpen();
@@ -199,7 +205,9 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
         }
         mEndTime = result.getEndTime();
         mLastOpen = result.getLastOpen();
-        SpannedString ss = new SpannedString(mTitleStr + mBuyRoomBean.getRoomName() + result.getPeriod() + "期");
+        SpannableString ss = new SpannableString(mTitleStr + " " + mBuyRoomBean.getRoomName() + " " + result.getPeriod() + "期");
+        int start = mTitleStr.length() + mBuyRoomBean.getRoomName().length() + 2;
+        ss.setSpan(new ForegroundColorSpan(Color.parseColor("#C30D23")), start, start+result.getPeriod().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         tvRoom.setText(ss);
         tvLotteryTime.setText(getString(R.string.s_lottery_time, DateUtils.getTimeStr(Long.valueOf(mEndTime), "yyyy-MM-dd HH:mm:ss")));
         tvIndex.setText(result.getLastPeriod() + "期");
