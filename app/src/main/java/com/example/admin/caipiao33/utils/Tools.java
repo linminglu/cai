@@ -1,8 +1,11 @@
 package com.example.admin.caipiao33.utils;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 
 import com.socks.library.KLog;
@@ -42,5 +45,17 @@ public class Tools
             }
         }
         return false;
+    }
+
+    /**
+     * 着色器
+     * @param drawable
+     * @param colors
+     * @return
+     */
+    public static Drawable tintDrawable(Drawable drawable, ColorStateList colors) {
+        final Drawable wrappedDrawable = DrawableCompat.wrap(drawable);
+        DrawableCompat.setTintList(wrappedDrawable, colors);
+        return wrappedDrawable;
     }
 }
