@@ -65,13 +65,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:gravity="center"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:text="距离截止下注:"
+                    android:text="距截止下注:"
                     android:textColor="@color/black"
                     android:textSize="16sp"/>
 
@@ -87,19 +88,19 @@
             </LinearLayout>
 
             <View
-                android:layout_width="0.5dp"
+                android:layout_width="@dimen/common_divider_line"
                 android:layout_height="match_parent"
                 android:layout_alignBottom="@+id/layout_time"
                 android:layout_alignTop="@+id/layout_time"
                 android:layout_toLeftOf="@+id/layout_time"
-                android:background="@color/middle_gray"/>
+                android:background="@color/light_gray"/>
 
             <View
                 android:id="@+id/line1"
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
+                android:layout_height="@dimen/common_divider_line"
                 android:layout_below="@+id/layout_time"
-                android:background="@color/middle_gray"/>
+                android:background="@color/light_gray"/>
 
             <TextView
                 android:id="@+id/tv_index"
@@ -123,10 +124,10 @@
             <View
                 android:id="@+id/line2"
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
+                android:layout_height="@dimen/common_divider_line"
                 android:layout_below="@+id/tv_result"
                 android:layout_marginTop="5dp"
-                android:background="@color/middle_gray"/>
+                android:background="@color/light_gray"/>
 
             <com.example.admin.caipiao33.views.PagerSlidingTabStrip
                 android:id="@+id/buy_tab"
