@@ -24,6 +24,8 @@
             android:singleLine="true"
             android:textColor="@color/white"
             android:textSize="20sp"
+            android:drawableRight="@mipmap/top_zhong_sanjiao"
+            android:drawablePadding="5dp"
             />
 
     </android.support.v7.widget.Toolbar>

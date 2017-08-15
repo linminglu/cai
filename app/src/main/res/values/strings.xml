@@ -77,5 +77,6 @@
         <item>自选下注</item>
         <item>快捷下注</item>
     </string-array>
+    <string name="s_play_options">玩法选择：%1$s</string>
 
 </resources>

@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.admin.caipiao33.bean.BuyRoomBean;
 import com.example.admin.caipiao33.bean.GouCaiBean;
 import com.example.admin.caipiao33.contract.IBuyContract;
@@ -105,8 +106,8 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
     private void initView()
     {
         ButterKnife.bind(this);
-        setSupportActionBar(toolbar);
         toolbar.setTitle("");
+        setSupportActionBar(toolbar);
         toolbar.setOnMenuItemClickListener(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mLoadingLayout = (LoadingLayout) findViewById(R.id.loadingLayout);
@@ -136,6 +137,7 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
     public void updateHomePage(BuyRoomBean bean)
     {
         this.mBuyRoomBean = bean;
+        toolbarTitle.setText(getString(R.string.s_play_options, bean.getPlayName()));
         SpannedString ss = new SpannedString(mTitleStr + bean.getRoomName() + bean.getPeriod() + "期");
         tvRoom.setText(ss);
         mEndTime = bean.getEndTime();
@@ -325,7 +327,7 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
         }
     }
 
-    @OnClick({R.id.tv_clear, R.id.tv_buy, R.id.tv_trend})
+    @OnClick({R.id.tv_clear, R.id.tv_buy, R.id.tv_trend, R.id.toolbar_title})
     public void onViewClicked(View view)
     {
         switch (view.getId()) {
@@ -346,7 +348,40 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
                 break;
             case R.id.tv_buy: // 投注
                 break;
+            case R.id.toolbar_title: // 玩法选择
+                showOptionsDialog();
+                break;
+            default:
+                break;
         }
+    }
+
+    private void showOptionsDialog()
+    {
+        if (null == mBuyRoomBean) {
+            return;
+        }
+
+        List<BuyRoomBean.PlayListBean> playList = mBuyRoomBean.getPlayList();
+        List<String> array = new ArrayList<>();
+        for (BuyRoomBean.PlayListBean bean : playList) {
+            array.add(bean.getPlayName());
+        }
+        new MaterialDialog.Builder(this).title("玩法选择")
+                .items(array)
+                .positiveText(R.string.dialog_ok)
+                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                        BuyRoomBean.PlayListBean playListBean = mBuyRoomBean.getPlayList()
+                                .get(which);
+                        mPlayId = playListBean.getPlayId();
+                        mPlayId1 = playListBean.getPlayId1();
+                        mPresenter.loadData(mNumber, mRoomId, mPlayId, mPlayId1);
+                        return true;
+                    }
+                })
+                .show();
     }
 
     @Override
