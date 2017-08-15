@@ -225,6 +225,26 @@ public class BuyRoomBean implements Serializable
             {
                 this.bonus = bonus;
             }
+
+            @Override
+            public boolean equals(Object o)
+            {
+                if (this == o)
+                    return true;
+                if (o == null || getClass() != o.getClass())
+                    return false;
+
+                ListBean listBean = (ListBean) o;
+
+                return playId != null ? playId.equals(listBean.playId) : listBean.playId == null;
+
+            }
+
+            @Override
+            public int hashCode()
+            {
+                return playId != null ? playId.hashCode() : 0;
+            }
         }
     }
 

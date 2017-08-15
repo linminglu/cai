@@ -32,8 +32,8 @@ public class NormalExpandableAdapter extends BaseAdapter
     private final BuyRoomBean mBuyRoomBean;
     private final LayoutInflater mInflater;
     private final int mType;
-    private List<String> mCheckedList = new ArrayList<>();
-    private HashMap<String, String> mNumberMap = new HashMap<>();
+    private List<BuyRoomBean.PlayDetailListBean.ListBean> mCheckedList = new ArrayList<>();
+    private HashMap<BuyRoomBean.PlayDetailListBean.ListBean, String> mNumberMap = new HashMap<>();
 
     public NormalExpandableAdapter(LayoutInflater inflater, BuyRoomBean bean, int type) {
         this.mInflater = inflater;
@@ -94,11 +94,10 @@ public class NormalExpandableAdapter extends BaseAdapter
                     BuyRoomBean.PlayDetailListBean playDetailListBean = (BuyRoomBean.PlayDetailListBean) parent.getTag(R.id.buy_holder);
                     BuyRoomBean.PlayDetailListBean.ListBean listBean = playDetailListBean.getList()
                             .get(position);
-                    String playId = listBean.getPlayId();
-                    if (mCheckedList.contains(playId)) {
-                        mCheckedList.remove(playId);
+                    if (mCheckedList.contains(listBean)) {
+                        mCheckedList.remove(listBean);
                     } else {
-                        mCheckedList.add(playId);
+                        mCheckedList.add(listBean);
                     }
                     MyGridAdapter adapter = (MyGridAdapter) parent.getAdapter();
                     adapter.notifyDataSetChanged();
@@ -194,8 +193,7 @@ public class NormalExpandableAdapter extends BaseAdapter
                 BuyRoomBean.PlayDetailListBean.ListBean listBean = mList.get(position);
                 tvName.setText(listBean.getPlayName());
                 tvOdds.setText(listBean.getBonus());
-                String playId = listBean.getPlayId();
-                if (mCheckedList.contains(playId)) {
+                if (mCheckedList.contains(listBean)) {
                     layout.setBackgroundResource(R.drawable.liuhecai_btn_xuanzhong_02);
                 } else {
                     layout.setBackgroundResource(R.drawable.liuhecai_btn_weixuan_01);
@@ -225,16 +223,16 @@ public class NormalExpandableAdapter extends BaseAdapter
                         public void afterTextChanged(Editable s)
                         {
                             String s1 = s.toString();
-                            String playId = (String) etNum.getTag(R.id.buy_data);
+                            BuyRoomBean.PlayDetailListBean.ListBean listBean = (BuyRoomBean.PlayDetailListBean.ListBean) etNum.getTag(R.id.buy_data);
                             if (TextUtils.isEmpty(s1)) {
                                 // 如果最新值为空，直接移除该项目
-                                if (mNumberMap.containsKey(playId)) {
-                                    mNumberMap.remove(playId);
+                                if (mNumberMap.containsKey(listBean)) {
+                                    mNumberMap.remove(listBean);
                                 }
                                 // 原来没有保存值，最新的值也是为空的话就直接忽略
                                 return;
                             }
-                            mNumberMap.put(playId, s1);
+                            mNumberMap.put(listBean, s1);
                         }
                     });
                 }
@@ -243,10 +241,9 @@ public class NormalExpandableAdapter extends BaseAdapter
                 BuyRoomBean.PlayDetailListBean.ListBean listBean = mList.get(position);
                 tvName.setText(listBean.getPlayName() + listBean.getBonus());
 
-                String playId = listBean.getPlayId();
-                etNum.setTag(R.id.buy_data, playId);
-                if (mNumberMap.containsKey(playId)) {
-                    etNum.setText(mNumberMap.get(playId));
+                etNum.setTag(R.id.buy_data, listBean);
+                if (mNumberMap.containsKey(listBean)) {
+                    etNum.setText(mNumberMap.get(listBean));
                 } else {
                     etNum.setText("");
                 }
