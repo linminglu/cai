@@ -4,19 +4,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+import android.widget.ExpandableListView;
 
 import com.example.admin.caipiao33.BaseFragment;
 import com.example.admin.caipiao33.R;
 import com.example.admin.caipiao33.bean.BuyRoomBean;
 import com.example.admin.caipiao33.fragment.adapter.MyBaseBuyAdapter;
-import com.example.admin.caipiao33.fragment.adapter.NormalExpandableAdapter;
-import com.example.admin.caipiao33.fragment.adapter.TypeAfterAdapter;
 import com.example.admin.caipiao33.fragment.adapter.TypeBeforeAdapter;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,7 +30,7 @@ public class QuickBuyFragment extends BaseFragment implements View.OnClickListen
     public static final int TYPE_SELF_SELECT = 1;
 
     @BindView(R.id.listView)
-    ListView listView;
+    ExpandableListView listView;
     Unbinder unbinder;
     private LayoutInflater mInflater;
     private View parentView;
@@ -44,29 +38,7 @@ public class QuickBuyFragment extends BaseFragment implements View.OnClickListen
     private MyBaseBuyAdapter adapter;
     private int mType;
 
-    /*
-    分类：
-        1. 六合
-        2. 前四个四个折叠
-        3. 第一个不折叠，后四个四个折叠
-     */
-    /**
-     * 18 - 香港⑥合彩
-     */
-    private final String six = "18";
 
-    /**
-     * 52 - 三分PK10
-     * 9 - 北京赛车(PK10)
-     * 34 - 幸运飞艇
-     */
-    private final List<String> beforeList = Arrays.asList("52", "9", "34");
-
-    /**
-     * 27 - 广东快乐十分
-     * 28 - 重庆幸运农场
-     */
-    private final List<String> afterList = Arrays.asList("27", "28");
 
     //若Fragement定义有带参构造函数，则一定要定义public的默认的构造函数
     public QuickBuyFragment()
@@ -110,16 +82,14 @@ public class QuickBuyFragment extends BaseFragment implements View.OnClickListen
     private void initView()
     {
         unbinder = ButterKnife.bind(this, parentView);
-        String num = mBuyRoomBean.getNum();
-
-        if (beforeList.contains(num)) {
-            adapter = new TypeBeforeAdapter(mInflater, mBuyRoomBean, mType);
-        } else if (afterList.contains(num)) {
-            adapter = new TypeAfterAdapter(mInflater, mBuyRoomBean, mType);
-        } else {
-            adapter = new NormalExpandableAdapter(mInflater, mBuyRoomBean, mType);
-        }
+        adapter = new TypeBeforeAdapter(mInflater, mBuyRoomBean, mType);
         listView.setAdapter(adapter);
+        //遍历所有group,将所有项设置成默认展开
+        int groupCount = listView.getCount();
+        for (int i=0; i < groupCount; i++)
+        {
+            listView.expandGroup(i);
+        }
     }
 
     @Override

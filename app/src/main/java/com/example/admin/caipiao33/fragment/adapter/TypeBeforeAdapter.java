@@ -11,8 +11,6 @@ import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,11 +19,10 @@ import com.example.admin.caipiao33.R;
 import com.example.admin.caipiao33.bean.BuyRoomBean;
 import com.example.admin.caipiao33.fragment.QuickBuyFragment;
 import com.example.admin.caipiao33.utils.ViewHolder;
-import com.example.admin.caipiao33.views.GridView4ScrollView;
 import com.example.admin.caipiao33.views.NumberInputFilter;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -33,19 +30,157 @@ import java.util.List;
  * 前四个四个折叠的适配器
  */
 
-public class TypeBeforeAdapter extends MyBaseBuyAdapter
+public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickListener
 {
+    /*
+    分类：
+        1. 六合
+        2. 前四个四个折叠
+        3. 第一个不折叠，后四个四个折叠
+     */
+    /**
+     * 18 - 香港⑥合彩
+     */
+    private final String six = "18";
+
+    /**
+     * 52 - 三分PK10
+     * 9 - 北京赛车(PK10)
+     * 34 - 幸运飞艇
+     */
+    private final List<String> beforeList = Arrays.asList("52", "9", "34");
+
+    /**
+     * 27 - 广东快乐十分
+     * 28 - 重庆幸运农场
+     */
+    private final List<String> afterList = Arrays.asList("27", "28");
+
+
     private static final int COUNT = 4;
     private final BuyRoomBean mBuyRoomBean;
     private final LayoutInflater mInflater;
     private final int mType;
     private List<BuyRoomBean.PlayDetailListBean.ListBean> mCheckedList = new ArrayList<>();
     private HashMap<BuyRoomBean.PlayDetailListBean.ListBean, String> mNumberMap = new HashMap<>();
+    private List<BeanGroup> mDataList;
+
 
     public TypeBeforeAdapter(LayoutInflater inflater, BuyRoomBean bean, int type) {
         this.mInflater = inflater;
         this.mBuyRoomBean = bean;
         this.mType = type;
+        String num = bean.getNum();
+        if (beforeList.contains(num)) {
+            creatDataBefore();
+        } else if (afterList.contains(num)) {
+            creatDataAfter();
+        } else {
+            creatDataNormal();
+        }
+    }
+
+    private void creatDataNormal()
+    {
+        int totalSize = mBuyRoomBean.getPlayDetailList().size();
+        mDataList = new ArrayList<>(totalSize);
+        for (int i =0; i < totalSize; i++) {
+            BeanGroup beanGroup = new BeanGroup();
+            BuyRoomBean.PlayDetailListBean playDetailListBean = mBuyRoomBean.getPlayDetailList().get(i);
+           List<String> groupNameList = new ArrayList<>(1);
+            groupNameList.add(playDetailListBean.getName());
+            beanGroup.setGroupNameList(groupNameList);
+            List<BuyRoomBean.PlayDetailListBean.ListBean> list = playDetailListBean.getList();
+            int childListSize;
+            if (list.size() % COUNT == 0) {
+                childListSize = list.size() / COUNT;
+            } else {
+                childListSize = list.size() / COUNT + 1;
+            }
+            List<List<BuyRoomBean.PlayDetailListBean.ListBean>> childList = new ArrayList<>(childListSize);
+            for (int j = 0; j < childListSize; j++) {
+                List<BuyRoomBean.PlayDetailListBean.ListBean> itemList = new ArrayList<>(COUNT);
+                for (int k = 0; k < COUNT; k++) {
+                    int index = j * COUNT + k;
+                    if (index >= list.size()) {
+                        break;
+                    }
+                    itemList.add(list.get(index));
+                }
+                childList.add(itemList);
+            }
+            beanGroup.setChildList(childList);
+            mDataList.add(beanGroup);
+        }
+    }
+
+    private void creatDataAfter()
+    {
+
+    }
+
+    private void creatDataBefore()
+    {
+        int totalSize = mBuyRoomBean.getPlayDetailList().size();
+        int groupSize = totalSize / COUNT + totalSize % COUNT;
+        mDataList = new ArrayList<>(groupSize);
+        for (int i =0; i < groupSize; i++) {
+            BeanGroup beanGroup = new BeanGroup();
+            if (i < totalSize / COUNT) {
+                List<String> groupNameList = new ArrayList<>(COUNT);
+                int childListSize = 0;
+                for (int j = 0; j < COUNT; j++) {
+                    BuyRoomBean.PlayDetailListBean playDetailListBean = mBuyRoomBean.getPlayDetailList().get(COUNT * i + j);
+                    List<BuyRoomBean.PlayDetailListBean.ListBean> itemList = playDetailListBean.getList();
+                    if (childListSize < itemList.size()) {
+                        childListSize = itemList.size();
+                    }
+                    groupNameList.add(playDetailListBean.getName());
+                }
+                beanGroup.setGroupNameList(groupNameList);
+
+                List<List<BuyRoomBean.PlayDetailListBean.ListBean>> childList = new ArrayList<>(childListSize);
+                for (int j = 0; j < childListSize; j++) {
+                    List<BuyRoomBean.PlayDetailListBean.ListBean> itemList = new ArrayList<>(COUNT);
+                    for (int k = 0; k < COUNT; k++) {
+                        BuyRoomBean.PlayDetailListBean playDetailListBean = mBuyRoomBean.getPlayDetailList().get(COUNT * i + k);
+                        List<BuyRoomBean.PlayDetailListBean.ListBean> list = playDetailListBean.getList();
+                        if (j < list.size()) {
+                            itemList.add(list.get(j));
+                        }
+                    }
+                    childList.add(itemList);
+                }
+                beanGroup.setChildList(childList);
+            } else {
+                BuyRoomBean.PlayDetailListBean playDetailListBean = mBuyRoomBean.getPlayDetailList()
+                        .get((totalSize / COUNT) * COUNT + (i - totalSize / COUNT));
+                List<String> groupNameList = new ArrayList<>(1);
+                groupNameList.add(playDetailListBean.getName());
+                beanGroup.setGroupNameList(groupNameList);
+                List<BuyRoomBean.PlayDetailListBean.ListBean> list = playDetailListBean.getList();
+                int childListSize;
+                if (list.size() % COUNT == 0) {
+                    childListSize = list.size() / COUNT;
+                } else {
+                    childListSize = list.size() / COUNT + 1;
+                }
+                List<List<BuyRoomBean.PlayDetailListBean.ListBean>> childList = new ArrayList<>(childListSize);
+                for (int j = 0; j < childListSize; j++) {
+                    List<BuyRoomBean.PlayDetailListBean.ListBean> itemList = new ArrayList<>(COUNT);
+                    for (int k = 0; k < COUNT; k++) {
+                        int index = j * COUNT + k;
+                        if (index >= list.size()) {
+                            break;
+                        }
+                        itemList.add(list.get(index));
+                    }
+                    childList.add(itemList);
+                }
+                beanGroup.setChildList(childList);
+            }
+            mDataList.add(beanGroup);
+        }
     }
 
     /**
@@ -64,319 +199,404 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter
     }
 
     @Override
-    public int getCount()
+    public int getGroupCount()
     {
-        int size = mBuyRoomBean.getPlayDetailList().size();
-        return size / COUNT + size % COUNT;
+        return mDataList.size();
     }
 
     @Override
-    public Object getItem(int position)
+    public int getChildrenCount(int groupPosition)
+    {
+        return mDataList.get(groupPosition).getChildList().size();
+    }
+
+    @Override
+    public Object getGroup(int groupPosition)
     {
         return null;
     }
 
     @Override
-    public long getItemId(int position)
+    public Object getChild(int groupPosition, int childPosition)
+    {
+        return null;
+    }
+
+    @Override
+    public long getGroupId(int groupPosition)
     {
         return 0;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent)
+    public long getChildId(int groupPosition, int childPosition)
     {
-        int size = mBuyRoomBean.getPlayDetailList().size();
-        BuyRoomBean.PlayDetailListBean playDetailListBean = mBuyRoomBean.getPlayDetailList()
-                .get(position);
-        GroupViewHolder holder;
+        return 0;
+    }
+
+    @Override
+    public boolean hasStableIds()
+    {
+        return false;
+    }
+
+    @Override
+    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent)
+    {
         if (null == convertView) {
-            convertView = mInflater.inflate(R.layout.item_buy_quick_group_before, null);
-            holder = new GroupViewHolder();
-            holder.layout = convertView.findViewById(R.id.layout);
-            holder.tv1 = (TextView) convertView.findViewById(R.id.tv_1);
-            holder.tv2 = (TextView) convertView.findViewById(R.id.tv_2);
-            holder.tv3 = (TextView) convertView.findViewById(R.id.tv_3);
-            holder.tv4 = (TextView) convertView.findViewById(R.id.tv_4);
-            holder.ivArrow = (ImageView) convertView.findViewById(R.id.iv_arrow);
-            holder.gridView = (GridView4ScrollView) convertView.findViewById(R.id.gridView4ScrollView);
-
-            if (position < size / COUNT) {
-                int maxSingleItemSize = 0;
-                for (int i = 0; i < COUNT; i++) {
-                    BuyRoomBean.PlayDetailListBean playDetailListBean1 = mBuyRoomBean.getPlayDetailList().get(COUNT * position + i);
-                    if (maxSingleItemSize < playDetailListBean1.getList().size()) {
-                        maxSingleItemSize = playDetailListBean1.getList().size();
-                    }
-                    switch (i) {
-                        case 0:
-                            holder.tv1.setText(playDetailListBean1.getName());
-                            break;
-                        case 1:
-                            holder.tv2.setText(playDetailListBean1.getName());
-                            break;
-                        case 2:
-                            holder.tv3.setText(playDetailListBean1.getName());
-                            break;
-                        case 3:
-                            holder.tv4.setText(playDetailListBean1.getName());
-                            break;
-                        default:
-                            break;
-                    }
-                }
-                int itemSize = maxSingleItemSize * COUNT;
-                List<BuyRoomBean.PlayDetailListBean.ListBean> list = new ArrayList<>(itemSize);
-                for (int i = 0; i < itemSize; i++) {
-                    list.add(null);
-                }
-                for (int i = 0; i < COUNT; i++) {
-                    List<BuyRoomBean.PlayDetailListBean.ListBean> itemList = mBuyRoomBean.getPlayDetailList()
-                            .get(COUNT * position + i)
-                            .getList();
-                    for (int j = 0; j < itemList.size(); j++) {
-                        list.set(COUNT * j + i, itemList.get(j));
-                    }
-                }
-                holder.gridView.setAdapter(new MyGridAdapter(list));
-                holder.gridView.setTag(R.id.buy_holder, list);
-            } else {
-                holder.tv1.setText(playDetailListBean.getName());
-                holder.tv2.setText("");
-                holder.tv3.setText("");
-                holder.tv4.setText("");
-                holder.gridView.setAdapter(new MyGridAdapter(playDetailListBean.getList()));
-                holder.gridView.setTag(R.id.buy_holder, playDetailListBean.getList());
-            }
-
-            holder.gridView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-            {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-                {
-                    List<BuyRoomBean.PlayDetailListBean.ListBean> list = (List<BuyRoomBean.PlayDetailListBean.ListBean>) parent.getTag(R.id.buy_holder);
-                    BuyRoomBean.PlayDetailListBean.ListBean listBean = list.get(position);
-                    if (null == listBean) {
-                        return;
-                    }
-                    if (mCheckedList.contains(listBean)) {
-                        mCheckedList.remove(listBean);
-                    } else {
-                        mCheckedList.add(listBean);
-                    }
-                    MyGridAdapter adapter = (MyGridAdapter) parent.getAdapter();
-                    adapter.notifyDataSetChanged();
-                }
-            });
-
-            holder.layout.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    BuyRoomBean.PlayDetailListBean playDetailListBean = (BuyRoomBean.PlayDetailListBean) v.getTag(R.id.buy_data);
-                    playDetailListBean.setCollapsed(!playDetailListBean.isCollapsed());
-                    notifyDataSetChanged();
-                }
-            });
-            convertView.setTag(holder);
-        } else {
-            holder = (GroupViewHolder) convertView.getTag();
-            MyGridAdapter adapter = (MyGridAdapter) holder.gridView.getAdapter();
-            if (position < size / COUNT) {
-                int maxSingleItemSize = 0;
-                for (int i = 0; i < COUNT; i++) {
-                    BuyRoomBean.PlayDetailListBean playDetailListBean1 = mBuyRoomBean.getPlayDetailList().get(COUNT * position + i);
-                    if (maxSingleItemSize < playDetailListBean1.getList().size()) {
-                        maxSingleItemSize = playDetailListBean1.getList().size();
-                    }
-                    switch (i) {
-                        case 0:
-                            holder.tv1.setText(playDetailListBean1.getName());
-                            break;
-                        case 1:
-                            holder.tv2.setText(playDetailListBean1.getName());
-                            break;
-                        case 2:
-                            holder.tv3.setText(playDetailListBean1.getName());
-                            break;
-                        case 3:
-                            holder.tv4.setText(playDetailListBean1.getName());
-                            break;
-                        default:
-                            break;
-                    }
-                }
-                int itemSize = maxSingleItemSize * COUNT;
-                List<BuyRoomBean.PlayDetailListBean.ListBean> list = new ArrayList<>(itemSize);
-                for (int i = 0; i < itemSize; i++) {
-                    list.add(null);
-                }
-                for (int i = 0; i < COUNT; i++) {
-                    List<BuyRoomBean.PlayDetailListBean.ListBean> itemList = mBuyRoomBean.getPlayDetailList()
-                            .get(COUNT * position + i)
-                            .getList();
-                    for (int j = 0; j < itemList.size(); j++) {
-                        list.set(COUNT * j + i, itemList.get(j));
-                    }
-                }
-                adapter.setListData(list);
-                holder.gridView.setTag(R.id.buy_holder, list);
-            } else {
-                holder.tv1.setText(playDetailListBean.getName());
-                holder.tv2.setText("");
-                holder.tv3.setText("");
-                holder.tv4.setText("");
-                adapter.setListData(playDetailListBean.getList());
-                holder.gridView.setTag(R.id.buy_holder, playDetailListBean.getList());
-            }
+            convertView = mInflater.inflate(R.layout.item_buy_quick_group, null);
         }
-        holder.layout.setTag(R.id.buy_data, playDetailListBean);
-        if (playDetailListBean.isCollapsed()) {
-            holder.gridView.setVisibility(View.GONE);
+        TextView tv1 = ViewHolder.get(convertView, R.id.tv_1);
+        TextView tv2 = ViewHolder.get(convertView, R.id.tv_2);
+        TextView tv3 = ViewHolder.get(convertView, R.id.tv_3);
+        TextView tv4 = ViewHolder.get(convertView, R.id.tv_4);
+        ImageView ivArrow = ViewHolder.get(convertView, R.id.iv_arrow);
+
+        tv1.setText("");
+        tv2.setText("");
+        tv3.setText("");
+        tv4.setText("");
+        if (isExpanded) {
+            ivArrow.setVisibility(View.GONE);
         } else {
-            holder.gridView.setVisibility(View.VISIBLE);
+            ivArrow.setVisibility(View.VISIBLE);
+        }
+        BeanGroup beanGroup = mDataList.get(groupPosition);
+        List<String> groupNameList = beanGroup.getGroupNameList();
+        for (int i = 0; i < groupNameList.size(); i++) {
+            switch (i) {
+                case 0:
+                    tv1.setText(groupNameList.get(i));
+                    break;
+                case 1:
+                    tv2.setText(groupNameList.get(i));
+                    break;
+                case 2:
+                    tv3.setText(groupNameList.get(i));
+                    break;
+                case 3:
+                    tv4.setText(groupNameList.get(i));
+                    break;
+                default:
+                    break;
+            }
         }
         return convertView;
     }
 
-    private class GroupViewHolder {
-        public View layout;
-        public TextView tv1;
-        public TextView tv2;
-        public TextView tv3;
-        public TextView tv4;
-        public ImageView ivArrow;
-        public GridView4ScrollView gridView;
+    @Override
+    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
+    {
+        if (mType == QuickBuyFragment.TYPE_QUICK) {
+            // 快捷下注的类型
+            if (null == convertView) {
+                convertView = mInflater.inflate(R.layout.item_buy_quick, null);
+                ViewHolder.get(convertView, R.id.layout1).setOnClickListener(this);
+                ViewHolder.get(convertView, R.id.layout2).setOnClickListener(this);
+                ViewHolder.get(convertView, R.id.layout3).setOnClickListener(this);
+                ViewHolder.get(convertView, R.id.layout4).setOnClickListener(this);
+            }
+            View layout1 = ViewHolder.get(convertView, R.id.layout1);
+            TextView tvName1 = ViewHolder.get(convertView, R.id.tv_name1);
+            TextView tvOdds1 = ViewHolder.get(convertView, R.id.tv_odds1);
+            View layout2 = ViewHolder.get(convertView, R.id.layout2);
+            TextView tvName2 = ViewHolder.get(convertView, R.id.tv_name2);
+            TextView tvOdds2 = ViewHolder.get(convertView, R.id.tv_odds2);
+            View layout3 = ViewHolder.get(convertView, R.id.layout3);
+            TextView tvName3 = ViewHolder.get(convertView, R.id.tv_name3);
+            TextView tvOdds3 = ViewHolder.get(convertView, R.id.tv_odds3);
+            View layout4 = ViewHolder.get(convertView, R.id.layout4);
+            TextView tvName4 = ViewHolder.get(convertView, R.id.tv_name4);
+            TextView tvOdds4 = ViewHolder.get(convertView, R.id.tv_odds4);
+
+            layout1.setVisibility(View.INVISIBLE);
+            layout1.setTag(R.id.buy_data, null);
+            layout2.setVisibility(View.INVISIBLE);
+            layout2.setTag(R.id.buy_data, null);
+            layout3.setVisibility(View.INVISIBLE);
+            layout3.setTag(R.id.buy_data, null);
+            layout4.setVisibility(View.INVISIBLE);
+            layout4.setTag(R.id.buy_data, null);
+
+            List<BuyRoomBean.PlayDetailListBean.ListBean> listBeen = mDataList.get(groupPosition)
+                    .getChildList()
+                    .get(childPosition);
+            for (int i = 0; i < listBeen.size(); i++) {
+                BuyRoomBean.PlayDetailListBean.ListBean listBean = listBeen.get(i);
+                View layout = null;
+                TextView tvName = null;
+                TextView tvOdds = null;
+                switch (i) {
+                    case 0:
+                        layout = layout1;
+                        tvName = tvName1;
+                        tvOdds = tvOdds1;
+                        break;
+                    case 1:
+                        layout = layout2;
+                        tvName = tvName2;
+                        tvOdds = tvOdds2;
+                        break;
+                    case 2:
+                        layout = layout3;
+                        tvName = tvName3;
+                        tvOdds = tvOdds3;
+                        break;
+                    case 3:
+                        layout = layout4;
+                        tvName = tvName4;
+                        tvOdds = tvOdds4;
+                        break;
+                    default:
+                        break;
+                }
+                layout.setVisibility(View.VISIBLE);
+                layout.setTag(R.id.buy_data, listBean);
+                tvName.setText(listBean.getPlayName());
+                tvOdds.setText(listBean.getBonus());
+                if (mCheckedList.contains(listBean)) {
+                    layout.setBackgroundResource(R.drawable.liuhecai_btn_xuanzhong_02);
+                } else {
+                    layout.setBackgroundResource(R.drawable.liuhecai_btn_weixuan_01);
+                }
+            }
+            return convertView;
+        } else {
+            // 自选下注的类型
+            if (null == convertView) {
+                convertView = mInflater.inflate(R.layout.item_buy_self_select, null);
+
+                InputFilter[] filters = {new NumberInputFilter()};
+                final EditText etNum1 = ViewHolder.get(convertView, R.id.et_num1);
+                etNum1.setFilters(filters);
+                etNum1.addTextChangedListener(new TextWatcher()
+                {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after)
+                    {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count)
+                    {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s)
+                    {
+                        String s1 = s.toString();
+                        BuyRoomBean.PlayDetailListBean.ListBean listBean = (BuyRoomBean.PlayDetailListBean.ListBean) etNum1.getTag(R.id.buy_data);
+                        if (TextUtils.isEmpty(s1)) {
+                            // 如果最新值为空，直接移除该项目
+                            if (mNumberMap.containsKey(listBean)) {
+                                mNumberMap.remove(listBean);
+                            }
+                            // 原来没有保存值，最新的值也是为空的话就直接忽略
+                            return;
+                        }
+                        mNumberMap.put(listBean, s1);
+                    }
+                });
+                final EditText etNum2 = ViewHolder.get(convertView, R.id.et_num2);
+                etNum2.setFilters(filters);
+                etNum2.addTextChangedListener(new TextWatcher()
+                {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after)
+                    {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count)
+                    {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s)
+                    {
+                        String s1 = s.toString();
+                        BuyRoomBean.PlayDetailListBean.ListBean listBean = (BuyRoomBean.PlayDetailListBean.ListBean) etNum2.getTag(R.id.buy_data);
+                        if (TextUtils.isEmpty(s1)) {
+                            // 如果最新值为空，直接移除该项目
+                            if (mNumberMap.containsKey(listBean)) {
+                                mNumberMap.remove(listBean);
+                            }
+                            // 原来没有保存值，最新的值也是为空的话就直接忽略
+                            return;
+                        }
+                        mNumberMap.put(listBean, s1);
+                    }
+                });
+                final EditText etNum3 = ViewHolder.get(convertView, R.id.et_num3);
+                etNum3.setFilters(filters);
+                etNum3.addTextChangedListener(new TextWatcher()
+                {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after)
+                    {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count)
+                    {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s)
+                    {
+                        String s1 = s.toString();
+                        BuyRoomBean.PlayDetailListBean.ListBean listBean = (BuyRoomBean.PlayDetailListBean.ListBean) etNum3.getTag(R.id.buy_data);
+                        if (TextUtils.isEmpty(s1)) {
+                            // 如果最新值为空，直接移除该项目
+                            if (mNumberMap.containsKey(listBean)) {
+                                mNumberMap.remove(listBean);
+                            }
+                            // 原来没有保存值，最新的值也是为空的话就直接忽略
+                            return;
+                        }
+                        mNumberMap.put(listBean, s1);
+                    }
+                });
+                final EditText etNum4 = ViewHolder.get(convertView, R.id.et_num4);
+                etNum4.setFilters(filters);
+                etNum4.addTextChangedListener(new TextWatcher()
+                {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after)
+                    {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count)
+                    {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s)
+                    {
+                        String s1 = s.toString();
+                        BuyRoomBean.PlayDetailListBean.ListBean listBean = (BuyRoomBean.PlayDetailListBean.ListBean) etNum4.getTag(R.id.buy_data);
+                        if (TextUtils.isEmpty(s1)) {
+                            // 如果最新值为空，直接移除该项目
+                            if (mNumberMap.containsKey(listBean)) {
+                                mNumberMap.remove(listBean);
+                            }
+                            // 原来没有保存值，最新的值也是为空的话就直接忽略
+                            return;
+                        }
+                        mNumberMap.put(listBean, s1);
+                    }
+                });
+            }
+            View layout1 = ViewHolder.get(convertView, R.id.layout1);
+            View layout2 = ViewHolder.get(convertView, R.id.layout2);
+            View layout3 = ViewHolder.get(convertView, R.id.layout3);
+            View layout4 = ViewHolder.get(convertView, R.id.layout4);
+            layout1.setVisibility(View.INVISIBLE);
+            layout2.setVisibility(View.INVISIBLE);
+            layout3.setVisibility(View.INVISIBLE);
+            layout4.setVisibility(View.INVISIBLE);
+
+            TextView tvName1 = ViewHolder.get(convertView, R.id.tv_name1);
+            TextView tvName2 = ViewHolder.get(convertView, R.id.tv_name2);
+            TextView tvName3 = ViewHolder.get(convertView, R.id.tv_name3);
+            TextView tvName4 = ViewHolder.get(convertView, R.id.tv_name4);
+            EditText etNum1 = ViewHolder.get(convertView, R.id.et_num1);
+            etNum1.setTag(R.id.buy_data, null);
+            EditText etNum2 = ViewHolder.get(convertView, R.id.et_num2);
+            etNum2.setTag(R.id.buy_data, null);
+            EditText etNum3 = ViewHolder.get(convertView, R.id.et_num3);
+            etNum3.setTag(R.id.buy_data, null);
+            EditText etNum4 = ViewHolder.get(convertView, R.id.et_num4);
+            etNum4.setTag(R.id.buy_data, null);
+
+            List<BuyRoomBean.PlayDetailListBean.ListBean> listBeen = mDataList.get(groupPosition)
+                    .getChildList()
+                    .get(childPosition);
+            for (int i = 0; i < listBeen.size(); i++) {
+                BuyRoomBean.PlayDetailListBean.ListBean listBean = listBeen.get(i);
+                View layout = null;
+                TextView tvName = null;
+                EditText etNum = null;
+                switch (i) {
+                    case 0:
+                        layout = layout1;
+                        tvName = tvName1;
+                        etNum = etNum1;
+                        break;
+                    case 1:
+                        layout = layout2;
+                        tvName = tvName2;
+                        etNum = etNum2;
+                        break;
+                    case 2:
+                        layout = layout3;
+                        tvName = tvName3;
+                        etNum = etNum3;
+                        break;
+                    case 3:
+                        layout = layout4;
+                        tvName = tvName4;
+                        etNum = etNum4;
+                        break;
+                    default:
+                        break;
+                }
+                layout.setVisibility(View.VISIBLE);
+                SpannableString ss = new SpannableString(listBean.getPlayName() + " " + listBean.getBonus());
+                int start = listBean.getPlayName().length() + 1;
+                ss.setSpan(new ForegroundColorSpan(Color.parseColor("#C30D23")), start, start+listBean.getBonus().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                tvName.setText(ss);
+                etNum.setTag(R.id.buy_data, listBean);
+                if (mNumberMap.containsKey(listBean)) {
+                    etNum.setText(mNumberMap.get(listBean));
+                } else {
+                    etNum.setText("");
+                }
+            }
+            return convertView;
+        }
     }
 
-    private class MyGridAdapter extends BaseAdapter
+    @Override
+    public boolean isChildSelectable(int groupPosition, int childPosition)
     {
+        return false;
+    }
 
-        private List<BuyRoomBean.PlayDetailListBean.ListBean> mList;
-
-        public MyGridAdapter(List<BuyRoomBean.PlayDetailListBean.ListBean> list) {
-            this.mList = list;
-        }
-
-        public void setListData(List<BuyRoomBean.PlayDetailListBean.ListBean> list) {
-            this.mList = list;
-            notifyDataSetChanged();
-        }
-
-        @Override
-        public int getCount()
-        {
-            return mList.size();
-        }
-
-        @Override
-        public Object getItem(int position)
-        {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int position)
-        {
-            return 0;
-        }
-
-        @Override
-        public int getViewTypeCount()
-        {
-            return 2;
-        }
-
-        @Override
-        public int getItemViewType(int position)
-        {
-            return mType;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent)
-        {
-            // 快捷下注的类型
-            if (getItemViewType(position) == QuickBuyFragment.TYPE_QUICK) {
-                if (null == convertView) {
-                    convertView = mInflater.inflate(R.layout.item_buy_quick, null);
-                }
-                View layout = ViewHolder.get(convertView, R.id.layout);
-                TextView tvName = ViewHolder.get(convertView, R.id.tv_name);
-                TextView tvOdds = ViewHolder.get(convertView, R.id.tv_odds);
-                BuyRoomBean.PlayDetailListBean.ListBean listBean = mList.get(position);
+    @Override
+    public void onClick(View v)
+    {
+        switch (v.getId()) {
+            case R.id.layout1:
+            case R.id.layout2:
+            case R.id.layout3:
+            case R.id.layout4:
+                BuyRoomBean.PlayDetailListBean.ListBean listBean = (BuyRoomBean.PlayDetailListBean.ListBean) v.getTag(R.id.buy_data);
                 if (null == listBean) {
-                    layout.setVisibility(View.INVISIBLE);
+                    return;
+                }
+                if (mCheckedList.contains(listBean)) {
+                    mCheckedList.remove(listBean);
                 } else {
-                    layout.setVisibility(View.VISIBLE);
-                    tvName.setText(listBean.getPlayName());
-                    tvOdds.setText(listBean.getBonus());
-                    if (mCheckedList.contains(listBean)) {
-                        layout.setBackgroundResource(R.drawable.liuhecai_btn_xuanzhong_02);
-                    } else {
-                        layout.setBackgroundResource(R.drawable.liuhecai_btn_weixuan_01);
-                    }
+                    mCheckedList.add(listBean);
                 }
-                return convertView;
-            } else {
-                // 自选下注的类型
-                if (null == convertView) {
-                    convertView = mInflater.inflate(R.layout.item_buy_self_select, null);
-                    final EditText etNum = ViewHolder.get(convertView, R.id.et_num);
-                    etNum.setFilters(new InputFilter[]{new NumberInputFilter()});
-                    etNum.addTextChangedListener(new TextWatcher()
-                    {
-                        @Override
-                        public void beforeTextChanged(CharSequence s, int start, int count, int after)
-                        {
-
-                        }
-
-                        @Override
-                        public void onTextChanged(CharSequence s, int start, int before, int count)
-                        {
-
-                        }
-
-                        @Override
-                        public void afterTextChanged(Editable s)
-                        {
-                            String s1 = s.toString();
-                            BuyRoomBean.PlayDetailListBean.ListBean listBean = (BuyRoomBean.PlayDetailListBean.ListBean) etNum.getTag(R.id.buy_data);
-                            if (TextUtils.isEmpty(s1)) {
-                                // 如果最新值为空，直接移除该项目
-                                if (mNumberMap.containsKey(listBean)) {
-                                    mNumberMap.remove(listBean);
-                                }
-                                // 原来没有保存值，最新的值也是为空的话就直接忽略
-                                return;
-                            }
-                            mNumberMap.put(listBean, s1);
-                        }
-                    });
-                }
-                View layout = ViewHolder.get(convertView, R.id.layout);
-                TextView tvName = ViewHolder.get(convertView, R.id.tv_name);
-                EditText etNum = ViewHolder.get(convertView, R.id.et_num);
-                BuyRoomBean.PlayDetailListBean.ListBean listBean = mList.get(position);
-                if (null == listBean) {
-                    layout.setVisibility(View.INVISIBLE);
+                if (mCheckedList.contains(listBean)) {
+                    v.setBackgroundResource(R.drawable.liuhecai_btn_xuanzhong_02);
                 } else {
-                    layout.setVisibility(View.VISIBLE);
-                    SpannableString ss = new SpannableString(listBean.getPlayName() + " " + listBean.getBonus());
-                    int start = listBean.getPlayName().length() + 1;
-                    ss.setSpan(new ForegroundColorSpan(Color.parseColor("#C30D23")), start, start+listBean.getBonus().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                    tvName.setText(ss);
-
-                    etNum.setTag(R.id.buy_data, listBean);
-                    if (mNumberMap.containsKey(listBean)) {
-                        etNum.setText(mNumberMap.get(listBean));
-                    } else {
-                        etNum.setText("");
-                    }
+                    v.setBackgroundResource(R.drawable.liuhecai_btn_weixuan_01);
                 }
-                return convertView;
-            }
+                break;
+            default:
+                break;
         }
     }
 }
