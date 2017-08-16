@@ -27,7 +27,8 @@
     <com.example.admin.caipiao33.views.LoadingLayout
         android:id="@+id/loadingLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
     </com.example.admin.caipiao33.views.LoadingLayout>
 
     <android.support.v4.widget.SwipeRefreshLayout
@@ -36,18 +37,10 @@
         android:layout_height="match_parent"
         android:visibility="gone">
 
-        <ListView
-            android:id="@+id/kaijiang_lv"
+        <WebView
+            android:id="@+id/kaijiang_webView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/layout_background"
-            android:cacheColorHint="@color/transparent"
-            android:descendantFocusability="blocksDescendants"
-            android:divider="@color/layout_background"
-            android:dividerHeight="5dp"
-            android:footerDividersEnabled="false"
-            android:listSelector="@android:color/transparent"
-            android:overScrollMode="never"
-            android:scrollbars="none"/>
+            android:layerType="hardware"/>
     </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>
