@@ -172,7 +172,6 @@ public class WebActivity extends Activity
                             .getTokenString(WebActivity.this)))
                     {
                         webView.loadUrl(mUrl);
-                        HttpUtil.changeBaseUrl(mUrl);
                         KLog.d(LOG_TAG, mUrl);
                     }
                     else

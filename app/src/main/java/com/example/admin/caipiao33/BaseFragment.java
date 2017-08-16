@@ -3,6 +3,7 @@ package com.example.admin.caipiao33;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
+import com.example.admin.caipiao33.bean.BaseUrlBean;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.httputils.MyResponseListener;
 import com.example.admin.caipiao33.views.LoadingLayout;
@@ -104,12 +105,12 @@ public class BaseFragment extends Fragment
      */
     public void reconfirmBaseUrl()
     {
-        HttpUtil.requestFirst("index", String.class, getActivity(), new MyResponseListener<String>()
+        HttpUtil.requestFirst("index", BaseUrlBean.class, getActivity(), new MyResponseListener<BaseUrlBean>()
         {
             @Override
-            public void onSuccess(String result)
+            public void onSuccess(BaseUrlBean result)
             {
-                HttpUtil.changeBaseUrl(result);
+                HttpUtil.changeBaseUrl(result.getUrl());
             }
 
             @Override
