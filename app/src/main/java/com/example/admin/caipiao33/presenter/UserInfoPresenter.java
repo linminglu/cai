@@ -71,7 +71,7 @@ public class UserInfoPresenter implements IUserContract.Presenter
             @Override
             public void onFailed(int code, String msg)
             {
-                mView.showLoadingLayoutError4Ami(hideView);
+                mView.showErrorMsg(msg);
             }
 
             @Override

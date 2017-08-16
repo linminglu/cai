@@ -33,7 +33,7 @@ public class KaiJiangDTPresenter implements IKaiJiangContract.Presenter
     public void loadData()
     {
         mView.showLoadingLayout4Ami(hideView);
-        HttpUtil.requestFirst("draw", null, new TypeToken<ArrayList<KaiJiangDTBean>>()
+        HttpUtil.requestFirst("draw1", null, new TypeToken<ArrayList<KaiJiangDTBean>>()
         {
         }.getType(), mView.getBaseActivity(), new MyResponseListener<ArrayList<KaiJiangDTBean>>()
         {
@@ -48,6 +48,7 @@ public class KaiJiangDTPresenter implements IKaiJiangContract.Presenter
             public void onFailed(int code, String msg)
             {
                 mView.showLoadingLayoutError4Ami(hideView);
+                mView.showErrorMsg(msg);
             }
 
             @Override
@@ -72,13 +73,12 @@ public class KaiJiangDTPresenter implements IKaiJiangContract.Presenter
             @Override
             public void onFailed(int code, String msg)
             {
-                mView.showLoadingLayoutError4Ami(hideView);
+                mView.showErrorMsg(msg);
             }
 
             @Override
             public void onFinish()
             {
-
             }
         }, null);
     }
