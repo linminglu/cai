@@ -44,6 +44,10 @@
     <string name="s_promotions">优惠活动</string>
     <string name="s_win_text">喜中%1$s元</string>
     <string name="s_win_type">购买%1$s</string>
+    <string name="s_homepage_1">存/取款</string>
+    <string name="s_homepage_2">投资记录</string>
+    <string name="s_homepage_3">优惠活动</string>
+    <string name="s_homepage_4">在线客服</string>
 
     <!-- 购彩大厅 -->
     <string name="s_goucai_dating">购彩大厅</string>
@@ -77,5 +81,6 @@
         <item>自选下注</item>
         <item>快捷下注</item>
     </string-array>
+    <string name="s_play_options">玩法选择：%1$s</string>
 
 </resources>

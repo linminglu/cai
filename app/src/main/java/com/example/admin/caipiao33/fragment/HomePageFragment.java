@@ -2,6 +2,9 @@ package com.example.admin.caipiao33.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
@@ -138,6 +141,14 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
     MyVerticalBanner myVerticalBanner;
     @BindView(R.id.tv_calc)
     TextView tvCalc;
+    @BindView(R.id.iv_homepage_1)
+    ImageView ivHomepage1;
+    @BindView(R.id.iv_homepage_2)
+    ImageView ivHomepage2;
+    @BindView(R.id.iv_homepage_3)
+    ImageView ivHomepage3;
+    @BindView(R.id.iv_homepage_4)
+    ImageView ivHomepage4;
     private MainActivity mainActivity;
     private LayoutInflater mInflater;
     private View parentView;
@@ -228,6 +239,16 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
             }
         });
         Tools.setSwipeRefreshColor(swipeRefreshLayout);
+
+        Resources resources = getResources();
+        final Drawable homepage1 = resources.getDrawable(R.mipmap.homepage_1);
+        final Drawable homepage2 = resources.getDrawable(R.mipmap.homepage_2);
+        final Drawable homepage3 = resources.getDrawable(R.mipmap.homepage_3);
+        final Drawable homepage4 = resources.getDrawable(R.mipmap.homepage_4);
+        ivHomepage1.setImageDrawable(Tools.tintDrawable(homepage1, ColorStateList.valueOf(resources.getColor(R.color.c_homepage_1))));
+        ivHomepage2.setImageDrawable(Tools.tintDrawable(homepage2, ColorStateList.valueOf(resources.getColor(R.color.c_homepage_2))));
+        ivHomepage3.setImageDrawable(Tools.tintDrawable(homepage3, ColorStateList.valueOf(resources.getColor(R.color.c_homepage_3))));
+        ivHomepage4.setImageDrawable(Tools.tintDrawable(homepage4, ColorStateList.valueOf(resources.getColor(R.color.c_homepage_4))));
     }
 
     @Override

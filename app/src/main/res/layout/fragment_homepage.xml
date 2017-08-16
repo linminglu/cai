@@ -78,15 +78,23 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:gravity="center_horizontal"
-                        android:padding="5dp"
+                        android:gravity="center"
+                        android:padding="10dp"
                         android:layout_weight="1">
 
-
                         <ImageView
+                            android:id="@+id/iv_homepage_1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@mipmap/index_zoushi_cp_icon"/>
+                            android:src="@mipmap/homepage_1"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="5dp"
+                            android:textSize="13sp"
+                            android:text="@string/s_homepage_1"
+                            android:textColor="@color/c_homepage_1"/>
 
                     </LinearLayout>
 
@@ -95,14 +103,23 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:gravity="center_horizontal"
-                        android:padding="5dp"
+                        android:gravity="center"
+                        android:padding="10dp"
                         android:layout_weight="1">
 
                         <ImageView
+                            android:id="@+id/iv_homepage_2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@mipmap/index_goucai_cp_icon"/>
+                            android:src="@mipmap/homepage_2"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="5dp"
+                            android:textSize="13sp"
+                            android:text="@string/s_homepage_2"
+                            android:textColor="@color/c_homepage_2"/>
 
                     </LinearLayout>
 
@@ -111,15 +128,22 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:gravity="center_horizontal"
-                        android:padding="5dp"
+                        android:gravity="center"
+                        android:padding="10dp"
                         android:layout_weight="1">
 
                         <ImageView
+                            android:id="@+id/iv_homepage_3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@mipmap/index_youhui_cp_icon"/>
-
+                            android:src="@mipmap/homepage_3"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="5dp"
+                            android:textSize="13sp"
+                            android:text="@string/s_homepage_3"
+                            android:textColor="@color/c_homepage_3"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -127,15 +151,22 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:gravity="center_horizontal"
-                        android:padding="5dp"
+                        android:gravity="center"
+                        android:padding="10dp"
                         android:layout_weight="1">
 
                         <ImageView
+                            android:id="@+id/iv_homepage_4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@mipmap/index_kefu_cp_icon"/>
-
+                            android:src="@mipmap/homepage_4"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="5dp"
+                            android:textSize="13sp"
+                            android:text="@string/s_homepage_4"
+                            android:textColor="@color/c_homepage_4"/>
                     </LinearLayout>
 
                 </LinearLayout>
@@ -422,7 +453,8 @@
         android:id="@+id/loadingLayout"
         android:layout_below="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="visible">
 
     </com.example.admin.caipiao33.views.LoadingLayout>
 

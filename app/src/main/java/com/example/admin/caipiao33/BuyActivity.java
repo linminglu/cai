@@ -1,6 +1,7 @@
 package com.example.admin.caipiao33;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -9,12 +10,16 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.SpannedString;
+import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.admin.caipiao33.bean.BuyRoomBean;
 import com.example.admin.caipiao33.bean.GouCaiBean;
 import com.example.admin.caipiao33.contract.IBuyContract;
@@ -105,8 +110,8 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
     private void initView()
     {
         ButterKnife.bind(this);
-        setSupportActionBar(toolbar);
         toolbar.setTitle("");
+        setSupportActionBar(toolbar);
         toolbar.setOnMenuItemClickListener(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mLoadingLayout = (LoadingLayout) findViewById(R.id.loadingLayout);
@@ -136,7 +141,10 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
     public void updateHomePage(BuyRoomBean bean)
     {
         this.mBuyRoomBean = bean;
-        SpannedString ss = new SpannedString(mTitleStr + bean.getRoomName() + bean.getPeriod() + "期");
+        toolbarTitle.setText(getString(R.string.s_play_options, bean.getPlayName()));
+        SpannableString ss = new SpannableString(mTitleStr + " " + mBuyRoomBean.getRoomName() + " " + bean.getPeriod() + "期");
+        int start = mTitleStr.length() + mBuyRoomBean.getRoomName().length() + 2;
+        ss.setSpan(new ForegroundColorSpan(Color.parseColor("#C30D23")), start, start+bean.getPeriod().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         tvRoom.setText(ss);
         mEndTime = bean.getEndTime();
         mLastOpen = bean.getLastOpen();
@@ -197,7 +205,9 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
         }
         mEndTime = result.getEndTime();
         mLastOpen = result.getLastOpen();
-        SpannedString ss = new SpannedString(mTitleStr + mBuyRoomBean.getRoomName() + result.getPeriod() + "期");
+        SpannableString ss = new SpannableString(mTitleStr + " " + mBuyRoomBean.getRoomName() + " " + result.getPeriod() + "期");
+        int start = mTitleStr.length() + mBuyRoomBean.getRoomName().length() + 2;
+        ss.setSpan(new ForegroundColorSpan(Color.parseColor("#C30D23")), start, start+result.getPeriod().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         tvRoom.setText(ss);
         tvLotteryTime.setText(getString(R.string.s_lottery_time, DateUtils.getTimeStr(Long.valueOf(mEndTime), "yyyy-MM-dd HH:mm:ss")));
         tvIndex.setText(result.getLastPeriod() + "期");
@@ -325,7 +335,7 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
         }
     }
 
-    @OnClick({R.id.tv_clear, R.id.tv_buy, R.id.tv_trend})
+    @OnClick({R.id.tv_clear, R.id.tv_buy, R.id.tv_trend, R.id.toolbar_title})
     public void onViewClicked(View view)
     {
         switch (view.getId()) {
@@ -346,7 +356,40 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
                 break;
             case R.id.tv_buy: // 投注
                 break;
+            case R.id.toolbar_title: // 玩法选择
+                showOptionsDialog();
+                break;
+            default:
+                break;
         }
+    }
+
+    private void showOptionsDialog()
+    {
+        if (null == mBuyRoomBean) {
+            return;
+        }
+
+        List<BuyRoomBean.PlayListBean> playList = mBuyRoomBean.getPlayList();
+        List<String> array = new ArrayList<>();
+        for (BuyRoomBean.PlayListBean bean : playList) {
+            array.add(bean.getPlayName());
+        }
+        new MaterialDialog.Builder(this).title("玩法选择")
+                .items(array)
+                .positiveText(R.string.dialog_ok)
+                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                        BuyRoomBean.PlayListBean playListBean = mBuyRoomBean.getPlayList()
+                                .get(which);
+                        mPlayId = playListBean.getPlayId();
+                        mPlayId1 = playListBean.getPlayId1();
+                        mPresenter.loadData(mNumber, mRoomId, mPlayId, mPlayId1);
+                        return true;
+                    }
+                })
+                .show();
     }
 
     @Override

@@ -4,12 +4,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+import android.widget.ExpandableListView;
 
 import com.example.admin.caipiao33.BaseFragment;
 import com.example.admin.caipiao33.R;
 import com.example.admin.caipiao33.bean.BuyRoomBean;
-import com.example.admin.caipiao33.fragment.adapter.NormalExpandableAdapter;
+import com.example.admin.caipiao33.fragment.adapter.MyBaseBuyAdapter;
+import com.example.admin.caipiao33.fragment.adapter.TypeBeforeAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,13 +30,14 @@ public class QuickBuyFragment extends BaseFragment implements View.OnClickListen
     public static final int TYPE_SELF_SELECT = 1;
 
     @BindView(R.id.listView)
-    ListView listView;
+    ExpandableListView listView;
     Unbinder unbinder;
     private LayoutInflater mInflater;
     private View parentView;
     private BuyRoomBean mBuyRoomBean;
-    private NormalExpandableAdapter adapter;
+    private MyBaseBuyAdapter adapter;
     private int mType;
+
 
 
     //若Fragement定义有带参构造函数，则一定要定义public的默认的构造函数
@@ -80,8 +82,14 @@ public class QuickBuyFragment extends BaseFragment implements View.OnClickListen
     private void initView()
     {
         unbinder = ButterKnife.bind(this, parentView);
-        adapter = new NormalExpandableAdapter(mInflater, mBuyRoomBean, mType);
+        adapter = new TypeBeforeAdapter(mInflater, mBuyRoomBean, mType);
         listView.setAdapter(adapter);
+        //遍历所有group,将所有项设置成默认展开
+        int groupCount = listView.getCount();
+        for (int i=0; i < groupCount; i++)
+        {
+            listView.expandGroup(i);
+        }
     }
 
     @Override
