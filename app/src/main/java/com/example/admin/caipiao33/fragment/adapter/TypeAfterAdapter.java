@@ -28,10 +28,10 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * 普通可扩展listview的适配器
+ * 第一个不折叠，后四个四个折叠的适配器
  */
 
-public class NormalExpandableAdapter extends MyBaseBuyAdapter
+public class TypeAfterAdapter extends MyBaseBuyAdapter
 {
     private final BuyRoomBean mBuyRoomBean;
     private final LayoutInflater mInflater;
@@ -39,7 +39,7 @@ public class NormalExpandableAdapter extends MyBaseBuyAdapter
     private List<BuyRoomBean.PlayDetailListBean.ListBean> mCheckedList = new ArrayList<>();
     private HashMap<BuyRoomBean.PlayDetailListBean.ListBean, String> mNumberMap = new HashMap<>();
 
-    public NormalExpandableAdapter(LayoutInflater inflater, BuyRoomBean bean, int type) {
+    public TypeAfterAdapter(LayoutInflater inflater, BuyRoomBean bean, int type) {
         this.mInflater = inflater;
         this.mBuyRoomBean = bean;
         this.mType = type;
