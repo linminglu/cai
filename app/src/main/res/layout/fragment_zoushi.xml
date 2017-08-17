@@ -16,7 +16,22 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:text="走势"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:visibility="gone"
+            />
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
+            android:drawablePadding="5dp"
+            android:drawableRight="@mipmap/top_zhong_sanjiao"
+            android:gravity="center"
+            android:maxLines="1"
             android:text="走势"
             android:textColor="@color/white"
             android:textSize="20sp"
@@ -24,4 +39,23 @@
 
     </android.support.v7.widget.Toolbar>
 
+    <com.example.admin.caipiao33.views.LoadingLayout
+        android:id="@+id/loadingLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+    </com.example.admin.caipiao33.views.LoadingLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <WebView
+            android:id="@+id/zoushi_webView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layerType="hardware"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>
