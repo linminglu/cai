@@ -195,6 +195,18 @@ public class BuyRoomBean implements Serializable
             private String playName;
             private String playId;
             private String bonus;
+            /** 投注金额 自选时为输入的金额，快捷时为0 */
+            private String money;
+
+            public String getMoney()
+            {
+                return money;
+            }
+
+            public void setMoney(String money)
+            {
+                this.money = money;
+            }
 
             public String getPlayName()
             {

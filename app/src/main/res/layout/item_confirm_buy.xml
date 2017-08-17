@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <com.example.admin.caipiao33.views.MaxHeightGridView
+        android:id="@+id/gridView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:maxHeight="100dp"
+        android:listSelector="@android:color/transparent"
+        android:numColumns="4">
+    </com.example.admin.caipiao33.views.MaxHeightGridView>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/et_money"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:background="@drawable/liuhecai_btn_weixuan_01"
+            android:paddingLeft="10dp"
+            android:inputType="number"
+            android:maxLines="1"
+            />
+
+        <TextView
+            android:id="@+id/tv_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="清空"
+            android:layout_marginLeft="10dp"
+            android:padding="10dp"
+            android:background="@drawable/button_gray_bg"
+            />
+
+    </LinearLayout>
+
+    <com.example.admin.caipiao33.views.FlowLayout
+        android:id="@+id/layout_quick_money"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_100"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@drawable/button_gray_bg"
+            android:textColor="@color/black"
+            android:layout_margin="10dp"
+            android:text="100"/>
+
+        <TextView
+            android:id="@+id/tv_500"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@drawable/button_gray_bg"
+            android:textColor="@color/black"
+            android:layout_margin="10dp"
+            android:text="500"/>
+
+        <TextView
+            android:id="@+id/tv_1000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@drawable/button_gray_bg"
+            android:textColor="@color/black"
+            android:layout_margin="10dp"
+            android:text="1000"/>
+
+        <TextView
+            android:id="@+id/tv_5000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@drawable/button_gray_bg"
+            android:textColor="@color/black"
+            android:layout_margin="10dp"
+            android:text="5000"/>
+
+        <TextView
+            android:id="@+id/tv_10000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@drawable/button_gray_bg"
+            android:textColor="@color/black"
+            android:layout_margin="10dp"
+            android:text="10000"/>
+
+        <TextView
+            android:id="@+id/tv_50000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@drawable/button_gray_bg"
+            android:textColor="@color/black"
+            android:layout_margin="10dp"
+            android:text="50000"/>
+
+    </com.example.admin.caipiao33.views.FlowLayout>
+
+    <TextView
+        android:id="@+id/tv_tips"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="#FFD18F"
+        android:gravity="center"
+        />
+
+</LinearLayout>

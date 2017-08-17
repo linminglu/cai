@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -19,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.admin.caipiao33.bean.BuyRoomBean;
 import com.example.admin.caipiao33.bean.GouCaiBean;
@@ -30,6 +32,7 @@ import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.DateUtils;
 import com.example.admin.caipiao33.utils.StringUtils;
 import com.example.admin.caipiao33.utils.ToastUtil;
+import com.example.admin.caipiao33.views.ConfirmBuyDialog;
 import com.example.admin.caipiao33.views.LoadingLayout;
 import com.example.admin.caipiao33.views.PagerSlidingTabStrip;
 import com.example.admin.caipiao33.views.ZoomOutPageTransformer;
@@ -363,6 +366,7 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
                 startActivity(webIntent);
                 break;
             case R.id.tv_buy: // 投注
+                showBuyDialog();
                 break;
             case R.id.toolbar_title: // 玩法选择
                 showOptionsDialog();
@@ -370,6 +374,27 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
             default:
                 break;
         }
+    }
+
+    private void showBuyDialog()
+    {
+//        int currentItem = buyPager.getCurrentItem();
+//        QuickBuyFragment fragment = (QuickBuyFragment) fragmentManager.getFragments().get(currentItem);
+//        List<BuyRoomBean.PlayDetailListBean.ListBean> checked = fragment.getChecked();
+//        if (null == checked || checked.size() == 0) {
+//            ToastUtil.show("请选择下注的内容");
+//            return;
+//        }
+//
+//        ConfirmBuyDialog confirmBuyDialog = new ConfirmBuyDialog(this, checked, new ConfirmBuyDialog.ConfirmBuyListener()
+//        {
+//            @Override
+//            public void onConfirmBuyListener(List<BuyRoomBean.PlayDetailListBean.ListBean> checked)
+//            {
+//
+//            }
+//        });
+//        confirmBuyDialog.show();
     }
 
     private void showOptionsDialog()

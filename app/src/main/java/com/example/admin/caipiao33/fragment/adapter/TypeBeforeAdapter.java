@@ -23,7 +23,6 @@ import com.example.admin.caipiao33.views.NumberInputFilter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -62,9 +61,7 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
     private final LayoutInflater mInflater;
     private final int mType;
     private List<BuyRoomBean.PlayDetailListBean.ListBean> mCheckedList = new ArrayList<>();
-    private HashMap<BuyRoomBean.PlayDetailListBean.ListBean, String> mNumberMap = new HashMap<>();
     private List<BeanGroup> mDataList;
-
 
     public TypeBeforeAdapter(LayoutInflater inflater, BuyRoomBean bean, int type) {
         this.mInflater = inflater;
@@ -268,10 +265,16 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
             mCheckedList.clear();
             notifyDataSetChanged();
         }
-        if (mNumberMap.size() > 0) {
-            mNumberMap.clear();
-            notifyDataSetChanged();
-        }
+    }
+
+    /**
+     * 获取已选中的列表
+     * @return
+     */
+    @Override
+    public List<BuyRoomBean.PlayDetailListBean.ListBean> getCheckedList()
+    {
+        return mCheckedList;
     }
 
     @Override
@@ -466,13 +469,17 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
                         BuyRoomBean.PlayDetailListBean.ListBean listBean = (BuyRoomBean.PlayDetailListBean.ListBean) etNum1.getTag(R.id.buy_data);
                         if (TextUtils.isEmpty(s1)) {
                             // 如果最新值为空，直接移除该项目
-                            if (mNumberMap.containsKey(listBean)) {
-                                mNumberMap.remove(listBean);
+                            if (mCheckedList.contains(listBean)) {
+                                mCheckedList.remove(listBean);
                             }
                             // 原来没有保存值，最新的值也是为空的话就直接忽略
                             return;
                         }
-                        mNumberMap.put(listBean, s1);
+                        listBean.setMoney(s1);
+                        if (mCheckedList.contains(listBean)) {
+                            mCheckedList.remove(listBean);
+                        }
+                        mCheckedList.add(listBean);
                     }
                 });
                 final EditText etNum2 = ViewHolder.get(convertView, R.id.et_num2);
@@ -498,13 +505,17 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
                         BuyRoomBean.PlayDetailListBean.ListBean listBean = (BuyRoomBean.PlayDetailListBean.ListBean) etNum2.getTag(R.id.buy_data);
                         if (TextUtils.isEmpty(s1)) {
                             // 如果最新值为空，直接移除该项目
-                            if (mNumberMap.containsKey(listBean)) {
-                                mNumberMap.remove(listBean);
+                            if (mCheckedList.contains(listBean)) {
+                                mCheckedList.remove(listBean);
                             }
                             // 原来没有保存值，最新的值也是为空的话就直接忽略
                             return;
                         }
-                        mNumberMap.put(listBean, s1);
+                        listBean.setMoney(s1);
+                        if (mCheckedList.contains(listBean)) {
+                            mCheckedList.remove(listBean);
+                        }
+                        mCheckedList.add(listBean);
                     }
                 });
                 final EditText etNum3 = ViewHolder.get(convertView, R.id.et_num3);
@@ -530,13 +541,17 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
                         BuyRoomBean.PlayDetailListBean.ListBean listBean = (BuyRoomBean.PlayDetailListBean.ListBean) etNum3.getTag(R.id.buy_data);
                         if (TextUtils.isEmpty(s1)) {
                             // 如果最新值为空，直接移除该项目
-                            if (mNumberMap.containsKey(listBean)) {
-                                mNumberMap.remove(listBean);
+                            if (mCheckedList.contains(listBean)) {
+                                mCheckedList.remove(listBean);
                             }
                             // 原来没有保存值，最新的值也是为空的话就直接忽略
                             return;
                         }
-                        mNumberMap.put(listBean, s1);
+                        listBean.setMoney(s1);
+                        if (mCheckedList.contains(listBean)) {
+                            mCheckedList.remove(listBean);
+                        }
+                        mCheckedList.add(listBean);
                     }
                 });
                 final EditText etNum4 = ViewHolder.get(convertView, R.id.et_num4);
@@ -562,13 +577,17 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
                         BuyRoomBean.PlayDetailListBean.ListBean listBean = (BuyRoomBean.PlayDetailListBean.ListBean) etNum4.getTag(R.id.buy_data);
                         if (TextUtils.isEmpty(s1)) {
                             // 如果最新值为空，直接移除该项目
-                            if (mNumberMap.containsKey(listBean)) {
-                                mNumberMap.remove(listBean);
+                            if (mCheckedList.contains(listBean)) {
+                                mCheckedList.remove(listBean);
                             }
                             // 原来没有保存值，最新的值也是为空的话就直接忽略
                             return;
                         }
-                        mNumberMap.put(listBean, s1);
+                        listBean.setMoney(s1);
+                        if (mCheckedList.contains(listBean)) {
+                            mCheckedList.remove(listBean);
+                        }
+                        mCheckedList.add(listBean);
                     }
                 });
             }
@@ -632,8 +651,8 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
                 ss.setSpan(new ForegroundColorSpan(Color.parseColor("#C30D23")), start, start+listBean.getBonus().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 tvName.setText(ss);
                 etNum.setTag(R.id.buy_data, listBean);
-                if (mNumberMap.containsKey(listBean)) {
-                    etNum.setText(mNumberMap.get(listBean));
+                if (mCheckedList.contains(listBean)) {
+                    etNum.setText(listBean.getMoney());
                 } else {
                     etNum.setText("");
                 }

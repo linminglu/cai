@@ -122,5 +122,9 @@ public class QuickBuyFragment extends BaseFragment
     public void clearChecked() {
         adapter.clearChecked();
     }
+
+    public List<BuyRoomBean.PlayDetailListBean.ListBean> getChecked() {
+        return adapter.getCheckedList();
+    }
 }
 
