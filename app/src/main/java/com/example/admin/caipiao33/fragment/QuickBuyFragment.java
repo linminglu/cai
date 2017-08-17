@@ -12,16 +12,16 @@ import com.example.admin.caipiao33.bean.BuyRoomBean;
 import com.example.admin.caipiao33.fragment.adapter.MyBaseBuyAdapter;
 import com.example.admin.caipiao33.fragment.adapter.TypeBeforeAdapter;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
- * Description : 走势页面
- * Author : cxy
- * Date   : 17/7/31
+ * 自选下注、快捷下注
  */
-public class QuickBuyFragment extends BaseFragment implements View.OnClickListener
+public class QuickBuyFragment extends BaseFragment
 {
 
     private static final String PLAY_DETAIL_LIST_BEAN = "playDetailListBean";
@@ -69,6 +69,23 @@ public class QuickBuyFragment extends BaseFragment implements View.OnClickListen
         }
     }
 
+    public void updateBuyRoomBean(BuyRoomBean bean) {
+        List<BuyRoomBean.PlayDetailListBean> playDetailList = bean.getPlayDetailList();
+        if (null == playDetailList) {
+            return;
+        }
+        if (adapter instanceof TypeBeforeAdapter) {
+            TypeBeforeAdapter typeBeforeAdapter = (TypeBeforeAdapter) adapter;
+            typeBeforeAdapter.updateData(bean);
+            adapter.notifyDataSetChanged();
+            //遍历所有group,将所有项设置成默认展开
+            int groupCount = adapter.getGroupCount();
+            for (int i=0; i < groupCount; i++)
+            {
+                listView.expandGroup(i);
+            }
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -90,11 +107,6 @@ public class QuickBuyFragment extends BaseFragment implements View.OnClickListen
         {
             listView.expandGroup(i);
         }
-    }
-
-    @Override
-    public void onClick(final View v)
-    {
     }
 
     @Override

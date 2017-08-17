@@ -159,42 +159,50 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
         reSetPartUI();
         mHandler.post(timerRunnable);
 
-
-        buyPager.setPageTransformer(true, new ZoomOutPageTransformer());
-        fragmentManager = getSupportFragmentManager();
-        buyPager.setAdapter(new FragmentPagerAdapter(fragmentManager)
-        {
-
-            @Override
-            public Fragment getItem(int position)
+        if (null == fragmentManager) {
+            buyPager.setPageTransformer(true, new ZoomOutPageTransformer());
+            fragmentManager = getSupportFragmentManager();
+            buyPager.setAdapter(new FragmentPagerAdapter(fragmentManager)
             {
-                Fragment ff = null;
-                switch (position)
+
+                @Override
+                public Fragment getItem(int position)
                 {
-                    case 0:
-                        ff = QuickBuyFragment.newInstance(mBuyRoomBean, QuickBuyFragment.TYPE_SELF_SELECT);
-                        break;
-                    case 1:
-                        ff = QuickBuyFragment.newInstance(mBuyRoomBean, QuickBuyFragment.TYPE_QUICK);
-                        break;
+                    Fragment ff = null;
+                    switch (position)
+                    {
+                        case 0:
+                            ff = QuickBuyFragment.newInstance(mBuyRoomBean, QuickBuyFragment.TYPE_SELF_SELECT);
+                            break;
+                        case 1:
+                            ff = QuickBuyFragment.newInstance(mBuyRoomBean, QuickBuyFragment.TYPE_QUICK);
+                            break;
+                    }
+                    return ff;
                 }
-                return ff;
-            }
 
-            @Override
-            public int getCount()
-            {
-                return mTitleArray.length;
-            }
+                @Override
+                public int getCount()
+                {
+                    return mTitleArray.length;
+                }
 
-            @Override
-            public CharSequence getPageTitle(int position)
+                @Override
+                public CharSequence getPageTitle(int position)
+                {
+                    return mTitleArray[position];
+                }
+            });
+            buyTab.setViewPager(buyPager);
+            buyPager.setCurrentItem(1);
+        } else {
+            List<Fragment> fragments = fragmentManager.getFragments();
+            for (Fragment f: fragments)
             {
-                return mTitleArray[position];
+                QuickBuyFragment fragment = (QuickBuyFragment) f;
+                fragment.updateBuyRoomBean(bean);
             }
-        });
-        buyTab.setViewPager(buyPager);
-        buyPager.setCurrentItem(1);
+        }
     }
 
     @Override

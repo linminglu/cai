@@ -58,7 +58,7 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
 
 
     private static final int COUNT = 4;
-    private final BuyRoomBean mBuyRoomBean;
+    private BuyRoomBean mBuyRoomBean;
     private final LayoutInflater mInflater;
     private final int mType;
     private List<BuyRoomBean.PlayDetailListBean.ListBean> mCheckedList = new ArrayList<>();
@@ -70,6 +70,15 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
         this.mInflater = inflater;
         this.mBuyRoomBean = bean;
         this.mType = type;
+        updateData(bean);
+    }
+
+    /**
+     * 重置数据
+     * @param bean
+     */
+    public void updateData(BuyRoomBean bean) {
+        this.mBuyRoomBean = bean;
         String num = bean.getNum();
         if (beforeList.contains(num)) {
             creatDataBefore();
@@ -87,7 +96,7 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
         for (int i =0; i < totalSize; i++) {
             BeanGroup beanGroup = new BeanGroup();
             BuyRoomBean.PlayDetailListBean playDetailListBean = mBuyRoomBean.getPlayDetailList().get(i);
-           List<String> groupNameList = new ArrayList<>(1);
+            List<String> groupNameList = new ArrayList<>(1);
             groupNameList.add(playDetailListBean.getName());
             beanGroup.setGroupNameList(groupNameList);
             List<BuyRoomBean.PlayDetailListBean.ListBean> list = playDetailListBean.getList();
@@ -114,9 +123,76 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
         }
     }
 
+    /**
+     * 第一个不合并，后面数据四个四个合并
+     */
     private void creatDataAfter()
     {
+        int totalSize = mBuyRoomBean.getPlayDetailList().size();
+        int groupSize = 1 + (totalSize - 1) / COUNT + (totalSize - 1) % COUNT;
+        mDataList = new ArrayList<>(groupSize);
+        for (int i =0; i < groupSize; i++) {
+            BeanGroup beanGroup = new BeanGroup();
+            if (i > 0 && i <= (totalSize - 1) / COUNT) {
+                List<String> groupNameList = new ArrayList<>(COUNT);
+                int childListSize = 0;
+                for (int j = 0; j < COUNT; j++) {
+                    BuyRoomBean.PlayDetailListBean playDetailListBean = mBuyRoomBean.getPlayDetailList().get(1 + COUNT * (i - 1) + j);
+                    List<BuyRoomBean.PlayDetailListBean.ListBean> itemList = playDetailListBean.getList();
+                    if (childListSize < itemList.size()) {
+                        childListSize = itemList.size();
+                    }
+                    groupNameList.add(playDetailListBean.getName());
+                }
+                beanGroup.setGroupNameList(groupNameList);
 
+                List<List<BuyRoomBean.PlayDetailListBean.ListBean>> childList = new ArrayList<>(childListSize);
+                for (int j = 0; j < childListSize; j++) {
+                    List<BuyRoomBean.PlayDetailListBean.ListBean> itemList = new ArrayList<>(COUNT);
+                    for (int k = 0; k < COUNT; k++) {
+                        BuyRoomBean.PlayDetailListBean playDetailListBean = mBuyRoomBean.getPlayDetailList().get(1 + COUNT * (i - 1) + k);
+                        List<BuyRoomBean.PlayDetailListBean.ListBean> list = playDetailListBean.getList();
+                        if (j < list.size()) {
+                            itemList.add(list.get(j));
+                        }
+                    }
+                    childList.add(itemList);
+                }
+                beanGroup.setChildList(childList);
+            } else {
+                BuyRoomBean.PlayDetailListBean playDetailListBean;
+                if (i == 0) {
+                    playDetailListBean = mBuyRoomBean.getPlayDetailList().get(i);
+                } else {
+                    playDetailListBean = mBuyRoomBean.getPlayDetailList()
+                            .get(1 + ((totalSize - 1) / COUNT) * COUNT + (i - (totalSize - 1) / COUNT) - 1);
+                }
+                List<String> groupNameList = new ArrayList<>(1);
+                groupNameList.add(playDetailListBean.getName());
+                beanGroup.setGroupNameList(groupNameList);
+                List<BuyRoomBean.PlayDetailListBean.ListBean> list = playDetailListBean.getList();
+                int childListSize;
+                if (list.size() % COUNT == 0) {
+                    childListSize = list.size() / COUNT;
+                } else {
+                    childListSize = list.size() / COUNT + 1;
+                }
+                List<List<BuyRoomBean.PlayDetailListBean.ListBean>> childList = new ArrayList<>(childListSize);
+                for (int j = 0; j < childListSize; j++) {
+                    List<BuyRoomBean.PlayDetailListBean.ListBean> itemList = new ArrayList<>(COUNT);
+                    for (int k = 0; k < COUNT; k++) {
+                        int index = j * COUNT + k;
+                        if (index >= list.size()) {
+                            break;
+                        }
+                        itemList.add(list.get(index));
+                    }
+                    childList.add(itemList);
+                }
+                beanGroup.setChildList(childList);
+            }
+            mDataList.add(beanGroup);
+        }
     }
 
     private void creatDataBefore()
@@ -225,13 +301,13 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
     @Override
     public long getGroupId(int groupPosition)
     {
-        return 0;
+        return groupPosition;
     }
 
     @Override
     public long getChildId(int groupPosition, int childPosition)
     {
-        return 0;
+        return getCombinedChildId(groupPosition, childPosition);
     }
 
     @Override
