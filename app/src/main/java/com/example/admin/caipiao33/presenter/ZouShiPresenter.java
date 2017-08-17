@@ -2,24 +2,21 @@ package com.example.admin.caipiao33.presenter;
 
 import android.view.View;
 
-import com.example.admin.caipiao33.bean.HomePageBean;
-import com.example.admin.caipiao33.bean.UserInfoBean;
-import com.example.admin.caipiao33.contract.IUserContract;
+import com.example.admin.caipiao33.bean.GouCaiBean;
+import com.example.admin.caipiao33.contract.IZouShiContract;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.httputils.MyResponseListener;
 
-import java.util.HashMap;
-
 /**
- * Created by cxy on 2017/8/2
+ * Created by cxy on 2017/8/17
  */
 
-public class UserInfoPresenter implements IUserContract.Presenter
+public class ZouShiPresenter implements IZouShiContract.Presenter
 {
-    private final IUserContract.View mView;
+    private final IZouShiContract.View mView;
     private View hideView;
 
-    public UserInfoPresenter(IUserContract.View view, View hideView)
+    public ZouShiPresenter(IZouShiContract.View view, View hideView)
     {
         this.mView = view;
         this.hideView = hideView;
@@ -29,18 +26,13 @@ public class UserInfoPresenter implements IUserContract.Presenter
     public void loadData()
     {
         mView.showLoadingLayout4Ami(hideView);
-
-        HashMap<String, String> map = new HashMap<>();
-        map.put("type", "0");
-
-
-        HttpUtil.requestSecond("user", "amount", map, UserInfoBean.class, mView.getBaseActivity(), new MyResponseListener<UserInfoBean>()
+        baseRequest(new MyResponseListener<GouCaiBean>()
         {
             @Override
-            public void onSuccess(UserInfoBean result)
+            public void onSuccess(GouCaiBean result)
             {
                 mView.hideLoadingLayout4Ami(hideView);
-                mView.updateUsers(result);
+                mView.update(result);
             }
 
             @Override
@@ -54,22 +46,18 @@ public class UserInfoPresenter implements IUserContract.Presenter
             {
 
             }
-        }, null);
+        });
     }
 
     @Override
     public void refreshData()
     {
-
-        HashMap<String, String> map = new HashMap<>();
-        map.put("type", "0");
-
-        HttpUtil.requestSecond("user", "amount", map, UserInfoBean.class, mView.getBaseActivity(), new MyResponseListener<UserInfoBean>()
+        baseRequest(new MyResponseListener<GouCaiBean>()
         {
             @Override
-            public void onSuccess(UserInfoBean result)
+            public void onSuccess(GouCaiBean result)
             {
-                mView.updateUsers(result);
+                mView.update(result);
             }
 
             @Override
@@ -83,6 +71,11 @@ public class UserInfoPresenter implements IUserContract.Presenter
             {
 
             }
-        }, null);
+        });
+    }
+
+    private void baseRequest(MyResponseListener listener)
+    {
+        HttpUtil.requestFirst("hall", GouCaiBean.class, mView.getBaseActivity(), listener, null);
     }
 }

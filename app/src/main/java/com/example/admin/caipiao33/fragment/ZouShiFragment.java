@@ -1,7 +1,6 @@
 package com.example.admin.caipiao33.fragment;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
@@ -12,16 +11,17 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.admin.caipiao33.BaseActivity;
 import com.example.admin.caipiao33.BaseFragment;
 import com.example.admin.caipiao33.MainActivity;
 import com.example.admin.caipiao33.R;
-import com.example.admin.caipiao33.WebUrlActivity;
-import com.example.admin.caipiao33.bean.KaiJiangDTBean;
+import com.example.admin.caipiao33.bean.GouCaiBean;
+import com.example.admin.caipiao33.contract.IZouShiContract;
 import com.example.admin.caipiao33.httputils.HttpUtil;
-import com.example.admin.caipiao33.utils.CaiZhongUtils;
-import com.example.admin.caipiao33.utils.Constants;
+import com.example.admin.caipiao33.presenter.ZouShiPresenter;
 import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.views.LoadingLayout;
 
@@ -29,6 +29,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -37,17 +38,22 @@ import butterknife.Unbinder;
  * Date   : 17/7/31
  */
 @SuppressLint("ValidFragment")
-public class ZouShiFragment extends BaseFragment implements View.OnClickListener
+public class ZouShiFragment extends BaseFragment implements View.OnClickListener, IZouShiContract.View
 {
     Unbinder unbinder;
     @BindView(R.id.zoushi_webView)
     WebView zoushiWebView;
     @BindView(R.id.swipeRefreshLayout)
     SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.toolbar_title)
+    TextView toolbarTitle;
     private MainActivity mainActivity;
     private LayoutInflater mInflater;
     private View parentView;
     private boolean isFirst = true;
+    private GouCaiBean mGouCaiBean;
+    private IZouShiContract.Presenter mPresenter;
+    private ArrayList<String> names;
 
     //若Fragement定义有带参构造函数，则一定要定义public的默认的构造函数
     public ZouShiFragment()
@@ -62,6 +68,8 @@ public class ZouShiFragment extends BaseFragment implements View.OnClickListener
         mInflater = inflater;
         unbinder = ButterKnife.bind(this, parentView);
         initView();
+        mPresenter = new ZouShiPresenter(this, swipeRefreshLayout);
+        mPresenter.loadData();
         return parentView;
     }
 
@@ -73,7 +81,7 @@ public class ZouShiFragment extends BaseFragment implements View.OnClickListener
             @Override
             public void onReload(View v)
             {
-                zoushiWebView.loadUrl(HttpUtil.mNewUrl + "/api/trend?gid=53");
+                mPresenter.loadData();
             }
         });
 
@@ -81,7 +89,6 @@ public class ZouShiFragment extends BaseFragment implements View.OnClickListener
         webSettings.setSavePassword(false);
         webSettings.setSaveFormData(false);
         webSettings.setJavaScriptEnabled(true);
-
         // 设置可以支持缩放
         webSettings.setSupportZoom(true);
         // 设置出现缩放工具
@@ -91,27 +98,12 @@ public class ZouShiFragment extends BaseFragment implements View.OnClickListener
         //自适应屏幕
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         webSettings.setLoadWithOverviewMode(true);
-
-        zoushiWebView.loadUrl(HttpUtil.mNewUrl + "/api/trend?gid=53");
         zoushiWebView.setWebChromeClient(new MyWebChromeClient());
         zoushiWebView.setWebViewClient(new WebViewClient()
         {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url)
             {
-                Intent intent = new Intent(getActivity(), WebUrlActivity.class);
-                intent.putExtra(Constants.EXTRA_URL, url);
-                int pid = 9999;
-                try
-                {
-                    pid = Integer.valueOf(url.substring(url.indexOf("=") + 1));
-                }
-                catch (Exception e)
-                {
-
-                }
-                intent.putExtra(Constants.EXTRA_TITLE, CaiZhongUtils.getCaiZhong(pid));
-                startActivity(intent);
                 return true;
             }
 
@@ -124,11 +116,6 @@ public class ZouShiFragment extends BaseFragment implements View.OnClickListener
 
             public void onPageFinished(WebView view, String url)
             {
-                if (isFirst)
-                {
-                    hideLoadingLayout4Ami(swipeRefreshLayout);
-                    isFirst = false;
-                }
                 swipeRefreshLayout.setRefreshing(false);
                 super.onPageFinished(view, url);
             }
@@ -141,7 +128,7 @@ public class ZouShiFragment extends BaseFragment implements View.OnClickListener
             @Override
             public void onRefresh()
             {
-                zoushiWebView.loadUrl(HttpUtil.mNewUrl + "/api/trend?gid=53");
+                mPresenter.refreshData();
             }
         });
     }
@@ -156,6 +143,49 @@ public class ZouShiFragment extends BaseFragment implements View.OnClickListener
     {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @OnClick(R.id.toolbar_title)
+    public void onViewClicked(View view)
+    {
+        switch (view.getId())
+        {
+            case R.id.toolbar_title: // 玩法选择
+                showOptionsDialog();
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public BaseActivity getBaseActivity()
+    {
+        return mainActivity;
+    }
+
+    @Override
+    public void showErrorMsg(String msg)
+    {
+        ToastUtil.show(msg);
+    }
+
+    @Override
+    public void update(GouCaiBean bean)
+    {
+        if (bean != null)
+        {
+            mGouCaiBean = bean;
+            zoushiWebView.loadUrl(HttpUtil.mNewUrl + "/api/trend?gid=" + bean.getAll()
+                    .get(0)
+                    .getNum());
+            toolbarTitle.setText(bean.getAll().get(0).getName() + "的走势");
+            names = new ArrayList<>();
+            for (int i = 0; i < mGouCaiBean.getAll().size(); i++)
+            {
+                names.add(mGouCaiBean.getAll().get(i).getName());
+            }
+        }
     }
 
     /**
@@ -188,6 +218,31 @@ public class ZouShiFragment extends BaseFragment implements View.OnClickListener
         {
             super.onReceivedTitle(view, title);
         }
+    }
+
+    private void showOptionsDialog()
+    {
+        if (null == mGouCaiBean && null == names)
+        {
+            return;
+        }
+
+        new MaterialDialog.Builder(mainActivity).title("玩法选择")
+                .items(names)
+                .positiveText(R.string.dialog_ok)
+                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice()
+                {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text)
+                    {
+                        zoushiWebView.loadUrl(HttpUtil.mNewUrl + "/api/trend?gid=" + mGouCaiBean.getAll()
+                                .get(which)
+                                .getNum());
+                        toolbarTitle.setText(mGouCaiBean.getAll().get(which).getName() + "的走势");
+                        return true;
+                    }
+                })
+                .show();
     }
 }
 

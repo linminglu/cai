@@ -119,6 +119,10 @@ public class KaiJiangFragment extends BaseFragment implements View.OnClickListen
             @Override
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl)
             {
+                if (isFirst)
+                {
+                    showLoadingLayoutError4Ami(swipeRefreshLayout);
+                }
                 super.onReceivedError(view, errorCode, description, failingUrl);
             }
 
