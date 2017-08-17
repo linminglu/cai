@@ -158,7 +158,7 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
         @Override
         public void displayImage(String imageURL, ImageView imageView)
         {
-            MyImageLoader.displayImage(HttpUtil.mNewUrl + "/" + imageURL, imageView, getBaseActivity());
+            MyImageLoader.displayImage(imageURL, imageView, getBaseActivity());
         }
 
         @Override
@@ -185,8 +185,8 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
         initView();
         mPresenter.loadData();
 
-//        String s = "xpIzvGq0MbOAufA6w2uDq3KP5eitmt/pXLC1kIHUfkU=";
-//        KLog.e("asdfasdf", P2PNative.getInstance().decrypt(s));
+        //        String s = "xpIzvGq0MbOAufA6w2uDq3KP5eitmt/pXLC1kIHUfkU=";
+        //        KLog.e("asdfasdf", P2PNative.getInstance().decrypt(s));
         return parentView;
     }
 
@@ -320,17 +320,21 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
          *  -- 立即购买页面
          */
 
-        if (bean.getPage().equals("room")) {
+        if (bean.getPage().equals("room"))
+        {
             Intent intent = new Intent(getActivity(), BuyRoomActivity.class);
             intent.putExtra(Constants.EXTRA_TITLE, title);
             intent.putExtra(Constants.EXTRA_BUY_ROOM_BEAN, bean);
             startActivity(intent);
-        } else {
+        }
+        else
+        {
             String roomId = bean.getRoomId();
             String playId = null;
             String playId1 = null;
             List<BuyRoomBean.PlayListBean> playList = bean.getPlayList();
-            if (null != playList && playList.size() > 0) {
+            if (null != playList && playList.size() > 0)
+            {
                 BuyRoomBean.PlayListBean playListBean = playList.get(0);
                 playId = playListBean.getPlayId();
                 playId1 = playListBean.getPlayId1();
@@ -361,28 +365,36 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
                 toWebUrlActivity(HttpUtil.mNewUrl + "/api/systemNotice", "公告");
                 break;
             case R.id.ll_1_1:
-                mPresenter.requestRoomData(mTypeListBeanList.get(0).getNum(), mTypeListBeanList.get(0).getName());
+                mPresenter.requestRoomData(mTypeListBeanList.get(0)
+                        .getNum(), mTypeListBeanList.get(0).getName());
                 break;
             case R.id.ll_1_2:
-                mPresenter.requestRoomData(mTypeListBeanList.get(1).getNum(), mTypeListBeanList.get(1).getName());
+                mPresenter.requestRoomData(mTypeListBeanList.get(1)
+                        .getNum(), mTypeListBeanList.get(1).getName());
                 break;
             case R.id.ll_1_3:
-                mPresenter.requestRoomData(mTypeListBeanList.get(2).getNum(), mTypeListBeanList.get(2).getName());
+                mPresenter.requestRoomData(mTypeListBeanList.get(2)
+                        .getNum(), mTypeListBeanList.get(2).getName());
                 break;
             case R.id.ll_2_1:
-                mPresenter.requestRoomData(mTypeListBeanList.get(3).getNum(), mTypeListBeanList.get(3).getName());
+                mPresenter.requestRoomData(mTypeListBeanList.get(3)
+                        .getNum(), mTypeListBeanList.get(3).getName());
                 break;
             case R.id.ll_2_2:
-                mPresenter.requestRoomData(mTypeListBeanList.get(4).getNum(), mTypeListBeanList.get(4).getName());
+                mPresenter.requestRoomData(mTypeListBeanList.get(4)
+                        .getNum(), mTypeListBeanList.get(4).getName());
                 break;
             case R.id.ll_2_3:
-                mPresenter.requestRoomData(mTypeListBeanList.get(5).getNum(), mTypeListBeanList.get(5).getName());
+                mPresenter.requestRoomData(mTypeListBeanList.get(5)
+                        .getNum(), mTypeListBeanList.get(5).getName());
                 break;
             case R.id.ll_3_1:
-                mPresenter.requestRoomData(mTypeListBeanList.get(6).getNum(), mTypeListBeanList.get(6).getName());
+                mPresenter.requestRoomData(mTypeListBeanList.get(6)
+                        .getNum(), mTypeListBeanList.get(6).getName());
                 break;
             case R.id.ll_3_2:
-                mPresenter.requestRoomData(mTypeListBeanList.get(7).getNum(), mTypeListBeanList.get(7).getName());
+                mPresenter.requestRoomData(mTypeListBeanList.get(7)
+                        .getNum(), mTypeListBeanList.get(7).getName());
                 break;
             case R.id.ll_3_3: // 更多彩种
                 ((MainActivity) getActivity()).tabSwitchCenter(GouCaiFragment.class);
