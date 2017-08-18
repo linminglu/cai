@@ -378,23 +378,23 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
 
     private void showBuyDialog()
     {
-//        int currentItem = buyPager.getCurrentItem();
-//        QuickBuyFragment fragment = (QuickBuyFragment) fragmentManager.getFragments().get(currentItem);
-//        List<BuyRoomBean.PlayDetailListBean.ListBean> checked = fragment.getChecked();
-//        if (null == checked || checked.size() == 0) {
-//            ToastUtil.show("请选择下注的内容");
-//            return;
-//        }
-//
-//        ConfirmBuyDialog confirmBuyDialog = new ConfirmBuyDialog(this, checked, new ConfirmBuyDialog.ConfirmBuyListener()
-//        {
-//            @Override
-//            public void onConfirmBuyListener(List<BuyRoomBean.PlayDetailListBean.ListBean> checked)
-//            {
-//
-//            }
-//        });
-//        confirmBuyDialog.show();
+        int currentItem = buyPager.getCurrentItem();
+        QuickBuyFragment fragment = (QuickBuyFragment) fragmentManager.getFragments().get(currentItem);
+        List<BuyRoomBean.PlayDetailListBean.ListBean> checked = fragment.getChecked();
+        if (null == checked || checked.size() == 0) {
+            ToastUtil.show("请选择下注的内容");
+            return;
+        }
+
+        ConfirmBuyDialog confirmBuyDialog = new ConfirmBuyDialog(this, checked, new ConfirmBuyDialog.ConfirmBuyListener()
+        {
+            @Override
+            public void onConfirmBuyListener(List<BuyRoomBean.PlayDetailListBean.ListBean> checked)
+            {
+
+            }
+        });
+        confirmBuyDialog.show();
     }
 
     private void showOptionsDialog()

@@ -8,7 +8,7 @@ import android.widget.GridView;
 import com.example.admin.caipiao33.R;
 
 /**
- * Created by shaodongPC on 2017/8/17.
+ * 设置最大高度的gridview
  */
 
 public class MaxHeightGridView extends GridView
@@ -26,7 +26,9 @@ public class MaxHeightGridView extends GridView
         super(context, attrs);
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.MaxHeightGridView, 0, 0);
         try {
-            setMaxHeight(a.getInt(R.styleable.MaxHeightGridView_maxHeight, 0));
+            setMaxHeight((int) a.getDimension(R.styleable.MaxHeightGridView_maxHeight, WITHOUT_MAX_HEIGHT_VALUE));
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             a.recycle();
         }
