@@ -111,7 +111,9 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
                     if (index >= list.size()) {
                         break;
                     }
-                    itemList.add(list.get(index));
+                    BuyRoomBean.PlayDetailListBean.ListBean e = list.get(index);
+                    e.setParentName(playDetailListBean.getName());
+                    itemList.add(e);
                 }
                 childList.add(itemList);
             }
@@ -150,7 +152,9 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
                         BuyRoomBean.PlayDetailListBean playDetailListBean = mBuyRoomBean.getPlayDetailList().get(1 + COUNT * (i - 1) + k);
                         List<BuyRoomBean.PlayDetailListBean.ListBean> list = playDetailListBean.getList();
                         if (j < list.size()) {
-                            itemList.add(list.get(j));
+                            BuyRoomBean.PlayDetailListBean.ListBean e = list.get(j);
+                            e.setParentName(playDetailListBean.getName());
+                            itemList.add(e);
                         }
                     }
                     childList.add(itemList);
@@ -182,7 +186,9 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
                         if (index >= list.size()) {
                             break;
                         }
-                        itemList.add(list.get(index));
+                        BuyRoomBean.PlayDetailListBean.ListBean e = list.get(index);
+                        e.setParentName(playDetailListBean.getName());
+                        itemList.add(e);
                     }
                     childList.add(itemList);
                 }
@@ -219,7 +225,9 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
                         BuyRoomBean.PlayDetailListBean playDetailListBean = mBuyRoomBean.getPlayDetailList().get(COUNT * i + k);
                         List<BuyRoomBean.PlayDetailListBean.ListBean> list = playDetailListBean.getList();
                         if (j < list.size()) {
-                            itemList.add(list.get(j));
+                            BuyRoomBean.PlayDetailListBean.ListBean e = list.get(j);
+                            e.setParentName(playDetailListBean.getName());
+                            itemList.add(e);
                         }
                     }
                     childList.add(itemList);
@@ -246,7 +254,9 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
                         if (index >= list.size()) {
                             break;
                         }
-                        itemList.add(list.get(index));
+                        BuyRoomBean.PlayDetailListBean.ListBean e = list.get(index);
+                        e.setParentName(playDetailListBean.getName());
+                        itemList.add(e);
                     }
                     childList.add(itemList);
                 }

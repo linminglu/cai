@@ -1,5 +1,6 @@
 package com.example.admin.caipiao33.presenter;
 
+import com.example.admin.caipiao33.bean.AmountBean;
 import com.example.admin.caipiao33.bean.BuyRoomBean;
 import com.example.admin.caipiao33.bean.GouCaiBean;
 import com.example.admin.caipiao33.contract.IBuyContract;
@@ -90,6 +91,63 @@ public class BuyPresenter implements IBuyContract.Presenter
             public void onFinish()
             {
 
+            }
+        }, null);
+    }
+
+    @Override
+    public void refreshAmount()
+    {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("type", "1");// 1余额
+        HttpUtil.requestSecond("user", "amount", map, AmountBean.class, mView.getBaseActivity(), new MyResponseListener<AmountBean>()
+        {
+            @Override
+            public void onSuccess(AmountBean result)
+            {
+                mView.updateAmount(result.getBalance());
+            }
+
+            @Override
+            public void onFailed(int code, String msg)
+            {
+
+            }
+
+            @Override
+            public void onFinish()
+            {
+            }
+        }, null);
+    }
+
+    @Override
+    public void submit(String gid, String roomId, String issue, String betList)
+    {
+        mView.showLoadingDialog();
+        HashMap<String, String> map = new HashMap<>();
+        map.put("gid", gid);
+        map.put("roomId", roomId);
+        map.put("issue", issue);
+        map.put("betList", betList);
+        HttpUtil.requestSecond("bet", "submit", map, null, mView.getBaseActivity(), new MyResponseListener()
+        {
+            @Override
+            public void onSuccess(Object result)
+            {
+                mView.submitSuccess();
+            }
+
+            @Override
+            public void onFailed(int code, String msg)
+            {
+
+            }
+
+            @Override
+            public void onFinish()
+            {
+                mView.hideLoadingDialog();
             }
         }, null);
     }

@@ -16,10 +16,15 @@ public interface IBuyContract
         void updateHomePage(BuyRoomBean bean);
         void updateLotteryData(GouCaiBean.DataBean result);
         void updateLotteryFailed();
+        void updateAmount(String amount);
+        void submitSuccess();
     }
 
     interface Presenter extends IBasePresenter {
         void loadData(String num, String roomId, String playId, String playId1);
         void refreshLotteryData(String num);
+        void refreshAmount();
+        // gid彩种编码 roomId房间ID issue下注期数 betList下注列表
+        void submit(String gid, String roomId, String issue, String betList);
     }
 }

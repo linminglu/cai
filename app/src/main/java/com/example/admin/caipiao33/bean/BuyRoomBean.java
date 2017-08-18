@@ -184,7 +184,7 @@ public class BuyRoomBean implements Serializable
             this.list = list;
         }
 
-        public static class ListBean implements Serializable
+        public static class ListBean implements Serializable, Cloneable
         {
             /**
              * playName : 01
@@ -197,6 +197,18 @@ public class BuyRoomBean implements Serializable
             private String bonus;
             /** 投注金额 自选时为输入的金额，快捷时为0 */
             private String money;
+            /** 玩法列表名称 例如：万位千位百位... */
+            private String parentName;
+
+            public String getParentName()
+            {
+                return parentName;
+            }
+
+            public void setParentName(String parentName)
+            {
+                this.parentName = parentName;
+            }
 
             public String getMoney()
             {
@@ -256,6 +268,19 @@ public class BuyRoomBean implements Serializable
             public int hashCode()
             {
                 return playId != null ? playId.hashCode() : 0;
+            }
+
+            @Override
+            public ListBean clone()
+            {
+                ListBean o = null;
+                try
+                {
+                    o = (ListBean) super.clone();
+                } catch (CloneNotSupportedException e) {
+                    e.printStackTrace();
+                }
+                return o;
             }
         }
     }

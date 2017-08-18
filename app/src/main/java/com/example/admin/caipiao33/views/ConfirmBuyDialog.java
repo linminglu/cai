@@ -3,6 +3,7 @@ package com.example.admin.caipiao33.views;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.text.Editable;
+import android.text.Html;
 import android.text.InputFilter;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -11,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,11 +19,12 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.admin.caipiao33.R;
 import com.example.admin.caipiao33.bean.BuyRoomBean;
+import com.example.admin.caipiao33.utils.FloatUtils;
+import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.utils.ViewHolder;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.OnClick;
 
 /**
  * Created by shaodongPC on 2017/8/17.
@@ -32,7 +33,7 @@ import butterknife.OnClick;
 public class ConfirmBuyDialog implements View.OnClickListener
 {
     private final Context mContext;
-    private List<BuyRoomBean.PlayDetailListBean.ListBean> checkedList;
+    private List<BuyRoomBean.PlayDetailListBean.ListBean> checkedList = new ArrayList<>();
     private final ConfirmBuyListener callBack;
 
     MaxHeightGridView gridView;
@@ -49,10 +50,20 @@ public class ConfirmBuyDialog implements View.OnClickListener
     TextView tvTips;
     private final View view;
 
+    // 本金总和
+    private float totalCapital;
+    // 预计中奖总和
+    private float totalWinMoney;
+
+
     public ConfirmBuyDialog(Context context, List<BuyRoomBean.PlayDetailListBean.ListBean> checked, ConfirmBuyListener callBack)
     {
         this.mContext = context;
-        this.checkedList = checked;
+        this.checkedList.clear();
+        for (BuyRoomBean.PlayDetailListBean.ListBean bean : checked)
+        {
+            checkedList.add(bean.clone());
+        }
         this.callBack = callBack;
 
         view = LayoutInflater.from(context).inflate(R.layout.item_confirm_buy, null);
@@ -95,10 +106,23 @@ public class ConfirmBuyDialog implements View.OnClickListener
             @Override
             public void afterTextChanged(Editable s)
             {
+                totalCapital = 0;
+                totalWinMoney = 0;
                 String s1 = s.toString();
                 if (TextUtils.isEmpty(s1)) {
-
+                    tvTips.setVisibility(View.GONE);
+                    return;
                 }
+                tvTips.setVisibility(View.VISIBLE);
+                for (BuyRoomBean.PlayDetailListBean.ListBean bean: checkedList)
+                {
+                    bean.setMoney(s1);
+                    int capital = Integer.valueOf(bean.getMoney());
+                    float bonus = Float.valueOf(bean.getBonus());
+                    totalCapital += capital;
+                    totalWinMoney += capital*bonus;
+                }
+                tvTips.setText(Html.fromHtml(mContext.getString(R.string.s_buy_explain, checkedList.size(), String.valueOf(FloatUtils.format(totalCapital)), String.valueOf(FloatUtils.format(totalWinMoney)), String.valueOf(FloatUtils.format(totalWinMoney - totalCapital)))));
             }
         });
 
@@ -116,18 +140,26 @@ public class ConfirmBuyDialog implements View.OnClickListener
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which)
                     {
-
+                        if (totalCapital <= 0) {
+                            ToastUtil.show("请输入买入金额");
+                            return;
+                        }
+                        callBack.onConfirmBuyListener(checkedList);
                     }
                 })
                 .show();
     }
 
-    private void updateUI(List<BuyRoomBean.PlayDetailListBean.ListBean> checked)
+    public void updateUI(List<BuyRoomBean.PlayDetailListBean.ListBean> checked)
     {
         if (null == checked || checked.size() == 0) {
             return;
         }
-        this.checkedList = checked;
+        this.checkedList.clear();
+        for (BuyRoomBean.PlayDetailListBean.ListBean bean : checked)
+        {
+            checkedList.add(bean.clone());
+        }
 
         gridView.setAdapter(new MyAdapter());
 
@@ -136,10 +168,20 @@ public class ConfirmBuyDialog implements View.OnClickListener
             // 快捷下注
             layoutQuickMoney.setVisibility(View.VISIBLE);
             layoutInput.setVisibility(View.VISIBLE);
+            tvTips.setVisibility(View.GONE);
         } else {
             // 自选下注
-            layoutQuickMoney.setVisibility(View.VISIBLE);
+            layoutQuickMoney.setVisibility(View.GONE);
             layoutInput.setVisibility(View.GONE);
+            tvTips.setVisibility(View.VISIBLE);
+            for (BuyRoomBean.PlayDetailListBean.ListBean bean: checkedList)
+            {
+                int capital = Integer.valueOf(bean.getMoney());
+                float bonus = Float.valueOf(bean.getBonus());
+                totalCapital += capital;
+                totalWinMoney += capital*bonus;
+            }
+            tvTips.setText(Html.fromHtml(mContext.getString(R.string.s_buy_explain, checkedList.size(), String.valueOf(FloatUtils.format(totalCapital)), String.valueOf(FloatUtils.format(totalWinMoney)), String.valueOf(FloatUtils.format(totalWinMoney - totalCapital)))));
         }
     }
 
@@ -205,7 +247,7 @@ public class ConfirmBuyDialog implements View.OnClickListener
             }
             TextView tvContent = ViewHolder.get(convertView, R.id.tv_content);
             BuyRoomBean.PlayDetailListBean.ListBean listBean = checkedList.get(position);
-            tvContent.setText(listBean.getPlayName());
+            tvContent.setText(listBean.getParentName() + "\n" + listBean.getPlayName());
             return convertView;
         }
     }

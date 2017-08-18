@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -13,17 +12,16 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.Spanned;
-import android.text.SpannedString;
 import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.admin.caipiao33.bean.BuyRoomBean;
 import com.example.admin.caipiao33.bean.GouCaiBean;
+import com.example.admin.caipiao33.bean.TokenBean;
 import com.example.admin.caipiao33.contract.IBuyContract;
 import com.example.admin.caipiao33.fragment.QuickBuyFragment;
 import com.example.admin.caipiao33.httputils.HttpUtil;
@@ -32,6 +30,7 @@ import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.DateUtils;
 import com.example.admin.caipiao33.utils.StringUtils;
 import com.example.admin.caipiao33.utils.ToastUtil;
+import com.example.admin.caipiao33.utils.UserConfig;
 import com.example.admin.caipiao33.views.ConfirmBuyDialog;
 import com.example.admin.caipiao33.views.LoadingLayout;
 import com.example.admin.caipiao33.views.PagerSlidingTabStrip;
@@ -79,6 +78,8 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
     PagerSlidingTabStrip buyTab;
     @BindView(R.id.buy_pager)
     ViewPager buyPager;
+    @BindView(R.id.tv_amount)
+    TextView tvAmount;
     private String mNumber;
     private String mTitleStr;
     private String mRoomId;
@@ -91,6 +92,7 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
     private String mLastOpen;
     private String[] mTitleArray;
     private FragmentManager fragmentManager;
+    private ConfirmBuyDialog confirmBuyDialog;
 
 
     @Override
@@ -108,6 +110,13 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
 
         mPresenter = new BuyPresenter(this);
         mPresenter.loadData(mNumber, mRoomId, mPlayId, mPlayId1);
+        TokenBean token = UserConfig.getInstance().getToken(this);
+        if (null == token || token.getIsLogin() == 0) {
+            // 未登录
+            tvAmount.setVisibility(View.GONE);
+        } else {
+            mPresenter.refreshAmount();
+        }
     }
 
     private void initView()
@@ -241,6 +250,26 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
     }
 
     @Override
+    public void updateAmount(String amount)
+    {
+        tvAmount.setVisibility(View.VISIBLE);
+        tvAmount.setText(amount);
+    }
+
+    @Override
+    public void submitSuccess()
+    {
+        ToastUtil.show("下注成功");
+        List<Fragment> fragments = fragmentManager.getFragments();
+        for (Fragment fragment : fragments) {
+            if (fragment instanceof QuickBuyFragment) {
+                QuickBuyFragment qf = (QuickBuyFragment) fragment;
+                qf.clearChecked();
+            }
+        }
+    }
+
+    @Override
     protected void onResume()
     {
         super.onResume();
@@ -346,7 +375,7 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
         }
     }
 
-    @OnClick({R.id.tv_clear, R.id.tv_buy, R.id.tv_trend, R.id.toolbar_title})
+    @OnClick({R.id.tv_clear, R.id.tv_buy, R.id.tv_trend, R.id.toolbar_title, R.id.tv_amount})
     public void onViewClicked(View view)
     {
         switch (view.getId()) {
@@ -371,6 +400,16 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
             case R.id.toolbar_title: // 玩法选择
                 showOptionsDialog();
                 break;
+            case R.id.tv_amount: // 刷新余额
+                TokenBean token = UserConfig.getInstance().getToken(this);
+                if (null == token || token.getIsLogin() == 0) {
+                    // 未登录
+                    Intent intent = new Intent(this, LoginActivity.class);
+                    startActivityForResult(intent, Constants.REQUEST_CODE_Main2_LOGIN);
+                    return;
+                }
+                mPresenter.refreshAmount();
+                break;
             default:
                 break;
         }
@@ -378,6 +417,14 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
 
     private void showBuyDialog()
     {
+        TokenBean token = UserConfig.getInstance().getToken(this);
+        if (null == token || token.getIsLogin() == 0) {
+            // 未登录
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivityForResult(intent, Constants.REQUEST_CODE_Main2_LOGIN);
+            return;
+        }
+
         int currentItem = buyPager.getCurrentItem();
         QuickBuyFragment fragment = (QuickBuyFragment) fragmentManager.getFragments().get(currentItem);
         List<BuyRoomBean.PlayDetailListBean.ListBean> checked = fragment.getChecked();
@@ -386,14 +433,24 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
             return;
         }
 
-        ConfirmBuyDialog confirmBuyDialog = new ConfirmBuyDialog(this, checked, new ConfirmBuyDialog.ConfirmBuyListener()
-        {
-            @Override
-            public void onConfirmBuyListener(List<BuyRoomBean.PlayDetailListBean.ListBean> checked)
-            {
+        // 投注成功，选中清空，弹出提示，页面余额变化
 
-            }
-        });
+        if (null == confirmBuyDialog) {
+            confirmBuyDialog = new ConfirmBuyDialog(this, checked, new ConfirmBuyDialog.ConfirmBuyListener()
+            {
+                @Override
+                public void onConfirmBuyListener(List<BuyRoomBean.PlayDetailListBean.ListBean> checked)
+                {
+                    StringBuilder sb = new StringBuilder();
+                    for (BuyRoomBean.PlayDetailListBean.ListBean bean : checked) {
+                        sb.append(bean.getPlayName()).append("|").append(bean.getPlayId()).append("|").append(bean.getMoney()).append(";");
+                    }
+                    mPresenter.submit(mBuyRoomBean.getNum(), mBuyRoomBean.getRoomId(), mBuyRoomBean.getPeriod(), sb.toString());
+                }
+            });
+        } else {
+            confirmBuyDialog.updateUI(checked);
+        }
         confirmBuyDialog.show();
     }
 
@@ -458,5 +515,13 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
                 break;
         }
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (requestCode == Constants.REQUEST_CODE_Main2_LOGIN && resultCode == Constants.REQUEST_CODE_2_LOGIN) {
+            mPresenter.refreshAmount();
+        }
     }
 }
