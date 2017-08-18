@@ -6,8 +6,10 @@ import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +18,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.admin.caipiao33.BaseActivity;
 import com.example.admin.caipiao33.BaseFragment;
 import com.example.admin.caipiao33.BuyActivity;
@@ -295,6 +299,31 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
             layoutParams.height = (tvCalc.getMeasuredHeight() + 2 * ResourcesUtil.getDip(getResources(), R.dimen.d_win_text_padding) + 2 * ResourcesUtil
                     .getDip(getResources(), R.dimen.d_win_text_layout_padding_top)) * 5;
         }
+
+//        HomePageBean.PopNoticeBean popNotice = bean.getPopNotice();
+//        if (null != popNotice) {
+//            // 弹出提示框
+//            View view = LayoutInflater.from(mainActivity)
+//                    .inflate(R.layout.item_home_page_tips, null);
+//            TextView tvTime = (TextView) view.findViewById(R.id.tv_time);
+//            TextView tvContent = (TextView) view.findViewById(R.id.tv_content);
+//            tvTime.setText(popNotice.getTime());
+//            tvContent.setText(Html.fromHtml(popNotice.getContent()));
+//            new MaterialDialog.Builder(mainActivity).title(popNotice.getTitle())
+//                    .customView(view, false)
+//                    .positiveText("不再提示")
+//                    .positiveColor(getResources().getColor(R.color.blue))
+//                    .negativeText("知道了")
+//                    .onPositive(new MaterialDialog.SingleButtonCallback()
+//                    {
+//                        @Override
+//                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which)
+//                        {
+//                            ToastUtil.show("请求接口");
+//                        }
+//                    })
+//                    .show();
+//        }
     }
 
     @Override
