@@ -64,6 +64,7 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
     private boolean isCreate;
     private GouCaiBean mGouCaiBean;
     private MyGouCaiGrideAdapter grideAdapter;
+    private boolean isPause;
 
     public GouCaiItemFragment()
     {
@@ -118,7 +119,7 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
                     synchronized (refreshList) {
                         refreshList.add(num);
                     }
-                    mPresenter.refreshData(num, WHAT_REFRESH_ITEM);
+                    mPresenter.refreshData(num, WHAT_REFRESH_RESULT);
                     break;
             }
             return false;
@@ -153,17 +154,22 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
     public void onResume()
     {
         super.onResume();
-//        GouCaiFragment fragment = (GouCaiFragment) getParentFragment();
-//        if (fragment.isLinearLayout && isVisible) {
-//            mHandler.post(timerRunnable);
-//            return;
-//        }
+        if (isPause) {
+            // 页面暂停过，需要重新加载
+            isPause = false;
+            if (isVisible) {
+                swipeRefreshLayout.setRefreshing(true);
+                GouCaiFragment fragment = (GouCaiFragment) getParentFragment();
+                fragment.toRefreshData();
+            }
+        }
     }
 
     @Override
     public void onPause()
     {
         super.onPause();
+        this.isPause = true;
         mHandler.removeCallbacks(timerRunnable);
     }
 
@@ -233,7 +239,8 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
             } else {
                 updateUILayout();
             }
-            mHandler.post(timerRunnable);
+            mHandler.removeCallbacks(timerRunnable);
+            mHandler.postDelayed(timerRunnable, LIMIT_TIME);
         } else {
             RecyclerView.Adapter adapter = recyclerView.getAdapter();
             if (adapter != null && adapter instanceof MyGouCaiGrideAdapter) {
@@ -367,7 +374,10 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
         item.setName(newData.getName());
         item.setPeriod(newData.getPeriod());
         item.setPic(newData.getPic());
-        adapter.notifyItemChanged(position);
+        // 页面不在滑动状态才更新
+        if (recyclerView.getScrollState() == RecyclerView.SCROLL_STATE_IDLE) {
+            adapter.notifyItemChanged(position);
+        }
         synchronized (refreshList) {
             refreshList.remove(item.getNum());
         }
@@ -392,6 +402,17 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
         {
             super(itemView);
             ButterKnife.bind(this, itemView);
+        }
+
+        @OnClick(R.id.parent)
+        public void onViewClicked(View view) {
+            switch (view.getId()) {
+                case R.id.parent:
+                    int position = getAdapterPosition();
+                    GouCaiBean.DataBean dataBean = mDataList.get(position);
+                    mPresenter.requestRoomData(dataBean.getNum(), dataBean.getName());
+                    break;
+            }
         }
     }
 
