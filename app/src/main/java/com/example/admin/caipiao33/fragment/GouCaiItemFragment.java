@@ -144,8 +144,11 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
                 mHandler.removeCallbacks(this);
                 return;
             }
+            // 页面不在滑动状态才更新
+            if (recyclerView.getScrollState() == RecyclerView.SCROLL_STATE_IDLE) {
+                adapter.notifyDataSetChanged();
             KLog.e("timerRunnable");
-            adapter.notifyDataSetChanged();
+            }
             mHandler.postDelayed(this, LIMIT_TIME);
         }
     };

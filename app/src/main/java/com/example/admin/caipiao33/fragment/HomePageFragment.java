@@ -300,30 +300,30 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
                     .getDip(getResources(), R.dimen.d_win_text_layout_padding_top)) * 5;
         }
 
-//        HomePageBean.PopNoticeBean popNotice = bean.getPopNotice();
-//        if (null != popNotice) {
-//            // 弹出提示框
-//            View view = LayoutInflater.from(mainActivity)
-//                    .inflate(R.layout.item_home_page_tips, null);
-//            TextView tvTime = (TextView) view.findViewById(R.id.tv_time);
-//            TextView tvContent = (TextView) view.findViewById(R.id.tv_content);
-//            tvTime.setText(popNotice.getTime());
-//            tvContent.setText(Html.fromHtml(popNotice.getContent()));
-//            new MaterialDialog.Builder(mainActivity).title(popNotice.getTitle())
-//                    .customView(view, false)
-//                    .positiveText("不再提示")
-//                    .positiveColor(getResources().getColor(R.color.blue))
-//                    .negativeText("知道了")
-//                    .onPositive(new MaterialDialog.SingleButtonCallback()
-//                    {
-//                        @Override
-//                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which)
-//                        {
-//                            ToastUtil.show("请求接口");
-//                        }
-//                    })
-//                    .show();
-//        }
+        HomePageBean.PopNoticeBean popNotice = bean.getPopNotice();
+        if (null != popNotice) {
+            // 弹出提示框
+            View view = LayoutInflater.from(mainActivity)
+                    .inflate(R.layout.item_home_page_tips, null);
+            TextView tvTime = (TextView) view.findViewById(R.id.tv_time);
+            TextView tvContent = (TextView) view.findViewById(R.id.tv_content);
+            tvTime.setText(popNotice.getTime());
+            tvContent.setText(Html.fromHtml(popNotice.getContent()));
+            new MaterialDialog.Builder(mainActivity).title(popNotice.getTitle())
+                    .customView(view, false)
+                    .positiveText("不再提示")
+                    .positiveColor(getResources().getColor(R.color.blue))
+                    .negativeText("知道了")
+                    .onPositive(new MaterialDialog.SingleButtonCallback()
+                    {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which)
+                        {
+                            ToastUtil.show("请求接口");
+                        }
+                    })
+                    .show();
+        }
     }
 
     @Override
