@@ -24,6 +24,7 @@ import com.example.admin.caipiao33.bean.GouCaiBean;
 import com.example.admin.caipiao33.contract.IGouCaiContract;
 import com.example.admin.caipiao33.presenter.GouCaiPresenter;
 import com.example.admin.caipiao33.views.LoadingLayout;
+import com.socks.library.KLog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -60,6 +61,7 @@ public class GouCaiFragment extends BaseFragment implements IGouCaiContract.View
     private GouCaiItemFragment fragmentDP;
     private GouCaiBean mGouCaiBeant;
     public boolean isLinearLayout = true;
+    public boolean isvisible;
 
     //若Fragement定义有带参构造函数，则一定要定义public的默认的构造函数
     public GouCaiFragment()
@@ -251,6 +253,36 @@ public class GouCaiFragment extends BaseFragment implements IGouCaiContract.View
             case R.id.goucai_dp:
                 goucaiPager.setCurrentItem(2);
                 break;
+        }
+    }
+
+    public void fragmentShow(){
+        this.isvisible = true;
+        if (null == goucaiPager) {
+            return;
+        }
+        int currentItem = goucaiPager.getCurrentItem();
+        if (currentItem == 0) {
+            fragmentAll.timerResume();
+        } else if (currentItem == 1) {
+            fragmentGP.timerResume();
+        } else {
+            fragmentDP.timerResume();
+        }
+    }
+
+    public void fragmentHide(){
+        this.isvisible = false;
+        if (null == goucaiPager) {
+            return;
+        }
+        int currentItem = goucaiPager.getCurrentItem();
+        if (currentItem == 0) {
+            fragmentAll.timerPause();
+        } else if (currentItem == 1) {
+            fragmentGP.timerPause();
+        } else {
+            fragmentDP.timerPause();
         }
     }
 }

@@ -23,5 +23,6 @@ public interface IHomePageContract
         void refreshData();
         void toAskService();
         void requestRoomData(String num, String title);
+        void noTip(String id);
     }
 }

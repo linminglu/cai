@@ -231,6 +231,19 @@ public class MainActivity extends BaseActivity
         {
             ft.show(userFragment);
         }
+
+        // 通知fragment当前被显示或者隐藏
+        if (clazz == GouCaiFragment.class) {
+            ((GouCaiFragment) userFragment).fragmentShow();
+        } else if (mCurFragment instanceof GouCaiFragment) {
+            ((GouCaiFragment) mCurFragment).fragmentHide();
+        }
+        if (clazz == HomePageFragment.class) {
+            ((HomePageFragment) userFragment).fragmentShow();
+        } else if (mCurFragment instanceof HomePageFragment) {
+            ((HomePageFragment) mCurFragment).fragmentHide();
+        }
+
         ft.commitAllowingStateLoss();
         mCurFragment = userFragment;
     }

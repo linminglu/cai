@@ -14,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -34,10 +36,12 @@ import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.presenter.HomePagePresenter;
 import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.MyImageLoader;
-import com.example.admin.caipiao33.utils.P2PNative;
 import com.example.admin.caipiao33.utils.ResourcesUtil;
 import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.utils.Tools;
+import com.example.admin.caipiao33.utils.UserConfig;
+import com.example.admin.caipiao33.utils.ViewHolder;
+import com.example.admin.caipiao33.views.GridView4ScrollView;
 import com.example.admin.caipiao33.views.LoadingLayout;
 import com.example.admin.caipiao33.views.ScrollingTextView;
 import com.example.admin.caipiao33.views.banner.ImageCycleViewListener;
@@ -45,7 +49,6 @@ import com.example.admin.caipiao33.views.banner.MyBanner;
 import com.example.admin.caipiao33.views.banner.MyVerticalBanner;
 import com.socks.library.KLog;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -59,7 +62,7 @@ import butterknife.Unbinder;
  * Date   : 17/7/31
  */
 @SuppressLint("ValidFragment")
-public class HomePageFragment extends BaseFragment implements View.OnClickListener, IHomePageContract.View
+public class HomePageFragment extends BaseFragment implements IHomePageContract.View
 {
 
     @BindView(R.id.toolbar)
@@ -68,64 +71,8 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
     MyBanner myBanner;
     @BindView(R.id.tv_scroll)
     ScrollingTextView tvScroll;
-    @BindView(R.id.iv_1)
-    ImageView iv1;
-    @BindView(R.id.tv_1)
-    TextView tv1;
-    @BindView(R.id.ll_1_1)
-    LinearLayout ll11;
-    @BindView(R.id.iv_2)
-    ImageView iv2;
-    @BindView(R.id.tv_2)
-    TextView tv2;
-    @BindView(R.id.ll_1_2)
-    LinearLayout ll12;
-    @BindView(R.id.iv_3)
-    ImageView iv3;
-    @BindView(R.id.tv_3)
-    TextView tv3;
-    @BindView(R.id.ll_1_3)
-    LinearLayout ll13;
-    @BindView(R.id.ll_1)
-    LinearLayout ll1;
-    @BindView(R.id.iv_4)
-    ImageView iv4;
-    @BindView(R.id.tv_4)
-    TextView tv4;
-    @BindView(R.id.ll_2_1)
-    LinearLayout ll21;
-    @BindView(R.id.iv_5)
-    ImageView iv5;
-    @BindView(R.id.tv_5)
-    TextView tv5;
-    @BindView(R.id.ll_2_2)
-    LinearLayout ll22;
-    @BindView(R.id.iv_6)
-    ImageView iv6;
-    @BindView(R.id.tv_6)
-    TextView tv6;
-    @BindView(R.id.ll_2_3)
-    LinearLayout ll23;
-    @BindView(R.id.ll_2)
-    LinearLayout ll2;
-    @BindView(R.id.iv_7)
-    ImageView iv7;
-    @BindView(R.id.tv_7)
-    TextView tv7;
-    @BindView(R.id.ll_3_1)
-    LinearLayout ll31;
-    @BindView(R.id.iv_8)
-    ImageView iv8;
-    @BindView(R.id.tv_8)
-    TextView tv8;
-    @BindView(R.id.iv_9)
-    ImageView iv9;
-    @BindView(R.id.ll_3_2)
-    LinearLayout ll32;
-    @BindView(R.id.ll_3_3)
-    LinearLayout ll33;
-    @BindView(R.id.ll_3)
-    LinearLayout ll3;
+    @BindView(R.id.gridView4ScrollView)
+    GridView4ScrollView gridView4ScrollView;
     @BindView(R.id.swipeRefreshLayout)
     SwipeRefreshLayout swipeRefreshLayout;
     Unbinder unbinder;
@@ -137,8 +84,6 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
     LinearLayout llFunc3;
     @BindView(R.id.ll_func_4)
     LinearLayout llFunc4;
-    @BindView(R.id.tv_9)
-    TextView tv9;
     @BindView(R.id.loadingLayout)
     LoadingLayout loadingLayout;
     @BindView(R.id.myVerticalBanner)
@@ -162,6 +107,7 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
         @Override
         public void displayImage(String imageURL, ImageView imageView)
         {
+            KLog.e("ImageCycleViewListener displayImage");
             MyImageLoader.displayImage(imageURL, imageView, getBaseActivity());
         }
 
@@ -171,8 +117,10 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
             toPromotions();
         }
     };
-    private List<ViewHolder> mHotType;
     private List<HomePageBean.TypeListBean> mTypeListBeanList;
+    private MyAdapter adapter;
+    private boolean isPause;
+    private boolean isvisible;
 
     //若Fragement定义有带参构造函数，则一定要定义public的默认的构造函数
     public HomePageFragment()
@@ -216,16 +164,20 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
 
         myBanner.setSwipeRefresh(swipeRefreshLayout);
         mLoadingLayout = (LoadingLayout) parentView.findViewById(R.id.loadingLayout);
-        mHotType = new ArrayList<>();
-        mHotType.add(new ViewHolder(iv1, tv1));
-        mHotType.add(new ViewHolder(iv2, tv2));
-        mHotType.add(new ViewHolder(iv3, tv3));
-        mHotType.add(new ViewHolder(iv4, tv4));
-        mHotType.add(new ViewHolder(iv5, tv5));
-        mHotType.add(new ViewHolder(iv6, tv6));
-        mHotType.add(new ViewHolder(iv7, tv7));
-        mHotType.add(new ViewHolder(iv8, tv8));
-        MyImageLoader.displayResourceImage(R.mipmap.logo_more_yellow, iv9, getBaseActivity());
+        gridView4ScrollView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                // 更多彩种
+                if (position == parent.getCount() - 1) {
+                    ((MainActivity) getActivity()).tabSwitchCenter(GouCaiFragment.class);
+                    return;
+                }
+                HomePageBean.TypeListBean typeListBean = mTypeListBeanList.get(position);
+                mPresenter.requestRoomData(typeListBean.getNum(), typeListBean.getName());
+            }
+        });
         mLoadingLayout.setOnReloadingListener(new LoadingLayout.OnReloadingListener()
         {
             @Override
@@ -255,9 +207,69 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
         ivHomepage4.setImageDrawable(Tools.tintDrawable(homepage4, ColorStateList.valueOf(resources.getColor(R.color.c_homepage_4))));
     }
 
-    @Override
-    public void onClick(final View v)
-    {
+    class MyAdapter extends BaseAdapter {
+
+        private List<HomePageBean.TypeListBean> list;
+
+        public MyAdapter(List<HomePageBean.TypeListBean> typeListBeanList)
+        {
+            this.list = typeListBeanList;
+        }
+
+        @Override
+        public int getCount()
+        {
+            return null == list ? 0 : 9;
+        }
+
+        @Override
+        public Object getItem(int position)
+        {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position)
+        {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent)
+        {
+            if (null == convertView) {
+                convertView = mInflater.inflate(R.layout.item_home_page_hot, null);
+            }
+            ImageView iv = ViewHolder.get(convertView, R.id.iv);
+            TextView tv = ViewHolder.get(convertView, R.id.tv);
+
+            if (position >= list.size())
+            {
+                return convertView;
+            }
+            HomePageBean.TypeListBean typeListBean = list.get(position);
+            if (null == typeListBean)
+            {
+                return convertView;
+            }
+            if (position == getCount() - 1)
+            {
+                MyImageLoader.displayResourceImage(R.mipmap.logo_more_yellow, iv, getBaseActivity());
+                tv.setText("更多彩种");
+                return convertView;
+            }
+
+            MyImageLoader.displayImage(HttpUtil.mNewUrl + typeListBean.getPic(), iv, getBaseActivity());
+            tv.setText(typeListBean.getName());
+
+            return convertView;
+        }
+
+        public void updateData(List<HomePageBean.TypeListBean> typeListBeanList)
+        {
+            list.clear();
+            this.list = typeListBeanList;
+        }
     }
 
     @Override
@@ -273,6 +285,64 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
     }
 
     @Override
+    public void onResume()
+    {
+        super.onResume();
+        if (isPause) {
+            isPause = false;
+            bannerStart();
+        }
+    }
+
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        isPause = true;
+        bannerStop();
+    }
+
+    public void fragmentHide()
+    {
+        this.isvisible = false;
+        bannerStop();
+    }
+
+    public void fragmentShow()
+    {
+        this.isvisible = true;
+        bannerStart();
+    }
+
+    private void bannerStop()
+    {
+        if (null != myBanner)
+        {
+            myBanner.pushImageCycle();
+        }
+        if (null != myVerticalBanner)
+        {
+            myVerticalBanner.pushImageCycle();
+        }
+    }
+
+    private void bannerStart()
+    {
+        if (!isvisible) {
+            return;
+        }
+        if (null != myBanner)
+        {
+            myBanner.startImageCycle();
+        }
+        if (null != myVerticalBanner)
+        {
+            myVerticalBanner.startImageCycle();
+        }
+    }
+
+
+    @Override
     public void updateHomePage(HomePageBean bean)
     {
         /**设置数据*/
@@ -280,16 +350,12 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
         tvScroll.setText(bean.getScrollNotice());
         tvScroll.setEnabled(true);
         mTypeListBeanList = bean.getTypeList();
-        for (int i = 0; i < bean.getTypeList().size(); i++)
-        {
-            HomePageBean.TypeListBean typeListBean = bean.getTypeList().get(i);
-            if (i == mHotType.size())
-            {
-                break;
-            }
-            ViewHolder viewHolder = mHotType.get(i);
-            MyImageLoader.displayImage(HttpUtil.mNewUrl + typeListBean.getPic(), viewHolder.iv, getBaseActivity());
-            viewHolder.tv.setText(typeListBean.getName());
+        if (null == adapter) {
+            adapter = new MyAdapter(mTypeListBeanList);
+            gridView4ScrollView.setAdapter(adapter);
+        } else {
+            adapter.updateData(mTypeListBeanList);
+            adapter.notifyDataSetChanged();
         }
         List<HomePageBean.WinListBean> winList = bean.getWinList();
         myVerticalBanner.setNewsData(winList);
@@ -319,7 +385,7 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
                         @Override
                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which)
                         {
-                            ToastUtil.show("请求接口");
+                            mPresenter.noTip(UserConfig.getInstance().getToken(mainActivity).getMemberId());
                         }
                     })
                     .show();
@@ -385,48 +451,13 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
         unbinder.unbind();
     }
 
-    @OnClick({R.id.tv_scroll, R.id.ll_1_1, R.id.ll_1_2, R.id.ll_1_3, R.id.ll_2_1, R.id.ll_2_2, R.id.ll_2_3, R.id.ll_3_1, R.id.ll_3_2, R.id.ll_3_3, R.id.ll_func_1, R.id.ll_func_2, R.id.ll_func_3, R.id.ll_func_4, R.id.myVerticalBanner})
+    @OnClick({R.id.tv_scroll, R.id.ll_func_1, R.id.ll_func_2, R.id.ll_func_3, R.id.ll_func_4, R.id.myVerticalBanner})
     public void onViewClicked(View view)
     {
         switch (view.getId())
         {
             case R.id.tv_scroll: // 滚动的公告
                 toWebUrlActivity(HttpUtil.mNewUrl + "/api/systemNotice", "公告");
-                break;
-            case R.id.ll_1_1:
-                mPresenter.requestRoomData(mTypeListBeanList.get(0)
-                        .getNum(), mTypeListBeanList.get(0).getName());
-                break;
-            case R.id.ll_1_2:
-                mPresenter.requestRoomData(mTypeListBeanList.get(1)
-                        .getNum(), mTypeListBeanList.get(1).getName());
-                break;
-            case R.id.ll_1_3:
-                mPresenter.requestRoomData(mTypeListBeanList.get(2)
-                        .getNum(), mTypeListBeanList.get(2).getName());
-                break;
-            case R.id.ll_2_1:
-                mPresenter.requestRoomData(mTypeListBeanList.get(3)
-                        .getNum(), mTypeListBeanList.get(3).getName());
-                break;
-            case R.id.ll_2_2:
-                mPresenter.requestRoomData(mTypeListBeanList.get(4)
-                        .getNum(), mTypeListBeanList.get(4).getName());
-                break;
-            case R.id.ll_2_3:
-                mPresenter.requestRoomData(mTypeListBeanList.get(5)
-                        .getNum(), mTypeListBeanList.get(5).getName());
-                break;
-            case R.id.ll_3_1:
-                mPresenter.requestRoomData(mTypeListBeanList.get(6)
-                        .getNum(), mTypeListBeanList.get(6).getName());
-                break;
-            case R.id.ll_3_2:
-                mPresenter.requestRoomData(mTypeListBeanList.get(7)
-                        .getNum(), mTypeListBeanList.get(7).getName());
-                break;
-            case R.id.ll_3_3: // 更多彩种
-                ((MainActivity) getActivity()).tabSwitchCenter(GouCaiFragment.class);
                 break;
             case R.id.ll_func_1: // 存/取款
                 break;
@@ -460,16 +491,5 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
         //        startActivity(new Intent(getActivity(), PromotionsActivity.class));
     }
 
-    private class ViewHolder
-    {
-        ImageView iv;
-        TextView tv;
-
-        public ViewHolder(ImageView iv, TextView tv)
-        {
-            this.iv = iv;
-            this.tv = tv;
-        }
-    }
 }
 

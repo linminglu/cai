@@ -156,7 +156,17 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
     @Override
     public void onResume()
     {
+        KLog.e("GouCaiItemFragment onResume");
         super.onResume();
+        timerResume();
+    }
+
+    public void timerResume()
+    {
+        GouCaiFragment pf = (GouCaiFragment) getParentFragment();
+        if (!pf.isvisible) {
+            return;
+        }
         if (isPause) {
             // 页面暂停过，需要重新加载
             isPause = false;
@@ -171,7 +181,13 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
     @Override
     public void onPause()
     {
+        KLog.e("GouCaiItemFragment onPause");
         super.onPause();
+        timerPause();
+    }
+
+    public void timerPause()
+    {
         this.isPause = true;
         mHandler.removeCallbacks(timerRunnable);
     }

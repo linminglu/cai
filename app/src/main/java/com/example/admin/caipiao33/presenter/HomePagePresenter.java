@@ -129,4 +129,31 @@ public class HomePagePresenter implements IHomePageContract.Presenter
             }
         }, null);
     }
+
+    @Override
+    public void noTip(String id)
+    {
+        mView.showLoadingDialog();
+        HashMap<String, String> map = new HashMap<>();
+        map.put("id", id);
+        HttpUtil.requestSecond("notice", "noTip", map, null, mView.getBaseActivity(), new MyResponseListener()
+        {
+            @Override
+            public void onSuccess(Object result)
+            {
+            }
+
+            @Override
+            public void onFailed(int code, String msg)
+            {
+
+            }
+
+            @Override
+            public void onFinish()
+            {
+                mView.hideLoadingDialog();
+            }
+        }, null);
+    }
 }
