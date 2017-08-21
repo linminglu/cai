@@ -31,6 +31,7 @@ import com.example.admin.caipiao33.utils.DateUtils;
 import com.example.admin.caipiao33.utils.MyImageLoader;
 import com.example.admin.caipiao33.utils.StringUtils;
 import com.example.admin.caipiao33.utils.Tools;
+import com.example.admin.caipiao33.views.DividerGridItemDecoration;
 import com.example.admin.caipiao33.views.DividerItemDecoration;
 import com.socks.library.KLog;
 
@@ -65,6 +66,8 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
     private GouCaiBean mGouCaiBean;
     private MyGouCaiGrideAdapter grideAdapter;
     private boolean isPause;
+    private DividerItemDecoration lineDecor;
+    private DividerGridItemDecoration gridDecor;
 
     public GouCaiItemFragment()
     {
@@ -207,8 +210,10 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
                 fragment.toRefreshData();
             }
         });
+        lineDecor = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST);
+        gridDecor = new DividerGridItemDecoration(getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
+        recyclerView.addItemDecoration(lineDecor);
         adapter = new MyGouCaiAdapter();
         grideAdapter = new MyGouCaiGrideAdapter();
         recyclerView.setAdapter(adapter);
@@ -274,9 +279,12 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
         GouCaiFragment fragment = (GouCaiFragment) getParentFragment();
         if (fragment.isLinearLayout) {
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
+            recyclerView.removeItemDecoration(gridDecor);
+            recyclerView.addItemDecoration(lineDecor);
             recyclerView.setAdapter(adapter);
         } else {
+            recyclerView.removeItemDecoration(lineDecor);
+            recyclerView.addItemDecoration(gridDecor);
             recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
             recyclerView.setAdapter(grideAdapter);
         }
