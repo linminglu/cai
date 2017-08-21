@@ -155,6 +155,7 @@ public class ConfirmBuyDialog implements View.OnClickListener
         if (null == checked || checked.size() == 0) {
             return;
         }
+        etMoney.setText("");
         this.checkedList.clear();
         for (BuyRoomBean.PlayDetailListBean.ListBean bean : checked)
         {

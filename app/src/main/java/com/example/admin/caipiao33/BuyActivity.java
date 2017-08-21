@@ -524,4 +524,10 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
             mPresenter.refreshAmount();
         }
     }
+
+    @Override
+    public void showErrorMsg(String msg)
+    {
+        ToastUtil.show(msg);
+    }
 }
