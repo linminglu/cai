@@ -19,4 +19,5 @@
 
     <dimen name="item_margin">5dp</dimen>
     <dimen name="homepage_hot_height">120dp</dimen>
+    <dimen name="d_circle_height">30dp</dimen>
 </resources>

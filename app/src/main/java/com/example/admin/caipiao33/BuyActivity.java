@@ -17,6 +17,7 @@ import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -35,6 +36,7 @@ import com.example.admin.caipiao33.utils.UserConfig;
 import com.example.admin.caipiao33.views.ConfirmBuyDialog;
 import com.example.admin.caipiao33.views.LoadingLayout;
 import com.example.admin.caipiao33.views.PagerSlidingTabStrip;
+import com.example.admin.caipiao33.views.ResultAssist;
 import com.example.admin.caipiao33.views.ZoomOutPageTransformer;
 
 import java.util.ArrayList;
@@ -73,8 +75,8 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
     TextView tvTime;
     @BindView(R.id.tv_index)
     TextView tvIndex;
-    @BindView(R.id.tv_result)
-    TextView tvResult;
+    @BindView(R.id.layout_result)
+    LinearLayout layoutResult;
     @BindView(R.id.buy_tab)
     PagerSlidingTabStrip buyTab;
     @BindView(R.id.buy_pager)
@@ -94,6 +96,7 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
     private String[] mTitleArray;
     private FragmentManager fragmentManager;
     private ConfirmBuyDialog confirmBuyDialog;
+    private ResultAssist resultAssist;
 
 
     @Override
@@ -163,11 +166,10 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
         mLastOpen = bean.getLastOpen();
         tvLotteryTime.setText(getString(R.string.s_lottery_time, DateUtils.getTimeStr(Long.valueOf(StringUtils.isEmpty2(mEndTime) ? "0" : mEndTime), "yyyy-MM-dd HH:mm:ss")));
         tvIndex.setText(bean.getLastPeriod() + "期");
-        String lastOpen = bean.getLastOpen();
-        if (StringUtils.isEmpty(lastOpen)) {
-            tvResult.setText("等待开奖");
+        if (null == resultAssist) {
+            resultAssist = new ResultAssist(getLayoutInflater(), layoutResult, bean, bean.getLastOpen());
         } else {
-            tvResult.setText(lastOpen);
+            resultAssist.updateData(bean.getLastOpen());
         }
         reSetPartUI();
         mHandler.post(timerRunnable);
@@ -232,11 +234,10 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
         tvRoom.setText(ss);
         tvLotteryTime.setText(getString(R.string.s_lottery_time, DateUtils.getTimeStr(Long.valueOf(mEndTime), "yyyy-MM-dd HH:mm:ss")));
         tvIndex.setText(result.getLastPeriod() + "期");
-        String lastOpen = result.getLastOpen();
-        if (StringUtils.isEmpty(lastOpen)) {
-            tvResult.setText("等待开奖");
+        if (null == resultAssist) {
+            resultAssist = new ResultAssist(getLayoutInflater(), layoutResult, mBuyRoomBean, result.getLastOpen());
         } else {
-            tvResult.setText(lastOpen);
+            resultAssist.updateData(result.getLastOpen());
         }
     }
 
@@ -288,6 +289,15 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
         super.onPause();
         isPause = true;
         mHandler.removeCallbacks(timerRunnable);
+    }
+
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        if (null != resultAssist) {
+            resultAssist.clear();
+        }
     }
 
     private Handler mHandler = new Handler(new Handler.Callback()

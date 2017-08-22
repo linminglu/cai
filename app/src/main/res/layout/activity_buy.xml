@@ -112,14 +112,16 @@
                 android:textSize="16sp"
                 />
 
-            <TextView
-                android:id="@+id/tv_result"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/layout_result"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_index"
                 android:padding="5dp"
-                android:textColor="@color/red"
-                android:textSize="16sp"/>
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/tv_amount"
@@ -139,7 +141,7 @@
                 android:id="@+id/line2"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/common_divider_line"
-                android:layout_below="@+id/tv_result"
+                android:layout_below="@+id/layout_result"
                 android:layout_marginTop="5dp"
                 android:background="@color/light_gray"/>
 
