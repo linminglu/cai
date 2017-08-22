@@ -13,10 +13,14 @@ public interface IQianDaoContract
     interface View extends IBaseView
     {
         void updata(QianDaoBean result);
+
+        void submit(String result);
     }
 
     interface Presenter extends IBasePresenter
     {
         void getQianDao();
+
+        void submitQianDao();
     }
 }

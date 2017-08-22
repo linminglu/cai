@@ -19,6 +19,7 @@ public class QianDaoPresenter implements IQianDaoContract.Presenter
 {
     private final IQianDaoContract.View mView;
     private View hideView;
+    private boolean isFirst = true;
 
     public QianDaoPresenter(IQianDaoContract.View view, View hideView)
     {
@@ -29,13 +30,48 @@ public class QianDaoPresenter implements IQianDaoContract.Presenter
     @Override
     public void getQianDao()
     {
-        mView.showLoadingDialog(false);
         HttpUtil.requestSecond("user", "checkin", null, QianDaoBean.class, mView.getBaseActivity(), new MyResponseListener<QianDaoBean>()
         {
             @Override
             public void onSuccess(QianDaoBean result)
             {
+                if (isFirst)
+                {
+                    mView.hideLoadingLayout();
+                    isFirst = false;
+                }
                 mView.updata(result);
+            }
+
+            @Override
+            public void onFailed(int code, String msg)
+            {
+                if (isFirst)
+                {
+                    mView.showLoadingLayoutError();
+                    isFirst = false;
+                }
+                ToastUtil.show(msg);
+            }
+
+            @Override
+            public void onFinish()
+            {
+                mView.hideLoadingDialog();
+            }
+        }, null);
+    }
+
+    @Override
+    public void submitQianDao()
+    {
+        mView.showLoadingDialog(false);
+        HttpUtil.requestSecond("user", "checkinSubmit", null, String.class, mView.getBaseActivity(), new MyResponseListener<String>()
+        {
+            @Override
+            public void onSuccess(String result)
+            {
+                mView.submit(result);
             }
 
             @Override

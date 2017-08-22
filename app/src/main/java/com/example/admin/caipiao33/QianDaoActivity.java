@@ -5,12 +5,15 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.admin.caipiao33.bean.QianDaoBean;
 import com.example.admin.caipiao33.contract.IQianDaoContract;
 import com.example.admin.caipiao33.presenter.QianDaoPresenter;
+import com.example.admin.caipiao33.utils.ToastUtil;
+import com.example.admin.caipiao33.views.LoadingLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,14 +49,22 @@ public class QianDaoActivity extends ToolbarActivity implements Toolbar.OnMenuIt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qiandao);
         ButterKnife.bind(this);
-        mPresenter = new QianDaoPresenter(this, null);
         initView();
+        mPresenter = new QianDaoPresenter(this, null);
         mPresenter.getQianDao();
     }
 
     private void initView()
     {
-
+        mLoadingLayout = (LoadingLayout) findViewById(R.id.loadingLayout);
+        mLoadingLayout.setOnReloadingListener(new LoadingLayout.OnReloadingListener()
+        {
+            @Override
+            public void onReload(View v)
+            {
+                mPresenter.getQianDao();
+            }
+        });
     }
 
     @Override
@@ -124,10 +135,24 @@ public class QianDaoActivity extends ToolbarActivity implements Toolbar.OnMenuIt
         tvQiandaoHongbao.setText(result.getGiftAmount() + "元");
     }
 
-    @OnClick(R.id.btn_qiandao_ok)
-    public void onViewClicked()
+    @Override
+    public void submit(String result)
     {
+        ToastUtil.show("签到成功！");
+        Intent intent = new Intent(QianDaoActivity.this, QianDaoJiLuActivity.class);
+        startActivity(intent);
+        finish();
+    }
 
+    @OnClick(R.id.btn_qiandao_ok)
+    public void onViewClicked(View view)
+    {
+        switch (view.getId())
+        {
+            case R.id.btn_qiandao_ok:
+                mPresenter.submitQianDao();
+                break;
+        }
     }
 }
 
