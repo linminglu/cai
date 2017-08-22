@@ -219,7 +219,14 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
         @Override
         public int getCount()
         {
-            return null == list ? 0 : 9;
+            if (null == list) {
+                return 0;
+            }
+            // 加一表示最后放一个更多彩种
+            int total = list.size() + 1;
+            // 整除3表示数据是三个三个一行，保证不会出现空缺
+            int num = total / 3;
+            return num * 3;
         }
 
         @Override
@@ -243,6 +250,12 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
             ImageView iv = ViewHolder.get(convertView, R.id.iv);
             TextView tv = ViewHolder.get(convertView, R.id.tv);
 
+            if (position == getCount() - 1)
+            {
+                MyImageLoader.displayResourceImage(R.mipmap.logo_more_yellow, iv, getBaseActivity());
+                tv.setText("更多彩种");
+                return convertView;
+            }
             if (position >= list.size())
             {
                 return convertView;
@@ -250,12 +263,6 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
             HomePageBean.TypeListBean typeListBean = list.get(position);
             if (null == typeListBean)
             {
-                return convertView;
-            }
-            if (position == getCount() - 1)
-            {
-                MyImageLoader.displayResourceImage(R.mipmap.logo_more_yellow, iv, getBaseActivity());
-                tv.setText("更多彩种");
                 return convertView;
             }
 
