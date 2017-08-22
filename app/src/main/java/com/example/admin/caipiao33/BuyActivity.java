@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
@@ -253,7 +254,7 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
     public void updateAmount(String amount)
     {
         tvAmount.setVisibility(View.VISIBLE);
-        tvAmount.setText(amount);
+        tvAmount.setText(Html.fromHtml(getString(R.string.s_amount, amount)));
     }
 
     @Override

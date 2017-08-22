@@ -98,6 +98,7 @@ public class BuyPresenter implements IBuyContract.Presenter
     @Override
     public void refreshAmount()
     {
+        mView.showLoadingDialog();
         HashMap<String, String> map = new HashMap<>();
         map.put("type", "1");// 1余额
         HttpUtil.requestSecond("user", "amount", map, AmountBean.class, mView.getBaseActivity(), new MyResponseListener<AmountBean>()
@@ -117,6 +118,7 @@ public class BuyPresenter implements IBuyContract.Presenter
             @Override
             public void onFinish()
             {
+                mView.hideLoadingDialog();
             }
         }, null);
     }
