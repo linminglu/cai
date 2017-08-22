@@ -1,7 +1,7 @@
 package com.example.admin.caipiao33.fragment;
 
 import android.annotation.SuppressLint;
-import android.graphics.drawable.Drawable;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
@@ -15,8 +15,8 @@ import android.widget.TextView;
 import com.example.admin.caipiao33.BaseActivity;
 import com.example.admin.caipiao33.BaseFragment;
 import com.example.admin.caipiao33.MainActivity;
+import com.example.admin.caipiao33.QianDaoActivity;
 import com.example.admin.caipiao33.R;
-import com.example.admin.caipiao33.bean.HomePageBean;
 import com.example.admin.caipiao33.bean.UserInfoBean;
 import com.example.admin.caipiao33.contract.IUserContract;
 import com.example.admin.caipiao33.presenter.UserInfoPresenter;
@@ -174,6 +174,8 @@ public class UserFragment extends BaseFragment implements View.OnClickListener, 
             case R.id.user_fragment_tixian_tv:
                 break;
             case R.id.user_fragment_qiandao_tv:
+                Intent intent = new Intent(mainActivity, QianDaoActivity.class);
+                startActivity(intent);
                 break;
             case R.id.user_fragment_tuijian_iv:
                 break;

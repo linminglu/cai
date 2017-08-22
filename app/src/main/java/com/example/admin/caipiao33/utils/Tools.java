@@ -27,18 +27,26 @@ public class Tools
      * @param context
      * @return<br>
      */
-    public static boolean isNetworkAvailable(Context context) {
-        if(context==null){
+    public static boolean isNetworkAvailable(Context context)
+    {
+        if (context == null)
+        {
             return false;
         }
         ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (connectivity == null) {
+        if (connectivity == null)
+        {
             KLog.w("Utils", "couldn't get connectivity manager");
-        } else {
+        }
+        else
+        {
             NetworkInfo[] info = connectivity.getAllNetworkInfo();
-            if (info != null) {
-                for (int i = 0; i < info.length; i++) {
-                    if (info[i].getState() == NetworkInfo.State.CONNECTED) {
+            if (info != null)
+            {
+                for (int i = 0; i < info.length; i++)
+                {
+                    if (info[i].getState() == NetworkInfo.State.CONNECTED)
+                    {
                         return true;
                     }
                 }
@@ -49,13 +57,20 @@ public class Tools
 
     /**
      * 着色器
+     *
      * @param drawable
      * @param colors
      * @return
      */
-    public static Drawable tintDrawable(Drawable drawable, ColorStateList colors) {
+    public static Drawable tintDrawable(Drawable drawable, ColorStateList colors)
+    {
         final Drawable wrappedDrawable = DrawableCompat.wrap(drawable);
         DrawableCompat.setTintList(wrappedDrawable, colors);
         return wrappedDrawable;
+    }
+
+    public static int dp2px(Context context, int dpValue)
+    {
+        return (int) context.getResources().getDisplayMetrics().density * dpValue;
     }
 }

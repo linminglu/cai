@@ -40,8 +40,8 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:launchMode="singleTop"
             android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait">
         </activity>
         <activity
@@ -67,11 +67,21 @@
         <activity
             android:name=".BuyActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
         </activity>
         <activity
             android:name=".BuyRoomActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".QianDaoActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".QianDaoJiLuActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait">
         </activity>

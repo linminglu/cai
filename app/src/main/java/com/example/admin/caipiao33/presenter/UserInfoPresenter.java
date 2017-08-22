@@ -33,7 +33,6 @@ public class UserInfoPresenter implements IUserContract.Presenter
         HashMap<String, String> map = new HashMap<>();
         map.put("type", "0");
 
-
         HttpUtil.requestSecond("user", "amount", map, UserInfoBean.class, mView.getBaseActivity(), new MyResponseListener<UserInfoBean>()
         {
             @Override

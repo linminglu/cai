@@ -11,6 +11,9 @@
     <string name="loading">正在加载中...</string>
     <string name="reloading">点击重新加载</string>
 
+    <string name="s_load_more_end">已经到底啦~</string>
+    <string name="s_not_message">列表是空的！</string>
+
     <string name="main_tab_homepage">首页</string>
     <string name="main_tab_goucai">购彩</string>
     <string name="main_tab_kaijiang">开奖</string>
@@ -71,6 +74,15 @@
     <string name="s_bind">绑定</string>
     <string name="s_bind_mobile">绑定手机</string>
     <string name="s_login_status_failed">您还未登录或登录状态超时，是否跳转到登录界面？</string>
+
+    <!-- 签到 -->
+    <string name="s_qiandao">签到</string>
+    <string name="s_qiandao_jilu">签到记录</string>
+    <string name="s_qiandao_yue">账户余额</string>
+    <string name="s_qiandao_zuijin">最近三天充值记录</string>
+    <string name="s_qiandao_zengsong">赠送百分比（%）</string>
+    <string name="s_qiandao_hongbao">可领取红包金额</string>
+    <string name="s_qiandao_ok">签到领取</string>
 
     <!-- 投注内页 -->
     <string name="s_clear_options">清空选项</string>
