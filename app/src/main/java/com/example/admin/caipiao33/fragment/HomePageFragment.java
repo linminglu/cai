@@ -26,11 +26,14 @@ import com.example.admin.caipiao33.BaseActivity;
 import com.example.admin.caipiao33.BaseFragment;
 import com.example.admin.caipiao33.BuyActivity;
 import com.example.admin.caipiao33.BuyRoomActivity;
+import com.example.admin.caipiao33.LoginActivity;
 import com.example.admin.caipiao33.MainActivity;
+import com.example.admin.caipiao33.QianDaoActivity;
 import com.example.admin.caipiao33.R;
 import com.example.admin.caipiao33.WebUrlActivity;
 import com.example.admin.caipiao33.bean.BuyRoomBean;
 import com.example.admin.caipiao33.bean.HomePageBean;
+import com.example.admin.caipiao33.bean.TokenBean;
 import com.example.admin.caipiao33.contract.IHomePageContract;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.presenter.HomePagePresenter;
@@ -155,7 +158,14 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
                 switch (item.getItemId())
                 {
                     case R.id.action_sign:
-                        ToastUtil.show("去签到");
+                        TokenBean token = UserConfig.getInstance().getToken(getActivity());
+                        if (null == token || token.getIsLogin() == 0) {
+                            // 未登录
+                            Intent intent = new Intent(getActivity(), LoginActivity.class);
+                            startActivityForResult(intent, Constants.REQUEST_CODE_Main2_LOGIN);
+                        } else {
+                            startActivity(new Intent(getActivity(), QianDaoActivity.class));
+                        }
                         break;
                 }
                 return false;
