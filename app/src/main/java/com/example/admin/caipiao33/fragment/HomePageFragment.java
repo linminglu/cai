@@ -375,6 +375,7 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
             TextView tvContent = (TextView) view.findViewById(R.id.tv_content);
             tvTime.setText(popNotice.getTime());
             tvContent.setText(Html.fromHtml(popNotice.getContent()));
+            final String id = popNotice.getId();
             new MaterialDialog.Builder(mainActivity).title(popNotice.getTitle())
                     .customView(view, false)
                     .positiveText("不再提示")
@@ -385,7 +386,7 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
                         @Override
                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which)
                         {
-                            mPresenter.noTip(UserConfig.getInstance().getToken(mainActivity).getMemberId());
+                            mPresenter.noTip(id);
                         }
                     })
                     .show();
