@@ -7,6 +7,7 @@ import com.example.admin.caipiao33.bean.UserInfoBean;
 import com.example.admin.caipiao33.contract.IUserContract;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.httputils.MyResponseListener;
+import com.example.admin.caipiao33.utils.ToastUtil;
 
 import java.util.HashMap;
 
@@ -18,6 +19,7 @@ public class UserInfoPresenter implements IUserContract.Presenter
 {
     private final IUserContract.View mView;
     private View hideView;
+    private boolean isFirst = true;
 
     public UserInfoPresenter(IUserContract.View view, View hideView)
     {
@@ -28,8 +30,6 @@ public class UserInfoPresenter implements IUserContract.Presenter
     @Override
     public void loadData()
     {
-        mView.showLoadingLayout4Ami(hideView);
-
         HashMap<String, String> map = new HashMap<>();
         map.put("type", "0");
 
@@ -38,14 +38,22 @@ public class UserInfoPresenter implements IUserContract.Presenter
             @Override
             public void onSuccess(UserInfoBean result)
             {
-                mView.hideLoadingLayout4Ami(hideView);
+                if (isFirst)
+                {
+                    mView.hideLoadingLayout4Ami(hideView);
+                    isFirst = false;
+                }
                 mView.updateUsers(result);
             }
 
             @Override
             public void onFailed(int code, String msg)
             {
-                mView.showLoadingLayoutError4Ami(hideView);
+                if (isFirst)
+                {
+                    mView.showLoadingLayoutError4Ami(hideView);
+                }
+                ToastUtil.show(msg);
             }
 
             @Override

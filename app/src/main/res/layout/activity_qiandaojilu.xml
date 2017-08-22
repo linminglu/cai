@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/layout_background"
+    android:orientation="vertical"
     tools:context="com.example.admin.caipiao33.QianDaoJiLuActivity">
+
+    <com.example.admin.caipiao33.views.LoadingLayout
+        android:id="@+id/loadingLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/notify_swipe"
@@ -26,13 +34,6 @@
         </android.support.v7.widget.RecyclerView>
 
     </android.support.v4.widget.SwipeRefreshLayout>
-
-    <com.example.admin.caipiao33.views.LoadingLayout
-        android:id="@+id/layout_loading"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        />
 
     <LinearLayout
         android:id="@+id/notify_null_layout"
@@ -58,7 +59,5 @@
             android:textColor="@color/light_gray"
             android:textSize="@dimen/font_larger"
             />
-
     </LinearLayout>
-
-</RelativeLayout>
+</LinearLayout>

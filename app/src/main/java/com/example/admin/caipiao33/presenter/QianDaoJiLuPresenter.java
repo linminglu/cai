@@ -18,6 +18,7 @@ public class QianDaoJiLuPresenter implements IQianDaoJiLuContract.Presenter
 {
     private final IQianDaoJiLuContract.View mView;
     private View hideView;
+    private boolean isFirst = true;
 
     public QianDaoJiLuPresenter(IQianDaoJiLuContract.View view, View hideView)
     {
@@ -36,12 +37,22 @@ public class QianDaoJiLuPresenter implements IQianDaoJiLuContract.Presenter
             @Override
             public void onSuccess(QianDaoJiLuBean result)
             {
+                if (isFirst)
+                {
+                    mView.hideLoadingLayout4Ami(hideView);
+                    isFirst = false;
+                }
                 mView.updata(result);
             }
 
             @Override
             public void onFailed(int code, String msg)
             {
+                if (isFirst)
+                {
+                    mView.showLoadingLayoutError4Ami(hideView);
+                    isFirst = false;
+                }
                 ToastUtil.show(msg);
             }
 

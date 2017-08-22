@@ -39,8 +39,8 @@ public class QianDaoJiLuActivity extends ToolbarActivity implements Toolbar.OnMe
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qiandaojilu);
-        mPresenter = new QianDaoJiLuPresenter(this, null);
         initView();
+        mPresenter = new QianDaoJiLuPresenter(this, mNotifySwipe);
         mPresenter.getQianDaoJiLu();
     }
 
@@ -77,7 +77,7 @@ public class QianDaoJiLuActivity extends ToolbarActivity implements Toolbar.OnMe
         mNotifyRecycler.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
         mAdapter = new MyAdapter();
         mNotifyRecycler.setAdapter(mAdapter);
-        mLoadingLayout = (LoadingLayout) findViewById(R.id.layout_loading);
+        mLoadingLayout = (LoadingLayout) findViewById(R.id.loadingLayout);
         mLoadingLayout.setOnReloadingListener(new LoadingLayout.OnReloadingListener()
         {
             @Override
@@ -190,7 +190,7 @@ public class QianDaoJiLuActivity extends ToolbarActivity implements Toolbar.OnMe
         @Override
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
         {
-            View view = getLayoutInflater().inflate(R.layout.item_qiandaojilu, null);
+            View view = getLayoutInflater().inflate(R.layout.item_qiandaojilu, parent, false);
             return new MyViewHolder(view);
         }
 
@@ -200,8 +200,8 @@ public class QianDaoJiLuActivity extends ToolbarActivity implements Toolbar.OnMe
             QianDaoJiLuBean.ItemsBean itemsBean = mList.get(position);
             holder.item_qiandaojilu_checkinDay.setText(itemsBean.getCheckinDay());
             holder.item_qiandaojilu_checkinTime.setText(itemsBean.getCheckinTime());
-            holder.item_qiandaojilu_giftAmount.setText(itemsBean.getGiftAmount());
-            holder.item_qiandaojilu_recharge.setText(itemsBean.getRecharge());
+            holder.item_qiandaojilu_giftAmount.setText(itemsBean.getGiftAmount() + "元");
+            holder.item_qiandaojilu_recharge.setText("充值总额：" + itemsBean.getRecharge() + "元");
         }
 
         @Override
