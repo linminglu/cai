@@ -184,6 +184,7 @@
                     android:gravity="center"/>
 
                 <RelativeLayout
+                    android:id="@+id/user_fragment_tuijian_rl"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:layout_marginTop="30dp"
@@ -205,7 +206,6 @@
                         android:src="@mipmap/user_tuijian"/>
 
                     <TextView
-                        android:id="@+id/user_fragment_tuijian_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -236,6 +236,7 @@
                     android:background="@color/ban_beijing"/>
 
                 <RelativeLayout
+                    android:id="@+id/user_fragment_gonggao_rl"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:background="@drawable/minefragment_state_ly"
@@ -256,7 +257,6 @@
                         android:src="@mipmap/user_gonggao"/>
 
                     <TextView
-                        android:id="@+id/minefragment_gonggao_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -287,6 +287,7 @@
                     android:background="@color/ban_beijing"/>
 
                 <RelativeLayout
+                    android:id="@+id/user_fragment_touzhujilu_rl"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:background="@drawable/minefragment_state_ly"
@@ -294,7 +295,7 @@
                     android:gravity="center_vertical">
 
                     <ImageView
-                        android:id="@+id/user_fragment_touzhu_iv"
+                        android:id="@+id/user_fragment_touzhujilu_iv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
@@ -307,11 +308,10 @@
                         android:src="@mipmap/user_touzhujilu"/>
 
                     <TextView
-                        android:id="@+id/minefragment_touzhu_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toRightOf="@+id/user_fragment_touzhu_iv"
+                        android:layout_toRightOf="@+id/user_fragment_touzhujilu_iv"
                         android:text="投注记录"
                         android:textColor="@color/light_black"
                         android:textSize="16sp"/>
@@ -338,6 +338,7 @@
                     android:background="@color/ban_beijing"/>
 
                 <RelativeLayout
+                    android:id="@+id/user_fragment_zhongjiangjilu_rl"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:background="@drawable/minefragment_state_ly"
@@ -345,7 +346,7 @@
                     android:gravity="center_vertical">
 
                     <ImageView
-                        android:id="@+id/user_fragment_zhongjiang_iv"
+                        android:id="@+id/user_fragment_zhongjiangjilu_iv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
@@ -358,11 +359,10 @@
                         android:src="@mipmap/user_zhongjiangjilu"/>
 
                     <TextView
-                        android:id="@+id/minefragment_zhongjiang_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toRightOf="@+id/user_fragment_zhongjiang_iv"
+                        android:layout_toRightOf="@+id/user_fragment_zhongjiangjilu_iv"
                         android:text="中奖记录"
                         android:textColor="@color/light_black"
                         android:textSize="16sp"/>
@@ -389,6 +389,7 @@
                     android:background="@color/ban_beijing"/>
 
                 <RelativeLayout
+                    android:id="@+id/user_fragment_mingxi_rl"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:background="@drawable/minefragment_state_ly"
@@ -409,7 +410,6 @@
                         android:src="@mipmap/user_mingxi"/>
 
                     <TextView
-                        android:id="@+id/minefragment_mingxi_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -440,6 +440,7 @@
                     android:background="@color/ban_beijing"/>
 
                 <RelativeLayout
+                    android:id="@+id/user_fragment_chongzhijilu_rl"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:background="@drawable/minefragment_state_ly"
@@ -460,7 +461,6 @@
                         android:src="@mipmap/user_chongzhijilu"/>
 
                     <TextView
-                        android:id="@+id/minefragment_chongzhijilu_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -491,6 +491,7 @@
                     android:background="@color/ban_beijing"/>
 
                 <RelativeLayout
+                    android:id="@+id/user_fragment_tikuanjilu_rl"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:background="@drawable/minefragment_state_ly"
@@ -511,7 +512,6 @@
                         android:src="@mipmap/user_touzhujilu"/>
 
                     <TextView
-                        android:id="@+id/minefragment_tikuanjilu_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -542,6 +542,7 @@
                     android:background="@color/ban_beijing"/>
 
                 <RelativeLayout
+                    android:id="@+id/user_fragment_qiandaojilu_rl"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:background="@drawable/minefragment_state_ly"
@@ -562,7 +563,6 @@
                         android:src="@mipmap/user_qiandaojilu"/>
 
                     <TextView
-                        android:id="@+id/minefragment_qiandao_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -593,6 +593,7 @@
                     android:background="@color/ban_beijing"/>
 
                 <RelativeLayout
+                    android:id="@+id/user_fragment_geren_rl"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:layout_marginBottom="30dp"
@@ -614,7 +615,6 @@
                         android:src="@mipmap/user_gonggao"/>
 
                     <TextView
-                        android:id="@+id/minefragment_geren_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"

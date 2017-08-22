@@ -10,17 +10,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.admin.caipiao33.BaseActivity;
 import com.example.admin.caipiao33.BaseFragment;
 import com.example.admin.caipiao33.MainActivity;
 import com.example.admin.caipiao33.QianDaoActivity;
+import com.example.admin.caipiao33.QianDaoJiLuActivity;
 import com.example.admin.caipiao33.R;
 import com.example.admin.caipiao33.bean.UserInfoBean;
 import com.example.admin.caipiao33.contract.IUserContract;
 import com.example.admin.caipiao33.presenter.UserInfoPresenter;
-import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.utils.UserConfig;
 import com.example.admin.caipiao33.views.CircleImageView;
 import com.example.admin.caipiao33.views.LoadingLayout;
@@ -30,6 +31,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
+import static com.example.admin.caipiao33.R.id.user_fragment_qiandao_tv;
+
 /**
  * Description : 用户页面
  * Author : cxy
@@ -38,60 +41,61 @@ import butterknife.Unbinder;
 @SuppressLint("ValidFragment")
 public class UserFragment extends BaseFragment implements View.OnClickListener, Toolbar.OnMenuItemClickListener, IUserContract.View
 {
-
     @BindView(R.id.user_fragment_icon_iv)
     CircleImageView userFragmentIconIv;
     @BindView(R.id.user_fragment_name_tv)
     TextView userFragmentNameTv;
     @BindView(R.id.user_fragment_yue_tv)
     TextView userFragmentYueTv;
+    @BindView(R.id.textView)
+    TextView textView;
     @BindView(R.id.user_fragment_kefu_tv)
     TextView userFragmentKefuTv;
     @BindView(R.id.user_fragment_chongzhi_tv)
     TextView userFragmentChongzhiTv;
     @BindView(R.id.user_fragment_tixian_tv)
     TextView userFragmentTixianTv;
-    @BindView(R.id.user_fragment_qiandao_tv)
+    @BindView(user_fragment_qiandao_tv)
     TextView userFragmentQiandaoTv;
     @BindView(R.id.user_fragment_tuijian_iv)
     ImageView userFragmentTuijianIv;
-    @BindView(R.id.user_fragment_tuijian_tv)
-    TextView userFragmentTuijianTv;
+    @BindView(R.id.user_fragment_tuijian_rl)
+    RelativeLayout userFragmentTuijianRl;
     @BindView(R.id.user_fragment_gonggao_iv)
     ImageView userFragmentGonggaoIv;
-    @BindView(R.id.minefragment_gonggao_tv)
-    TextView minefragmentGonggaoTv;
-    @BindView(R.id.user_fragment_touzhu_iv)
-    ImageView userFragmentTouzhuIv;
-    @BindView(R.id.minefragment_touzhu_tv)
-    TextView minefragmentTouzhuTv;
-    @BindView(R.id.user_fragment_zhongjiang_iv)
-    ImageView userFragmentZhongjiangIv;
-    @BindView(R.id.minefragment_zhongjiang_tv)
-    TextView minefragmentZhongjiangTv;
+    @BindView(R.id.user_fragment_gonggao_rl)
+    RelativeLayout userFragmentGonggaoRl;
+    @BindView(R.id.user_fragment_touzhujilu_iv)
+    ImageView userFragmentTouzhujiluIv;
+    @BindView(R.id.user_fragment_touzhujilu_rl)
+    RelativeLayout userFragmentTouzhujiluRl;
+    @BindView(R.id.user_fragment_zhongjiangjilu_iv)
+    ImageView userFragmentZhongjiangjiluIv;
+    @BindView(R.id.user_fragment_zhongjiangjilu_rl)
+    RelativeLayout userFragmentZhongjiangjiluRl;
     @BindView(R.id.user_fragment_mingxi_iv)
     ImageView userFragmentMingxiIv;
-    @BindView(R.id.minefragment_mingxi_tv)
-    TextView minefragmentMingxiTv;
+    @BindView(R.id.user_fragment_mingxi_rl)
+    RelativeLayout userFragmentMingxiRl;
     @BindView(R.id.user_fragment_chongzhijilu_iv)
     ImageView userFragmentChongzhijiluIv;
-    @BindView(R.id.minefragment_chongzhijilu_tv)
-    TextView minefragmentChongzhijiluTv;
+    @BindView(R.id.user_fragment_chongzhijilu_rl)
+    RelativeLayout userFragmentChongzhijiluRl;
     @BindView(R.id.user_fragment_tikuanjilu_iv)
     ImageView userFragmentTikuanjiluIv;
-    @BindView(R.id.minefragment_tikuanjilu_tv)
-    TextView minefragmentTikuanjiluTv;
+    @BindView(R.id.user_fragment_tikuanjilu_rl)
+    RelativeLayout userFragmentTikuanjiluRl;
     @BindView(R.id.user_fragment_qiandaojilu_iv)
     ImageView userFragmentQiandaojiluIv;
-    @BindView(R.id.minefragment_qiandao_tv)
-    TextView minefragmentQiandaoTv;
+    @BindView(R.id.user_fragment_qiandaojilu_rl)
+    RelativeLayout userFragmentQiandaojiluRl;
     @BindView(R.id.user_fragment_geren_iv)
     ImageView userFragmentGerenIv;
-    @BindView(R.id.minefragment_geren_tv)
-    TextView minefragmentGerenTv;
-    Unbinder unbinder;
+    @BindView(R.id.user_fragment_geren_rl)
+    RelativeLayout userFragmentGerenRl;
     @BindView(R.id.swipeRefreshLayout)
     SwipeRefreshLayout swipeRefreshLayout;
+    Unbinder unbinder;
     private MainActivity mainActivity;
     private LayoutInflater mInflater;
     private View parentView;
@@ -155,67 +159,6 @@ public class UserFragment extends BaseFragment implements View.OnClickListener, 
         unbinder.unbind();
     }
 
-    @OnClick({R.id.user_fragment_icon_iv, R.id.user_fragment_name_tv, R.id.user_fragment_yue_tv, R.id.user_fragment_kefu_tv, R.id.user_fragment_chongzhi_tv, R.id.user_fragment_tixian_tv, R.id.user_fragment_qiandao_tv, R.id.user_fragment_tuijian_iv, R.id.user_fragment_tuijian_tv, R.id.user_fragment_gonggao_iv, R.id.minefragment_gonggao_tv, R.id.user_fragment_touzhu_iv, R.id.minefragment_touzhu_tv, R.id.user_fragment_zhongjiang_iv, R.id.minefragment_zhongjiang_tv, R.id.user_fragment_mingxi_iv, R.id.minefragment_mingxi_tv, R.id.user_fragment_chongzhijilu_iv, R.id.minefragment_chongzhijilu_tv, R.id.user_fragment_tikuanjilu_iv, R.id.minefragment_tikuanjilu_tv, R.id.user_fragment_qiandaojilu_iv, R.id.minefragment_qiandao_tv, R.id.user_fragment_geren_iv, R.id.minefragment_geren_tv})
-    public void onViewClicked(View view)
-    {
-        switch (view.getId())
-        {
-            case R.id.user_fragment_icon_iv:
-                ToastUtil.show("123");
-                break;
-            case R.id.user_fragment_name_tv:
-                break;
-            case R.id.user_fragment_yue_tv:
-                break;
-            case R.id.user_fragment_kefu_tv:
-                break;
-            case R.id.user_fragment_chongzhi_tv:
-                break;
-            case R.id.user_fragment_tixian_tv:
-                break;
-            case R.id.user_fragment_qiandao_tv:
-                Intent intent = new Intent(mainActivity, QianDaoActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.user_fragment_tuijian_iv:
-                break;
-            case R.id.user_fragment_tuijian_tv:
-                break;
-            case R.id.user_fragment_gonggao_iv:
-                break;
-            case R.id.minefragment_gonggao_tv:
-                break;
-            case R.id.user_fragment_touzhu_iv:
-                break;
-            case R.id.minefragment_touzhu_tv:
-                break;
-            case R.id.user_fragment_zhongjiang_iv:
-                break;
-            case R.id.minefragment_zhongjiang_tv:
-                break;
-            case R.id.user_fragment_mingxi_iv:
-                break;
-            case R.id.minefragment_mingxi_tv:
-                break;
-            case R.id.user_fragment_chongzhijilu_iv:
-                break;
-            case R.id.minefragment_chongzhijilu_tv:
-                break;
-            case R.id.user_fragment_tikuanjilu_iv:
-                break;
-            case R.id.minefragment_tikuanjilu_tv:
-                break;
-            case R.id.user_fragment_qiandaojilu_iv:
-                break;
-            case R.id.minefragment_qiandao_tv:
-                break;
-            case R.id.user_fragment_geren_iv:
-                break;
-            case R.id.minefragment_geren_tv:
-                break;
-        }
-    }
-
     @Override
     public void onClick(View v)
     {
@@ -240,6 +183,39 @@ public class UserFragment extends BaseFragment implements View.OnClickListener, 
         swipeRefreshLayout.setRefreshing(false);
         userFragmentNameTv.setText(UserConfig.getInstance().getToken(mainActivity).getMemberName());
         userFragmentYueTv.setText(bean.getBalance() + "元");
+    }
+
+    @OnClick({R.id.user_fragment_qiandao_tv, R.id.user_fragment_tuijian_rl, R.id.user_fragment_gonggao_rl, R.id.user_fragment_touzhujilu_rl, R.id.user_fragment_zhongjiangjilu_rl, R.id.user_fragment_mingxi_rl, R.id.user_fragment_chongzhijilu_rl, R.id.user_fragment_tikuanjilu_rl, R.id.user_fragment_qiandaojilu_rl, R.id.user_fragment_geren_rl})
+    public void onViewClicked(View view)
+    {
+        Intent intent;
+        switch (view.getId())
+        {
+            case user_fragment_qiandao_tv:
+                intent = new Intent(mainActivity, QianDaoActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.user_fragment_tuijian_rl:
+                break;
+            case R.id.user_fragment_gonggao_rl:
+                break;
+            case R.id.user_fragment_touzhujilu_rl:
+                break;
+            case R.id.user_fragment_zhongjiangjilu_rl:
+                break;
+            case R.id.user_fragment_mingxi_rl:
+                break;
+            case R.id.user_fragment_chongzhijilu_rl:
+                break;
+            case R.id.user_fragment_tikuanjilu_rl:
+                break;
+            case R.id.user_fragment_qiandaojilu_rl:
+                intent = new Intent(mainActivity, QianDaoJiLuActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.user_fragment_geren_rl:
+                break;
+        }
     }
 }
 
