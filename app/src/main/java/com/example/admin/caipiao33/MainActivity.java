@@ -3,10 +3,15 @@ package com.example.admin.caipiao33;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.example.admin.caipiao33.application.MyApplication;
+import com.example.admin.caipiao33.bean.BaseUrlBean;
 import com.example.admin.caipiao33.fragment.GouCaiFragment;
 import com.example.admin.caipiao33.fragment.HomePageFragment;
 import com.example.admin.caipiao33.fragment.KaiJiangFragment;
@@ -15,7 +20,10 @@ import com.example.admin.caipiao33.fragment.ZouShiFragment;
 import com.example.admin.caipiao33.pagerBottomTabStrip.Controller;
 import com.example.admin.caipiao33.pagerBottomTabStrip.OnTabItemSelectListener;
 import com.example.admin.caipiao33.pagerBottomTabStrip.PagerBottomTabLayout;
+import com.example.admin.caipiao33.update.DownloadService;
+import com.example.admin.caipiao33.utils.AppUtils;
 import com.example.admin.caipiao33.utils.Constants;
+import com.example.admin.caipiao33.utils.StringUtils;
 import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.utils.UserConfig;
 
@@ -33,6 +41,80 @@ public class MainActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
+        showUpdateDialog();
+
+    }
+
+    private void showUpdateDialog()
+    {
+        // 判断是否弹出更新提示框
+        BaseUrlBean baseUrlBean = MyApplication.getInstance().getBaseUrlBean();
+        if (null != baseUrlBean) {
+            String currentVersion = baseUrlBean.getCurrentVersion();
+            String lowVersion = baseUrlBean.getLowVersion();
+            final String updateUrl = baseUrlBean.getUpdateUrl();
+
+            try {
+                int intCurrVersion = Integer.valueOf(currentVersion);
+                int intLowVersion = Integer.valueOf(lowVersion);
+                int appVersionCode = AppUtils.getAppVersionCode(this);
+                if (appVersionCode  >= intCurrVersion) {
+                    return;
+                }
+                if (StringUtils.isEmpty(updateUrl) || !updateUrl.endsWith("apk")) {
+                    ToastUtil.show("自动更新网址不对");
+                    return;
+                }
+                boolean isNormal = false;
+                if (appVersionCode < intLowVersion) {
+                    // 强制更新
+                    isNormal = false;
+                } else {
+                    // 普通更新
+                    isNormal = true;
+                }
+                final boolean finalNormal = isNormal;
+                new MaterialDialog.Builder(this)
+                        .content("更新")
+                        .positiveText("现在更新")
+                        .positiveColor(getResources().getColor(R.color.blue))
+                        .cancelable(isNormal)
+                        .negativeText(isNormal ? "下次再说" : "直接退出")
+                        .negativeColor(getResources().getColor(R.color.middle_gray))
+                        .onPositive(new MaterialDialog.SingleButtonCallback()
+                        {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which)
+                            {
+                                Intent intent = new Intent(MyApplication.getInstance(), DownloadService.class);
+                                intent.putExtra(Constants.APK_DOWNLOAD_URL, updateUrl);
+                                startService(intent);
+                                if (!finalNormal) {
+                                    new MaterialDialog.Builder(MainActivity.this)
+                                            .content("正在更新，请稍候...")
+                                            .cancelable(false)
+                                            .show();
+                                }
+                            }
+                        })
+                        .onNegative(new MaterialDialog.SingleButtonCallback()
+                        {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which)
+                            {
+                                // 强制更新
+                                if (!finalNormal) {
+                                    android.os.Process.killProcess(android.os.Process.myPid());
+                                }
+                            }
+                        })
+                        .show();
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -140,6 +222,7 @@ public class MainActivity extends BaseActivity
         else if (mClicks == 2)
         {
             finish();
+            System.exit(0);
         }
     }
 

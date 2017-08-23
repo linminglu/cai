@@ -30,6 +30,7 @@ public interface Constants
     int REQUEST_SELECT_PHOTO = 1002;
     int REQUEST_PHOTO_PREVIEW = 1003;
 
+    String APK_DOWNLOAD_URL = "url";
     String UPDATEACTION = "com.example.admin.caipiao33.update";
 
     String EXTRA_URL = "extra_url";
@@ -39,4 +40,5 @@ public interface Constants
     String EXTRA_ROOM_ID = "extra_room_id";
     String EXTRA_PLAY_ID = "extra_play_id";
     String EXTRA_PLAY_ID1 = "extra_play_id1";
+
 }

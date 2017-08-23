@@ -13,6 +13,7 @@ import android.view.View;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.example.admin.caipiao33.application.MyApplication;
 import com.example.admin.caipiao33.bean.BaseUrlBean;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.httputils.MyResponseListener;
@@ -218,6 +219,7 @@ public class BaseActivity extends AppCompatActivity implements IBaseView
             public void onSuccess(BaseUrlBean result)
             {
                 HttpUtil.changeBaseUrl(result.getUrl());
+                MyApplication.getInstance().setBaseUrlBean(result);
             }
 
             @Override
