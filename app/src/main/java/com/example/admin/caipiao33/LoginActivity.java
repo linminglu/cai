@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.admin.caipiao33.contract.ILoginContract;
+import com.example.admin.caipiao33.fragment.UserFragment;
 import com.example.admin.caipiao33.presenter.LoginPresenter;
 import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.StringUtils;
@@ -23,10 +24,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.example.admin.caipiao33.R.id.edTxt_account;
+
 
 public class LoginActivity extends ToolbarActivity implements Toolbar.OnMenuItemClickListener, ILoginContract.View
 {
-    @BindView(R.id.edTxt_account)
+    @BindView(edTxt_account)
     EditText edTxtAccount;
     @BindView(R.id.edTxt_pwd)
     EditText edTxtPwd;
@@ -106,12 +109,12 @@ public class LoginActivity extends ToolbarActivity implements Toolbar.OnMenuItem
         mPresenter.getLogin(edTxtAccount.getText().toString(), edTxtPwd.getText().toString());
     }
 
-    @OnClick({R.id.edTxt_account, R.id.edTxt_pwd, R.id.cBox_password, R.id.btn_login, R.id.tv_register, R.id.tv_find_pwd, R.id.login_weixin_img, R.id.login_weibo_img})
+    @OnClick({edTxt_account, R.id.edTxt_pwd, R.id.cBox_password, R.id.btn_login, R.id.tv_register, R.id.tv_find_pwd, R.id.login_weixin_img, R.id.login_weibo_img})
     public void onViewClicked(View view)
     {
         switch (view.getId())
         {
-            case R.id.edTxt_account:
+            case edTxt_account:
                 break;
             case R.id.edTxt_pwd:
                 break;
@@ -139,6 +142,16 @@ public class LoginActivity extends ToolbarActivity implements Toolbar.OnMenuItem
         ToastUtil.show("登录成功！");
         setResult(Constants.REQUEST_CODE_2_LOGIN);
         finish();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (resultCode == Constants.REQUEST_CODE_Main2_REGISTER)
+        {
+            edTxtAccount.setText(data.getStringExtra("username"));
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

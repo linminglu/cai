@@ -68,6 +68,7 @@
     <string name="s_please_enter_account">请输入账号</string>
     <string name="s_please_enter_email">请输入邮箱</string>
     <string name="s_please_enter_pwd">请输入密码</string>
+    <string name="s_please_enter_vcode">请输入验证码</string>
     <string name="s_user_login">用户登录</string>
     <string name="search_hint">\t搜索商品</string>
     <string name="search_order_hint">\t订单搜索</string>
