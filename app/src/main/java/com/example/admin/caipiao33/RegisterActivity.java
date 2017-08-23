@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.example.admin.caipiao33.bean.RegisterBean;
 import com.example.admin.caipiao33.bean.RegisterSubmitBean;
 import com.example.admin.caipiao33.contract.IRegisterContract;
+import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.presenter.RegisterPresenter;
 import com.example.admin.caipiao33.utils.CodeUtils;
 import com.example.admin.caipiao33.utils.Constants;
@@ -156,6 +157,9 @@ public class RegisterActivity extends ToolbarActivity implements Toolbar.OnMenuI
         }
         registerVcodeIv.setImageBitmap(CodeUtils.getInstance()
                 .createBitmap(result.getVerifyCode()));
+
+        registerProtocolTv.setText("我已年满十八周岁，并且同意接受《法律声明》，请牢记凤凰彩票" + result.getWebName() + "官方永久域名：" + result
+                .getDhUrl());
     }
 
     @Override
@@ -186,6 +190,10 @@ public class RegisterActivity extends ToolbarActivity implements Toolbar.OnMenuI
             case R.id.register_protocol_cb:
                 break;
             case R.id.register_protocol_tv:
+                Intent intent = new Intent(RegisterActivity.this, WebUrlActivity.class);
+                intent.putExtra(Constants.EXTRA_URL, HttpUtil.mNewUrl + "/api/reg/law");
+                intent.putExtra(Constants.EXTRA_TITLE, "注册协议");
+                startActivity(intent);
                 break;
             case R.id.register_btn:
                 if (registerProtocolCb.isChecked())

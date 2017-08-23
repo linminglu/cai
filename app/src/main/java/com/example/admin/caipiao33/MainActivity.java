@@ -49,33 +49,39 @@ public class MainActivity extends BaseActivity
     {
         // 判断是否弹出更新提示框
         BaseUrlBean baseUrlBean = MyApplication.getInstance().getBaseUrlBean();
-        if (null != baseUrlBean) {
+        if (null != baseUrlBean)
+        {
             String currentVersion = baseUrlBean.getCurrentVersion();
             String lowVersion = baseUrlBean.getLowVersion();
             final String updateUrl = baseUrlBean.getUpdateUrl();
 
-            try {
+            try
+            {
                 int intCurrVersion = Integer.valueOf(currentVersion);
                 int intLowVersion = Integer.valueOf(lowVersion);
                 int appVersionCode = AppUtils.getAppVersionCode(this);
-                if (appVersionCode  >= intCurrVersion) {
+                if (appVersionCode >= intCurrVersion)
+                {
                     return;
                 }
-                if (StringUtils.isEmpty(updateUrl) || !updateUrl.endsWith("apk")) {
+                if (StringUtils.isEmpty(updateUrl) || !updateUrl.endsWith("apk"))
+                {
                     ToastUtil.show("自动更新网址不对");
                     return;
                 }
                 boolean isNormal = false;
-                if (appVersionCode < intLowVersion) {
+                if (appVersionCode < intLowVersion)
+                {
                     // 强制更新
                     isNormal = false;
-                } else {
+                }
+                else
+                {
                     // 普通更新
                     isNormal = true;
                 }
                 final boolean finalNormal = isNormal;
-                new MaterialDialog.Builder(this)
-                        .content("更新")
+                new MaterialDialog.Builder(this).content("更新")
                         .positiveText("现在更新")
                         .positiveColor(getResources().getColor(R.color.blue))
                         .cancelable(isNormal)
@@ -89,9 +95,9 @@ public class MainActivity extends BaseActivity
                                 Intent intent = new Intent(MyApplication.getInstance(), DownloadService.class);
                                 intent.putExtra(Constants.APK_DOWNLOAD_URL, updateUrl);
                                 startService(intent);
-                                if (!finalNormal) {
-                                    new MaterialDialog.Builder(MainActivity.this)
-                                            .content("正在更新，请稍候...")
+                                if (!finalNormal)
+                                {
+                                    new MaterialDialog.Builder(MainActivity.this).content("正在更新，请稍候...")
                                             .cancelable(false)
                                             .show();
                                 }
@@ -103,15 +109,20 @@ public class MainActivity extends BaseActivity
                             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which)
                             {
                                 // 强制更新
-                                if (!finalNormal) {
+                                if (!finalNormal)
+                                {
                                     android.os.Process.killProcess(android.os.Process.myPid());
                                 }
                             }
                         })
                         .show();
-            } catch (NumberFormatException e) {
+            }
+            catch (NumberFormatException e)
+            {
                 e.printStackTrace();
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 e.printStackTrace();
             }
         }

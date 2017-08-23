@@ -17,8 +17,13 @@ import com.example.admin.caipiao33.contract.ILoginContract;
 import com.example.admin.caipiao33.fragment.UserFragment;
 import com.example.admin.caipiao33.presenter.LoginPresenter;
 import com.example.admin.caipiao33.utils.Constants;
+import com.example.admin.caipiao33.utils.LoginEvent;
 import com.example.admin.caipiao33.utils.StringUtils;
 import com.example.admin.caipiao33.utils.ToastUtil;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -141,6 +146,7 @@ public class LoginActivity extends ToolbarActivity implements Toolbar.OnMenuItem
     {
         ToastUtil.show("登录成功！");
         setResult(Constants.REQUEST_CODE_2_LOGIN);
+        EventBus.getDefault().post(new LoginEvent(""));
         finish();
     }
 
@@ -153,6 +159,7 @@ public class LoginActivity extends ToolbarActivity implements Toolbar.OnMenuItem
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
+
 
     @Override
     public void failed(String result)

@@ -24,9 +24,14 @@ import com.example.admin.caipiao33.bean.UserInfoBean;
 import com.example.admin.caipiao33.contract.IUserContract;
 import com.example.admin.caipiao33.presenter.UserInfoPresenter;
 import com.example.admin.caipiao33.utils.Constants;
+import com.example.admin.caipiao33.utils.LoginEvent;
 import com.example.admin.caipiao33.utils.UserConfig;
 import com.example.admin.caipiao33.views.CircleImageView;
 import com.example.admin.caipiao33.views.LoadingLayout;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -121,6 +126,7 @@ public class UserFragment extends BaseFragment implements View.OnClickListener, 
         initView();
         mPresenter = new UserInfoPresenter(this, swipeRefreshLayout);
         mPresenter.loadData();
+        EventBus.getDefault().register(this);
         return parentView;
     }
 
@@ -167,6 +173,7 @@ public class UserFragment extends BaseFragment implements View.OnClickListener, 
     {
         super.onDestroyView();
         unbinder.unbind();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -226,6 +233,12 @@ public class UserFragment extends BaseFragment implements View.OnClickListener, 
             case R.id.user_fragment_geren_rl:
                 break;
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMoonEvent(LoginEvent messageEvent)
+    {
+        mPresenter.loadData();
     }
 
     @Override
