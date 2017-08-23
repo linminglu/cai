@@ -110,7 +110,6 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
         @Override
         public void displayImage(String imageURL, ImageView imageView)
         {
-            KLog.e("ImageCycleViewListener displayImage");
             MyImageLoader.displayImage(imageURL, imageView, getBaseActivity());
         }
 
