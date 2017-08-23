@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/md_divider_white"
+              android:orientation="vertical"
+    >
+
+    <com.example.admin.caipiao33.views.LoadingLayout
+        android:id="@+id/loadingLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+    </com.example.admin.caipiao33.views.LoadingLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/layout_background">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/setting_tuijian_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/minefragment_state_ly"
+                    android:clickable="true"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:id="@+id/setting_tuijian_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginBottom="15dp"
+                        android:layout_marginLeft="22dp"
+                        android:layout_marginRight="22dp"
+                        android:layout_marginTop="15dp"
+                        android:src="@mipmap/geren_mima"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/setting_tuijian_iv"
+                        android:text="登录密码"
+                        android:textColor="@color/light_black"
+                        android:textSize="16sp"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="18dp"
+                        android:layout_marginRight="18dp"
+                        android:background="@mipmap/minefragment_right_img"/>
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginLeft="67dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginStart="67dp"
+                    android:background="@color/ban_beijing"/>
+
+                <RelativeLayout
+                    android:id="@+id/setting_gonggao_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:background="@drawable/minefragment_state_ly"
+                    android:clickable="true"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:id="@+id/setting_gonggao_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginBottom="15dp"
+                        android:layout_marginLeft="22dp"
+                        android:layout_marginRight="22dp"
+                        android:layout_marginTop="15dp"
+                        android:src="@mipmap/user_touzhujilu"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/setting_gonggao_iv"
+                        android:text="密保问题"
+                        android:textColor="@color/light_black"
+                        android:textSize="16sp"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="18dp"
+                        android:layout_marginRight="18dp"
+                        android:background="@mipmap/minefragment_right_img"/>
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginLeft="67dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginStart="67dp"
+                    android:background="@color/ban_beijing"/>
+
+                <RelativeLayout
+                    android:id="@+id/setting_touzhujilu_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:background="@drawable/minefragment_state_ly"
+                    android:clickable="true"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:id="@+id/setting_touzhujilu_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginBottom="15dp"
+                        android:layout_marginLeft="22dp"
+                        android:layout_marginRight="22dp"
+                        android:layout_marginTop="15dp"
+                        android:src="@mipmap/geren_mima"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/setting_touzhujilu_iv"
+                        android:text="提款密码"
+                        android:textColor="@color/light_black"
+                        android:textSize="16sp"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="18dp"
+                        android:layout_marginRight="18dp"
+                        android:background="@mipmap/minefragment_right_img"/>
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginLeft="67dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginStart="67dp"
+                    android:background="@color/ban_beijing"/>
+
+                <RelativeLayout
+                    android:id="@+id/setting_zhongjiangjilu_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:background="@drawable/minefragment_state_ly"
+                    android:clickable="true"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:id="@+id/setting_zhongjiangjilu_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginBottom="15dp"
+                        android:layout_marginLeft="22dp"
+                        android:layout_marginRight="22dp"
+                        android:layout_marginTop="15dp"
+                        android:src="@mipmap/user_tuijian"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/setting_zhongjiangjilu_iv"
+                        android:text="我的银行卡"
+                        android:textColor="@color/light_black"
+                        android:textSize="16sp"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="18dp"
+                        android:layout_marginRight="18dp"
+                        android:background="@mipmap/minefragment_right_img"/>
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginLeft="67dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginStart="67dp"
+                    android:background="@color/ban_beijing"/>
+
+                <RelativeLayout
+                    android:id="@+id/setting_mingxi_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:background="@drawable/minefragment_state_ly"
+                    android:clickable="true"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:id="@+id/setting_mingxi_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginBottom="15dp"
+                        android:layout_marginLeft="22dp"
+                        android:layout_marginRight="22dp"
+                        android:layout_marginTop="15dp"
+                        android:src="@mipmap/geren_guanyu"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/setting_mingxi_iv"
+                        android:text="关于我们"
+                        android:textColor="@color/light_black"
+                        android:textSize="16sp"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="18dp"
+                        android:layout_marginRight="18dp"
+                        android:background="@mipmap/minefragment_right_img"/>
+
+                </RelativeLayout>
+
+                <Button
+                    android:id="@+id/setting_logout_btn"
+                    style="@style/button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="30dp"
+                    android:text="@string/s_logout"/>
+            </LinearLayout>
+        </ScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+</LinearLayout>

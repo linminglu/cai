@@ -233,14 +233,20 @@ public class MainActivity extends BaseActivity
         }
 
         // 通知fragment当前被显示或者隐藏
-        if (clazz == GouCaiFragment.class) {
+        if (clazz == GouCaiFragment.class)
+        {
             ((GouCaiFragment) userFragment).fragmentShow();
-        } else if (mCurFragment instanceof GouCaiFragment) {
+        }
+        else if (mCurFragment instanceof GouCaiFragment)
+        {
             ((GouCaiFragment) mCurFragment).fragmentHide();
         }
-        if (clazz == HomePageFragment.class) {
+        if (clazz == HomePageFragment.class)
+        {
             ((HomePageFragment) userFragment).fragmentShow();
-        } else if (mCurFragment instanceof HomePageFragment) {
+        }
+        else if (mCurFragment instanceof HomePageFragment)
+        {
             ((HomePageFragment) mCurFragment).fragmentHide();
         }
 
@@ -290,9 +296,13 @@ public class MainActivity extends BaseActivity
         {
             mCurFragment.onActivityResult(requestCode, resultCode, data);
         }
-        if (requestCode == Constants.REQUEST_CODE_Main2_LOGIN && resultCode == Constants.REQUEST_CODE_2_LOGIN)
+        if (resultCode == Constants.REQUEST_CODE_2_LOGIN)
         {
             tabSwitchCenter(UserFragment.class);
+        }
+        if (resultCode == Constants.REQUEST_CODE_Main2_LOGOUT)
+        {
+            tabSwitchCenter(HomePageFragment.class);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

@@ -19,9 +19,11 @@ import com.example.admin.caipiao33.MainActivity;
 import com.example.admin.caipiao33.QianDaoActivity;
 import com.example.admin.caipiao33.QianDaoJiLuActivity;
 import com.example.admin.caipiao33.R;
+import com.example.admin.caipiao33.SettingActivity;
 import com.example.admin.caipiao33.bean.UserInfoBean;
 import com.example.admin.caipiao33.contract.IUserContract;
 import com.example.admin.caipiao33.presenter.UserInfoPresenter;
+import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.UserConfig;
 import com.example.admin.caipiao33.views.CircleImageView;
 import com.example.admin.caipiao33.views.LoadingLayout;
@@ -31,6 +33,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
+import static com.example.admin.caipiao33.R.id.toolbar;
 import static com.example.admin.caipiao33.R.id.user_fragment_qiandao_tv;
 
 /**
@@ -123,7 +126,7 @@ public class UserFragment extends BaseFragment implements View.OnClickListener, 
 
     private void initView()
     {
-        mToolbar = (Toolbar) parentView.findViewById(R.id.toolbar);
+        mToolbar = (Toolbar) parentView.findViewById(toolbar);
         mToolbar.inflateMenu(R.menu.menu_userinfo);
         mToolbar.setOnMenuItemClickListener(this);
         mLoadingLayout = (LoadingLayout) parentView.findViewById(R.id.loadingLayout);
@@ -149,6 +152,13 @@ public class UserFragment extends BaseFragment implements View.OnClickListener, 
     @Override
     public boolean onMenuItemClick(MenuItem item)
     {
+        switch (item.getItemId())
+        {
+            case R.id.action_message:
+                Intent intent = new Intent(mainActivity, SettingActivity.class);
+                startActivityForResult(intent, Constants.REQUEST_CODE_Main2_LOGOUT);
+                break;
+        }
         return false;
     }
 
@@ -216,6 +226,12 @@ public class UserFragment extends BaseFragment implements View.OnClickListener, 
             case R.id.user_fragment_geren_rl:
                 break;
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
 

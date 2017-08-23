@@ -71,6 +71,8 @@
     <string name="search_hint">\t搜索商品</string>
     <string name="search_order_hint">\t订单搜索</string>
     <string name="s_login">登录</string>
+    <string name="s_logout">退出登录</string>
+    <string name="s_setting">设置</string>
     <string name="s_bind">绑定</string>
     <string name="s_bind_mobile">绑定手机</string>
     <string name="s_login_status_failed">您还未登录或登录状态超时，是否跳转到登录界面？</string>
