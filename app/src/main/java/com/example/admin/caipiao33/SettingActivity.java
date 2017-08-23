@@ -13,6 +13,7 @@ import com.example.admin.caipiao33.contract.ISettingContract;
 import com.example.admin.caipiao33.presenter.SettingPresenter;
 import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.ToastUtil;
+import com.example.admin.caipiao33.utils.UserConfig;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -84,6 +85,7 @@ public class SettingActivity extends ToolbarActivity implements Toolbar.OnMenuIt
     @Override
     public void logoutOk(String result)
     {
+        UserConfig.getInstance().clear(this);
         ToastUtil.show("退出登录成功！");
         setResult(Constants.REQUEST_CODE_Main2_LOGOUT);
         finish();

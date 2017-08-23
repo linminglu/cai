@@ -121,6 +121,8 @@ public class LoginActivity extends ToolbarActivity implements Toolbar.OnMenuItem
                 login();
                 break;
             case R.id.tv_register:
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivityForResult(intent, Constants.REQUEST_CODE_Main2_REGISTER);
                 break;
             case R.id.tv_find_pwd:
                 break;
@@ -129,12 +131,6 @@ public class LoginActivity extends ToolbarActivity implements Toolbar.OnMenuItem
             case R.id.login_weibo_img:
                 break;
         }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

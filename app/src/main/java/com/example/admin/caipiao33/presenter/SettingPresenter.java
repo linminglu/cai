@@ -49,6 +49,7 @@ public class SettingPresenter implements ISettingContract.Presenter
             public void onFailed(int code, String msg)
             {
                 ToastUtil.show(msg);
+                mView.logoutOk(msg);
             }
 
             @Override
