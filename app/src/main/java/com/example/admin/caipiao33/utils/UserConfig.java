@@ -38,7 +38,13 @@ public class UserConfig
                 e.printStackTrace();
             }
         }
-        return mTokenBean = gson.fromJson(P2PNative.getInstance().decrypt(mToken), TokenBean.class);
+        try {
+            mTokenBean = gson.fromJson(P2PNative.getInstance().decrypt(mToken), TokenBean.class);
+        } catch(Exception e) {
+            e.printStackTrace();
+            mTokenBean = null;
+        }
+        return mTokenBean;
     }
 
     public synchronized String getTokenString(Context context)
