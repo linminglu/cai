@@ -2,6 +2,7 @@ package com.example.admin.caipiao33.presenter;
 
 import android.view.View;
 
+import com.example.admin.caipiao33.bean.TopupBean;
 import com.example.admin.caipiao33.contract.ILoginContract;
 import com.example.admin.caipiao33.contract.ITopupContract;
 import com.example.admin.caipiao33.httputils.HttpUtil;
@@ -26,13 +27,13 @@ public class TopupPresenter implements ITopupContract.Presenter
     }
 
     @Override
-    public void getTopup(String userName, String password)
+    public void getTopup()
     {
         mView.showLoadingDialog(false);
-        HttpUtil.requestSecond("user", "recharge", null, String.class, mView.getBaseActivity(), new MyResponseListener<String>()
+        HttpUtil.requestSecond("user", "recharge", null, TopupBean.class, mView.getBaseActivity(), new MyResponseListener<TopupBean>()
         {
             @Override
-            public void onSuccess(String result)
+            public void onSuccess(TopupBean result)
             {
                 mView.updata(result);
             }

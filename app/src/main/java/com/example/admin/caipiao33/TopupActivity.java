@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.admin.caipiao33.bean.TopupBean;
 import com.example.admin.caipiao33.contract.ITopupContract;
 import com.example.admin.caipiao33.presenter.TopupPresenter;
 import com.example.admin.caipiao33.views.NumberInputFilter;
@@ -102,7 +103,7 @@ public class TopupActivity extends ToolbarActivity implements Toolbar.OnMenuItem
     }
 
     @Override
-    public void updata(String result)
+    public void updata(TopupBean result)
     {
 
     }
