@@ -3,6 +3,7 @@ package com.example.admin.caipiao33;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.text.InputFilter;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.admin.caipiao33.contract.ITopupContract;
 import com.example.admin.caipiao33.presenter.TopupPresenter;
+import com.example.admin.caipiao33.views.NumberInputFilter;
 import com.example.admin.caipiao33.views.PagerSlidingTabStrip;
 
 import butterknife.BindView;
@@ -64,6 +66,8 @@ public class TopupActivity extends ToolbarActivity implements Toolbar.OnMenuItem
     private void initView()
     {
         mTitleArray = getResources().getStringArray(R.array.s_array_topup);
+        InputFilter[] filters = {new NumberInputFilter()};
+        topupMoneyEt.setFilters(filters);
     }
 
     public void onCreateCustomToolBar(Toolbar toolbar)
@@ -109,20 +113,48 @@ public class TopupActivity extends ToolbarActivity implements Toolbar.OnMenuItem
         switch (view.getId())
         {
             case R.id.topup_clear_tv:
+                topupMoneyEt.setText("");
+                topupMoneyEt.setSelection(topupMoneyEt.length());
                 break;
             case R.id.topup_100_tv:
+                topupMoneyEt.setText(updateMoney(100));
+                topupMoneyEt.setSelection(topupMoneyEt.length());
                 break;
             case R.id.topup_500_tv:
+                topupMoneyEt.setText(updateMoney(500));
+                topupMoneyEt.setSelection(topupMoneyEt.length());
                 break;
             case R.id.topup_1000_tv:
+                topupMoneyEt.setText(updateMoney(1000));
+                topupMoneyEt.setSelection(topupMoneyEt.length());
                 break;
             case R.id.topup_5000_tv:
+                topupMoneyEt.setText(updateMoney(5000));
+                topupMoneyEt.setSelection(topupMoneyEt.length());
                 break;
             case R.id.topup_10000_tv:
+                topupMoneyEt.setText(updateMoney(10000));
+                topupMoneyEt.setSelection(topupMoneyEt.length());
                 break;
             case R.id.topup_50000_tv:
+                topupMoneyEt.setText(updateMoney(50000));
+                topupMoneyEt.setSelection(topupMoneyEt.length());
                 break;
         }
+    }
+
+    private String updateMoney(int num)
+    {
+        try
+        {
+            int afterNum = Integer.valueOf(topupMoneyEt.getText().toString());
+            return afterNum + num + "";
+        }
+        catch (Exception e)
+        {
+
+        }
+        return num + "";
     }
 }
 

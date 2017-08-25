@@ -109,27 +109,45 @@ public class ConfirmBuyDialog implements View.OnClickListener
                 totalCapital = 0;
                 totalWinMoney = 0;
                 String s1 = s.toString();
-                if (TextUtils.isEmpty(s1)) {
+                if (TextUtils.isEmpty(s1))
+                {
                     tvTips.setVisibility(View.GONE);
                     return;
                 }
                 tvTips.setVisibility(View.VISIBLE);
-                for (BuyRoomBean.PlayDetailListBean.ListBean bean: checkedList)
+                for (BuyRoomBean.PlayDetailListBean.ListBean bean : checkedList)
                 {
                     bean.setMoney(s1);
                     int capital = Integer.valueOf(bean.getMoney());
                     float bonus = Float.valueOf(bean.getBonus());
                     totalCapital += capital;
-                    totalWinMoney += capital*bonus;
+                    totalWinMoney += capital * bonus;
                 }
-                tvTips.setText(Html.fromHtml(mContext.getString(R.string.s_buy_explain, checkedList.size(), String.valueOf(FloatUtils.format(totalCapital)), String.valueOf(FloatUtils.format(totalWinMoney)), String.valueOf(FloatUtils.format(totalWinMoney - totalCapital)))));
+                tvTips.setText(Html.fromHtml(mContext.getString(R.string.s_buy_explain, checkedList.size(), String
+                        .valueOf(FloatUtils.format(totalCapital)), String.valueOf(FloatUtils.format(totalWinMoney)), String
+                        .valueOf(FloatUtils.format(totalWinMoney - totalCapital)))));
             }
         });
 
         updateUI(checked);
     }
 
-    public void show() {
+    private String updateMoney(int num)
+    {
+        try
+        {
+            int afterNum = Integer.valueOf(etMoney.getText().toString());
+            return afterNum + num + "";
+        }
+        catch (Exception e)
+        {
+
+        }
+        return num + "";
+    }
+
+    public void show()
+    {
         new MaterialDialog.Builder(mContext).title("确认下注")
                 .customView(view, false)
                 .positiveText("下注")
@@ -140,7 +158,8 @@ public class ConfirmBuyDialog implements View.OnClickListener
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which)
                     {
-                        if (totalCapital <= 0) {
+                        if (totalCapital <= 0)
+                        {
                             ToastUtil.show("请输入买入金额");
                             return;
                         }
@@ -152,7 +171,8 @@ public class ConfirmBuyDialog implements View.OnClickListener
 
     public void updateUI(List<BuyRoomBean.PlayDetailListBean.ListBean> checked)
     {
-        if (null == checked || checked.size() == 0) {
+        if (null == checked || checked.size() == 0)
+        {
             return;
         }
         etMoney.setText("");
@@ -165,62 +185,77 @@ public class ConfirmBuyDialog implements View.OnClickListener
         gridView.setAdapter(new MyAdapter());
 
         BuyRoomBean.PlayDetailListBean.ListBean listBean = checked.get(0);
-        if (TextUtils.isEmpty(listBean.getMoney())) {
+        if (TextUtils.isEmpty(listBean.getMoney()))
+        {
             // 快捷下注
             layoutQuickMoney.setVisibility(View.VISIBLE);
             layoutInput.setVisibility(View.VISIBLE);
             tvTips.setVisibility(View.GONE);
-        } else {
+        }
+        else
+        {
             // 自选下注
             layoutQuickMoney.setVisibility(View.GONE);
             layoutInput.setVisibility(View.GONE);
             tvTips.setVisibility(View.VISIBLE);
-            for (BuyRoomBean.PlayDetailListBean.ListBean bean: checkedList)
+            for (BuyRoomBean.PlayDetailListBean.ListBean bean : checkedList)
             {
                 int capital = Integer.valueOf(bean.getMoney());
                 float bonus = Float.valueOf(bean.getBonus());
                 totalCapital += capital;
-                totalWinMoney += capital*bonus;
+                totalWinMoney += capital * bonus;
             }
-            tvTips.setText(Html.fromHtml(mContext.getString(R.string.s_buy_explain, checkedList.size(), String.valueOf(FloatUtils.format(totalCapital)), String.valueOf(FloatUtils.format(totalWinMoney)), String.valueOf(FloatUtils.format(totalWinMoney - totalCapital)))));
+            tvTips.setText(Html.fromHtml(mContext.getString(R.string.s_buy_explain, checkedList.size(), String
+                    .valueOf(FloatUtils.format(totalCapital)), String.valueOf(FloatUtils.format(totalWinMoney)), String
+                    .valueOf(FloatUtils.format(totalWinMoney - totalCapital)))));
         }
     }
 
     @Override
     public void onClick(View v)
     {
-        switch (v.getId()) {
+        switch (v.getId())
+        {
             case R.id.tv_100:
-                etMoney.setText("100");
+                etMoney.setText(updateMoney(100));
+                etMoney.setSelection(etMoney.length());
                 break;
             case R.id.tv_500:
-                etMoney.setText("500");
+                etMoney.setText(updateMoney(100));
+                etMoney.setSelection(etMoney.length());
                 break;
             case R.id.tv_1000:
-                etMoney.setText("1000");
+                etMoney.setText(updateMoney(100));
+                etMoney.setSelection(etMoney.length());
                 break;
             case R.id.tv_5000:
-                etMoney.setText("5000");
+                etMoney.setText(updateMoney(100));
+                etMoney.setSelection(etMoney.length());
                 break;
             case R.id.tv_10000:
-                etMoney.setText("10000");
+                etMoney.setText(updateMoney(100));
+                etMoney.setSelection(etMoney.length());
                 break;
             case R.id.tv_50000:
-                etMoney.setText("50000");
+                etMoney.setText(updateMoney(100));
+                etMoney.setSelection(etMoney.length());
                 break;
             case R.id.tv_clear:
                 etMoney.setText("");
+                etMoney.setSelection(etMoney.length());
                 break;
             default:
                 break;
         }
     }
 
-    public interface ConfirmBuyListener {
+    public interface ConfirmBuyListener
+    {
         void onConfirmBuyListener(List<BuyRoomBean.PlayDetailListBean.ListBean> checked);
     }
 
-    public class MyAdapter extends BaseAdapter {
+    public class MyAdapter extends BaseAdapter
+    {
 
         @Override
         public int getCount()
@@ -243,8 +278,10 @@ public class ConfirmBuyDialog implements View.OnClickListener
         @Override
         public View getView(int position, View convertView, ViewGroup parent)
         {
-            if (null == convertView) {
-                convertView = LayoutInflater.from(mContext).inflate(R.layout.item_confirm_buy_item, null);
+            if (null == convertView)
+            {
+                convertView = LayoutInflater.from(mContext)
+                        .inflate(R.layout.item_confirm_buy_item, null);
             }
             TextView tvContent = ViewHolder.get(convertView, R.id.tv_content);
             BuyRoomBean.PlayDetailListBean.ListBean listBean = checkedList.get(position);
