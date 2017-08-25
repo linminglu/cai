@@ -81,6 +81,16 @@
     <string name="s_login_status_failed">您还未登录或登录状态超时，是否跳转到登录界面？</string>
     <string name="s_agree_protocol">我已年满十八周岁，并且同意接受《法律声明》 \n 请牢记凤凰彩票F83官方永久域名：F83.com</string>
 
+    <!-- 充值页面 -->
+    <string name="s_topup">充值</string>
+    <string-array name="s_array_topup">
+        <item>银行转账</item>
+        <item>微信</item>
+        <item>支付宝</item>
+        <item>QQ钱包</item>
+        <item>网银支付</item>
+    </string-array>
+
     <!-- 签到 -->
     <string name="s_qiandao">签到</string>
     <string name="s_qiandao_jilu">签到记录</string>

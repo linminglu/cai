@@ -21,11 +21,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:drawablePadding="5dp"
+            android:drawableRight="@mipmap/top_zhong_sanjiao"
             android:singleLine="true"
             android:textColor="@color/white"
             android:textSize="20sp"
-            android:drawableRight="@mipmap/top_zhong_sanjiao"
-            android:drawablePadding="5dp"
             />
 
     </android.support.v7.widget.Toolbar>
@@ -34,9 +34,9 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
         android:layout_above="@+id/bottomLinearLayout"
-        android:layout_below="@+id/toolbar">
+        android:layout_below="@+id/toolbar"
+        android:fillViewport="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -117,9 +117,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_index"
-                android:padding="5dp"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="5dp">
 
             </LinearLayout>
 
@@ -127,13 +127,13 @@
                 android:id="@+id/tv_amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/line1"
                 android:layout_alignParentRight="true"
+                android:layout_below="@+id/line1"
+                android:drawablePadding="5dp"
+                android:drawableRight="@mipmap/refresh"
                 android:padding="5dp"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                android:drawableRight="@mipmap/refresh"
-                android:drawablePadding="5dp"
                 android:visibility="gone"
                 />
 
@@ -230,7 +230,9 @@
         android:id="@+id/loadingLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar">
+
+        android:layout_below="@+id/toolbar"
+        android:visibility="gone">
 
     </com.example.admin.caipiao33.views.LoadingLayout>
 </RelativeLayout>

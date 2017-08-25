@@ -20,6 +20,7 @@ import com.example.admin.caipiao33.QianDaoActivity;
 import com.example.admin.caipiao33.QianDaoJiLuActivity;
 import com.example.admin.caipiao33.R;
 import com.example.admin.caipiao33.SettingActivity;
+import com.example.admin.caipiao33.TopupActivity;
 import com.example.admin.caipiao33.bean.UserInfoBean;
 import com.example.admin.caipiao33.contract.IUserContract;
 import com.example.admin.caipiao33.presenter.UserInfoPresenter;
@@ -202,13 +203,17 @@ public class UserFragment extends BaseFragment implements View.OnClickListener, 
         userFragmentYueTv.setText(bean.getBalance() + "元");
     }
 
-    @OnClick({R.id.user_fragment_qiandao_tv, R.id.user_fragment_tuijian_rl, R.id.user_fragment_gonggao_rl, R.id.user_fragment_touzhujilu_rl, R.id.user_fragment_zhongjiangjilu_rl, R.id.user_fragment_mingxi_rl, R.id.user_fragment_chongzhijilu_rl, R.id.user_fragment_tikuanjilu_rl, R.id.user_fragment_qiandaojilu_rl, R.id.user_fragment_geren_rl})
+    @OnClick({R.id.user_fragment_chongzhi_tv, R.id.user_fragment_qiandao_tv, R.id.user_fragment_tuijian_rl, R.id.user_fragment_gonggao_rl, R.id.user_fragment_touzhujilu_rl, R.id.user_fragment_zhongjiangjilu_rl, R.id.user_fragment_mingxi_rl, R.id.user_fragment_chongzhijilu_rl, R.id.user_fragment_tikuanjilu_rl, R.id.user_fragment_qiandaojilu_rl, R.id.user_fragment_geren_rl})
     public void onViewClicked(View view)
     {
         Intent intent;
         switch (view.getId())
         {
-            case user_fragment_qiandao_tv:
+            case R.id.user_fragment_chongzhi_tv:
+                intent = new Intent(mainActivity, TopupActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.user_fragment_qiandao_tv:
                 intent = new Intent(mainActivity, QianDaoActivity.class);
                 startActivity(intent);
                 break;

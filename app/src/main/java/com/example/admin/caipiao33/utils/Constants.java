@@ -16,9 +16,9 @@ public interface Constants
     int SUCCESSCODE = 200;
     int NOLOGIN2START = 5000;
 
-    String JSONERROR = "服务器数据解析异常";
+    String JSONERROR =  "服务器数据解析异常";
 
-    String MERCHANTID = "2";
+    String MERCHANTID = "1";
 
     String CURR_PHOTO = "currPhoto";
     int REQUEST_CODE_2_LOGIN = 3000;
