@@ -1,6 +1,9 @@
 package com.example.admin.caipiao33;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.text.InputFilter;
@@ -12,9 +15,11 @@ import android.widget.TextView;
 
 import com.example.admin.caipiao33.bean.TopupBean;
 import com.example.admin.caipiao33.contract.ITopupContract;
+import com.example.admin.caipiao33.fragment.WeiXinPayFragment;
 import com.example.admin.caipiao33.presenter.TopupPresenter;
 import com.example.admin.caipiao33.views.NumberInputFilter;
 import com.example.admin.caipiao33.views.PagerSlidingTabStrip;
+import com.example.admin.caipiao33.views.ZoomOutPageTransformer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,6 +56,9 @@ public class TopupActivity extends ToolbarActivity implements Toolbar.OnMenuItem
     @BindView(R.id.topup_buy_vp)
     ViewPager topupBuyVp;
 
+
+    private FragmentManager fragmentManager;
+
     private String[] mTitleArray;
     private ITopupContract.Presenter mPresenter;
 
@@ -69,6 +77,51 @@ public class TopupActivity extends ToolbarActivity implements Toolbar.OnMenuItem
         mTitleArray = getResources().getStringArray(R.array.s_array_topup);
         InputFilter[] filters = {new NumberInputFilter()};
         topupMoneyEt.setFilters(filters);
+
+        topupBuyVp.setOffscreenPageLimit(5);
+        topupBuyVp.setPageTransformer(true, new ZoomOutPageTransformer());
+        fragmentManager = getSupportFragmentManager();
+        topupBuyVp.setAdapter(new FragmentPagerAdapter(fragmentManager)
+        {
+
+            @Override
+            public Fragment getItem(int position)
+            {
+                Fragment ff = null;
+                switch (position)
+                {
+                    case 0:
+                        ff = new WeiXinPayFragment();
+                        break;
+                    case 1:
+                        ff = new WeiXinPayFragment();
+                        break;
+                    case 2:
+                        ff = new WeiXinPayFragment();
+                        break;
+                    case 3:
+                        ff = new WeiXinPayFragment();
+                        break;
+                    case 4:
+                        ff = new WeiXinPayFragment();
+                        break;
+                }
+                return ff;
+            }
+
+            @Override
+            public int getCount()
+            {
+                return mTitleArray.length;
+            }
+
+            @Override
+            public CharSequence getPageTitle(int position)
+            {
+                return mTitleArray[position];
+            }
+        });
+        topupBuyPsts.setViewPager(topupBuyVp);
     }
 
     public void onCreateCustomToolBar(Toolbar toolbar)
