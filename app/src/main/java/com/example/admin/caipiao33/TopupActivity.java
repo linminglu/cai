@@ -69,6 +69,7 @@ public class TopupActivity extends ToolbarActivity implements Toolbar.OnMenuItem
         setContentView(R.layout.activity_topup);
         ButterKnife.bind(this);
         mPresenter = new TopupPresenter(this, null);
+        mPresenter.getTopup();
         initView();
     }
 
@@ -158,7 +159,8 @@ public class TopupActivity extends ToolbarActivity implements Toolbar.OnMenuItem
     @Override
     public void updata(TopupBean result)
     {
-
+        topupUsernameTv.setText(result.getCode());
+        topupYueTv.setText(result.getAmount() + "元");
     }
 
     @OnClick({R.id.topup_clear_tv, R.id.topup_100_tv, R.id.topup_500_tv, R.id.topup_1000_tv, R.id.topup_5000_tv, R.id.topup_10000_tv, R.id.topup_50000_tv})

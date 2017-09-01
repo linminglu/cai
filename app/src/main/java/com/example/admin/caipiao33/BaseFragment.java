@@ -94,6 +94,7 @@ public class BaseFragment extends Fragment
 
     public void showLoadingLayoutError4Ami(View view)
     {
+
         if (null != mLoadingLayout)
         {
             mLoadingLayout.setOnLoadingError(getActivity(), view);
