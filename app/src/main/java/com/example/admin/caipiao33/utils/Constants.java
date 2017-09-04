@@ -41,5 +41,8 @@ public interface Constants
     String EXTRA_ROOM_ID = "extra_room_id";
     String EXTRA_PLAY_ID = "extra_play_id";
     String EXTRA_PLAY_ID1 = "extra_play_id1";
+    String EXTRA_TOPUP_WEIXIN = "extra_topup_weixin";
+    String EXTRA_TOPUP_TOPUPAMOUNT = "extra_topup_topupamount";
+    String EXTRA_TOPUP_PAYID = "extra_topup_payid";
 
 }

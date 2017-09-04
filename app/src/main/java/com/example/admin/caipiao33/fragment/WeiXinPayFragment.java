@@ -1,5 +1,6 @@
 package com.example.admin.caipiao33.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,10 @@ import com.example.admin.caipiao33.bean.WeiXinPayBean;
 import com.example.admin.caipiao33.fragment.adapter.WeiXinPayAdapter;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.httputils.MyResponseListener;
+import com.example.admin.caipiao33.topupactivity.TianJiaHaoYouActivity;
+import com.example.admin.caipiao33.topupactivity.WeiXin3SaoMaActivity;
+import com.example.admin.caipiao33.topupactivity.WeiXinPingTaiActivity;
+import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.ToastUtil;
 import com.google.gson.reflect.TypeToken;
 
@@ -37,7 +42,6 @@ public class WeiXinPayFragment extends BaseFragment implements View.OnClickListe
     Unbinder unbinder;
     private LayoutInflater mInflater;
     private View parentView;
-    private ArrayList<WeiXinPayBean> weiXinPayBeens;
     private TopupActivity topupActivity;
     private WeiXinPayAdapter payAdapter;
 
@@ -74,9 +78,8 @@ public class WeiXinPayFragment extends BaseFragment implements View.OnClickListe
             @Override
             public void onSuccess(ArrayList<WeiXinPayBean> result)
             {
-                weiXinPayBeens = result;
-                weiXinPayBeens.get(0).setSelete(true);
-                payAdapter = new WeiXinPayAdapter(weiXinPayBeens, mInflater, weixinPayLv, topupActivity);
+                result.get(0).setSelete(true);
+                payAdapter = new WeiXinPayAdapter(result, mInflater, weixinPayLv, topupActivity);
                 weixinPayLv.setAdapter(payAdapter);
                 payAdapter.notifyDataSetChanged();
             }
@@ -102,11 +105,11 @@ public class WeiXinPayFragment extends BaseFragment implements View.OnClickListe
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-                for (int i = 0; i < weiXinPayBeens.size(); i++)
+                for (int i = 0; i < payAdapter.getBeanContents().size(); i++)
                 {
-                    weiXinPayBeens.get(i).setSelete(false);
+                    payAdapter.getBeanContents().get(i).setSelete(false);
                 }
-                weiXinPayBeens.get(position).setSelete(true);
+                payAdapter.getBeanContents().get(position).setSelete(true);
                 payAdapter.notifyDataSetChanged();
             }
         });
@@ -122,12 +125,105 @@ public class WeiXinPayFragment extends BaseFragment implements View.OnClickListe
     @OnClick(R.id.weixin_pay_btn)
     public void onViewClicked(View v)
     {
+        Intent intent;
         switch (v.getId())
         {
             case R.id.weixin_pay_btn: //下一步
+                for (int i = 0; i < payAdapter.getBeanContents().size(); i++)
+                {
+                    if (payAdapter.getBeanContents().get(i).isSelete())
+                    {
+                        if (!payAdapter.getBeanContents().get(i).getCode().equals("#scan#"))
+                        {
+                            //跳转添加好友页面
+                            if (payAdapter.getBeanContents().get(i).getPayType() == 3)
+                            {
+                                intent = new Intent(topupActivity, TianJiaHaoYouActivity.class);
+                                intent.putExtra(Constants.EXTRA_TOPUP_WEIXIN, payAdapter.getBeanContents()
+                                        .get(i));
+                                startActivity(intent);
+                            }
+                            //跳转微信平台支付页面
+                            else
+                            {
+                                if (isCanNext(topupActivity.getTopupAmount(), payAdapter.getBeanContents()
+                                        .get(i)
+                                        .getPayMin(), payAdapter.getBeanContents()
+                                        .get(i)
+                                        .getPayMax()))
+                                {
+                                    intent = new Intent(topupActivity, WeiXinPingTaiActivity.class);
+                                    intent.putExtra(Constants.EXTRA_TOPUP_PAYID, payAdapter.getBeanContents()
+                                            .get(i)
+                                            .getId());
+                                    intent.putExtra(Constants.EXTRA_TOPUP_TOPUPAMOUNT, topupActivity
+                                            .getTopupAmount() + "");
+                                    startActivity(intent);
+                                }
+                            }
+                        }
+                        //跳转第三方支付页面
+                        //                        else if (payAdapter.getBeanContents().get(i).getType() == 2)
+                        else
+                        {
+                            if (payAdapter.getBeanContents().get(i).getType() == 1)
+                            {
+                                if (isCanNext(topupActivity.getTopupAmount(), payAdapter.getBeanContents()
+                                        .get(i)
+                                        .getPayMin(), payAdapter.getBeanContents()
+                                        .get(i)
+                                        .getPayMax()))
+                                {
+                                    intent = new Intent(topupActivity, WeiXin3SaoMaActivity.class);
+                                    intent.putExtra(Constants.EXTRA_TOPUP_PAYID, payAdapter.getBeanContents()
+                                            .get(i)
+                                            .getId());
+                                    intent.putExtra(Constants.EXTRA_TOPUP_TOPUPAMOUNT, topupActivity
+                                            .getTopupAmount() + "");
+                                    startActivity(intent);
+                                }
+                            }
+                            else if (payAdapter.getBeanContents().get(i).getType() == 2)
+                            {
+                                if (isCanNext(topupActivity.getTopupAmount(), payAdapter.getBeanContents()
+                                        .get(i)
+                                        .getPayMin(), payAdapter.getBeanContents()
+                                        .get(i)
+                                        .getPayMax()))
+                                {
+                                    intent = new Intent(topupActivity, TianJiaHaoYouActivity.class);
+                                    intent.putExtra(Constants.EXTRA_TOPUP_PAYID, payAdapter.getBeanContents()
+                                            .get(i)
+                                            .getId());
+                                    intent.putExtra(Constants.EXTRA_TOPUP_TOPUPAMOUNT, topupActivity
+                                            .getTopupAmount() + "");
+                                    //                                    startActivity(intent);
+                                }
+                            }
+                        }
+                    }
+                }
                 break;
             default:
                 break;
+        }
+    }
+
+    private boolean isCanNext(int amount, int min, int max)
+    {
+        if (min > amount)
+        {
+            ToastUtil.show("充值金额不足" + min + "元！");
+            return false;
+        }
+        else if (max < amount)
+        {
+            ToastUtil.show("充值金额超过" + max + "元！");
+            return false;
+        }
+        else
+        {
+            return true;
         }
     }
 

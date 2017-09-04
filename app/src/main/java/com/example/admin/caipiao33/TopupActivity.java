@@ -1,5 +1,6 @@
 package com.example.admin.caipiao33;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,10 +17,19 @@ import android.widget.TextView;
 import com.example.admin.caipiao33.bean.TopupBean;
 import com.example.admin.caipiao33.contract.ITopupContract;
 import com.example.admin.caipiao33.fragment.WeiXinPayFragment;
+import com.example.admin.caipiao33.httputils.HttpUtil;
+import com.example.admin.caipiao33.httputils.MyResponseListener;
 import com.example.admin.caipiao33.presenter.TopupPresenter;
+import com.example.admin.caipiao33.utils.Constants;
+import com.example.admin.caipiao33.utils.LoginEvent;
+import com.example.admin.caipiao33.utils.TopupEvent;
 import com.example.admin.caipiao33.views.NumberInputFilter;
 import com.example.admin.caipiao33.views.PagerSlidingTabStrip;
 import com.example.admin.caipiao33.views.ZoomOutPageTransformer;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -68,6 +78,7 @@ public class TopupActivity extends ToolbarActivity implements Toolbar.OnMenuItem
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_topup);
         ButterKnife.bind(this);
+        EventBus.getDefault().register(this);
         mPresenter = new TopupPresenter(this, null);
         mPresenter.getTopup();
         initView();
@@ -142,6 +153,27 @@ public class TopupActivity extends ToolbarActivity implements Toolbar.OnMenuItem
             case R.id.action_jilu: // 充值记录
                 break;
             case R.id.action_kefu: // 在线客服
+                showLoadingDialog();
+                HttpUtil.requestFirst("kefu", String.class, TopupActivity.this, new MyResponseListener<String>()
+                {
+                    @Override
+                    public void onSuccess(String result)
+                    {
+                        toWebUrlActivity(result, "在线客服");
+                    }
+
+                    @Override
+                    public void onFailed(int code, String msg)
+                    {
+
+                    }
+
+                    @Override
+                    public void onFinish()
+                    {
+                        hideLoadingDialog();
+                    }
+                }, null);
                 break;
             default:
                 break;
@@ -154,6 +186,12 @@ public class TopupActivity extends ToolbarActivity implements Toolbar.OnMenuItem
     {
         getMenuInflater().inflate(R.menu.menu_topup, menu);
         return true;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMoonEvent(TopupEvent messageEvent)
+    {
+        finish();
     }
 
     @Override
@@ -211,6 +249,29 @@ public class TopupActivity extends ToolbarActivity implements Toolbar.OnMenuItem
 
         }
         return num + "";
+    }
+
+    public int getTopupAmount()
+    {
+        int amount = 0;
+        try
+        {
+            amount = Integer.valueOf(topupMoneyEt.getText().toString());
+        }
+        catch (Exception e)
+        {
+
+        }
+        return amount;
+    }
+
+    // 跳转到网页
+    private void toWebUrlActivity(String url, String title)
+    {
+        Intent intent = new Intent(TopupActivity.this, WebUrlActivity.class);
+        intent.putExtra(Constants.EXTRA_URL, url);
+        intent.putExtra(Constants.EXTRA_TITLE, title);
+        startActivity(intent);
     }
 }
 

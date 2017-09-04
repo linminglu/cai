@@ -83,6 +83,8 @@
 
     <!-- 充值页面 -->
     <string name="s_topup">充值</string>
+    <string name="s_weixin_tianjiahaoyou">微信添加好友</string>
+    <string name="s_weixin_pingtaichongzhi">微信平台充值</string>
     <string-array name="s_array_topup">
         <item>银行转账</item>
         <item>微信</item>

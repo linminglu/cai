@@ -44,8 +44,9 @@
         android:layout_below="@+id/item_weixinpay_name"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="8dp"
-        android:maxLength="30"
+        android:ellipsize="end"
         android:maxLines="2"
+        android:maxWidth="250dp"
         android:text="重要：在转账时，请备注您的会员账号，才可以事实到账"
         android:textColor="@color/light_black"
         android:textSize="11sp"/>
