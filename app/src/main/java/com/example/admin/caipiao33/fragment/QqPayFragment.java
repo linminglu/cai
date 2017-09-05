@@ -13,13 +13,12 @@ import com.example.admin.caipiao33.BaseFragment;
 import com.example.admin.caipiao33.R;
 import com.example.admin.caipiao33.TopupActivity;
 import com.example.admin.caipiao33.WebUrlActivity;
-import com.example.admin.caipiao33.bean.WeiXinPayBean;
-import com.example.admin.caipiao33.fragment.adapter.WeiXinPayAdapter;
+import com.example.admin.caipiao33.bean.QqPayBean;
+import com.example.admin.caipiao33.fragment.adapter.QqPayAdapter;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.httputils.MyResponseListener;
-import com.example.admin.caipiao33.topupactivity.WeiXinHaoYouActivity;
-import com.example.admin.caipiao33.topupactivity.WeiXin3SaoMaActivity;
-import com.example.admin.caipiao33.topupactivity.WeiXinPingTaiActivity;
+import com.example.admin.caipiao33.topupactivity.QqPay3SaoMaActivity;
+import com.example.admin.caipiao33.topupactivity.QqPayPingTaiActivity;
 import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.utils.UserConfig;
@@ -33,20 +32,20 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
- * 微信充值页面
+ * QQ钱包充值页面
  */
-public class WeiXinPayFragment extends BaseFragment implements View.OnClickListener
+public class QqPayFragment extends BaseFragment implements View.OnClickListener
 {
-    @BindView(R.id.weixin_pay_lv)
-    ListView weixinPayLv;
-    @BindView(R.id.weixin_pay_btn)
-    Button weixinPayBtn;
+    @BindView(R.id.qq_pay_lv)
+    ListView qqPayLv;
+    @BindView(R.id.qq_pay_btn)
+    Button qqPayBtn;
     Unbinder unbinder;
     private LayoutInflater mInflater;
     private TopupActivity topupActivity;
-    private WeiXinPayAdapter payAdapter;
+    private QqPayAdapter payAdapter;
 
-    public WeiXinPayFragment()
+    public QqPayFragment()
     {
 
     }
@@ -60,7 +59,7 @@ public class WeiXinPayFragment extends BaseFragment implements View.OnClickListe
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View parentView = inflater.inflate(R.layout.fragment_weixin_pay, container, false);
+        View parentView = inflater.inflate(R.layout.fragment_qq_pay, container, false);
         mInflater = inflater;
         topupActivity = (TopupActivity) getActivity();
         unbinder = ButterKnife.bind(this, parentView);
@@ -72,16 +71,16 @@ public class WeiXinPayFragment extends BaseFragment implements View.OnClickListe
     private void initData()
     {
         showLoadingDialog(false);
-        HttpUtil.requestSecond("user", "rwechatList", null, new TypeToken<ArrayList<WeiXinPayBean>>()
+        HttpUtil.requestSecond("user", "rqqpayList", null, new TypeToken<ArrayList<QqPayBean>>()
         {
-        }.getType(), topupActivity, new MyResponseListener<ArrayList<WeiXinPayBean>>()
+        }.getType(), topupActivity, new MyResponseListener<ArrayList<QqPayBean>>()
         {
             @Override
-            public void onSuccess(ArrayList<WeiXinPayBean> result)
+            public void onSuccess(ArrayList<QqPayBean> result)
             {
                 result.get(0).setSelete(true);
-                payAdapter = new WeiXinPayAdapter(result, mInflater, weixinPayLv, topupActivity);
-                weixinPayLv.setAdapter(payAdapter);
+                payAdapter = new QqPayAdapter(result, mInflater, qqPayLv, topupActivity);
+                qqPayLv.setAdapter(payAdapter);
                 payAdapter.notifyDataSetChanged();
             }
 
@@ -101,7 +100,7 @@ public class WeiXinPayFragment extends BaseFragment implements View.OnClickListe
 
     private void initView()
     {
-        weixinPayLv.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        qqPayLv.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
@@ -123,13 +122,13 @@ public class WeiXinPayFragment extends BaseFragment implements View.OnClickListe
         unbinder.unbind();
     }
 
-    @OnClick(R.id.weixin_pay_btn)
+    @OnClick(R.id.qq_pay_btn)
     public void onViewClicked(View v)
     {
         Intent intent;
         switch (v.getId())
         {
-            case R.id.weixin_pay_btn: //下一步
+            case R.id.qq_pay_btn: //下一步
                 for (int i = 0; i < payAdapter.getBeanContents().size(); i++)
                 {
                     if (payAdapter.getBeanContents().get(i).isSelete())
@@ -137,31 +136,28 @@ public class WeiXinPayFragment extends BaseFragment implements View.OnClickListe
                         if (!payAdapter.getBeanContents().get(i).getCode().equals("#scan#"))
                         {
                             //跳转添加好友页面
-                            if (payAdapter.getBeanContents().get(i).getPayType() == 3)
+                            //                            if (payAdapter.getBeanContents().get(i).getPayType() == 3)
+                            //                            {
+                            //                                intent = new Intent(topupActivity, QqPayHaoYouActivity.class);
+                            //                                intent.putExtra(Constants.EXTRA_TOPUP_WEIXIN, payAdapter.getBeanContents()
+                            //                                        .get(i));
+                            //                                startActivity(intent);
+                            //                            }
+                            //跳转微信平台支付页面
+                            //                            else
+                            //                            {
+                            if (isCanNext(topupActivity.getTopupAmount(), payAdapter.getBeanContents()
+                                    .get(i)
+                                    .getPayMin(), payAdapter.getBeanContents().get(i).getPayMax()))
                             {
-                                intent = new Intent(topupActivity, WeiXinHaoYouActivity.class);
-                                intent.putExtra(Constants.EXTRA_TOPUP_WEIXIN, payAdapter.getBeanContents()
-                                        .get(i));
+                                intent = new Intent(topupActivity, QqPayPingTaiActivity.class);
+                                intent.putExtra(Constants.EXTRA_TOPUP_PAYID, payAdapter.getBeanContents()
+                                        .get(i)
+                                        .getId());
+                                intent.putExtra(Constants.EXTRA_TOPUP_TOPUPAMOUNT, topupActivity.getTopupAmount() + "");
                                 startActivity(intent);
                             }
-                            //跳转微信平台支付页面
-                            else
-                            {
-                                if (isCanNext(topupActivity.getTopupAmount(), payAdapter.getBeanContents()
-                                        .get(i)
-                                        .getPayMin(), payAdapter.getBeanContents()
-                                        .get(i)
-                                        .getPayMax()))
-                                {
-                                    intent = new Intent(topupActivity, WeiXinPingTaiActivity.class);
-                                    intent.putExtra(Constants.EXTRA_TOPUP_PAYID, payAdapter.getBeanContents()
-                                            .get(i)
-                                            .getId());
-                                    intent.putExtra(Constants.EXTRA_TOPUP_TOPUPAMOUNT, topupActivity
-                                            .getTopupAmount() + "");
-                                    startActivity(intent);
-                                }
-                            }
+                            //                            }
                         }
                         //跳转第三方支付页面
                         //                        else if (payAdapter.getBeanContents().get(i).getType() == 2)
@@ -175,7 +171,7 @@ public class WeiXinPayFragment extends BaseFragment implements View.OnClickListe
                                         .get(i)
                                         .getPayMax()))
                                 {
-                                    intent = new Intent(topupActivity, WeiXin3SaoMaActivity.class);
+                                    intent = new Intent(topupActivity, QqPay3SaoMaActivity.class);
                                     intent.putExtra(Constants.EXTRA_TOPUP_PAYID, payAdapter.getBeanContents()
                                             .get(i)
                                             .getId());
@@ -194,13 +190,13 @@ public class WeiXinPayFragment extends BaseFragment implements View.OnClickListe
                                 {
                                     String url = payAdapter.getBeanContents()
                                             .get(i)
-                                            .getPayImg() + "/common/recharge/third?memberId=" + UserConfig
+                                            .getPayUrl() + "/common/recharge/third?memberId=" + UserConfig
                                             .getInstance()
                                             .getToken(topupActivity)
-                                            .getMemberId() + "&type=1&payId=" + payAdapter.getBeanContents()
+                                            .getMemberId() + "&type=2&payId=" + payAdapter.getBeanContents()
                                             .get(i)
                                             .getId() + "&amount=" + topupActivity.getTopupAmount() + "&bankName=&baseUrl=" + HttpUtil.mNewUrl;
-                                    toWebUrlActivity(url, "微信支付");
+                                    toWebUrlActivity(url, "支付宝支付");
                                     //                                    startActivity(intent);
                                 }
                             }

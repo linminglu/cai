@@ -16,6 +16,8 @@ import android.widget.TextView;
 
 import com.example.admin.caipiao33.bean.TopupBean;
 import com.example.admin.caipiao33.contract.ITopupContract;
+import com.example.admin.caipiao33.fragment.AliPayFragment;
+import com.example.admin.caipiao33.fragment.QqPayFragment;
 import com.example.admin.caipiao33.fragment.WeiXinPayFragment;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.httputils.MyResponseListener;
@@ -109,10 +111,10 @@ public class TopupActivity extends ToolbarActivity implements Toolbar.OnMenuItem
                         ff = new WeiXinPayFragment();
                         break;
                     case 2:
-                        ff = new WeiXinPayFragment();
+                        ff = new AliPayFragment();
                         break;
                     case 3:
-                        ff = new WeiXinPayFragment();
+                        ff = new QqPayFragment();
                         break;
                     case 4:
                         ff = new WeiXinPayFragment();
