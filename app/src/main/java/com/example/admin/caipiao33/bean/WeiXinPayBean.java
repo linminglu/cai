@@ -32,6 +32,7 @@ public class WeiXinPayBean implements Serializable
     private int payMax;
     private String payImg;
     private String id;
+    private String payUrl;
     private boolean isSelete;
 
     public int getType()
@@ -142,5 +143,15 @@ public class WeiXinPayBean implements Serializable
     public void setSelete(boolean selete)
     {
         isSelete = selete;
+    }
+
+    public String getPayUrl()
+    {
+        return payUrl;
+    }
+
+    public void setPayUrl(String payUrl)
+    {
+        this.payUrl = payUrl;
     }
 }
