@@ -93,6 +93,19 @@
         <item>网银支付</item>
     </string-array>
 
+    <!-- 提款 -->
+    <string name="s_tikuan">提款</string>
+    <string name="s_tikuan_name">收款姓名</string>
+    <string name="s_tikuan_yue">账户余额</string>
+    <string name="s_tikuan_bili">消费比例</string>
+    <string name="s_tikuan_shifou">是否可以提款：</string>
+    <string name="s_tikuan_mianfei">当天免手续费：</string>
+    <string name="s_tikuan_yinhang">收款银行：</string>
+    <string name="s_tikuan_zhanghao">收款账号：</string>
+    <string name="s_tikuan_jine">提款金额：</string>
+    <string name="s_tikuan_mima">提款密码：</string>
+    <string name="s_tikuan_submit">确认</string>
+
     <!-- 签到 -->
     <string name="s_qiandao">签到</string>
     <string name="s_qiandao_jilu">签到记录</string>

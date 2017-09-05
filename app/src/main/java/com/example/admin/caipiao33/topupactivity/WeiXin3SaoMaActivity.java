@@ -1,5 +1,6 @@
 package com.example.admin.caipiao33.topupactivity;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -18,6 +19,7 @@ import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.MyImageLoader;
 import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.utils.TopupEvent;
+import com.example.admin.caipiao33.utils.ZXingUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -69,7 +71,7 @@ public class WeiXin3SaoMaActivity extends ToolbarActivity implements Toolbar.OnM
         map.put("amount", topupamount);
         map.put("baseUrl", HttpUtil.mNewUrl);
 
-        HttpUtil.requestSecond("user", "rwechatNext", map, WeiXin3SaoMaBean.class, WeiXin3SaoMaActivity.this, new MyResponseListener<WeiXin3SaoMaBean>()
+        HttpUtil.requestThird("user", "recharge", "wechatNext", map, WeiXin3SaoMaBean.class, WeiXin3SaoMaActivity.this, new MyResponseListener<WeiXin3SaoMaBean>()
         {
             @Override
             public void onSuccess(WeiXin3SaoMaBean result)
@@ -78,8 +80,18 @@ public class WeiXin3SaoMaActivity extends ToolbarActivity implements Toolbar.OnM
                 weixin3saomadingdanhao.setText(result.getOrderNo());
                 weixin3saomaamount.setText(result.getAmount());
                 weixin3saomaerrortip.setText(result.getErrorTip());
+                //                weixin3saomaerrortip.loadDataWithBaseURL("about:blank", result.getErrorTip(), "text/html", "utf-8", null);
                 weixin3saomasteps.loadDataWithBaseURL("about:blank", result.getSteps(), "text/html", "utf-8", null);
-                MyImageLoader.displayImage(HttpUtil.mNewUrl + "/" + result.getPayUrl(), weixin3saomaerweima, WeiXin3SaoMaActivity.this);
+                if (result.getNeedDown().equals("0"))
+                {
+                    Bitmap bitmap = ZXingUtils.createQRImage(result.getPayUrl(), weixin3saomaerweima
+                            .getWidth(), weixin3saomaerweima.getHeight());
+                    weixin3saomaerweima.setImageBitmap(bitmap);
+                }
+                else
+                {
+                    MyImageLoader.displayImage(result.getPayUrl(), weixin3saomaerweima, WeiXin3SaoMaActivity.this);
+                }
             }
 
             @Override
@@ -94,13 +106,6 @@ public class WeiXin3SaoMaActivity extends ToolbarActivity implements Toolbar.OnM
                 hideLoadingDialog();
             }
         }, null);
-    }
-
-    private void toNext()
-    {
-        ToastUtil.show("提交成功，请稍后查询充值记录！");
-        finish();
-        EventBus.getDefault().post(new TopupEvent(""));
     }
 
     public void onCreateCustomToolBar(Toolbar toolbar)

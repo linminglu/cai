@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.admin.caipiao33.contract.ILoginContract;
-import com.example.admin.caipiao33.fragment.UserFragment;
 import com.example.admin.caipiao33.presenter.LoginPresenter;
 import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.LoginEvent;
@@ -22,19 +21,15 @@ import com.example.admin.caipiao33.utils.StringUtils;
 import com.example.admin.caipiao33.utils.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.example.admin.caipiao33.R.id.edTxt_account;
-
 
 public class LoginActivity extends ToolbarActivity implements Toolbar.OnMenuItemClickListener, ILoginContract.View
 {
-    @BindView(edTxt_account)
+    @BindView(R.id.edTxt_account)
     EditText edTxtAccount;
     @BindView(R.id.edTxt_pwd)
     EditText edTxtPwd;
@@ -114,12 +109,12 @@ public class LoginActivity extends ToolbarActivity implements Toolbar.OnMenuItem
         mPresenter.getLogin(edTxtAccount.getText().toString(), edTxtPwd.getText().toString());
     }
 
-    @OnClick({edTxt_account, R.id.edTxt_pwd, R.id.cBox_password, R.id.btn_login, R.id.tv_register, R.id.tv_find_pwd, R.id.login_weixin_img, R.id.login_weibo_img})
+    @OnClick({R.id.edTxt_account, R.id.edTxt_pwd, R.id.cBox_password, R.id.btn_login, R.id.tv_register, R.id.tv_find_pwd, R.id.login_weixin_img, R.id.login_weibo_img})
     public void onViewClicked(View view)
     {
         switch (view.getId())
         {
-            case edTxt_account:
+            case R.id.edTxt_account:
                 break;
             case R.id.edTxt_pwd:
                 break;

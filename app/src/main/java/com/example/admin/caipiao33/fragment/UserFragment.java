@@ -20,9 +20,13 @@ import com.example.admin.caipiao33.QianDaoActivity;
 import com.example.admin.caipiao33.QianDaoJiLuActivity;
 import com.example.admin.caipiao33.R;
 import com.example.admin.caipiao33.SettingActivity;
+import com.example.admin.caipiao33.TiXianActivity;
 import com.example.admin.caipiao33.TopupActivity;
+import com.example.admin.caipiao33.WebUrlActivity;
 import com.example.admin.caipiao33.bean.UserInfoBean;
 import com.example.admin.caipiao33.contract.IUserContract;
+import com.example.admin.caipiao33.httputils.HttpUtil;
+import com.example.admin.caipiao33.httputils.MyResponseListener;
 import com.example.admin.caipiao33.presenter.UserInfoPresenter;
 import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.LoginEvent;
@@ -203,7 +207,7 @@ public class UserFragment extends BaseFragment implements View.OnClickListener, 
         userFragmentYueTv.setText(bean.getBalance() + "元");
     }
 
-    @OnClick({R.id.user_fragment_chongzhi_tv, R.id.user_fragment_qiandao_tv, R.id.user_fragment_tuijian_rl, R.id.user_fragment_gonggao_rl, R.id.user_fragment_touzhujilu_rl, R.id.user_fragment_zhongjiangjilu_rl, R.id.user_fragment_mingxi_rl, R.id.user_fragment_chongzhijilu_rl, R.id.user_fragment_tikuanjilu_rl, R.id.user_fragment_qiandaojilu_rl, R.id.user_fragment_geren_rl})
+    @OnClick({R.id.user_fragment_tixian_tv, R.id.user_fragment_kefu_tv, R.id.user_fragment_chongzhi_tv, R.id.user_fragment_qiandao_tv, R.id.user_fragment_tuijian_rl, R.id.user_fragment_gonggao_rl, R.id.user_fragment_touzhujilu_rl, R.id.user_fragment_zhongjiangjilu_rl, R.id.user_fragment_mingxi_rl, R.id.user_fragment_chongzhijilu_rl, R.id.user_fragment_tikuanjilu_rl, R.id.user_fragment_qiandaojilu_rl, R.id.user_fragment_geren_rl})
     public void onViewClicked(View view)
     {
         Intent intent;
@@ -216,6 +220,33 @@ public class UserFragment extends BaseFragment implements View.OnClickListener, 
             case R.id.user_fragment_qiandao_tv:
                 intent = new Intent(mainActivity, QianDaoActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.user_fragment_tixian_tv:
+                intent = new Intent(mainActivity, TiXianActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.user_fragment_kefu_tv:
+                showLoadingDialog(false);
+                HttpUtil.requestFirst("kefu", String.class, mainActivity, new MyResponseListener<String>()
+                {
+                    @Override
+                    public void onSuccess(String result)
+                    {
+                        toWebUrlActivity(result, "在线客服");
+                    }
+
+                    @Override
+                    public void onFailed(int code, String msg)
+                    {
+
+                    }
+
+                    @Override
+                    public void onFinish()
+                    {
+                        hideLoadingDialog();
+                    }
+                }, null);
                 break;
             case R.id.user_fragment_tuijian_rl:
                 break;
@@ -250,6 +281,15 @@ public class UserFragment extends BaseFragment implements View.OnClickListener, 
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    // 跳转到网页
+    private void toWebUrlActivity(String url, String title)
+    {
+        Intent intent = new Intent(mainActivity, WebUrlActivity.class);
+        intent.putExtra(Constants.EXTRA_URL, url);
+        intent.putExtra(Constants.EXTRA_TITLE, title);
+        startActivity(intent);
     }
 }
 
