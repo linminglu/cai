@@ -113,6 +113,7 @@ public class QqPayFragment extends BaseFragment implements View.OnClickListener
                 payAdapter.notifyDataSetChanged();
             }
         });
+
     }
 
     @Override
