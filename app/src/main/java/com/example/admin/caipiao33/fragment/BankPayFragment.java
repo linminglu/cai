@@ -17,6 +17,8 @@ import com.example.admin.caipiao33.bean.BankPayBean;
 import com.example.admin.caipiao33.fragment.adapter.BankPayAdapter;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.httputils.MyResponseListener;
+import com.example.admin.caipiao33.topupactivity.Ali3SaoMaActivity;
+import com.example.admin.caipiao33.topupactivity.BankPayActivity;
 import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.ToastUtil;
 import com.google.gson.reflect.TypeToken;
@@ -130,7 +132,17 @@ public class BankPayFragment extends BaseFragment implements View.OnClickListene
                 {
                     if (payAdapter.getBeanContents().get(i).isSelete())
                     {
-
+                        if (isCanNext(topupActivity.getTopupAmount(), payAdapter.getBeanContents()
+                                .get(i)
+                                .getPayMin(), payAdapter.getBeanContents().get(i).getPayMax()))
+                        {
+                            intent = new Intent(topupActivity, BankPayActivity.class);
+                            intent.putExtra(Constants.EXTRA_TOPUP_PAYID, payAdapter.getBeanContents()
+                                    .get(i)
+                                    .getId());
+                            intent.putExtra(Constants.EXTRA_TOPUP_TOPUPAMOUNT, topupActivity.getTopupAmount() + "");
+                            startActivity(intent);
+                        }
                     }
                 }
                 break;

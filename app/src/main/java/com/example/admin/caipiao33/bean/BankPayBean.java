@@ -22,6 +22,7 @@ public class BankPayBean implements Serializable
     private String bankAddr;
     private String accountCode;
     private String accountName;
+    private String id;
     private int payMin;
     private int payMax;
     private boolean isSelete;
@@ -94,5 +95,15 @@ public class BankPayBean implements Serializable
     public void setSelete(boolean selete)
     {
         isSelete = selete;
+    }
+
+    public String getId()
+    {
+        return id;
+    }
+
+    public void setId(String id)
+    {
+        this.id = id;
     }
 }

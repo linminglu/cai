@@ -88,6 +88,7 @@
     <string name="s_ali_tianjiahaoyou">支付宝添加好友</string>
     <string name="s_ali_pingtaichongzhi">支付宝充值</string>
     <string name="s_qq_pingtaichongzhi">QQ钱包充值</string>
+    <string name="s_bank_yinhangzhuanzhang">银行转账</string>
     <string-array name="s_array_topup">
         <item>银行转账</item>
         <item>微信</item>
