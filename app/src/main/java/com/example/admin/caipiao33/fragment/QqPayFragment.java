@@ -191,10 +191,10 @@ public class QqPayFragment extends BaseFragment implements View.OnClickListener
                                 {
                                     String url = payAdapter.getBeanContents()
                                             .get(i)
-                                            .getPayUrl() + "/common/recharge/third?memberId=" + UserConfig
+                                            .getPayImg() + "/common/recharge/third?memberId=" + UserConfig
                                             .getInstance()
                                             .getToken(topupActivity)
-                                            .getMemberId() + "&type=2&payId=" + payAdapter.getBeanContents()
+                                            .getMemberId() + "&type=7&payId=" + payAdapter.getBeanContents()
                                             .get(i)
                                             .getId() + "&amount=" + topupActivity.getTopupAmount() + "&bankName=&baseUrl=" + HttpUtil.mNewUrl;
                                     toWebUrlActivity(url, "支付宝支付");
