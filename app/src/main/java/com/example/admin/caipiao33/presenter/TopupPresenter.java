@@ -29,25 +29,26 @@ public class TopupPresenter implements ITopupContract.Presenter
     @Override
     public void getTopup()
     {
-        mView.showLoadingDialog(false);
         HttpUtil.requestSecond("user", "recharge", null, TopupBean.class, mView.getBaseActivity(), new MyResponseListener<TopupBean>()
         {
             @Override
             public void onSuccess(TopupBean result)
             {
                 mView.updata(result);
+                mView.hideLoadingLayout();
             }
 
             @Override
             public void onFailed(int code, String msg)
             {
                 ToastUtil.show(msg);
+                mView.showLoadingLayoutError();
             }
 
             @Override
             public void onFinish()
             {
-                mView.hideLoadingDialog();
+
             }
         }, null);
     }

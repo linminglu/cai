@@ -29,26 +29,25 @@ public class TiKuanPresenter implements ITiKuanContract.Presenter
     @Override
     public void getTiKuan()
     {
-        mView.showLoadingDialog(false);
-
         HttpUtil.requestSecond("user", "withdraw", null, TiKuanBean.class, mView.getBaseActivity(), new MyResponseListener<TiKuanBean>()
         {
             @Override
             public void onSuccess(TiKuanBean result)
             {
                 mView.updata(result);
+                mView.hideLoadingLayout();
             }
 
             @Override
             public void onFailed(int code, String msg)
             {
                 ToastUtil.show(msg);
+                mView.showLoadingLayoutError();
             }
 
             @Override
             public void onFinish()
             {
-                mView.hideLoadingDialog();
             }
         }, null);
     }

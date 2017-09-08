@@ -26,6 +26,7 @@ import com.example.admin.caipiao33.httputils.MyResponseListener;
 import com.example.admin.caipiao33.presenter.TopupPresenter;
 import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.TopupEvent;
+import com.example.admin.caipiao33.views.LoadingLayout;
 import com.example.admin.caipiao33.views.NumberInputFilter;
 import com.example.admin.caipiao33.views.PagerSlidingTabStrip;
 import com.example.admin.caipiao33.views.ZoomOutPageTransformer;
@@ -137,6 +138,16 @@ public class TopupActivity extends ToolbarActivity implements Toolbar.OnMenuItem
             }
         });
         topupBuyPsts.setViewPager(topupBuyVp);
+
+        mLoadingLayout = (LoadingLayout) findViewById(R.id.loadingLayout);
+        mLoadingLayout.setOnReloadingListener(new LoadingLayout.OnReloadingListener()
+        {
+            @Override
+            public void onReload(View v)
+            {
+                mPresenter.getTopup();
+            }
+        });
     }
 
     public void onCreateCustomToolBar(Toolbar toolbar)

@@ -18,6 +18,7 @@ import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.MyImageLoader;
 import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.utils.TopupEvent;
+import com.example.admin.caipiao33.views.LoadingLayout;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -68,8 +69,6 @@ public class AliPingTaiActivity extends ToolbarActivity implements Toolbar.OnMen
 
     private void initData()
     {
-        showLoadingDialog(false);
-
         HashMap<String, String> map = new HashMap<>();
         map.put("payId", payId);
         map.put("amount", topupamount);
@@ -88,18 +87,19 @@ public class AliPingTaiActivity extends ToolbarActivity implements Toolbar.OnMen
                 alipingtaiErrortip.setText(result.getErrorTip());
                 alipingtaiSteps.loadDataWithBaseURL("about:blank", result.getSteps(), "text/html", "utf-8", null);
                 MyImageLoader.displayImage(HttpUtil.mNewUrl + "/" + result.getImg(), alipingtaiErweima, AliPingTaiActivity.this);
+                hideLoadingLayout();
             }
 
             @Override
             public void onFailed(int code, String msg)
             {
                 ToastUtil.show(msg);
+                showLoadingLayoutError();
             }
 
             @Override
             public void onFinish()
             {
-                hideLoadingDialog();
             }
         }, null);
     }
@@ -152,6 +152,15 @@ public class AliPingTaiActivity extends ToolbarActivity implements Toolbar.OnMen
         //        tianjiahaoyou_Subtitle.setText(aliPayBean.getPayDesc());
         //        tianjiahaoyouName.setText("微信账号：" + aliPayBean.getCode() + "    微信昵称：" + aliPayBean.getName());
         //        MyImageLoader.displayImage(HttpUtil.mNewUrl + "/" + aliPayBean.getPayImg(), tianjiahaoyouErweima, this);
+        mLoadingLayout = (LoadingLayout) findViewById(R.id.loadingLayout);
+        mLoadingLayout.setOnReloadingListener(new LoadingLayout.OnReloadingListener()
+        {
+            @Override
+            public void onReload(View v)
+            {
+                initData();
+            }
+        });
     }
 
     @Override

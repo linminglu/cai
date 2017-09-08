@@ -66,7 +66,6 @@ public class OnLinePayFragment extends BaseFragment implements View.OnClickListe
 
     private void initData()
     {
-        showLoadingDialog(false);
         HttpUtil.requestSecond("user", "ronlineList", null, OnLinePayBean.class, topupActivity, new MyResponseListener<OnLinePayBean>()
         {
             @Override
@@ -82,13 +81,13 @@ public class OnLinePayFragment extends BaseFragment implements View.OnClickListe
             @Override
             public void onFailed(int code, String msg)
             {
-                ToastUtil.show(msg);
+                //                ToastUtil.show(msg);
             }
 
             @Override
             public void onFinish()
             {
-                hideLoadingDialog();
+                //                hideLoadingDialog();
             }
         }, null);
     }

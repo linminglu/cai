@@ -69,7 +69,6 @@ public class BankPayFragment extends BaseFragment implements View.OnClickListene
 
     private void initData()
     {
-        showLoadingDialog(false);
         HttpUtil.requestSecond("user", "rbankList", null, new TypeToken<ArrayList<BankPayBean>>()
         {
         }.getType(), topupActivity, new MyResponseListener<ArrayList<BankPayBean>>()
@@ -86,13 +85,12 @@ public class BankPayFragment extends BaseFragment implements View.OnClickListene
             @Override
             public void onFailed(int code, String msg)
             {
-                ToastUtil.show(msg);
+                //                ToastUtil.show(msg);
             }
 
             @Override
             public void onFinish()
             {
-                hideLoadingDialog();
             }
         }, null);
     }

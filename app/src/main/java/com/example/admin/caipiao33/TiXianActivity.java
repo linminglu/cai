@@ -14,6 +14,7 @@ import com.example.admin.caipiao33.contract.ITiKuanContract;
 import com.example.admin.caipiao33.presenter.TiKuanPresenter;
 import com.example.admin.caipiao33.utils.StringUtils;
 import com.example.admin.caipiao33.utils.ToastUtil;
+import com.example.admin.caipiao33.views.LoadingLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,6 +44,8 @@ public class TiXianActivity extends ToolbarActivity implements Toolbar.OnMenuIte
     EditText tikuanMimaEt;
     @BindView(R.id.tikuan_tip_tv)
     TextView tikuanTipTv;
+    @BindView(R.id.tikuan_errortip_tv)
+    TextView tikuanErrorTipTv;
     @BindView(R.id.tikuan_submit_btn)
     Button tikuanSubmitBtn;
     private ITiKuanContract.Presenter mPresenter;
@@ -60,7 +63,15 @@ public class TiXianActivity extends ToolbarActivity implements Toolbar.OnMenuIte
 
     private void initView()
     {
-
+        mLoadingLayout = (LoadingLayout) findViewById(R.id.loadingLayout);
+        mLoadingLayout.setOnReloadingListener(new LoadingLayout.OnReloadingListener()
+        {
+            @Override
+            public void onReload(View v)
+            {
+                mPresenter.getTiKuan();
+            }
+        });
     }
 
     @Override
@@ -94,15 +105,29 @@ public class TiXianActivity extends ToolbarActivity implements Toolbar.OnMenuIte
     @Override
     public void updata(TiKuanBean result)
     {
-        tikuanNameTv.setText(result.getAccountName());
-        tikuanYueTv.setText("¥" + result.getAmount());
-        tikuanShifouTv.setText(result.getCanWithdraw());
-        tikuanMianfeiTv.setText(result.getFreeTimes());
-        tikuanLastRechargeTv.setText("您最后一笔入款" + result.getLastRecharge() + "需下注" + result.getNeedDml() + "才能提款,当前已下注" + result
-                .getRealDml());
-        tikuanYinhangTv.setText(result.getBankName());
-        tikuanZhanghaoTv.setText(result.getAccountCode());
-        tikuanTipTv.setText(result.getWithdrawTip());
+        if (result.getStatus().equals("-1"))
+        {
+            ToastUtil.show("还未绑定银行卡！");
+            finish();
+        }
+        else if (result.getStatus().equals("1"))
+        {
+            tikuanNameTv.setText(result.getAccountName());
+            tikuanYueTv.setText("¥" + result.getAmount());
+            tikuanShifouTv.setText(result.getCanWithdraw());
+            tikuanMianfeiTv.setText(result.getFreeTimes());
+            tikuanLastRechargeTv.setText("您最后一笔入款" + result.getLastRecharge() + "需下注" + result.getNeedDml() + "才能提款,当前已下注" + result
+                    .getRealDml());
+            tikuanYinhangTv.setText(result.getBankName());
+            tikuanZhanghaoTv.setText(result.getAccountCode());
+            tikuanTipTv.setText(result.getWithdrawTip());
+            tikuanErrorTipTv.setVisibility(View.GONE);
+        }
+        else
+        {
+            tikuanErrorTipTv.setVisibility(View.VISIBLE);
+            tikuanErrorTipTv.setText(result.getCloseTip());
+        }
     }
 
     @Override

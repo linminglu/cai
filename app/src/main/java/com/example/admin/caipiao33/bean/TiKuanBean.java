@@ -32,6 +32,7 @@ public class TiKuanBean
     private String bankName;
     private String canWithdraw;
     private String withdrawTip;
+    private String closeTip;
 
     public String getStatus()
     {
@@ -141,5 +142,15 @@ public class TiKuanBean
     public void setWithdrawTip(String withdrawTip)
     {
         this.withdrawTip = withdrawTip;
+    }
+
+    public String getCloseTip()
+    {
+        return closeTip;
+    }
+
+    public void setCloseTip(String closeTip)
+    {
+        this.closeTip = closeTip;
     }
 }

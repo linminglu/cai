@@ -71,7 +71,6 @@ public class WeiXinPayFragment extends BaseFragment implements View.OnClickListe
 
     private void initData()
     {
-        showLoadingDialog(false);
         HttpUtil.requestSecond("user", "rwechatList", null, new TypeToken<ArrayList<WeiXinPayBean>>()
         {
         }.getType(), topupActivity, new MyResponseListener<ArrayList<WeiXinPayBean>>()
@@ -88,13 +87,13 @@ public class WeiXinPayFragment extends BaseFragment implements View.OnClickListe
             @Override
             public void onFailed(int code, String msg)
             {
-                ToastUtil.show(msg);
+                //                ToastUtil.show(msg);
             }
 
             @Override
             public void onFinish()
             {
-                hideLoadingDialog();
+                //                hideLoadingDialog();
             }
         }, null);
     }

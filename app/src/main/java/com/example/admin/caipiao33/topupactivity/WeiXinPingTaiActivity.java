@@ -19,6 +19,7 @@ import com.example.admin.caipiao33.utils.LoginEvent;
 import com.example.admin.caipiao33.utils.MyImageLoader;
 import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.utils.TopupEvent;
+import com.example.admin.caipiao33.views.LoadingLayout;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -69,8 +70,6 @@ public class WeiXinPingTaiActivity extends ToolbarActivity implements Toolbar.On
 
     private void initData()
     {
-        showLoadingDialog(false);
-
         HashMap<String, String> map = new HashMap<>();
         map.put("payId", payId);
         map.put("amount", topupamount);
@@ -89,18 +88,19 @@ public class WeiXinPingTaiActivity extends ToolbarActivity implements Toolbar.On
                 weixinpingtaiErrortip.setText(result.getErrorTip());
                 weixinpingtaiSteps.loadDataWithBaseURL("about:blank", result.getSteps(), "text/html", "utf-8", null);
                 MyImageLoader.displayImage(HttpUtil.mNewUrl + "/" + result.getImg(), weixinpingtaiErweima, WeiXinPingTaiActivity.this);
+                hideLoadingLayout();
             }
 
             @Override
             public void onFailed(int code, String msg)
             {
                 ToastUtil.show(msg);
+                showLoadingLayoutError();
             }
 
             @Override
             public void onFinish()
             {
-                hideLoadingDialog();
             }
         }, null);
     }
@@ -149,10 +149,15 @@ public class WeiXinPingTaiActivity extends ToolbarActivity implements Toolbar.On
 
     private void initView()
     {
-        //        tianjiahaoyouTitle.setText(weiXinPayBean.getPayName());
-        //        tianjiahaoyou_Subtitle.setText(weiXinPayBean.getPayDesc());
-        //        tianjiahaoyouName.setText("微信账号：" + weiXinPayBean.getCode() + "    微信昵称：" + weiXinPayBean.getName());
-        //        MyImageLoader.displayImage(HttpUtil.mNewUrl + "/" + weiXinPayBean.getPayImg(), tianjiahaoyouErweima, this);
+        mLoadingLayout = (LoadingLayout) findViewById(R.id.loadingLayout);
+        mLoadingLayout.setOnReloadingListener(new LoadingLayout.OnReloadingListener()
+        {
+            @Override
+            public void onReload(View v)
+            {
+                initData();
+            }
+        });
     }
 
     @Override

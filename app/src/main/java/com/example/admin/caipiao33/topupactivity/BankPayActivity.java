@@ -18,6 +18,7 @@ import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.StringUtils;
 import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.utils.TopupEvent;
+import com.example.admin.caipiao33.views.LoadingLayout;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -83,8 +84,6 @@ public class BankPayActivity extends ToolbarActivity implements Toolbar.OnMenuIt
 
     private void initData()
     {
-        showLoadingDialog(false);
-
         HashMap<String, String> map = new HashMap<>();
         map.put("id", payId);
         map.put("money", topupamount);
@@ -102,18 +101,19 @@ public class BankPayActivity extends ToolbarActivity implements Toolbar.OnMenuIt
                 bankpayWangdianTv.setText(result.getBank().getBankAddr());
                 bankpayTimeTv.setText(result.getSaveTime());
                 bankpayAmountTv.setText(result.getMoney());
+                hideLoadingLayout();
             }
 
             @Override
             public void onFailed(int code, String msg)
             {
                 ToastUtil.show(msg);
+                showLoadingLayoutError();
             }
 
             @Override
             public void onFinish()
             {
-                hideLoadingDialog();
             }
         }, null);
     }
@@ -170,6 +170,16 @@ public class BankPayActivity extends ToolbarActivity implements Toolbar.OnMenuIt
         boxes.add(bankpayYinhangguitaizhuanzhangCb);
         boxes.add(bankpayShoujiyinhangzhuanzhangCb);
         boxes.add(bankpayQitaCb);
+
+        mLoadingLayout = (LoadingLayout) findViewById(R.id.loadingLayout);
+        mLoadingLayout.setOnReloadingListener(new LoadingLayout.OnReloadingListener()
+        {
+            @Override
+            public void onReload(View v)
+            {
+                initData();
+            }
+        });
     }
 
     @Override

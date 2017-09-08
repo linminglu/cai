@@ -70,7 +70,6 @@ public class QqPayFragment extends BaseFragment implements View.OnClickListener
 
     private void initData()
     {
-        showLoadingDialog(false);
         HttpUtil.requestSecond("user", "rqqpayList", null, new TypeToken<ArrayList<QqPayBean>>()
         {
         }.getType(), topupActivity, new MyResponseListener<ArrayList<QqPayBean>>()
@@ -87,13 +86,13 @@ public class QqPayFragment extends BaseFragment implements View.OnClickListener
             @Override
             public void onFailed(int code, String msg)
             {
-                ToastUtil.show(msg);
+                //                ToastUtil.show(msg);
             }
 
             @Override
             public void onFinish()
             {
-                hideLoadingDialog();
+                //                hideLoadingDialog();
             }
         }, null);
     }

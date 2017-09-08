@@ -20,6 +20,7 @@ import com.example.admin.caipiao33.utils.MyImageLoader;
 import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.utils.TopupEvent;
 import com.example.admin.caipiao33.utils.ZXingUtils;
+import com.example.admin.caipiao33.views.LoadingLayout;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -64,7 +65,7 @@ public class Ali3SaoMaActivity extends ToolbarActivity implements Toolbar.OnMenu
 
     private void initData()
     {
-        showLoadingDialog(false);
+        //        showLoadingDialog(false);
 
         HashMap<String, String> map = new HashMap<>();
         map.put("payId", payId);
@@ -92,18 +93,20 @@ public class Ali3SaoMaActivity extends ToolbarActivity implements Toolbar.OnMenu
                 {
                     MyImageLoader.displayImage(result.getPayUrl(), ali3saomaerweima, Ali3SaoMaActivity.this);
                 }
+                hideLoadingLayout();
             }
 
             @Override
             public void onFailed(int code, String msg)
             {
                 ToastUtil.show(msg);
+                showLoadingLayoutError();
             }
 
             @Override
             public void onFinish()
             {
-                hideLoadingDialog();
+                //                hideLoadingDialog();
             }
         }, null);
     }
@@ -119,7 +122,15 @@ public class Ali3SaoMaActivity extends ToolbarActivity implements Toolbar.OnMenu
 
     private void initView()
     {
-
+        mLoadingLayout = (LoadingLayout) findViewById(R.id.loadingLayout);
+        mLoadingLayout.setOnReloadingListener(new LoadingLayout.OnReloadingListener()
+        {
+            @Override
+            public void onReload(View v)
+            {
+                initData();
+            }
+        });
     }
 
     @Override

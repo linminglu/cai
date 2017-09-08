@@ -71,7 +71,6 @@ public class AliPayFragment extends BaseFragment implements View.OnClickListener
 
     private void initData()
     {
-        showLoadingDialog(false);
         HttpUtil.requestSecond("user", "ralipayList", null, new TypeToken<ArrayList<AliPayBean>>()
         {
         }.getType(), topupActivity, new MyResponseListener<ArrayList<AliPayBean>>()
@@ -88,13 +87,12 @@ public class AliPayFragment extends BaseFragment implements View.OnClickListener
             @Override
             public void onFailed(int code, String msg)
             {
-                ToastUtil.show(msg);
+                //                ToastUtil.show(msg);
             }
 
             @Override
             public void onFinish()
             {
-                hideLoadingDialog();
             }
         }, null);
     }
