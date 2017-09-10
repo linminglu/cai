@@ -20,6 +20,7 @@
     <string name="main_tab_zoushi">走势</string>
     <string name="main_tab_user">我的</string>
     <string name="pressargin">再按一次退出</string>
+    <string name="about">关于我们</string>
 
     <!--dialog常用词汇-->
     <string name="dialog_networkerror">服务器数据加载失败！</string>
@@ -102,6 +103,25 @@
         <item>支付宝</item>
         <item>QQ钱包</item>
         <item>网银支付</item>
+    </string-array>
+
+    <string-array name="s_array_banknames">
+        <item>中国银行</item>
+        <item>中国建设银行</item>
+        <item>中国工商银行</item>
+        <item>招商银行</item>
+        <item>中国农业银行</item>
+        <item>中国邮政储蓄</item>
+        <item>中国民生银行</item>
+        <item>中信银行</item>
+        <item>中国光大银行</item>
+        <item>兴业银行</item>
+        <item>华夏银行</item>
+        <item>北京银行</item>
+        <item>浦发银行</item>
+        <item>广发银行</item>
+        <item>平安银行</item>
+        <item>其他</item>
     </string-array>
 
     <!-- 提款 -->

@@ -131,8 +131,25 @@ public class SettingActivity extends ToolbarActivity implements Toolbar.OnMenuIt
                 startActivity(intent);
                 break;
             case R.id.setting_yinhangka_rl:
+                if (!settingBean.getTkPasswd().equals("1"))
+                {
+                    ToastUtil.show("您还没设置提款密码，请先设置提款密码再绑定银行卡！");
+                    intent = new Intent(SettingActivity.this, ChangeTiKuanPasswordActivity.class);
+                    intent.putExtra(Constants.CHANGE_TIKUAN_PASSWORD, settingBean.getTkPasswd()
+                            .equals("1") ? 1 : 0);
+                    startActivity(intent);
+                }
+                else
+                {
+                    intent = new Intent(SettingActivity.this, ChangeBankActivity.class);
+                    intent.putExtra(Constants.CHANGE_TIKUAN_PASSWORD, settingBean.getBank()
+                            .equals("1") ? 1 : 0);
+                    startActivity(intent);
+                }
                 break;
             case R.id.setting_guanyu_rl:
+                intent = new Intent(SettingActivity.this, AboutActivity.class);
+                startActivity(intent);
                 break;
             case R.id.setting_logout_btn:
                 mPresenter.getLogout();

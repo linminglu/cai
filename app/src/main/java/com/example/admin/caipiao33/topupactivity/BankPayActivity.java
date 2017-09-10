@@ -95,10 +95,13 @@ public class BankPayActivity extends ToolbarActivity implements Toolbar.OnMenuIt
             {
                 bankPayDetailBean = result;
                 bankpayDingdanhaoTv.setText(result.getOrderNo());
-                bankpayWeixinhaoTv.setText(result.getBank().getBankName());
-                bankpayWeixinmingTv.setText(result.getBank().getAccountName());
-                bankpayZhanghaoTv.setText(result.getBank().getAccountCode());
-                bankpayWangdianTv.setText(result.getBank().getBankAddr());
+                if (result.getBank() != null)
+                {
+                    bankpayWeixinhaoTv.setText(result.getBank().getBankName());
+                    bankpayWeixinmingTv.setText(result.getBank().getAccountName());
+                    bankpayZhanghaoTv.setText(result.getBank().getAccountCode());
+                    bankpayWangdianTv.setText(result.getBank().getBankAddr());
+                }
                 bankpayTimeTv.setText(result.getSaveTime());
                 bankpayAmountTv.setText(result.getMoney());
                 hideLoadingLayout();
