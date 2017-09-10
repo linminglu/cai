@@ -75,14 +75,17 @@ public class ChangePasswordActivity extends ToolbarActivity implements Toolbar.O
                 if (StringUtils.isEmpty2(changepasswordOpasswordEt.getText().toString()))
                 {
                     ToastUtil.show("请输入旧密码！");
+                    return;
                 }
                 if (StringUtils.isEmpty2(changepasswordNpasswordEt.getText().toString()))
                 {
                     ToastUtil.show("请输入新密码！");
+                    return;
                 }
                 if (StringUtils.isEmpty2(changepasswordPasswordEt.getText().toString()))
                 {
                     ToastUtil.show("请再次输入新密码！");
+                    return;
                 }
                 mPresenter.changePassword(changepasswordOpasswordEt.getText()
                         .toString(), changepasswordNpasswordEt.getText()

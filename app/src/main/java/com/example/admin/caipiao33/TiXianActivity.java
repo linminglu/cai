@@ -112,6 +112,7 @@ public class TiXianActivity extends ToolbarActivity implements Toolbar.OnMenuIte
         }
         else if (result.getStatus().equals("1"))
         {
+            hideLoadingLayout();
             tikuanNameTv.setText(result.getAccountName());
             tikuanYueTv.setText("¥" + result.getAmount());
             tikuanShifouTv.setText(result.getCanWithdraw());
@@ -125,6 +126,7 @@ public class TiXianActivity extends ToolbarActivity implements Toolbar.OnMenuIte
         }
         else
         {
+            hideLoadingLayout();
             tikuanErrorTipTv.setVisibility(View.VISIBLE);
             tikuanErrorTipTv.setText(result.getCloseTip());
         }

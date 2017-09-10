@@ -16,7 +16,7 @@ public interface Constants
     int SUCCESSCODE = 200;
     int NOLOGIN2START = 5000;
 
-    String JSONERROR =  "服务器数据解析异常";
+    String JSONERROR = "服务器数据解析异常";
 
     String MERCHANTID = "1";
 
@@ -30,6 +30,9 @@ public interface Constants
     /*jzp start*/ int REQUEST_ENTERPRISE = 1001;
     int REQUEST_SELECT_PHOTO = 1002;
     int REQUEST_PHOTO_PREVIEW = 1003;
+
+
+    String CHANGE_TIKUAN_PASSWORD = "change_tikuan_password";
 
     String APK_DOWNLOAD_URL = "url";
     String UPDATEACTION = "com.example.admin.caipiao33.update";

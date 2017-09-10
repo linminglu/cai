@@ -35,7 +35,6 @@ public class TiKuanPresenter implements ITiKuanContract.Presenter
             public void onSuccess(TiKuanBean result)
             {
                 mView.updata(result);
-                mView.hideLoadingLayout();
             }
 
             @Override

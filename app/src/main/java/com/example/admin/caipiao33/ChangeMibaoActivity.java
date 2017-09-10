@@ -91,10 +91,12 @@ public class ChangeMibaoActivity extends ToolbarActivity implements Toolbar.OnMe
                 if (StringUtils.isEmpty2(changepasswordMibaowentiEt.getText().toString()))
                 {
                     ToastUtil.show("请输入旧问题！");
+                    return;
                 }
                 if (StringUtils.isEmpty2(changepasswordMibaodaanEt.getText().toString()))
                 {
                     ToastUtil.show("请输入新问题！");
+                    return;
                 }
                 mPresenter.changeMibao(question, changepasswordMibaowentiEt.getText()
                         .toString(), changepasswordMibaodaanEt.getText().toString());

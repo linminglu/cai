@@ -78,10 +78,12 @@ public class SetMibaoActivity extends ToolbarActivity implements Toolbar.OnMenuI
                 if (StringUtils.isEmpty2(setpasswordMibaowentiEt.getText().toString()))
                 {
                     ToastUtil.show("请输入密保问题！");
+                    return;
                 }
                 if (StringUtils.isEmpty2(setpasswordMibaodaanEt.getText().toString()))
                 {
                     ToastUtil.show("请输入密保答案！");
+                    return;
                 }
                 mPresenter.setMibao(setpasswordMibaowentiEt.getText()
                         .toString(), setpasswordMibaodaanEt.getText().toString());

@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.example.admin.caipiao33.bean.SettingBean;
 import com.example.admin.caipiao33.contract.ISettingContract;
-import com.example.admin.caipiao33.presenter.ChangeMibaoPresenter;
 import com.example.admin.caipiao33.presenter.SettingPresenter;
 import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.ToastUtil;
@@ -126,6 +125,10 @@ public class SettingActivity extends ToolbarActivity implements Toolbar.OnMenuIt
                 }
                 break;
             case R.id.setting_tikuanmima_rl:
+                intent = new Intent(SettingActivity.this, ChangeTiKuanPasswordActivity.class);
+                intent.putExtra(Constants.CHANGE_TIKUAN_PASSWORD, settingBean.getTkPasswd()
+                        .equals("1") ? 1 : 0);
+                startActivity(intent);
                 break;
             case R.id.setting_yinhangka_rl:
                 break;
