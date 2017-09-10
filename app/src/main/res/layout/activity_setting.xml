@@ -29,7 +29,7 @@
                 android:orientation="vertical">
 
                 <RelativeLayout
-                    android:id="@+id/setting_tuijian_rl"
+                    android:id="@+id/setting_password_rl"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:layout_marginTop="10dp"
@@ -38,7 +38,7 @@
                     android:gravity="center_vertical">
 
                     <ImageView
-                        android:id="@+id/setting_tuijian_iv"
+                        android:id="@+id/setting_password_iv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
@@ -54,7 +54,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toRightOf="@+id/setting_tuijian_iv"
+                        android:layout_toRightOf="@+id/setting_password_iv"
                         android:text="登录密码"
                         android:textColor="@color/light_black"
                         android:textSize="16sp"/>
@@ -68,7 +68,6 @@
                         android:layout_marginEnd="18dp"
                         android:layout_marginRight="18dp"
                         android:background="@mipmap/minefragment_right_img"/>
-
                 </RelativeLayout>
 
                 <TextView
@@ -81,7 +80,7 @@
                     android:background="@color/ban_beijing"/>
 
                 <RelativeLayout
-                    android:id="@+id/setting_gonggao_rl"
+                    android:id="@+id/setting_mibao_rl"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:background="@drawable/minefragment_state_ly"
@@ -89,7 +88,7 @@
                     android:gravity="center_vertical">
 
                     <ImageView
-                        android:id="@+id/setting_gonggao_iv"
+                        android:id="@+id/setting_mibao_iv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
@@ -105,12 +104,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toRightOf="@+id/setting_gonggao_iv"
+                        android:layout_toRightOf="@+id/setting_mibao_iv"
                         android:text="密保问题"
                         android:textColor="@color/light_black"
                         android:textSize="16sp"/>
 
                     <ImageView
+                        android:id="@+id/imageView2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
@@ -120,6 +120,15 @@
                         android:layout_marginRight="18dp"
                         android:background="@mipmap/minefragment_right_img"/>
 
+                    <TextView
+                        android:id="@+id/setting_mibao_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/imageView2"
+                        android:layout_marginRight="5dp"
+                        android:layout_toLeftOf="@+id/imageView2"
+                        android:layout_toStartOf="@+id/imageView2"
+                        android:text="未设置"/>
                 </RelativeLayout>
 
                 <TextView
@@ -132,7 +141,7 @@
                     android:background="@color/ban_beijing"/>
 
                 <RelativeLayout
-                    android:id="@+id/setting_touzhujilu_rl"
+                    android:id="@+id/setting_tikuanmima_rl"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:background="@drawable/minefragment_state_ly"
@@ -140,7 +149,7 @@
                     android:gravity="center_vertical">
 
                     <ImageView
-                        android:id="@+id/setting_touzhujilu_iv"
+                        android:id="@+id/setting_tikuanmima_iv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
@@ -156,12 +165,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toRightOf="@+id/setting_touzhujilu_iv"
+                        android:layout_toRightOf="@+id/setting_tikuanmima_iv"
                         android:text="提款密码"
                         android:textColor="@color/light_black"
                         android:textSize="16sp"/>
 
                     <ImageView
+                        android:id="@+id/imageView3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
@@ -170,6 +180,16 @@
                         android:layout_marginEnd="18dp"
                         android:layout_marginRight="18dp"
                         android:background="@mipmap/minefragment_right_img"/>
+
+                    <TextView
+                        android:id="@+id/setting_tikuanmima_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/imageView3"
+                        android:layout_marginRight="5dp"
+                        android:layout_toLeftOf="@+id/imageView3"
+                        android:layout_toStartOf="@+id/imageView3"
+                        android:text="未设置"/>
 
                 </RelativeLayout>
 
@@ -183,7 +203,7 @@
                     android:background="@color/ban_beijing"/>
 
                 <RelativeLayout
-                    android:id="@+id/setting_zhongjiangjilu_rl"
+                    android:id="@+id/setting_yinhangka_rl"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:background="@drawable/minefragment_state_ly"
@@ -191,7 +211,7 @@
                     android:gravity="center_vertical">
 
                     <ImageView
-                        android:id="@+id/setting_zhongjiangjilu_iv"
+                        android:id="@+id/setting_yinhangka_iv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
@@ -207,12 +227,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toRightOf="@+id/setting_zhongjiangjilu_iv"
+                        android:layout_toRightOf="@+id/setting_yinhangka_iv"
                         android:text="我的银行卡"
                         android:textColor="@color/light_black"
                         android:textSize="16sp"/>
 
                     <ImageView
+                        android:id="@+id/imageView4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
@@ -221,6 +242,16 @@
                         android:layout_marginEnd="18dp"
                         android:layout_marginRight="18dp"
                         android:background="@mipmap/minefragment_right_img"/>
+
+                    <TextView
+                        android:id="@+id/setting_yinhangka_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/imageView4"
+                        android:layout_marginRight="5dp"
+                        android:layout_toLeftOf="@+id/imageView4"
+                        android:layout_toStartOf="@+id/imageView4"
+                        android:text="未设置"/>
 
                 </RelativeLayout>
 
@@ -234,7 +265,7 @@
                     android:background="@color/ban_beijing"/>
 
                 <RelativeLayout
-                    android:id="@+id/setting_mingxi_rl"
+                    android:id="@+id/setting_guanyu_rl"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:background="@drawable/minefragment_state_ly"
@@ -242,7 +273,7 @@
                     android:gravity="center_vertical">
 
                     <ImageView
-                        android:id="@+id/setting_mingxi_iv"
+                        android:id="@+id/setting_guanyu_iv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
@@ -258,7 +289,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toRightOf="@+id/setting_mingxi_iv"
+                        android:layout_toRightOf="@+id/setting_guanyu_iv"
                         android:text="关于我们"
                         android:textColor="@color/light_black"
                         android:textSize="16sp"/>

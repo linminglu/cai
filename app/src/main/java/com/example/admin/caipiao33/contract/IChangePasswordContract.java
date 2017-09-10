@@ -2,25 +2,20 @@ package com.example.admin.caipiao33.contract;
 
 import com.example.admin.caipiao33.IBasePresenter;
 import com.example.admin.caipiao33.IBaseView;
-import com.example.admin.caipiao33.bean.SettingBean;
 
 /**
- * Created by cxy on 2017/8/23
+ * Created by cxy on 2017/9/10
  */
 
-public interface ISettingContract
+public interface IChangePasswordContract
 {
     interface View extends IBaseView
     {
-        void updata(SettingBean result);
-
-        void logoutOk(String result);
+        void successFul(String result);
     }
 
     interface Presenter extends IBasePresenter
     {
-        void getSettingOp();
-
-        void getLogout();
+        void changePassword(String oPasswd, String passwd, String nPasswd);
     }
 }

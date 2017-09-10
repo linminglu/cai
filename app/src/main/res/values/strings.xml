@@ -81,6 +81,12 @@
     <string name="s_login_status_failed">您还未登录或登录状态超时，是否跳转到登录界面？</string>
     <string name="s_agree_protocol">我已年满十八周岁，并且同意接受《法律声明》 \n 请牢记凤凰彩票F83官方永久域名：F83.com</string>
 
+    <!-- 设置页面 -->
+    <string name="s_setting_changepassword">修改登录密码</string>
+    <string name="s_setting_setmibao">设置密保问题</string>
+    <string name="s_setting_changemibao">修改密保问题</string>
+    <string name="s_setting_submit">立即修改</string>
+
     <!-- 充值页面 -->
     <string name="s_topup">充值</string>
     <string name="s_weixin_tianjiahaoyou">微信添加好友</string>

@@ -8,8 +8,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.example.admin.caipiao33.bean.SettingBean;
 import com.example.admin.caipiao33.contract.ISettingContract;
+import com.example.admin.caipiao33.presenter.ChangeMibaoPresenter;
 import com.example.admin.caipiao33.presenter.SettingPresenter;
 import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.ToastUtil;
@@ -22,22 +25,28 @@ import butterknife.OnClick;
 
 public class SettingActivity extends ToolbarActivity implements Toolbar.OnMenuItemClickListener, ISettingContract.View
 {
-
-    @BindView(R.id.setting_tuijian_rl)
-    RelativeLayout settingTuijianRl;
-    @BindView(R.id.setting_gonggao_rl)
-    RelativeLayout settingGonggaoRl;
-    @BindView(R.id.setting_touzhujilu_rl)
-    RelativeLayout settingTouzhujiluRl;
-    @BindView(R.id.setting_zhongjiangjilu_rl)
-    RelativeLayout settingZhongjiangjiluRl;
-    @BindView(R.id.setting_mingxi_rl)
-    RelativeLayout settingMingxiRl;
+    @BindView(R.id.setting_password_rl)
+    RelativeLayout settingPasswordRl;
+    @BindView(R.id.setting_mibao_tv)
+    TextView settingMibaoTv;
+    @BindView(R.id.setting_mibao_rl)
+    RelativeLayout settingMibaoRl;
+    @BindView(R.id.setting_tikuanmima_tv)
+    TextView settingTikuanmimaTv;
+    @BindView(R.id.setting_tikuanmima_rl)
+    RelativeLayout settingTikuanmimaRl;
+    @BindView(R.id.setting_yinhangka_tv)
+    TextView settingYinhangkaTv;
+    @BindView(R.id.setting_yinhangka_rl)
+    RelativeLayout settingYinhangkaRl;
+    @BindView(R.id.setting_guanyu_rl)
+    RelativeLayout settingGuanyuRl;
     @BindView(R.id.setting_logout_btn)
     Button settingLogoutBtn;
     @BindView(R.id.swipeRefreshLayout)
     SwipeRefreshLayout swipeRefreshLayout;
     private ISettingContract.Presenter mPresenter;
+    private SettingBean settingBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -77,9 +86,12 @@ public class SettingActivity extends ToolbarActivity implements Toolbar.OnMenuIt
     }
 
     @Override
-    public void updata(String result)
+    public void updata(SettingBean result)
     {
-
+        settingBean = result;
+        settingMibaoTv.setText(result.getQuestion().equals("1") ? "已设置" : "未设置");
+        settingTikuanmimaTv.setText(result.getTkPasswd().equals("1") ? "已设置" : "未设置");
+        settingYinhangkaTv.setText(result.getBank().equals("1") ? "已设置" : "未设置");
     }
 
     @Override
@@ -91,20 +103,33 @@ public class SettingActivity extends ToolbarActivity implements Toolbar.OnMenuIt
         finish();
     }
 
-    @OnClick({R.id.setting_tuijian_rl, R.id.setting_gonggao_rl, R.id.setting_touzhujilu_rl, R.id.setting_zhongjiangjilu_rl, R.id.setting_mingxi_rl, R.id.setting_logout_btn})
+    @OnClick({R.id.setting_password_rl, R.id.setting_mibao_rl, R.id.setting_tikuanmima_rl, R.id.setting_yinhangka_rl, R.id.setting_guanyu_rl, R.id.setting_logout_btn})
     public void onViewClicked(View view)
     {
+        Intent intent;
         switch (view.getId())
         {
-            case R.id.setting_tuijian_rl:
+            case R.id.setting_password_rl:
+                intent = new Intent(SettingActivity.this, ChangePasswordActivity.class);
+                startActivity(intent);
                 break;
-            case R.id.setting_gonggao_rl:
+            case R.id.setting_mibao_rl:
+                if (settingBean.getQuestion().equals("1"))
+                {
+                    intent = new Intent(SettingActivity.this, ChangeMibaoActivity.class);
+                    startActivity(intent);
+                }
+                else
+                {
+                    intent = new Intent(SettingActivity.this, SetMibaoActivity.class);
+                    startActivity(intent);
+                }
                 break;
-            case R.id.setting_touzhujilu_rl:
+            case R.id.setting_tikuanmima_rl:
                 break;
-            case R.id.setting_zhongjiangjilu_rl:
+            case R.id.setting_yinhangka_rl:
                 break;
-            case R.id.setting_mingxi_rl:
+            case R.id.setting_guanyu_rl:
                 break;
             case R.id.setting_logout_btn:
                 mPresenter.getLogout();
