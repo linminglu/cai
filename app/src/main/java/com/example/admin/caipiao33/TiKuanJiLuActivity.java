@@ -1,5 +1,6 @@
 package com.example.admin.caipiao33;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -198,6 +200,7 @@ public class TiKuanJiLuActivity extends BaseActivity implements Toolbar.OnMenuIt
         public TextView item_tuijianjilu_recharge;
         public TextView item_tuijianjilu_giftAmount;
         public TextView item_tuijianjilu_checkinTime;
+        public LinearLayout notify_parent;
 
         public MyViewHolder(View itemView)
         {
@@ -206,6 +209,7 @@ public class TiKuanJiLuActivity extends BaseActivity implements Toolbar.OnMenuIt
             item_tuijianjilu_recharge = (TextView) itemView.findViewById(R.id.item_tuijianjilu_recharge);
             item_tuijianjilu_giftAmount = (TextView) itemView.findViewById(R.id.item_tuijianjilu_giftAmount);
             item_tuijianjilu_checkinTime = (TextView) itemView.findViewById(R.id.item_tuijianjilu_checkinTime);
+            notify_parent = (LinearLayout) itemView.findViewById(R.id.notify_parent);
         }
 
         @Override
@@ -230,7 +234,7 @@ public class TiKuanJiLuActivity extends BaseActivity implements Toolbar.OnMenuIt
         }
 
         @Override
-        public void onBindViewHolder(MyViewHolder holder, int position)
+        public void onBindViewHolder(MyViewHolder holder, final int position)
         {
             TiXianJiLuBean.ItemsBean itemsBean = mList.get(position);
             holder.item_tuijianjilu_checkinDay.setText("出款");
@@ -250,7 +254,16 @@ public class TiKuanJiLuActivity extends BaseActivity implements Toolbar.OnMenuIt
             {
                 holder.item_tuijianjilu_checkinTime.setText("已取消");
             }
-
+            holder.notify_parent.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    Intent intent = new Intent(TiKuanJiLuActivity.this, TiKuanDetailActivity.class);
+                    intent.putExtra("id", mList.get(position).getId());
+                    startActivity(intent);
+                }
+            });
             holder.item_tuijianjilu_recharge.setText("单号" + itemsBean.getOrderNo());
             holder.item_tuijianjilu_giftAmount.setTextColor(getResources().getColor(R.color.red));
             holder.item_tuijianjilu_giftAmount.setText(itemsBean.getAmount() + "元");

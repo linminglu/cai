@@ -240,6 +240,16 @@
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait">
         </activity>
+        <activity
+            android:name=".ChongZhiDetailActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".TiKuanDetailActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>

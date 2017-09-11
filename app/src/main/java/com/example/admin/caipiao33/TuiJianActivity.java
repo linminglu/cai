@@ -1,5 +1,7 @@
 package com.example.admin.caipiao33;
 
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -10,7 +12,9 @@ import android.widget.TextView;
 
 import com.example.admin.caipiao33.bean.TuiJianBean;
 import com.example.admin.caipiao33.contract.ITuiJianContract;
+import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.presenter.TuiJianPresenter;
+import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.utils.UserConfig;
 import com.example.admin.caipiao33.views.LoadingLayout;
 
@@ -100,8 +104,21 @@ public class TuiJianActivity extends ToolbarActivity implements Toolbar.OnMenuIt
     @Override
     public void updata(TuiJianBean result)
     {
-        tvTuijianId.setText(UserConfig.getInstance().getToken(TuiJianActivity.this).getMemberId());
-        tvTuijianUrl.setText("http://www.baidu.com");
+        int id = 1;
+        try
+        {
+            id = Integer.valueOf(UserConfig.getInstance()
+                    .getToken(TuiJianActivity.this)
+                    .getMemberId());
+        }
+        catch (Exception e)
+        {
+
+        }
+        tvTuijianId.setText(id + 10000 + "");
+        tvTuijianUrl.setText(HttpUtil.mNewUrl + "/lottery_phone/common/register?tj=" + UserConfig.getInstance()
+                .getToken(TuiJianActivity.this)
+                .getMemberId());
         tvTuijianShouyi.setText("¥" + result.getMySpread().getSpreadIn());
         tvTuijianShuoming.setText("说明：每天的7点更新收益，如3号7点，会计算2号0点-24点之间的所以胡数据，然后增加您的收益。您的收益=推荐会员的有效投注额度总和÷100 x " + result
                 .getSpread() + "（转换率），小输部分四舍五入！（风险账号不参与收益计算）");
@@ -127,6 +144,10 @@ public class TuiJianActivity extends ToolbarActivity implements Toolbar.OnMenuIt
         switch (view.getId())
         {
             case R.id.tv_tuijian_url:
+                ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                // 将文本内容放到系统剪贴板里。
+                cm.setText(tvTuijianUrl.getText());
+                ToastUtil.show("复制成功，可以发给朋友们了!");
                 break;
         }
     }

@@ -1,5 +1,6 @@
 package com.example.admin.caipiao33;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.admin.caipiao33.bean.GeRenXiaoXiBean;
@@ -166,6 +168,7 @@ public class GeRenXiaoXiActivity extends ToolbarActivity implements Toolbar.OnMe
         public TextView item_gerenxiaoxi_title;
         public TextView item_gerenxiaoxi_time;
         public TextView item_gerenxiaoxi_yidu;
+        public LinearLayout notify_parent;
 
         public MyViewHolder(View itemView)
         {
@@ -173,6 +176,7 @@ public class GeRenXiaoXiActivity extends ToolbarActivity implements Toolbar.OnMe
             item_gerenxiaoxi_title = (TextView) itemView.findViewById(R.id.item_gerenxiaoxi_title);
             item_gerenxiaoxi_time = (TextView) itemView.findViewById(R.id.item_gerenxiaoxi_time);
             item_gerenxiaoxi_yidu = (TextView) itemView.findViewById(R.id.item_gerenxiaoxi_yidu);
+            notify_parent = (LinearLayout) itemView.findViewById(R.id.notify_parent);
         }
 
         @Override
@@ -197,12 +201,22 @@ public class GeRenXiaoXiActivity extends ToolbarActivity implements Toolbar.OnMe
         }
 
         @Override
-        public void onBindViewHolder(MyViewHolder holder, int position)
+        public void onBindViewHolder(MyViewHolder holder, final int position)
         {
             GeRenXiaoXiBean.ItemsBean itemsBean = mList.get(position);
             holder.item_gerenxiaoxi_yidu.setVisibility(itemsBean.getStatus() == 1 ? View.GONE : View.VISIBLE);
             holder.item_gerenxiaoxi_title.setText(itemsBean.getTitle());
             holder.item_gerenxiaoxi_time.setText(itemsBean.getAddTime());
+            holder.notify_parent.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    Intent intent = new Intent(GeRenXiaoXiActivity.this, ChongZhiDetailActivity.class);
+                    intent.putExtra("id", mList.get(position).getId());
+                    startActivity(intent);
+                }
+            });
         }
 
         @Override

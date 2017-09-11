@@ -1,5 +1,6 @@
 package com.example.admin.caipiao33;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -24,6 +26,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.example.admin.caipiao33.R.id.view;
 
 //账户明细
 public class ChongZhiJiLuActivity extends BaseActivity implements Toolbar.OnMenuItemClickListener, IChongZhiJiLuContract.View
@@ -198,6 +202,7 @@ public class ChongZhiJiLuActivity extends BaseActivity implements Toolbar.OnMenu
         public TextView item_tuijianjilu_recharge;
         public TextView item_tuijianjilu_giftAmount;
         public TextView item_tuijianjilu_checkinTime;
+        public LinearLayout notify_parent;
 
         public MyViewHolder(View itemView)
         {
@@ -206,12 +211,12 @@ public class ChongZhiJiLuActivity extends BaseActivity implements Toolbar.OnMenu
             item_tuijianjilu_recharge = (TextView) itemView.findViewById(R.id.item_tuijianjilu_recharge);
             item_tuijianjilu_giftAmount = (TextView) itemView.findViewById(R.id.item_tuijianjilu_giftAmount);
             item_tuijianjilu_checkinTime = (TextView) itemView.findViewById(R.id.item_tuijianjilu_checkinTime);
+            notify_parent = (LinearLayout) itemView.findViewById(R.id.notify_parent);
         }
 
         @Override
         public void onClick(View v)
         {
-
         }
     }
 
@@ -226,11 +231,12 @@ public class ChongZhiJiLuActivity extends BaseActivity implements Toolbar.OnMenu
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
         {
             View view = getLayoutInflater().inflate(R.layout.item_tuijianjilu, parent, false);
-            return new MyViewHolder(view);
+            MyViewHolder myViewHolder = new MyViewHolder(view);
+            return myViewHolder;
         }
 
         @Override
-        public void onBindViewHolder(MyViewHolder holder, int position)
+        public void onBindViewHolder(MyViewHolder holder, final int position)
         {
             ChongZhiJiLuBean.ItemsBean itemsBean = mList.get(position);
             if (itemsBean.getStatus() == 0)
@@ -246,6 +252,16 @@ public class ChongZhiJiLuActivity extends BaseActivity implements Toolbar.OnMenu
                 holder.item_tuijianjilu_checkinDay.setText("已取消");
             }
 
+            holder.notify_parent.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    Intent intent = new Intent(ChongZhiJiLuActivity.this, ChongZhiDetailActivity.class);
+                    intent.putExtra("id", mList.get(position).getId());
+                    startActivity(intent);
+                }
+            });
             holder.item_tuijianjilu_recharge.setText("单号" + itemsBean.getOrderNo());
             holder.item_tuijianjilu_giftAmount.setTextColor(getResources().getColor(R.color.green));
             holder.item_tuijianjilu_giftAmount.setText(itemsBean.getAmount() + "元");
