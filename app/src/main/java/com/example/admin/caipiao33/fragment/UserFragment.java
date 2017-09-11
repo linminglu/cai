@@ -24,6 +24,7 @@ import com.example.admin.caipiao33.TiXianActivity;
 import com.example.admin.caipiao33.TopupActivity;
 import com.example.admin.caipiao33.TuiJianActivity;
 import com.example.admin.caipiao33.WebUrlActivity;
+import com.example.admin.caipiao33.ZhangHuMingXiActivity;
 import com.example.admin.caipiao33.bean.UserInfoBean;
 import com.example.admin.caipiao33.contract.IUserContract;
 import com.example.admin.caipiao33.httputils.HttpUtil;
@@ -260,6 +261,8 @@ public class UserFragment extends BaseFragment implements View.OnClickListener, 
             case R.id.user_fragment_zhongjiangjilu_rl:
                 break;
             case R.id.user_fragment_mingxi_rl:
+                intent = new Intent(mainActivity, ZhangHuMingXiActivity.class);
+                startActivity(intent);
                 break;
             case R.id.user_fragment_chongzhijilu_rl:
                 break;

@@ -10,9 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.admin.caipiao33.bean.TuiJianJiLuBean;
-import com.example.admin.caipiao33.contract.ITuiJianJiLuContract;
-import com.example.admin.caipiao33.presenter.TuiJianJiLuPresenter;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.example.admin.caipiao33.bean.ZhangHuMingXiBean;
+import com.example.admin.caipiao33.contract.IZhangHuMingXiContract;
+import com.example.admin.caipiao33.presenter.ZhangHuMingXiPresenter;
 import com.example.admin.caipiao33.views.DividerItemDecoration;
 import com.example.admin.caipiao33.views.LoadingLayout;
 import com.example.admin.caipiao33.views.loadmore.LoadMoreHelper;
@@ -20,38 +21,42 @@ import com.example.admin.caipiao33.views.loadmore.LoadMoreHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-//推荐记录
-public class TuiJianJiLuActivity extends ToolbarActivity implements Toolbar.OnMenuItemClickListener, ITuiJianJiLuContract.View
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+//账户明细
+public class ZhangHuMingXiActivity extends BaseActivity implements Toolbar.OnMenuItemClickListener, IZhangHuMingXiContract.View
 {
 
+    @BindView(R.id.toolbar_title)
+    TextView toolbarTitle;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
     private SwipeRefreshLayout mNotifySwipe;
     private RecyclerView mNotifyRecycler;
     private View mNotifyNullLayout;
-    private ArrayList<TuiJianJiLuBean.ItemsBean> mList = new ArrayList<>();
-    private ITuiJianJiLuContract.Presenter mPresenter;
+    private ArrayList<ZhangHuMingXiBean.ItemsBean> mList = new ArrayList<>();
+    private IZhangHuMingXiContract.Presenter mPresenter;
     private MyAdapter mAdapter;
     private LoadMoreHelper helper;
     private int currPage = 1;
+    private String type = "0";
     private int total;
+    private String[] typenames;
+    private String[] typenums;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_qiandaojilu);
+        setContentView(R.layout.activity_zhanghumingxi);
+        ButterKnife.bind(this);
         initView();
-        mPresenter = new TuiJianJiLuPresenter(this, mNotifySwipe);
-        mPresenter.getTuiJianJiLu();
-    }
-
-
-    public void onCreateCustomToolBar(Toolbar toolbar)
-    {
-        super.onCreateCustomToolBar(toolbar);
-        toolbar.setTitle(R.string.s_tuijian_jilu);
-        setSupportActionBar(toolbar);
-        toolbar.setOnMenuItemClickListener(this);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        typenames = getResources().getStringArray(R.array.s_array_mingxi_type);
+        typenums = getResources().getStringArray(R.array.s_array_mingxi_type_num);
+        mPresenter = new ZhangHuMingXiPresenter(this, mNotifySwipe);
+        mPresenter.getZhangHuMingXi(type);
     }
 
     @Override
@@ -62,6 +67,9 @@ public class TuiJianJiLuActivity extends ToolbarActivity implements Toolbar.OnMe
 
     private void initView()
     {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("");
         mNotifySwipe = (SwipeRefreshLayout) findViewById(R.id.notify_swipe);
         mNotifySwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
         {
@@ -69,7 +77,7 @@ public class TuiJianJiLuActivity extends ToolbarActivity implements Toolbar.OnMe
             public void onRefresh()
             {
                 currPage = 1;
-                mPresenter.getTuiJianJiLu();
+                mPresenter.getZhangHuMingXi(type);
             }
         });
         mNotifyRecycler = (RecyclerView) findViewById(R.id.notify_recycler);
@@ -84,7 +92,7 @@ public class TuiJianJiLuActivity extends ToolbarActivity implements Toolbar.OnMe
             public void onReload(View v)
             {
                 currPage = 1;
-                mPresenter.getTuiJianJiLu();
+                mPresenter.getZhangHuMingXi(type);
             }
         });
         mNotifyNullLayout = findViewById(R.id.notify_null_layout);
@@ -94,14 +102,26 @@ public class TuiJianJiLuActivity extends ToolbarActivity implements Toolbar.OnMe
             @Override
             public void onLoadMore()
             {
-                mPresenter.getMoreJiLu(currPage++);
+                mPresenter.getMoreMingXi(type, currPage++);
             }
         });
         helper.setBindingRecyclerView(mNotifyRecycler, mAdapter);
     }
 
     @Override
-    public void updata(TuiJianJiLuBean result)
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void updata(ZhangHuMingXiBean result)
     {
         mNotifySwipe.setRefreshing(false);
         mList = result.getItems();
@@ -131,10 +151,10 @@ public class TuiJianJiLuActivity extends ToolbarActivity implements Toolbar.OnMe
     }
 
     @Override
-    public void loadmore(TuiJianJiLuBean result)
+    public void loadmore(ZhangHuMingXiBean result)
     {
         mNotifySwipe.setRefreshing(false);
-        List<TuiJianJiLuBean.ItemsBean> content = result.getItems();
+        List<ZhangHuMingXiBean.ItemsBean> content = result.getItems();
         currPage = result.getPageNo();
         total = result.getTotalPage();
         // 合并数据
@@ -158,6 +178,17 @@ public class TuiJianJiLuActivity extends ToolbarActivity implements Toolbar.OnMe
         else
         {
             helper.loadMoreComplete();
+        }
+    }
+
+    @OnClick(R.id.toolbar_title)
+    public void onViewClicked(View view)
+    {
+        switch (view.getId())
+        {
+            case R.id.toolbar_title:
+                showOptionsDialog();
+                break;
         }
     }
 
@@ -201,11 +232,20 @@ public class TuiJianJiLuActivity extends ToolbarActivity implements Toolbar.OnMe
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position)
         {
-            TuiJianJiLuBean.ItemsBean itemsBean = mList.get(position);
-            holder.item_tuijianjilu_checkinDay.setText(itemsBean.getYearmonth());
-            holder.item_tuijianjilu_recharge.setText(itemsBean.getAddTime());
-            holder.item_tuijianjilu_giftAmount.setText(itemsBean.getAmount() + "元");
-            holder.item_tuijianjilu_checkinTime.setText("投注总额：" + itemsBean.getTotalBet() + "元");
+            ZhangHuMingXiBean.ItemsBean itemsBean = mList.get(position);
+            holder.item_tuijianjilu_checkinDay.setText(itemsBean.getExpand().getRemark());
+            holder.item_tuijianjilu_recharge.setText("单号" + itemsBean.getOrderNo());
+            if (itemsBean.getInOut() == 1)
+            {
+                holder.item_tuijianjilu_giftAmount.setTextColor(getResources().getColor(R.color.green));
+                holder.item_tuijianjilu_giftAmount.setText("+" + itemsBean.getAmount() + "元");
+            }
+            else
+            {
+                holder.item_tuijianjilu_giftAmount.setTextColor(getResources().getColor(R.color.red));
+                holder.item_tuijianjilu_giftAmount.setText("-" + itemsBean.getAmount() + "元");
+            }
+            holder.item_tuijianjilu_checkinTime.setText("余额：" + itemsBean.getAmountAfter() + "元");
         }
 
         @Override
@@ -214,6 +254,33 @@ public class TuiJianJiLuActivity extends ToolbarActivity implements Toolbar.OnMe
             return null == mList ? 0 : mList.size();
         }
 
+    }
+
+    private void showOptionsDialog()
+    {
+        if (null == typenames || null == typenums)
+        {
+            return;
+        }
+        new MaterialDialog.Builder(ZhangHuMingXiActivity.this).title("玩法选择")
+                .items(typenames)
+                .positiveText(R.string.dialog_ok)
+                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice()
+                {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text)
+                    {
+                        if (which != -1)
+                        {
+                            type = typenums[which];
+                            toolbarTitle.setText(typenames[which]);
+                            currPage = 1;
+                            mPresenter.getZhangHuMingXi(type);
+                        }
+                        return true;
+                    }
+                })
+                .show();
     }
 }
 

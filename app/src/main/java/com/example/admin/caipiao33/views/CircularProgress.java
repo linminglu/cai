@@ -64,10 +64,10 @@ public class CircularProgress extends View
         mBorderWidth = a.getDimension(R.styleable.CircularProgress_myBorderWidth, DEFAULT_BORDER_WIDTH * density);
         a.recycle();
         mColors = new int[4];
-        mColors[0] = context.getResources().getColor(R.color.green);
-        mColors[1] = context.getResources().getColor(R.color.green);
-        mColors[2] = context.getResources().getColor(R.color.green);
-        mColors[3] = context.getResources().getColor(R.color.green);
+        mColors[0] = context.getResources().getColor(R.color.black);
+        mColors[1] = context.getResources().getColor(R.color.black);
+        mColors[2] = context.getResources().getColor(R.color.black);
+        mColors[3] = context.getResources().getColor(R.color.black);
         mCurrentColorIndex = 0;
         mNextColorIndex = 1;
 

@@ -126,6 +126,30 @@
         <item>其他</item>
     </string-array>
 
+    <string-array name="s_array_mingxi_type">
+        <item>全部</item>
+        <item>充值</item>
+        <item>提款</item>
+        <item>派奖</item>
+        <item>撤单</item>
+        <item>购彩</item>
+        <item>返点</item>
+        <item>签到</item>
+        <item>推荐</item>
+    </string-array>
+
+    <string-array name="s_array_mingxi_type_num">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+    </string-array>
+
     <!-- 提款 -->
     <string name="s_tikuan">提款</string>
     <string name="s_tikuan_name">收款姓名</string>

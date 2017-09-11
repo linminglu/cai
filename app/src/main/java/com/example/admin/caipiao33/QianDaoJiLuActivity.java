@@ -110,10 +110,12 @@ public class QianDaoJiLuActivity extends ToolbarActivity implements Toolbar.OnMe
         // 合并数据
         if (null == mList || mList.size() == 0)
         {
+            mNotifySwipe.setVisibility(View.GONE);
             mNotifyNullLayout.setVisibility(View.VISIBLE);
         }
         else
         {
+            mNotifySwipe.setVisibility(View.VISIBLE);
             mNotifyNullLayout.setVisibility(View.GONE);
         }
         mAdapter.notifyDataSetChanged();
@@ -139,10 +141,12 @@ public class QianDaoJiLuActivity extends ToolbarActivity implements Toolbar.OnMe
         mList.addAll(content);
         if (null == mList || mList.size() == 0)
         {
+            mNotifySwipe.setVisibility(View.GONE);
             mNotifyNullLayout.setVisibility(View.VISIBLE);
         }
         else
         {
+            mNotifySwipe.setVisibility(View.VISIBLE);
             mNotifyNullLayout.setVisibility(View.GONE);
         }
         mAdapter.notifyDataSetChanged();
