@@ -164,7 +164,9 @@ public class TopupActivity extends ToolbarActivity implements Toolbar.OnMenuItem
     {
         switch (item.getItemId())
         {
-            case R.id.action_jilu: // 充值记录
+            case R.id.action_jilu: // 充值记录.
+                Intent intent = new Intent(TopupActivity.this, ChongZhiJiLuActivity.class);
+                startActivity(intent);
                 break;
             case R.id.action_kefu: // 在线客服
                 showLoadingDialog();

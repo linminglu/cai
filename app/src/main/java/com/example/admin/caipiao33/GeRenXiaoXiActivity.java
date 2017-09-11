@@ -212,7 +212,7 @@ public class GeRenXiaoXiActivity extends ToolbarActivity implements Toolbar.OnMe
                 @Override
                 public void onClick(View v)
                 {
-                    Intent intent = new Intent(GeRenXiaoXiActivity.this, ChongZhiDetailActivity.class);
+                    Intent intent = new Intent(GeRenXiaoXiActivity.this, GeRenMsgActivity.class);
                     intent.putExtra("id", mList.get(position).getId());
                     startActivity(intent);
                 }
