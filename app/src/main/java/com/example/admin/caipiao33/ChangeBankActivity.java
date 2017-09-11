@@ -160,7 +160,7 @@ public class ChangeBankActivity extends ToolbarActivity implements Toolbar.OnMen
         {
             return;
         }
-        new MaterialDialog.Builder(ChangeBankActivity.this).title("玩法选择")
+        new MaterialDialog.Builder(ChangeBankActivity.this).title("请选择银行")
                 .items(banknames)
                 .positiveText(R.string.dialog_ok)
                 .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice()

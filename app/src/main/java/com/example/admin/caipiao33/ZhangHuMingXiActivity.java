@@ -262,7 +262,7 @@ public class ZhangHuMingXiActivity extends BaseActivity implements Toolbar.OnMen
         {
             return;
         }
-        new MaterialDialog.Builder(ZhangHuMingXiActivity.this).title("玩法选择")
+        new MaterialDialog.Builder(ZhangHuMingXiActivity.this).title("类型选择")
                 .items(typenames)
                 .positiveText(R.string.dialog_ok)
                 .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice()

@@ -270,7 +270,7 @@ public class TiKuanJiLuActivity extends BaseActivity implements Toolbar.OnMenuIt
         {
             return;
         }
-        new MaterialDialog.Builder(TiKuanJiLuActivity.this).title("玩法选择")
+        new MaterialDialog.Builder(TiKuanJiLuActivity.this).title("类型选择")
                 .items(typenames)
                 .positiveText(R.string.dialog_ok)
                 .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice()

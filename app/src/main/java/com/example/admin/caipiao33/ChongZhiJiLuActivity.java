@@ -266,7 +266,7 @@ public class ChongZhiJiLuActivity extends BaseActivity implements Toolbar.OnMenu
         {
             return;
         }
-        new MaterialDialog.Builder(ChongZhiJiLuActivity.this).title("玩法选择")
+        new MaterialDialog.Builder(ChongZhiJiLuActivity.this).title("类型选择")
                 .items(typenames)
                 .positiveText(R.string.dialog_ok)
                 .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice()
