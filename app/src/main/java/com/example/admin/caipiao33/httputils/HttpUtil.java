@@ -325,4 +325,12 @@ public class HttpUtil
         postBase(call, null, null, clazz, mActivity, listener, intent);
     }
 
+    public static String getRequestSecondUrl(String name, String second, HashMap<String, String> map) {
+        Call<String> call;
+        FirstService firstService = retrofit.create(FirstService.class);
+        HashMap<String, String> params = CreateCode.getParams(map);
+        call = firstService.getSecondRepos(name, second, params);
+        return call.request().url().toString();
+    }
+
 }

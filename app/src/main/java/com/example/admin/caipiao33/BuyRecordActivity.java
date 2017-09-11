@@ -18,6 +18,7 @@ import com.example.admin.caipiao33.bean.BuyRoomBean;
 import com.example.admin.caipiao33.contract.IBuyRecordContract;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.presenter.BuyRecordPresenter;
+import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.MyImageLoader;
 import com.example.admin.caipiao33.utils.Tools;
 import com.example.admin.caipiao33.views.DividerItemDecoration;
@@ -236,7 +237,10 @@ public class BuyRecordActivity extends BaseActivity implements IBuyRecordContrac
             switch (view.getId()) {
                 case R.id.parent:
                     int position = getAdapterPosition();
-                    startActivity(new Intent(BuyRecordActivity.this, BuyDetailActivity.class));
+                    BuyRecordBean.ItemsBean itemsBean = mBuyRecordBean.getItems().get(position);
+                    Intent intent = new Intent(BuyRecordActivity.this, BuyDetailActivity.class);
+                    intent.putExtra(Constants.EXTRA_BUY_RECORD_ID, itemsBean.getId());
+                    startActivity(intent);
                     break;
             }
         }

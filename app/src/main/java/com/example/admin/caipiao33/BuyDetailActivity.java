@@ -1,12 +1,29 @@
 package com.example.admin.caipiao33;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.RecyclerView;
+import android.speech.tts.TextToSpeech;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.example.admin.caipiao33.encryption.CreateCode;
+import com.example.admin.caipiao33.httputils.HttpUtil;
+import com.example.admin.caipiao33.httputils.MyResponseListener;
+import com.example.admin.caipiao33.utils.Constants;
+import com.socks.library.KLog;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -14,6 +31,9 @@ import butterknife.OnClick;
 
 /**
  * 投注中奖记录
+ *
+ * 需要调用者传入
+ *     Constants.EXTRA_BUY_RECORD_ID
  */
 public class BuyDetailActivity extends BaseActivity
 {
@@ -21,15 +41,23 @@ public class BuyDetailActivity extends BaseActivity
     Toolbar mToolbar;
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
+    @BindView(R.id.webView)
+    WebView webView;
+    @BindView(R.id.progressbar)
+    ProgressBar mProgressbar;
+    private String mRecordId;
+    private String mUrl;
+    private TextToSpeech tts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy_detail);
+        Intent intent = getIntent();
+        mRecordId = intent.getStringExtra(Constants.EXTRA_BUY_RECORD_ID);
         ButterKnife.bind(this);
         initView();
-
         // 修改toolbar内容
         mToolbar.setTitle("");
         mToolbarTitle.setText("订单详情");
@@ -39,14 +67,65 @@ public class BuyDetailActivity extends BaseActivity
 
     private void initView()
     {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("id", mRecordId);
+        mUrl = HttpUtil.getRequestSecondUrl("user", "betDetail", map);
+        webView.loadUrl(mUrl);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.setWebViewClient(new WebViewClient()
+        {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url)
+            {
+                mProgressbar.setVisibility(View.VISIBLE);
+                mUrl = url;
+                view.loadUrl(url);
+                return true;
+            }
+
+            @Override
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl)
+            {
+                super.onReceivedError(view, errorCode, description, failingUrl);
+            }
+        });
+
+        webView.setWebChromeClient(new WebChromeClient()
+        {
+            @Override
+            public void onProgressChanged(WebView view, int newProgress)
+            {
+                super.onProgressChanged(view, newProgress);
+                if (newProgress == 100)
+                {
+                    mProgressbar.setVisibility(View.GONE);
+                }
+                else
+                {
+                    mProgressbar.setProgress(newProgress);
+                }
+            }
+
+            @Override
+            public void onReceivedTitle(WebView view, String title)
+            {
+                super.onReceivedTitle(view, title);
+            }
+        });
     }
 
-    @OnClick({R.id.toolbar_title})
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+    }
+
+    @OnClick({R.id.tv_again})
     public void onViewClicked(View view)
     {
         switch (view.getId())
         {
-            case R.id.toolbar_title: // 玩法选择
+            case R.id.tv_again: // 再来一注
                 break;
         }
     }
@@ -61,4 +140,5 @@ public class BuyDetailActivity extends BaseActivity
         }
         return super.onOptionsItemSelected(item);
     }
+
 }
