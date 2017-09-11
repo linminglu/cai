@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.admin.caipiao33.contract.ILoginContract;
+import com.example.admin.caipiao33.httputils.HttpUtil;
+import com.example.admin.caipiao33.httputils.MyResponseListener;
 import com.example.admin.caipiao33.presenter.LoginPresenter;
 import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.LoginEvent;
@@ -47,6 +49,10 @@ public class LoginActivity extends ToolbarActivity implements Toolbar.OnMenuItem
     ImageView loginWeiboImg;
     @BindView(R.id.login_qq_img)
     ImageView loginQqImg;
+    @BindView(R.id.btn_mianfeishiwan)
+    Button btnMianfeishiwan;
+    @BindView(R.id.btn_kefu)
+    Button btnKefu;
 
     private ILoginContract.Presenter mPresenter;
 
@@ -109,9 +115,10 @@ public class LoginActivity extends ToolbarActivity implements Toolbar.OnMenuItem
         mPresenter.getLogin(edTxtAccount.getText().toString(), edTxtPwd.getText().toString());
     }
 
-    @OnClick({R.id.edTxt_account, R.id.edTxt_pwd, R.id.cBox_password, R.id.btn_login, R.id.tv_register, R.id.tv_find_pwd, R.id.login_weixin_img, R.id.login_weibo_img})
+    @OnClick({R.id.btn_mianfeishiwan, R.id.btn_kefu, R.id.edTxt_account, R.id.edTxt_pwd, R.id.cBox_password, R.id.btn_login, R.id.tv_register, R.id.tv_find_pwd, R.id.login_weixin_img, R.id.login_weibo_img})
     public void onViewClicked(View view)
     {
+        Intent intent;
         switch (view.getId())
         {
             case R.id.edTxt_account:
@@ -124,7 +131,7 @@ public class LoginActivity extends ToolbarActivity implements Toolbar.OnMenuItem
                 login();
                 break;
             case R.id.tv_register:
-                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivityForResult(intent, Constants.REQUEST_CODE_Main2_REGISTER);
                 break;
             case R.id.tv_find_pwd:
@@ -132,6 +139,37 @@ public class LoginActivity extends ToolbarActivity implements Toolbar.OnMenuItem
             case R.id.login_weixin_img:
                 break;
             case R.id.login_weibo_img:
+                break;
+            case R.id.btn_mianfeishiwan:
+                intent = new Intent(LoginActivity.this, ShiWanActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+            case R.id.btn_kefu:
+                showLoadingDialog(false);
+                HttpUtil.requestFirst("kefu", String.class, LoginActivity.this, new MyResponseListener<String>()
+                {
+                    @Override
+                    public void onSuccess(String result)
+                    {
+                        Intent intent = new Intent(LoginActivity.this, WebUrlActivity.class);
+                        intent.putExtra(Constants.EXTRA_URL, result);
+                        intent.putExtra(Constants.EXTRA_TITLE, "在线客服");
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onFailed(int code, String msg)
+                    {
+
+                    }
+
+                    @Override
+                    public void onFinish()
+                    {
+                        hideLoadingDialog();
+                    }
+                }, null);
                 break;
         }
     }

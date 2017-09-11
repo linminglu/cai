@@ -31,10 +31,11 @@
                 android:src="@mipmap/login_telphone"/>
 
             <EditText
-                android:id="@+id/edTxt_account"
+                android:id="@+id/shiwan_edTxt_account"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
+                android:enabled="false"
                 android:hint="@string/s_please_enter_account"
                 android:imeOptions="actionNext"
                 android:paddingBottom="5dp"
@@ -43,23 +44,23 @@
                 android:textColorHint="@color/light_gray"/>
         </LinearLayout>
 
-        <include layout="@layout/item_divider_line"/>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:gravity="center"
             android:paddingLeft="15dp"
+            android:paddingRight="15dp"
             >
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
+
                 android:src="@mipmap/login_password"/>
 
             <EditText
-                android:id="@+id/edTxt_pwd"
+                android:id="@+id/shiwan_edTxt_pwd"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -72,16 +73,9 @@
                 android:singleLine="true"
                 android:textColorHint="@color/light_gray"/>
 
-            <CheckBox
-                android:id="@+id/cBox_password"
-                style="@style/PassWordCheckBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:background="@android:color/transparent"
-                android:gravity="center"
-                android:padding="10dp"/>
         </LinearLayout>
+
+        <include layout="@layout/item_divider_line"/>
 
         <include layout="@layout/item_divider_line"/>
 
@@ -89,7 +83,7 @@
 
 
     <Button
-        android:id="@+id/btn_login"
+        android:id="@+id/shiwan_btn_mianfeishiwan"
         style="@style/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -99,27 +93,7 @@
         android:layout_marginTop="15dp"
         android:text="@string/s_login"/>
 
-    <Button
-        android:id="@+id/btn_mianfeishiwan"
-        style="@style/button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="15dp"
-        android:text="@string/s_login_mianfeishiwan"/>
-
-    <Button
-        android:id="@+id/btn_kefu"
-        style="@style/button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="15dp"
-        android:text="@string/s_homepage_4"/>
+    s_homepage_4
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -128,13 +102,13 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/tv_register"
-            android:layout_width="wrap_content"
+            android:id="@+id/shiwan_kefu_tv"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="@string/s_register_now"
-            android:textColor="@drawable/selector_text_red"
+            android:text="在线客服"
+            android:textColor="@color/dark_gray"
             android:textSize="@dimen/font_normal"
             />
 
@@ -144,82 +118,86 @@
             android:background="@color/dark_gray"/>
 
         <TextView
-            android:id="@+id/tv_find_pwd"
-            android:layout_width="wrap_content"
+            android:id="@+id/shiwan_login_tv"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="@string/s_find_password"
-            android:textColor="@drawable/selector_text_red"
+            android:text="已有账号直接登录"
+            android:textColor="@color/dark_gray"
             android:textSize="@dimen/font_normal"
             />
 
     </LinearLayout>
 
-
-    <LinearLayout
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="120dp"
-        android:gravity="center"
-        android:visibility="gone">
-
-        <TextView
-            android:layout_width="80dp"
-            android:layout_height="1px"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="10dp"
-            android:background="@color/shen_grey"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="第三方登录"
-            android:textColor="@color/shen_grey"/>
-
-        <TextView
-            android:layout_width="80dp"
-            android:layout_height="1px"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="20dp"
-            android:background="@color/shen_grey"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:layout_marginTop="20dp"
-        android:visibility="gone">
+        android:text="1.每个免费试玩账号初始金额为2000RMB，不允许充值；"
+        android:textColor="@color/red"
+        android:textSize="12sp"/>
 
-        <ImageView
-            android:id="@+id/login_weixin_img"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:clickable="true"
-            android:focusable="true"
-            android:src="@drawable/login_state_weixin_img"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="8dp"
+        android:text="2.每个IP每天仅允许有3个试玩账号；"
+        android:textColor="@color/red"
+        android:textSize="12sp"/>
 
-        <ImageView
-            android:id="@+id/login_weibo_img"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:clickable="true"
-            android:focusable="true"
-            android:src="@drawable/login_state_weibo_img"
-            android:visibility="gone"
-            />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="8dp"
+        android:text="3.每个免费试玩账号从注册开始，有效时间为72小时，超过时间系统自动回收；"
+        android:textColor="@color/red"
+        android:textSize="12sp"/>
 
-        <ImageView
-            android:id="@+id/login_qq_img"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:clickable="true"
-            android:focusable="true"
-            android:src="@drawable/login_state_qq_img"
-            android:visibility="gone"
-            />
-    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="8dp"
+        android:text="4.试玩账号仅供玩家熟悉游戏，不允许充值和提款；"
+        android:textColor="@color/red"
+        android:textSize="12sp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="8dp"
+        android:text="5.试玩账号不享有参加优惠活动的权利；"
+        android:textColor="@color/red"
+        android:textSize="12sp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="8dp"
+        android:text="6.试玩账号的赔率仅供参考，可能与正式账号的赔率不相符；"
+        android:textColor="@color/red"
+        android:textSize="12sp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="8dp"
+        android:text="7.其他未说明事项以本公司解释为准；"
+        android:textColor="@color/red"
+        android:textSize="12sp"/>
+
 </LinearLayout>
