@@ -69,7 +69,7 @@ public class ZhangHuMingXiActivity extends BaseActivity implements Toolbar.OnMen
     {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("");
+        getSupportActionBar().setTitle(getResources().getString(R.string.s_zhanghumingxi));
         mNotifySwipe = (SwipeRefreshLayout) findViewById(R.id.notify_swipe);
         mNotifySwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
         {

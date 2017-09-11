@@ -15,14 +15,6 @@
         android:background="?attr/colorPrimary"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:text="账户明细"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            />
 
         <TextView
             android:id="@+id/toolbar_title"

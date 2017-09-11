@@ -11,9 +11,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.example.admin.caipiao33.bean.ChongZhiJiLuBean;
-import com.example.admin.caipiao33.contract.IChongZhiJiLuContract;
-import com.example.admin.caipiao33.presenter.ChongZhiJiLuPresenter;
+import com.example.admin.caipiao33.bean.TiXianJiLuBean;
+import com.example.admin.caipiao33.contract.ITiXianJiLuContract;
+import com.example.admin.caipiao33.presenter.TiKuanJiLuPresenter;
 import com.example.admin.caipiao33.views.DividerItemDecoration;
 import com.example.admin.caipiao33.views.LoadingLayout;
 import com.example.admin.caipiao33.views.loadmore.LoadMoreHelper;
@@ -25,8 +25,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-//账户明细
-public class ChongZhiJiLuActivity extends BaseActivity implements Toolbar.OnMenuItemClickListener, IChongZhiJiLuContract.View
+//提款记录
+public class TiKuanJiLuActivity extends BaseActivity implements Toolbar.OnMenuItemClickListener, ITiXianJiLuContract.View
 {
 
     @BindView(R.id.toolbar_title)
@@ -36,8 +36,8 @@ public class ChongZhiJiLuActivity extends BaseActivity implements Toolbar.OnMenu
     private SwipeRefreshLayout mNotifySwipe;
     private RecyclerView mNotifyRecycler;
     private View mNotifyNullLayout;
-    private ArrayList<ChongZhiJiLuBean.ItemsBean> mList = new ArrayList<>();
-    private IChongZhiJiLuContract.Presenter mPresenter;
+    private ArrayList<TiXianJiLuBean.ItemsBean> mList = new ArrayList<>();
+    private ITiXianJiLuContract.Presenter mPresenter;
     private MyAdapter mAdapter;
     private LoadMoreHelper helper;
     private int currPage = 1;
@@ -53,10 +53,10 @@ public class ChongZhiJiLuActivity extends BaseActivity implements Toolbar.OnMenu
         setContentView(R.layout.activity_zhanghumingxi);
         ButterKnife.bind(this);
         initView();
-        typenames = getResources().getStringArray(R.array.s_array_chongzhi_type);
-        typenums = getResources().getStringArray(R.array.s_array_chongzhi_type_num);
-        mPresenter = new ChongZhiJiLuPresenter(this, mNotifySwipe);
-        mPresenter.getChongZhiJiLu(type);
+        typenames = getResources().getStringArray(R.array.s_array_tikuan_type);
+        typenums = getResources().getStringArray(R.array.s_array_tikuan_type_num);
+        mPresenter = new TiKuanJiLuPresenter(this, mNotifySwipe);
+        mPresenter.getTiXianJiLu(type);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class ChongZhiJiLuActivity extends BaseActivity implements Toolbar.OnMenu
     {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(getResources().getString(R.string.s_chongzhijilu));
+        getSupportActionBar().setTitle(getResources().getString(R.string.s_tikuanjilu));
         mNotifySwipe = (SwipeRefreshLayout) findViewById(R.id.notify_swipe);
         mNotifySwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
         {
@@ -77,7 +77,7 @@ public class ChongZhiJiLuActivity extends BaseActivity implements Toolbar.OnMenu
             public void onRefresh()
             {
                 currPage = 1;
-                mPresenter.getChongZhiJiLu(type);
+                mPresenter.getTiXianJiLu(type);
             }
         });
         mNotifyRecycler = (RecyclerView) findViewById(R.id.notify_recycler);
@@ -92,7 +92,7 @@ public class ChongZhiJiLuActivity extends BaseActivity implements Toolbar.OnMenu
             public void onReload(View v)
             {
                 currPage = 1;
-                mPresenter.getChongZhiJiLu(type);
+                mPresenter.getTiXianJiLu(type);
             }
         });
         mNotifyNullLayout = findViewById(R.id.notify_null_layout);
@@ -121,7 +121,7 @@ public class ChongZhiJiLuActivity extends BaseActivity implements Toolbar.OnMenu
     }
 
     @Override
-    public void updata(ChongZhiJiLuBean result)
+    public void updata(TiXianJiLuBean result)
     {
         mNotifySwipe.setRefreshing(false);
         mList = result.getItems();
@@ -151,10 +151,10 @@ public class ChongZhiJiLuActivity extends BaseActivity implements Toolbar.OnMenu
     }
 
     @Override
-    public void loadmore(ChongZhiJiLuBean result)
+    public void loadmore(TiXianJiLuBean result)
     {
         mNotifySwipe.setRefreshing(false);
-        List<ChongZhiJiLuBean.ItemsBean> content = result.getItems();
+        List<TiXianJiLuBean.ItemsBean> content = result.getItems();
         currPage = result.getPageNo();
         total = result.getTotalPage();
         // 合并数据
@@ -232,24 +232,28 @@ public class ChongZhiJiLuActivity extends BaseActivity implements Toolbar.OnMenu
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position)
         {
-            ChongZhiJiLuBean.ItemsBean itemsBean = mList.get(position);
+            TiXianJiLuBean.ItemsBean itemsBean = mList.get(position);
+            holder.item_tuijianjilu_checkinDay.setText("出款");
             if (itemsBean.getStatus() == 0)
             {
-                holder.item_tuijianjilu_checkinDay.setText("待审核");
+                holder.item_tuijianjilu_checkinTime.setText("待审核");
             }
             else if (itemsBean.getStatus() == 1)
             {
-                holder.item_tuijianjilu_checkinDay.setText("已存入");
+                holder.item_tuijianjilu_checkinTime.setText("已提款");
+            }
+            else if (itemsBean.getStatus() == 2)
+            {
+                holder.item_tuijianjilu_checkinTime.setText("审核中");
             }
             else
             {
-                holder.item_tuijianjilu_checkinDay.setText("已取消");
+                holder.item_tuijianjilu_checkinTime.setText("已取消");
             }
 
             holder.item_tuijianjilu_recharge.setText("单号" + itemsBean.getOrderNo());
-            holder.item_tuijianjilu_giftAmount.setTextColor(getResources().getColor(R.color.green));
+            holder.item_tuijianjilu_giftAmount.setTextColor(getResources().getColor(R.color.red));
             holder.item_tuijianjilu_giftAmount.setText(itemsBean.getAmount() + "元");
-            holder.item_tuijianjilu_checkinTime.setText(itemsBean.getSaveTime());
         }
 
         @Override
@@ -266,7 +270,7 @@ public class ChongZhiJiLuActivity extends BaseActivity implements Toolbar.OnMenu
         {
             return;
         }
-        new MaterialDialog.Builder(ChongZhiJiLuActivity.this).title("玩法选择")
+        new MaterialDialog.Builder(TiKuanJiLuActivity.this).title("玩法选择")
                 .items(typenames)
                 .positiveText(R.string.dialog_ok)
                 .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice()
@@ -279,7 +283,7 @@ public class ChongZhiJiLuActivity extends BaseActivity implements Toolbar.OnMenu
                             type = typenums[which];
                             toolbarTitle.setText(typenames[which]);
                             currPage = 1;
-                            mPresenter.getChongZhiJiLu(type);
+                            mPresenter.getTiXianJiLu(type);
                         }
                         return true;
                     }

@@ -21,6 +21,7 @@ import com.example.admin.caipiao33.QianDaoActivity;
 import com.example.admin.caipiao33.QianDaoJiLuActivity;
 import com.example.admin.caipiao33.R;
 import com.example.admin.caipiao33.SettingActivity;
+import com.example.admin.caipiao33.TiKuanJiLuActivity;
 import com.example.admin.caipiao33.TiXianActivity;
 import com.example.admin.caipiao33.TopupActivity;
 import com.example.admin.caipiao33.TuiJianActivity;
@@ -271,6 +272,8 @@ public class UserFragment extends BaseFragment implements View.OnClickListener, 
                 startActivity(intent);
                 break;
             case R.id.user_fragment_tikuanjilu_rl:
+                intent = new Intent(mainActivity, TiKuanJiLuActivity.class);
+                startActivity(intent);
                 break;
             case R.id.user_fragment_qiandaojilu_rl:
                 intent = new Intent(mainActivity, QianDaoJiLuActivity.class);
