@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.example.admin.caipiao33.BaseActivity;
 import com.example.admin.caipiao33.BaseFragment;
 import com.example.admin.caipiao33.ChongZhiJiLuActivity;
+import com.example.admin.caipiao33.GeRenXiaoXiActivity;
 import com.example.admin.caipiao33.MainActivity;
 import com.example.admin.caipiao33.QianDaoActivity;
 import com.example.admin.caipiao33.QianDaoJiLuActivity;
@@ -280,6 +281,8 @@ public class UserFragment extends BaseFragment implements View.OnClickListener, 
                 startActivity(intent);
                 break;
             case R.id.user_fragment_geren_rl:
+                intent = new Intent(mainActivity, GeRenXiaoXiActivity.class);
+                startActivity(intent);
                 break;
         }
     }

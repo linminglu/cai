@@ -33,7 +33,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
- * 微信充值页面
+ * 支付宝充值页面
  */
 public class AliPayFragment extends BaseFragment implements View.OnClickListener
 {
@@ -192,7 +192,7 @@ public class AliPayFragment extends BaseFragment implements View.OnClickListener
                                 {
                                     String url = payAdapter.getBeanContents()
                                             .get(i)
-                                            .getPayUrl() + "/common/recharge/third?memberId=" + UserConfig
+                                            .getPayImg() + "/common/recharge/third?memberId=" + UserConfig
                                             .getInstance()
                                             .getToken(topupActivity)
                                             .getMemberId() + "&type=2&payId=" + payAdapter.getBeanContents()
