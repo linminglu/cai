@@ -135,6 +135,9 @@ public class LoginActivity extends ToolbarActivity implements Toolbar.OnMenuItem
                 startActivityForResult(intent, Constants.REQUEST_CODE_Main2_REGISTER);
                 break;
             case R.id.tv_find_pwd:
+                intent = new Intent(LoginActivity.this, FindPasswordActivity.class);
+                startActivity(intent);
+                finish();
                 break;
             case R.id.login_weixin_img:
                 break;

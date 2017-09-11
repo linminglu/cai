@@ -34,7 +34,7 @@ public class FindPasswordPresenter implements IFindPasswordContract.Presenter
         map.put("answer", answer);
 
 
-        HttpUtil.requestSecond("password", "verify", null, String.class, mView.getBaseActivity(), new MyResponseListener<String>()
+        HttpUtil.requestSecond("password", "verify", map, String.class, mView.getBaseActivity(), new MyResponseListener<String>()
         {
             @Override
             public void onSuccess(String result)

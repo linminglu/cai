@@ -34,7 +34,7 @@ public class ResetPasswordPresenter implements IResetPasswordContract.Presenter
         map.put("password1", password1);
 
 
-        HttpUtil.requestSecond("password", "reset", null, String.class, mView.getBaseActivity(), new MyResponseListener<String>()
+        HttpUtil.requestSecond("password", "reset", map, String.class, mView.getBaseActivity(), new MyResponseListener<String>()
         {
             @Override
             public void onSuccess(String result)
