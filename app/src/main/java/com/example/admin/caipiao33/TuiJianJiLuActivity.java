@@ -10,9 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.admin.caipiao33.bean.QianDaoJiLuBean;
-import com.example.admin.caipiao33.contract.IQianDaoJiLuContract;
-import com.example.admin.caipiao33.presenter.QianDaoJiLuPresenter;
+import com.example.admin.caipiao33.bean.TuiJianJiLuBean;
+import com.example.admin.caipiao33.contract.ITuiJianJiLuContract;
+import com.example.admin.caipiao33.presenter.TuiJianJiLuPresenter;
 import com.example.admin.caipiao33.views.DividerItemDecoration;
 import com.example.admin.caipiao33.views.LoadingLayout;
 import com.example.admin.caipiao33.views.loadmore.LoadMoreHelper;
@@ -20,15 +20,15 @@ import com.example.admin.caipiao33.views.loadmore.LoadMoreHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class QianDaoJiLuActivity extends ToolbarActivity implements Toolbar.OnMenuItemClickListener, IQianDaoJiLuContract.View
+//推荐记录
+public class TuiJianJiLuActivity extends ToolbarActivity implements Toolbar.OnMenuItemClickListener, ITuiJianJiLuContract.View
 {
 
     private SwipeRefreshLayout mNotifySwipe;
     private RecyclerView mNotifyRecycler;
     private View mNotifyNullLayout;
-    private ArrayList<QianDaoJiLuBean.ItemsBean> mList = new ArrayList<>();
-    private IQianDaoJiLuContract.Presenter mPresenter;
+    private ArrayList<TuiJianJiLuBean.ItemsBean> mList = new ArrayList<>();
+    private ITuiJianJiLuContract.Presenter mPresenter;
     private MyAdapter mAdapter;
     private LoadMoreHelper helper;
     private int currPage = 1;
@@ -40,15 +40,15 @@ public class QianDaoJiLuActivity extends ToolbarActivity implements Toolbar.OnMe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qiandaojilu);
         initView();
-        mPresenter = new QianDaoJiLuPresenter(this, mNotifySwipe);
-        mPresenter.getQianDaoJiLu();
+        mPresenter = new TuiJianJiLuPresenter(this, mNotifySwipe);
+        mPresenter.getTuiJianJiLu();
     }
 
 
     public void onCreateCustomToolBar(Toolbar toolbar)
     {
         super.onCreateCustomToolBar(toolbar);
-        toolbar.setTitle(R.string.s_qiandao_jilu);
+        toolbar.setTitle(R.string.s_tuijian_jilu);
         setSupportActionBar(toolbar);
         toolbar.setOnMenuItemClickListener(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -69,7 +69,7 @@ public class QianDaoJiLuActivity extends ToolbarActivity implements Toolbar.OnMe
             public void onRefresh()
             {
                 currPage = 1;
-                mPresenter.getQianDaoJiLu();
+                mPresenter.getTuiJianJiLu();
             }
         });
         mNotifyRecycler = (RecyclerView) findViewById(R.id.notify_recycler);
@@ -84,7 +84,7 @@ public class QianDaoJiLuActivity extends ToolbarActivity implements Toolbar.OnMe
             public void onReload(View v)
             {
                 currPage = 1;
-                mPresenter.getQianDaoJiLu();
+                mPresenter.getTuiJianJiLu();
             }
         });
         mNotifyNullLayout = findViewById(R.id.notify_null_layout);
@@ -101,7 +101,7 @@ public class QianDaoJiLuActivity extends ToolbarActivity implements Toolbar.OnMe
     }
 
     @Override
-    public void updata(QianDaoJiLuBean result)
+    public void updata(TuiJianJiLuBean result)
     {
         mNotifySwipe.setRefreshing(false);
         mList = result.getItems();
@@ -131,10 +131,10 @@ public class QianDaoJiLuActivity extends ToolbarActivity implements Toolbar.OnMe
     }
 
     @Override
-    public void loadmore(QianDaoJiLuBean result)
+    public void loadmore(TuiJianJiLuBean result)
     {
         mNotifySwipe.setRefreshing(false);
-        List<QianDaoJiLuBean.ItemsBean> content = result.getItems();
+        List<TuiJianJiLuBean.ItemsBean> content = result.getItems();
         currPage = result.getPageNo();
         total = result.getTotalPage();
         // 合并数据
@@ -163,18 +163,18 @@ public class QianDaoJiLuActivity extends ToolbarActivity implements Toolbar.OnMe
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
-        public TextView item_qiandaojilu_checkinDay;
-        public TextView item_qiandaojilu_recharge;
-        public TextView item_qiandaojilu_giftAmount;
-        public TextView item_qiandaojilu_checkinTime;
+        public TextView item_tuijianjilu_checkinDay;
+        public TextView item_tuijianjilu_recharge;
+        public TextView item_tuijianjilu_giftAmount;
+        public TextView item_tuijianjilu_checkinTime;
 
         public MyViewHolder(View itemView)
         {
             super(itemView);
-            item_qiandaojilu_checkinDay = (TextView) itemView.findViewById(R.id.item_qiandaojilu_checkinDay);
-            item_qiandaojilu_recharge = (TextView) itemView.findViewById(R.id.item_qiandaojilu_recharge);
-            item_qiandaojilu_giftAmount = (TextView) itemView.findViewById(R.id.item_qiandaojilu_giftAmount);
-            item_qiandaojilu_checkinTime = (TextView) itemView.findViewById(R.id.item_qiandaojilu_checkinTime);
+            item_tuijianjilu_checkinDay = (TextView) itemView.findViewById(R.id.item_tuijianjilu_checkinDay);
+            item_tuijianjilu_recharge = (TextView) itemView.findViewById(R.id.item_tuijianjilu_recharge);
+            item_tuijianjilu_giftAmount = (TextView) itemView.findViewById(R.id.item_tuijianjilu_giftAmount);
+            item_tuijianjilu_checkinTime = (TextView) itemView.findViewById(R.id.item_tuijianjilu_checkinTime);
         }
 
         @Override
@@ -194,18 +194,18 @@ public class QianDaoJiLuActivity extends ToolbarActivity implements Toolbar.OnMe
         @Override
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
         {
-            View view = getLayoutInflater().inflate(R.layout.item_qiandaojilu, parent, false);
+            View view = getLayoutInflater().inflate(R.layout.item_tuijianjilu, parent, false);
             return new MyViewHolder(view);
         }
 
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position)
         {
-            QianDaoJiLuBean.ItemsBean itemsBean = mList.get(position);
-            holder.item_qiandaojilu_checkinDay.setText(itemsBean.getCheckinDay());
-            holder.item_qiandaojilu_checkinTime.setText(itemsBean.getCheckinTime());
-            holder.item_qiandaojilu_giftAmount.setText(itemsBean.getGiftAmount() + "元");
-            holder.item_qiandaojilu_recharge.setText("充值总额：" + itemsBean.getRecharge() + "元");
+            TuiJianJiLuBean.ItemsBean itemsBean = mList.get(position);
+            holder.item_tuijianjilu_checkinDay.setText(itemsBean.getYearmonth());
+            holder.item_tuijianjilu_recharge.setText(itemsBean.getAddTime());
+            holder.item_tuijianjilu_giftAmount.setText(itemsBean.getAmount() + "元");
+            holder.item_tuijianjilu_checkinTime.setText("投注总额：" + itemsBean.getTotalBet() + "元");
         }
 
         @Override

@@ -10,9 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.admin.caipiao33.bean.QianDaoJiLuBean;
-import com.example.admin.caipiao33.contract.IQianDaoJiLuContract;
-import com.example.admin.caipiao33.presenter.QianDaoJiLuPresenter;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.example.admin.caipiao33.bean.ChongZhiJiLuBean;
+import com.example.admin.caipiao33.contract.IChongZhiJiLuContract;
+import com.example.admin.caipiao33.presenter.ChongZhiJiLuPresenter;
 import com.example.admin.caipiao33.views.DividerItemDecoration;
 import com.example.admin.caipiao33.views.LoadingLayout;
 import com.example.admin.caipiao33.views.loadmore.LoadMoreHelper;
@@ -20,38 +21,42 @@ import com.example.admin.caipiao33.views.loadmore.LoadMoreHelper;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-public class QianDaoJiLuActivity extends ToolbarActivity implements Toolbar.OnMenuItemClickListener, IQianDaoJiLuContract.View
+//账户明细
+public class ChongZhiJiLuActivity extends BaseActivity implements Toolbar.OnMenuItemClickListener, IChongZhiJiLuContract.View
 {
 
+    @BindView(R.id.toolbar_title)
+    TextView toolbarTitle;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
     private SwipeRefreshLayout mNotifySwipe;
     private RecyclerView mNotifyRecycler;
     private View mNotifyNullLayout;
-    private ArrayList<QianDaoJiLuBean.ItemsBean> mList = new ArrayList<>();
-    private IQianDaoJiLuContract.Presenter mPresenter;
+    private ArrayList<ChongZhiJiLuBean.ItemsBean> mList = new ArrayList<>();
+    private IChongZhiJiLuContract.Presenter mPresenter;
     private MyAdapter mAdapter;
     private LoadMoreHelper helper;
     private int currPage = 1;
+    private String type = "";
     private int total;
+    private String[] typenames;
+    private String[] typenums;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_qiandaojilu);
+        setContentView(R.layout.activity_zhanghumingxi);
+        ButterKnife.bind(this);
         initView();
-        mPresenter = new QianDaoJiLuPresenter(this, mNotifySwipe);
-        mPresenter.getQianDaoJiLu();
-    }
-
-
-    public void onCreateCustomToolBar(Toolbar toolbar)
-    {
-        super.onCreateCustomToolBar(toolbar);
-        toolbar.setTitle(R.string.s_qiandao_jilu);
-        setSupportActionBar(toolbar);
-        toolbar.setOnMenuItemClickListener(this);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        typenames = getResources().getStringArray(R.array.s_array_chongzhi_type);
+        typenums = getResources().getStringArray(R.array.s_array_chongzhi_type_num);
+        mPresenter = new ChongZhiJiLuPresenter(this, mNotifySwipe);
+        mPresenter.getChongZhiJiLu(type);
     }
 
     @Override
@@ -62,6 +67,9 @@ public class QianDaoJiLuActivity extends ToolbarActivity implements Toolbar.OnMe
 
     private void initView()
     {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("");
         mNotifySwipe = (SwipeRefreshLayout) findViewById(R.id.notify_swipe);
         mNotifySwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
         {
@@ -69,7 +77,7 @@ public class QianDaoJiLuActivity extends ToolbarActivity implements Toolbar.OnMe
             public void onRefresh()
             {
                 currPage = 1;
-                mPresenter.getQianDaoJiLu();
+                mPresenter.getChongZhiJiLu(type);
             }
         });
         mNotifyRecycler = (RecyclerView) findViewById(R.id.notify_recycler);
@@ -84,7 +92,7 @@ public class QianDaoJiLuActivity extends ToolbarActivity implements Toolbar.OnMe
             public void onReload(View v)
             {
                 currPage = 1;
-                mPresenter.getQianDaoJiLu();
+                mPresenter.getChongZhiJiLu(type);
             }
         });
         mNotifyNullLayout = findViewById(R.id.notify_null_layout);
@@ -94,14 +102,26 @@ public class QianDaoJiLuActivity extends ToolbarActivity implements Toolbar.OnMe
             @Override
             public void onLoadMore()
             {
-                mPresenter.getMoreJiLu(currPage++);
+                mPresenter.getMoreJiLu(type, currPage++);
             }
         });
         helper.setBindingRecyclerView(mNotifyRecycler, mAdapter);
     }
 
     @Override
-    public void updata(QianDaoJiLuBean result)
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void updata(ChongZhiJiLuBean result)
     {
         mNotifySwipe.setRefreshing(false);
         mList = result.getItems();
@@ -131,10 +151,10 @@ public class QianDaoJiLuActivity extends ToolbarActivity implements Toolbar.OnMe
     }
 
     @Override
-    public void loadmore(QianDaoJiLuBean result)
+    public void loadmore(ChongZhiJiLuBean result)
     {
         mNotifySwipe.setRefreshing(false);
-        List<QianDaoJiLuBean.ItemsBean> content = result.getItems();
+        List<ChongZhiJiLuBean.ItemsBean> content = result.getItems();
         currPage = result.getPageNo();
         total = result.getTotalPage();
         // 合并数据
@@ -161,20 +181,31 @@ public class QianDaoJiLuActivity extends ToolbarActivity implements Toolbar.OnMe
         }
     }
 
+    @OnClick(R.id.toolbar_title)
+    public void onViewClicked(View view)
+    {
+        switch (view.getId())
+        {
+            case R.id.toolbar_title:
+                showOptionsDialog();
+                break;
+        }
+    }
+
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
-        public TextView item_qiandaojilu_checkinDay;
-        public TextView item_qiandaojilu_recharge;
-        public TextView item_qiandaojilu_giftAmount;
-        public TextView item_qiandaojilu_checkinTime;
+        public TextView item_tuijianjilu_checkinDay;
+        public TextView item_tuijianjilu_recharge;
+        public TextView item_tuijianjilu_giftAmount;
+        public TextView item_tuijianjilu_checkinTime;
 
         public MyViewHolder(View itemView)
         {
             super(itemView);
-            item_qiandaojilu_checkinDay = (TextView) itemView.findViewById(R.id.item_qiandaojilu_checkinDay);
-            item_qiandaojilu_recharge = (TextView) itemView.findViewById(R.id.item_qiandaojilu_recharge);
-            item_qiandaojilu_giftAmount = (TextView) itemView.findViewById(R.id.item_qiandaojilu_giftAmount);
-            item_qiandaojilu_checkinTime = (TextView) itemView.findViewById(R.id.item_qiandaojilu_checkinTime);
+            item_tuijianjilu_checkinDay = (TextView) itemView.findViewById(R.id.item_tuijianjilu_checkinDay);
+            item_tuijianjilu_recharge = (TextView) itemView.findViewById(R.id.item_tuijianjilu_recharge);
+            item_tuijianjilu_giftAmount = (TextView) itemView.findViewById(R.id.item_tuijianjilu_giftAmount);
+            item_tuijianjilu_checkinTime = (TextView) itemView.findViewById(R.id.item_tuijianjilu_checkinTime);
         }
 
         @Override
@@ -194,18 +225,31 @@ public class QianDaoJiLuActivity extends ToolbarActivity implements Toolbar.OnMe
         @Override
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
         {
-            View view = getLayoutInflater().inflate(R.layout.item_qiandaojilu, parent, false);
+            View view = getLayoutInflater().inflate(R.layout.item_tuijianjilu, parent, false);
             return new MyViewHolder(view);
         }
 
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position)
         {
-            QianDaoJiLuBean.ItemsBean itemsBean = mList.get(position);
-            holder.item_qiandaojilu_checkinDay.setText(itemsBean.getCheckinDay());
-            holder.item_qiandaojilu_checkinTime.setText(itemsBean.getCheckinTime());
-            holder.item_qiandaojilu_giftAmount.setText(itemsBean.getGiftAmount() + "元");
-            holder.item_qiandaojilu_recharge.setText("充值总额：" + itemsBean.getRecharge() + "元");
+            ChongZhiJiLuBean.ItemsBean itemsBean = mList.get(position);
+            if (itemsBean.getStatus() == 0)
+            {
+                holder.item_tuijianjilu_checkinDay.setText("待审核");
+            }
+            else if (itemsBean.getStatus() == 1)
+            {
+                holder.item_tuijianjilu_checkinDay.setText("已存入");
+            }
+            else
+            {
+                holder.item_tuijianjilu_checkinDay.setText("已取消");
+            }
+
+            holder.item_tuijianjilu_recharge.setText("单号" + itemsBean.getOrderNo());
+            holder.item_tuijianjilu_giftAmount.setTextColor(getResources().getColor(R.color.green));
+            holder.item_tuijianjilu_giftAmount.setText(itemsBean.getAmount() + "元");
+            holder.item_tuijianjilu_checkinTime.setText(itemsBean.getSaveTime());
         }
 
         @Override
@@ -214,6 +258,33 @@ public class QianDaoJiLuActivity extends ToolbarActivity implements Toolbar.OnMe
             return null == mList ? 0 : mList.size();
         }
 
+    }
+
+    private void showOptionsDialog()
+    {
+        if (null == typenames || null == typenums)
+        {
+            return;
+        }
+        new MaterialDialog.Builder(ChongZhiJiLuActivity.this).title("玩法选择")
+                .items(typenames)
+                .positiveText(R.string.dialog_ok)
+                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice()
+                {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text)
+                    {
+                        if (which != -1)
+                        {
+                            type = typenums[which];
+                            toolbarTitle.setText(typenames[which]);
+                            currPage = 1;
+                            mPresenter.getChongZhiJiLu(type);
+                        }
+                        return true;
+                    }
+                })
+                .show();
     }
 }
 
