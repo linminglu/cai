@@ -81,6 +81,16 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
+            android:name=".BuyRecordActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".BuyDetailActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
             android:name=".QianDaoActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait">

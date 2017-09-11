@@ -25,6 +25,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.admin.caipiao33.BaseActivity;
 import com.example.admin.caipiao33.BaseFragment;
 import com.example.admin.caipiao33.BuyActivity;
+import com.example.admin.caipiao33.BuyRecordActivity;
 import com.example.admin.caipiao33.BuyRoomActivity;
 import com.example.admin.caipiao33.LoginActivity;
 import com.example.admin.caipiao33.MainActivity;
@@ -477,8 +478,17 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
                 toWebUrlActivity(HttpUtil.mNewUrl + "/api/systemNotice", "公告");
                 break;
             case R.id.ll_func_1: // 存/取款
+                mainActivity.tabSwitchCenter(UserFragment.class);
                 break;
             case R.id.ll_func_2: // 投注记录
+                TokenBean token = UserConfig.getInstance().getToken(getActivity());
+                if (null == token || token.getIsLogin() == 0) {
+                    // 未登录
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    startActivityForResult(intent, Constants.REQUEST_CODE_Main2_LOGIN);
+                } else {
+                    startActivity(new Intent(getActivity(), BuyRecordActivity.class));
+                }
                 break;
             case R.id.ll_func_3: // 优惠活动
                 toPromotions();

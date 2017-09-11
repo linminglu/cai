@@ -160,4 +160,15 @@
     <string name="s_play_options">玩法选择：%1$s</string>
     <string name="s_buy_explain">%1$d注共&lt;font color=\'#FF0000\'&gt;%2$s&lt;/font&gt;元，若中奖，奖金&lt;font color=\'#FF0000\'&gt;%3$s&lt;/font&gt;元，盈利&lt;font color=\'#FF0000\'&gt;%4$s&lt;/font&gt;元</string>
     <string name="s_amount">&lt;font color=\'#FF0000\'&gt;余额:&lt;/font&gt;￥%1$s</string>
+
+    <!-- 投注中奖 -->
+    <string name="s_money">%1$s元</string>
+    <string name="s_win_money">赢%1$s元</string>
+    <string name="s_not_win">未中奖</string>
+    <string-array name="s_array_buy_record">
+        <item>全部订单</item>
+        <item>我的中奖</item>
+        <item>待开奖</item>
+        <item>我的撤单</item>
+    </string-array>
 </resources>

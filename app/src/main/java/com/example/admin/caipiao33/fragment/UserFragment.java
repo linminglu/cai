@@ -251,6 +251,7 @@ public class UserFragment extends BaseFragment implements View.OnClickListener, 
             case R.id.user_fragment_tuijian_rl:
                 break;
             case R.id.user_fragment_gonggao_rl:
+                toWebUrlActivity(HttpUtil.mNewUrl + "/api/systemNotice", "公告");
                 break;
             case R.id.user_fragment_touzhujilu_rl:
                 break;

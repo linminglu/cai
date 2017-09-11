@@ -230,9 +230,8 @@
         android:id="@+id/loadingLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         android:layout_below="@+id/toolbar"
-        android:visibility="gone">
+        android:visibility="visible">
 
     </com.example.admin.caipiao33.views.LoadingLayout>
 </RelativeLayout>

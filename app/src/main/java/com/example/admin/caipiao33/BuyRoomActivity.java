@@ -29,7 +29,7 @@ import butterknife.OnClick;
  *
  * 购彩房间列表页
  */
-public class BuyRoomActivity extends AppCompatActivity
+public class BuyRoomActivity extends BaseActivity
 {
 
     private String mTitleStr;

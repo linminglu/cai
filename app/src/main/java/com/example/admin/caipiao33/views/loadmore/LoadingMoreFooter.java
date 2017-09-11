@@ -1,6 +1,7 @@
 package com.example.admin.caipiao33.views.loadmore;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -60,7 +61,7 @@ public class LoadingMoreFooter extends LinearLayout
         end_layout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         end_layout.setGravity(Gravity.CENTER);
         end_layout.setOrientation(LinearLayout.VERTICAL);
-        end_layout.setBackgroundColor(context.getResources().getColor(R.color.layout_background));
+        end_layout.setBackgroundColor(Color.TRANSPARENT);
         end_layout.setVisibility(View.GONE);
         frameLayout.addView(end_layout);
 

@@ -97,7 +97,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration
     {
         if (mOrientation == VERTICAL_LIST)
         {
-            outRect.set(0, 0, 0, 20);
+            outRect.set(0, 0, 0, mDivider.getIntrinsicHeight());
         }
         else
         {
