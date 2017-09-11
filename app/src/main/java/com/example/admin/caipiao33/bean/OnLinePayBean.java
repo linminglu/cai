@@ -12,18 +12,58 @@ public class OnLinePayBean implements Serializable
 {
 
     /**
-     * payUrl : http://localhost/lottery_user
-     * minAmount : 1
-     * maxAmount : 5000
-     * id : 21
-     * expand : [{"name":"工商银行（显示）","id":"(提交值)"}]
+     * type : 1
+     * name : 智付网银2001240101
+     * returnType : 2
+     * payUrl : http://pay.hmtnb.top
+     * payType : 4
+     * minAmount : 10
+     * maxAmount : 100000
+     * addAmount : 0
+     * id : 18
+     * expand : {"bankList":[{"name":"民生银行","id":"CMBC"},{"name":"工商银行","id":"ICBC"},{"name":"交通银行","id":"BCOM"},{"name":"光大银行","id":"CEBB"},{"name":"中信银行","id":"ECITIC"},{"name":"中国邮政银行","id":"PSBC"},{"name":"浦发银行","id":"SPDB"},{"name":"杭州银行","id":"HZB"},{"name":"华夏银行","id":"HXB"},{"name":"兴业银行","id":"CIB"},{"name":"上海银行","id":"SHB"},{"name":"建设银行","id":"CCB"},{"name":"宁波银行","id":"NBB"},{"name":"中国银行","id":"BOC"},{"name":"农业银行","id":"ABC"},{"name":"浙江稠州商业银行","id":"CZB"},{"name":"平安银行","id":"SPABANK"},{"name":"招商银行","id":"CMB"}]}
      */
 
+    private int type;
+    private String name;
+    private int returnType;
     private String payUrl;
+    private int payType;
     private int minAmount;
     private int maxAmount;
+    private int addAmount;
     private String id;
-    private ArrayList<ExpandBean> expand;
+    private ExpandBean expand;
+
+    public int getType()
+    {
+        return type;
+    }
+
+    public void setType(int type)
+    {
+        this.type = type;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
+    public int getReturnType()
+    {
+        return returnType;
+    }
+
+    public void setReturnType(int returnType)
+    {
+        this.returnType = returnType;
+    }
 
     public String getPayUrl()
     {
@@ -33,6 +73,16 @@ public class OnLinePayBean implements Serializable
     public void setPayUrl(String payUrl)
     {
         this.payUrl = payUrl;
+    }
+
+    public int getPayType()
+    {
+        return payType;
+    }
+
+    public void setPayType(int payType)
+    {
+        this.payType = payType;
     }
 
     public int getMinAmount()
@@ -55,6 +105,16 @@ public class OnLinePayBean implements Serializable
         this.maxAmount = maxAmount;
     }
 
+    public int getAddAmount()
+    {
+        return addAmount;
+    }
+
+    public void setAddAmount(int addAmount)
+    {
+        this.addAmount = addAmount;
+    }
+
     public String getId()
     {
         return id;
@@ -65,55 +125,70 @@ public class OnLinePayBean implements Serializable
         this.id = id;
     }
 
-    public ArrayList<ExpandBean> getExpand()
+    public ExpandBean getExpand()
     {
         return expand;
     }
 
-    public void setExpand(ArrayList<ExpandBean> expand)
+    public void setExpand(ExpandBean expand)
     {
         this.expand = expand;
     }
 
     public static class ExpandBean
     {
-        /**
-         * name : 工商银行（显示）
-         * id : (提交值)
-         */
+        private ArrayList<BankListBean> bankList;
 
-        private String name;
-        private String id;
-        private boolean isSelete;
-
-        public String getName()
+        public ArrayList<BankListBean> getBankList()
         {
-            return name;
+            return bankList;
         }
 
-        public void setName(String name)
+        public void setBankList(ArrayList<BankListBean> bankList)
         {
-            this.name = name;
+            this.bankList = bankList;
         }
 
-        public String getId()
+        public static class BankListBean
         {
-            return id;
-        }
+            /**
+             * name : 民生银行
+             * id : CMBC
+             */
 
-        public void setId(String id)
-        {
-            this.id = id;
-        }
+            private String name;
+            private String id;
+            private boolean isSelete;
 
-        public boolean isSelete()
-        {
-            return isSelete;
-        }
+            public boolean isSelete()
+            {
+                return isSelete;
+            }
 
-        public void setSelete(boolean selete)
-        {
-            isSelete = selete;
+            public void setSelete(boolean selete)
+            {
+                isSelete = selete;
+            }
+
+            public String getName()
+            {
+                return name;
+            }
+
+            public void setName(String name)
+            {
+                this.name = name;
+            }
+
+            public String getId()
+            {
+                return id;
+            }
+
+            public void setId(String id)
+            {
+                this.id = id;
+            }
         }
     }
 }

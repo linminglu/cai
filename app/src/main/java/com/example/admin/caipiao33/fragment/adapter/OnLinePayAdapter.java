@@ -25,7 +25,7 @@ import static com.example.admin.caipiao33.R.id.item_weixinpay_cb;
  */
 public class OnLinePayAdapter extends BaseAdapter
 {
-    private ArrayList<OnLinePayBean.ExpandBean> beanContents = new ArrayList<>();
+    private ArrayList<OnLinePayBean.ExpandBean.BankListBean> beanContents = new ArrayList<>();
 
     private LayoutInflater mInflater;
 
@@ -33,7 +33,7 @@ public class OnLinePayAdapter extends BaseAdapter
 
     private BaseActivity baseActivity;
 
-    public OnLinePayAdapter(ArrayList<OnLinePayBean.ExpandBean> beanContents, LayoutInflater mInflater, ListView mListView, BaseActivity baseActivity)
+    public OnLinePayAdapter(ArrayList<OnLinePayBean.ExpandBean.BankListBean> beanContents, LayoutInflater mInflater, ListView mListView, BaseActivity baseActivity)
     {
         this.mInflater = mInflater;
         this.beanContents = beanContents;
@@ -41,12 +41,12 @@ public class OnLinePayAdapter extends BaseAdapter
         this.baseActivity = baseActivity;
     }
 
-    public void setBeanContents(ArrayList<OnLinePayBean.ExpandBean> beanContents)
+    public void setBeanContents(ArrayList<OnLinePayBean.ExpandBean.BankListBean> beanContents)
     {
         this.beanContents = beanContents;
     }
 
-    public ArrayList<OnLinePayBean.ExpandBean> getBeanContents()
+    public ArrayList<OnLinePayBean.ExpandBean.BankListBean> getBeanContents()
     {
         return beanContents;
     }
@@ -72,13 +72,14 @@ public class OnLinePayAdapter extends BaseAdapter
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
-        final OnLinePayBean.ExpandBean beanContent = beanContents.get(position);
+        final OnLinePayBean.ExpandBean.BankListBean beanContent = beanContents.get(position);
         if (convertView == null)
         {
             convertView = mInflater.inflate(R.layout.item_onlinepay, parent, false);
         }
         TextView item_onlinepay_name = ViewHolder.get(convertView, R.id.item_onlinepay_name);
         CheckBox item_onlinepay_cb = ViewHolder.get(convertView, R.id.item_onlinepay_cb);
+        item_onlinepay_name.setText(beanContent.getName());
         item_onlinepay_cb.setChecked(beanContent.isSelete());
         return convertView;
     }

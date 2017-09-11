@@ -72,8 +72,9 @@ public class OnLinePayFragment extends BaseFragment implements View.OnClickListe
             public void onSuccess(OnLinePayBean result)
             {
                 onLinePayBean = result;
-                result.getExpand().get(0).setSelete(true);
-                payAdapter = new OnLinePayAdapter(result.getExpand(), mInflater, onlinePayLv, topupActivity);
+                result.getExpand().getBankList().get(0).setSelete(true);
+                payAdapter = new OnLinePayAdapter(result.getExpand()
+                        .getBankList(), mInflater, onlinePayLv, topupActivity);
                 onlinePayLv.setAdapter(payAdapter);
                 payAdapter.notifyDataSetChanged();
             }
@@ -132,9 +133,10 @@ public class OnLinePayFragment extends BaseFragment implements View.OnClickListe
                             String url = onLinePayBean.getPayUrl() + "/common/recharge/third?memberId=" + UserConfig
                                     .getInstance()
                                     .getToken(topupActivity)
-                                    .getMemberId() + "&type=4&payId=" + payAdapter.getBeanContents()
+                                    .getMemberId() + "&type=4&payId=" + onLinePayBean.getId() + "&amount=" + topupActivity
+                                    .getTopupAmount() + "&bankName=" + payAdapter.getBeanContents()
                                     .get(i)
-                                    .getId() + "&amount=" + topupActivity.getTopupAmount() + "&bankName=&baseUrl=" + HttpUtil.mNewUrl;
+                                    .getId() + "&baseUrl=" + HttpUtil.mNewUrl;
                             toWebUrlActivity(url, "网银支付");
                         }
                     }
