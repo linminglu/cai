@@ -1,5 +1,6 @@
 package com.example.admin.caipiao33;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -97,6 +98,8 @@ public class TiXianActivity extends ToolbarActivity implements Toolbar.OnMenuIte
         {
             //提现记录
             case R.id.action_message:
+                Intent intent = new Intent(TiXianActivity.this, TiKuanJiLuActivity.class);
+                startActivity(intent);
                 break;
         }
         return false;
