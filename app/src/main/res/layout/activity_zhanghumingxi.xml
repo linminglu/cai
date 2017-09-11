@@ -8,12 +8,6 @@
     android:orientation="vertical"
     tools:context="com.example.admin.caipiao33.QianDaoJiLuActivity">
 
-    <com.example.admin.caipiao33.views.LoadingLayout
-        android:id="@+id/loadingLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
-
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -45,6 +39,13 @@
             />
 
     </android.support.v7.widget.Toolbar>
+
+    <com.example.admin.caipiao33.views.LoadingLayout
+        android:id="@+id/loadingLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/notify_swipe"

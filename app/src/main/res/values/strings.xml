@@ -150,6 +150,34 @@
         <item>8</item>
     </string-array>
 
+    <string-array name="s_array_chongzhi_type">
+        <item>全部</item>
+        <item>待审核</item>
+        <item>已存入</item>
+        <item>已取消</item>
+    </string-array>
+
+    <string-array name="s_array_chongzhi_type_num">
+        <item></item>
+        <item>0</item>
+        <item>1</item>
+        <item>-1</item>
+    </string-array>
+
+    <string-array name="s_array_tikuan_type">
+        <item>全部</item>
+        <item>待审核</item>
+        <item>已存入</item>
+        <item>已取消</item>
+    </string-array>
+
+    <string-array name="s_array_tikuan_type_num">
+        <item></item>
+        <item>0</item>
+        <item>1</item>
+        <item>-1</item>
+    </string-array>
+
     <!-- 提款 -->
     <string name="s_tikuan">提款</string>
     <string name="s_tikuan_name">收款姓名</string>

@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.example.admin.caipiao33.BaseActivity;
 import com.example.admin.caipiao33.BaseFragment;
+import com.example.admin.caipiao33.ChongZhiJiLuActivity;
 import com.example.admin.caipiao33.MainActivity;
 import com.example.admin.caipiao33.QianDaoActivity;
 import com.example.admin.caipiao33.QianDaoJiLuActivity;
@@ -265,6 +266,8 @@ public class UserFragment extends BaseFragment implements View.OnClickListener, 
                 startActivity(intent);
                 break;
             case R.id.user_fragment_chongzhijilu_rl:
+                intent = new Intent(mainActivity, ChongZhiJiLuActivity.class);
+                startActivity(intent);
                 break;
             case R.id.user_fragment_tikuanjilu_rl:
                 break;
