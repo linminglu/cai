@@ -22,6 +22,7 @@ import com.example.admin.caipiao33.R;
 import com.example.admin.caipiao33.SettingActivity;
 import com.example.admin.caipiao33.TiXianActivity;
 import com.example.admin.caipiao33.TopupActivity;
+import com.example.admin.caipiao33.TuiJianActivity;
 import com.example.admin.caipiao33.WebUrlActivity;
 import com.example.admin.caipiao33.bean.UserInfoBean;
 import com.example.admin.caipiao33.contract.IUserContract;
@@ -249,6 +250,8 @@ public class UserFragment extends BaseFragment implements View.OnClickListener, 
                 }, null);
                 break;
             case R.id.user_fragment_tuijian_rl:
+                intent = new Intent(mainActivity, TuiJianActivity.class);
+                startActivity(intent);
                 break;
             case R.id.user_fragment_gonggao_rl:
                 break;

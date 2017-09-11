@@ -148,6 +148,10 @@
     <string name="s_qiandao_hongbao">可领取红包金额</string>
     <string name="s_qiandao_ok">签到领取</string>
 
+    <!-- 推荐 -->
+    <string name="s_tuijian">我的推荐</string>
+    <string name="s_tuijian_jilu">推荐记录</string>
+
     <!-- 投注内页 -->
     <string name="s_clear_options">清空选项</string>
     <string name="s_trend">趋势</string>
