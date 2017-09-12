@@ -178,7 +178,7 @@ public class RegisterActivity extends ToolbarActivity implements Toolbar.OnMenuI
     public void registerOk(RegisterSubmitBean result)
     {
         ToastUtil.show("注册成功！");
-//        EventBus.getDefault().post(new LoginEvent(""));
+        EventBus.getDefault().post(new LoginEvent(""));
         finish();
         //        Intent intentn = new Intent(RegisterActivity.this, LoginActivity.class);
         //        intentn.putExtra("userName", registerUsernameEt.getText().toString());
@@ -215,6 +215,7 @@ public class RegisterActivity extends ToolbarActivity implements Toolbar.OnMenuI
                 {
                     ToastUtil.show("请同意注册协议！");
                 }
+                break;
             case R.id.gologin_btn:
                 Intent intento = new Intent();
                 setResult(Constants.REQUEST_CODE_Main2_REGISTER_2LOGIN, intento);

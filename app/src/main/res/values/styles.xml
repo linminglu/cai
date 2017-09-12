@@ -41,4 +41,11 @@
         <item name="android:textSize">@dimen/button_font_size</item>
     </style>
 
+    <style name="buttonfan">
+        <item name="android:textColor">@drawable/button_textcolorfan</item>
+        <item name="android:background">@drawable/button_bgfan</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/button_font_size</item>
+    </style>
+
 </resources>

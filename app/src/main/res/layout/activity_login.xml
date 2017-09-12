@@ -92,7 +92,7 @@
         android:id="@+id/btn_login"
         style="@style/button"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_gravity="center"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
@@ -101,9 +101,9 @@
 
     <Button
         android:id="@+id/btn_mianfeishiwan"
-        style="@style/button"
+        style="@style/buttonfan"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_gravity="center"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
@@ -112,9 +112,9 @@
 
     <Button
         android:id="@+id/btn_kefu"
-        style="@style/button"
+        style="@style/buttonfan"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_gravity="center"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"

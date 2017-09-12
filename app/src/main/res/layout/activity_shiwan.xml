@@ -104,7 +104,7 @@
         <TextView
             android:id="@+id/shiwan_kefu_tv"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_weight="1"
             android:gravity="center"
             android:text="在线客服"
@@ -120,7 +120,7 @@
         <TextView
             android:id="@+id/shiwan_login_tv"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_weight="1"
             android:gravity="center"
             android:text="已有账号直接登录"
