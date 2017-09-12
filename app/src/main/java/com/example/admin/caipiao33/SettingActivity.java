@@ -60,7 +60,14 @@ public class SettingActivity extends ToolbarActivity implements Toolbar.OnMenuIt
 
     private void initView()
     {
-
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
+        {
+            @Override
+            public void onRefresh()
+            {
+                mPresenter.getSettingOp();
+            }
+        });
     }
 
     public void onCreateCustomToolBar(Toolbar toolbar)
@@ -87,6 +94,7 @@ public class SettingActivity extends ToolbarActivity implements Toolbar.OnMenuIt
     @Override
     public void updata(SettingBean result)
     {
+        swipeRefreshLayout.setRefreshing(false);
         settingBean = result;
         settingMibaoTv.setText(result.getQuestion().equals("1") ? "已设置" : "未设置");
         settingTikuanmimaTv.setText(result.getTkPasswd().equals("1") ? "已设置" : "未设置");
