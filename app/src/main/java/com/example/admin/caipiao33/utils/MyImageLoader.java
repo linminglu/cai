@@ -24,12 +24,12 @@ public class MyImageLoader
         }
         if (!StringUtils.isEmpty2(uri) && context != null)
         {
-            Glide.with(context).load(uri).placeholder(R.mipmap.icon).into(imageView);
+            Glide.with(context).load(uri).placeholder(R.mipmap.beijing).into(imageView);
             //            Picasso.with(context).load(uri).resize(250, 250).into(imageView);
         }
         else
         {
-            imageView.setImageResource(R.mipmap.icon);
+            imageView.setImageResource(R.mipmap.photo_error);
         }
     }
 
@@ -41,12 +41,16 @@ public class MyImageLoader
         }
         if (!StringUtils.isEmpty2(uri) && context != null)
         {
-            Glide.with(context).load(uri).placeholder(R.mipmap.icon).transform(new GlideCircleTransform(context)).into(imageView);
+            Glide.with(context)
+                    .load(uri)
+                    .placeholder(R.mipmap.beijing)
+                    .transform(new GlideCircleTransform(context))
+                    .into(imageView);
             //            Picasso.with(context).load(uri).resize(250, 250).into(imageView);
         }
         else
         {
-            imageView.setImageResource(R.mipmap.icon);
+            imageView.setImageResource(R.mipmap.photo_error);
         }
     }
 
@@ -63,7 +67,7 @@ public class MyImageLoader
         }
         else
         {
-//            imageView.setImageResource(R.mipmap.icon);
+            //            imageView.setImageResource(R.mipmap.beijing);
         }
     }
 
@@ -75,12 +79,12 @@ public class MyImageLoader
         }
         if (!StringUtils.isEmpty2(uri) && context != null)
         {
-            Glide.with(context).load(uri).placeholder(R.mipmap.icon).into(imageView);
+            Glide.with(context).load(uri).placeholder(R.mipmap.beijing).into(imageView);
             //            Picasso.with(context).load(uri).resize(width, height).into(imageView);
         }
         else
         {
-            imageView.setImageResource(R.mipmap.icon);
+            imageView.setImageResource(R.mipmap.photo_error);
         }
     }
 
@@ -96,7 +100,7 @@ public class MyImageLoader
         }
         else
         {
-            imageView.setImageResource(R.mipmap.icon);
+            imageView.setImageResource(R.mipmap.photo_error);
         }
     }
 
@@ -124,11 +128,11 @@ public class MyImageLoader
         }
         if (!StringUtils.isEmpty2(uri) && context != null)
         {
-            Glide.with(context).load(uri).placeholder(R.mipmap.icon).crossFade().into(imageView);
+            Glide.with(context).load(uri).placeholder(R.mipmap.beijing).crossFade().into(imageView);
         }
         else
         {
-            imageView.setImageResource(R.mipmap.icon);
+            imageView.setImageResource(R.mipmap.beijing);
         }
     }
 
@@ -140,7 +144,12 @@ public class MyImageLoader
         }
         if (!StringUtils.isEmpty2(uri) && context != null)
         {
-            Glide.with(context).load(uri).placeholder(R.mipmap.default_ad_load).crossFade().listener(listener).into(imageView);
+            Glide.with(context)
+                    .load(uri)
+                    .placeholder(R.mipmap.default_ad_load)
+                    .crossFade()
+                    .listener(listener)
+                    .into(imageView);
         }
         else
         {
@@ -156,7 +165,12 @@ public class MyImageLoader
         }
         if (null != file && context != null)
         {
-            Glide.with(context).load(new File(file)).centerCrop().placeholder(R.mipmap.photo_error).crossFade().into(imageView);
+            Glide.with(context)
+                    .load(new File(file))
+                    .centerCrop()
+                    .placeholder(R.mipmap.photo_error)
+                    .crossFade()
+                    .into(imageView);
         }
         else
         {
@@ -172,7 +186,7 @@ public class MyImageLoader
         }
         if (0 != id && context != null)
         {
-            Glide.with(context).load(id).placeholder(R.mipmap.icon).into(imageView);
+            Glide.with(context).load(id).placeholder(R.mipmap.beijing).into(imageView);
         }
         else
         {
