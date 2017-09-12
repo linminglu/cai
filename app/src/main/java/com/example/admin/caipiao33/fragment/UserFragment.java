@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import com.example.admin.caipiao33.BaseActivity;
 import com.example.admin.caipiao33.BaseFragment;
+import com.example.admin.caipiao33.BuyRecordActivity;
+import com.example.admin.caipiao33.BuyWinRecordActivity;
 import com.example.admin.caipiao33.ChongZhiJiLuActivity;
 import com.example.admin.caipiao33.GeRenXiaoXiActivity;
 import com.example.admin.caipiao33.MainActivity;
@@ -261,8 +263,12 @@ public class UserFragment extends BaseFragment implements View.OnClickListener, 
                 toWebUrlActivity(HttpUtil.mNewUrl + "/api/systemNotice", "公告");
                 break;
             case R.id.user_fragment_touzhujilu_rl:
+                intent = new Intent(mainActivity, BuyRecordActivity.class);
+                startActivity(intent);
                 break;
             case R.id.user_fragment_zhongjiangjilu_rl:
+                intent = new Intent(mainActivity, BuyWinRecordActivity.class);
+                startActivity(intent);
                 break;
             case R.id.user_fragment_mingxi_rl:
                 intent = new Intent(mainActivity, ZhangHuMingXiActivity.class);

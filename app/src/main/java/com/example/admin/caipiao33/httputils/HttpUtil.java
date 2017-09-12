@@ -198,7 +198,6 @@ public class HttpUtil
                         return;
                     }
                     String result = CreateCode.parseContent(response.body());
-                    KLog.d(result);
                     JSONObject object = new JSONObject(result);
                     int code = object.getInt("status");
                     if (code == Constants.SUCCESSCODE)
@@ -301,7 +300,7 @@ public class HttpUtil
         FirstService firstService = retrofit.create(FirstService.class);
         HashMap<String, String> params = CreateCode.getParams(map);
         call = firstService.getSecondRepos(name, second, params);
-        KLog.e("requestFirst: " + call.request().url().toString());
+        KLog.e("requestSecond: " + call.request().url().toString());
         postBase(call, null, null, clazz, mActivity, listener, intent);
     }
 
@@ -311,7 +310,7 @@ public class HttpUtil
         FirstService firstService = retrofit.create(FirstService.class);
         HashMap<String, String> params = CreateCode.getParams(map);
         call = firstService.getThirdRepos(name, second, third, params);
-        KLog.e("requestFirst: " + call.request().url().toString());
+        KLog.e("requestThird: " + call.request().url().toString());
         postBase(call, null, null, clazz, mActivity, listener, intent);
     }
 
@@ -321,7 +320,7 @@ public class HttpUtil
         LoginService loginService = retrofit.create(LoginService.class);
         HashMap<String, String> params = CreateCode.getParams(map);
         call = loginService.getLogin(params);
-        KLog.e("requestFirst: " + call.request().url().toString());
+        KLog.e("requestLogin: " + call.request().url().toString());
         postBase(call, null, null, clazz, mActivity, listener, intent);
     }
 

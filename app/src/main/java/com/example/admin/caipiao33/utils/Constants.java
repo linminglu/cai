@@ -48,4 +48,5 @@ public interface Constants
     String EXTRA_TOPUP_TOPUPAMOUNT = "extra_topup_topupamount";
     String EXTRA_TOPUP_PAYID = "extra_topup_payid";
     String EXTRA_BUY_RECORD_ID = "extra_buy_record_id";
+    String EXTRA_BUY_GAME_ID = "extra_buy_game_id";
 }

@@ -109,6 +109,7 @@ public class BuyRecordBean implements Serializable
         private String period;
         private String addTime;
         private String winAmount;
+        private String gId;
 
         public int getIsWin()
         {
@@ -138,6 +139,16 @@ public class BuyRecordBean implements Serializable
         public void setId(String id)
         {
             this.id = id;
+        }
+
+        public String getgId()
+        {
+            return gId;
+        }
+
+        public void setgId(String gId)
+        {
+            this.gId = gId;
         }
 
         public int getStatus()

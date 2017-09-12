@@ -9,23 +9,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.admin.caipiao33.bean.BuyRecordBean;
-import com.example.admin.caipiao33.bean.BuyRoomBean;
 import com.example.admin.caipiao33.contract.IBuyRecordContract;
-import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.presenter.BuyRecordPresenter;
 import com.example.admin.caipiao33.utils.Constants;
-import com.example.admin.caipiao33.utils.MyImageLoader;
 import com.example.admin.caipiao33.utils.Tools;
 import com.example.admin.caipiao33.views.DividerItemDecoration;
 import com.example.admin.caipiao33.views.LoadingLayout;
 import com.example.admin.caipiao33.views.loadmore.LoadMoreHelper;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -33,14 +28,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 投注中奖记录
+ * 中奖记录
  */
-public class BuyRecordActivity extends BaseActivity implements IBuyRecordContract.View
+public class BuyWinRecordActivity extends BaseActivity implements IBuyRecordContract.View
 {
-    private final static String TYPE_ALL = "0"; // 全部
     private final static String TYPE_WIN = "1"; // 中奖
-    private final static String TYPE_WAIT = "2"; // 待开奖
-    private final static String TYPE_CANCLE = "3"; // 撤单
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.toolbar_title)
@@ -52,27 +44,25 @@ public class BuyRecordActivity extends BaseActivity implements IBuyRecordContrac
     private IBuyRecordContract.Presenter mPresenter;
     private BuyRecordBean mBuyRecordBean;
     private MyAdapter adapter;
-    private String[] mArrays;
     private LoadMoreHelper helper;
-    private String mType = TYPE_ALL;
+    private String mType = TYPE_WIN;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_buy_record);
+        setContentView(R.layout.activity_buy_win_record);
         ButterKnife.bind(this);
         initView();
-        mArrays = getResources().getStringArray(R.array.s_array_buy_record);
 
         // 修改toolbar内容
         mToolbar.setTitle("");
-        mToolbarTitle.setText("全部订单");
+        mToolbarTitle.setText("中奖记录");
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mPresenter = new BuyRecordPresenter(this);
-        mPresenter.loadData(TYPE_ALL, "1");
+        mPresenter.loadData(mType, "1");
 
         // 加载
         adapter = new MyAdapter();
@@ -100,7 +90,7 @@ public class BuyRecordActivity extends BaseActivity implements IBuyRecordContrac
             @Override
             public void onReload(View v)
             {
-                mPresenter.loadData(TYPE_ALL, "1");
+                mPresenter.loadData(mType, "1");
             }
         });
         Tools.setSwipeRefreshColor(swipeRefreshLayout);
@@ -113,54 +103,6 @@ public class BuyRecordActivity extends BaseActivity implements IBuyRecordContrac
                 mPresenter.refreshData(mType, "1");
             }
         });
-    }
-
-    @OnClick({R.id.toolbar_title})
-    public void onViewClicked(View view)
-    {
-        switch (view.getId())
-        {
-            case R.id.toolbar_title: // 玩法选择
-                showOptionsDialog();
-                break;
-        }
-    }
-
-    private void showOptionsDialog()
-    {
-        new MaterialDialog.Builder(this).title("类型选择")
-                .items(mArrays)
-                .positiveText(R.string.dialog_ok)
-                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
-                    @Override
-                    public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                        if (which == -1) {
-                            return true;
-                        }
-                        mToolbarTitle.setText(mArrays[which]);
-                        switch (which) {
-                            case 0:
-                                mType = TYPE_ALL;
-                                break;
-                            case 1:
-                                mType = TYPE_WIN;
-                                break;
-                            case 2:
-                                mType = TYPE_WAIT;
-                                break;
-                            case 3:
-                                mType = TYPE_CANCLE;
-                                break;
-                            default:
-                                mType = TYPE_ALL;
-                                break;
-                        }
-                        swipeRefreshLayout.setRefreshing(true);
-                        mPresenter.refreshData(mType, "1");
-                        return true;
-                    }
-                })
-                .show();
     }
 
     @Override
@@ -241,7 +183,7 @@ public class BuyRecordActivity extends BaseActivity implements IBuyRecordContrac
                 case R.id.parent:
                     int position = getAdapterPosition();
                     BuyRecordBean.ItemsBean itemsBean = mBuyRecordBean.getItems().get(position);
-                    Intent intent = new Intent(BuyRecordActivity.this, BuyDetailActivity.class);
+                    Intent intent = new Intent(BuyWinRecordActivity.this, BuyDetailActivity.class);
                     intent.putExtra(Constants.EXTRA_BUY_RECORD_ID, itemsBean.getId());
                     intent.putExtra(Constants.EXTRA_BUY_GAME_ID, itemsBean.getgId());
                     startActivity(intent);

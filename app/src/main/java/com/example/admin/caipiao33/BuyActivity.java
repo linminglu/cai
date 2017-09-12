@@ -482,6 +482,9 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
                 .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                        if (which == -1) {
+                            return true;
+                        }
                         BuyRoomBean.PlayListBean playListBean = mBuyRoomBean.getPlayList()
                                 .get(which);
                         mPlayId = playListBean.getPlayId();
