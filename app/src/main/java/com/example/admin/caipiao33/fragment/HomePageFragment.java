@@ -31,6 +31,7 @@ import com.example.admin.caipiao33.LoginActivity;
 import com.example.admin.caipiao33.MainActivity;
 import com.example.admin.caipiao33.QianDaoActivity;
 import com.example.admin.caipiao33.R;
+import com.example.admin.caipiao33.RegisterActivity;
 import com.example.admin.caipiao33.WebUrlActivity;
 import com.example.admin.caipiao33.bean.BuyRoomBean;
 import com.example.admin.caipiao33.bean.HomePageBean;
@@ -71,6 +72,10 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.tv_left)
+    TextView tvLeft;
+    @BindView(R.id.tv_right)
+    TextView tvRight;
     @BindView(R.id.myBanner)
     MyBanner myBanner;
     @BindView(R.id.tv_scroll)
@@ -149,28 +154,7 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
     {
         unbinder = ButterKnife.bind(this, parentView);
 
-        toolbar.inflateMenu(R.menu.menu_homepage);
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener()
-        {
-            @Override
-            public boolean onMenuItemClick(MenuItem item)
-            {
-                switch (item.getItemId())
-                {
-                    case R.id.action_sign:
-                        TokenBean token = UserConfig.getInstance().getToken(getActivity());
-                        if (null == token || token.getIsLogin() == 0) {
-                            // 未登录
-                            Intent intent = new Intent(getActivity(), LoginActivity.class);
-                            startActivityForResult(intent, Constants.REQUEST_CODE_Main2_LOGIN);
-                        } else {
-                            startActivity(new Intent(getActivity(), QianDaoActivity.class));
-                        }
-                        break;
-                }
-                return false;
-            }
-        });
+        changeToolbar();
 
         myBanner.setSwipeRefresh(swipeRefreshLayout);
         mLoadingLayout = (LoadingLayout) parentView.findViewById(R.id.loadingLayout);
@@ -215,6 +199,21 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
         ivHomepage2.setImageDrawable(Tools.tintDrawable(homepage2, ColorStateList.valueOf(resources.getColor(R.color.c_homepage_2))));
         ivHomepage3.setImageDrawable(Tools.tintDrawable(homepage3, ColorStateList.valueOf(resources.getColor(R.color.c_homepage_3))));
         ivHomepage4.setImageDrawable(Tools.tintDrawable(homepage4, ColorStateList.valueOf(resources.getColor(R.color.c_homepage_4))));
+    }
+
+    private void changeToolbar()
+    {
+        TokenBean token = UserConfig.getInstance().getToken(getActivity());
+        if (null == token || token.getIsLogin() == 0) {
+            // 未登录
+            tvLeft.setBackgroundDrawable(null);
+            tvLeft.setText("登录");
+            tvRight.setText("注册");
+        } else {
+            tvLeft.setText("");
+            tvLeft.setBackgroundResource(R.mipmap.user);
+            tvRight.setText("签到");
+        }
     }
 
     class MyAdapter extends BaseAdapter {
@@ -309,6 +308,7 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
             isPause = false;
             bannerStart();
         }
+        changeToolbar();
     }
 
     @Override
@@ -469,11 +469,31 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
         unbinder.unbind();
     }
 
-    @OnClick({R.id.tv_scroll, R.id.ll_func_1, R.id.ll_func_2, R.id.ll_func_3, R.id.ll_func_4, R.id.myVerticalBanner})
+    @OnClick({R.id.tv_scroll, R.id.ll_func_1, R.id.ll_func_2, R.id.ll_func_3, R.id.ll_func_4, R.id.myVerticalBanner, R.id.tv_left, R.id.tv_right})
     public void onViewClicked(View view)
     {
         switch (view.getId())
         {
+            case R.id.tv_left: // 登录
+                // 未登录
+                TokenBean token = UserConfig.getInstance().getToken(getActivity());
+                if (null == token || token.getIsLogin() == 0) {
+                    // 未登录
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent);
+                } else {
+                    mainActivity.tabSwitchCenter(UserFragment.class);
+                }
+                break;
+            case R.id.tv_right: // 注册  或  签到
+                TokenBean token1 = UserConfig.getInstance().getToken(getActivity());
+                if (null == token1 || token1.getIsLogin() == 0) {
+                    // 未登录
+                    startActivity(new Intent(getActivity(), RegisterActivity.class));
+                } else {
+                    startActivity(new Intent(getActivity(), QianDaoActivity.class));
+                }
+                break;
             case R.id.tv_scroll: // 滚动的公告
                 toWebUrlActivity(HttpUtil.mNewUrl + "/api/systemNotice", "公告");
                 break;
@@ -481,8 +501,8 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
                 mainActivity.tabSwitchCenter(UserFragment.class);
                 break;
             case R.id.ll_func_2: // 投注记录
-                TokenBean token = UserConfig.getInstance().getToken(getActivity());
-                if (null == token || token.getIsLogin() == 0) {
+                TokenBean token2 = UserConfig.getInstance().getToken(getActivity());
+                if (null == token2 || token2.getIsLogin() == 0) {
                     // 未登录
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
                     startActivityForResult(intent, Constants.REQUEST_CODE_Main2_LOGIN);
@@ -517,6 +537,5 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
         toWebUrlActivity(HttpUtil.mNewUrl + "/api/activity", "优惠活动");
         //        startActivity(new Intent(getActivity(), PromotionsActivity.class));
     }
-
 }
 

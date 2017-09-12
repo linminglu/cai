@@ -16,14 +16,32 @@
         android:background="?attr/colorPrimary">
 
         <TextView
+            android:id="@+id/tv_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:singleLine="true"
+            android:text="登录"/>
+
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/home_page"
-            android:singleLine="true"
-            android:textColor="@color/white"
-            android:textSize="20sp"
+            android:background="@mipmap/logo"
             />
+
+        <TextView
+            android:id="@+id/tv_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:singleLine="true"
+            android:layout_marginRight="16dp"
+            android:text="注册"/>
 
     </android.support.v7.widget.Toolbar>
 
