@@ -82,12 +82,12 @@
 -dontwarn me.zhanghai.android.materialprogressbar.**
 -keep class me.zhanghai.android.materialprogressbar.** { *; }
 
--dontwarn com.dianji.dianjimall.mvp.model.bean.**
--keep class com.dianji.dianjimall.mvp.model.bean.** { *; }
+-dontwarn com.example.admin.caipiao33.bean.**
+-keep class com.example.admin.caipiao33.bean.** { *; }
 
--keep class com.dianji.dianjimall.encryption.AESencrypt { *; }
--keep class com.dianji.dianjimall.encryption.MyAESencrypt { *; }
--keep class com.dianji.dianjimall.utils.MyGlideModule { *; }
+-keep class com.example.admin.caipiao33.encryption.AESencrypt { *; }
+-keep class com.example.admin.caipiao33.encryption.MyAESencrypt { *; }
+#-keep class com.example.admin.caipiao33.utils.MyGlideModule { *; }
 
 #
 #为了保证引用友盟Social SDK jar文件以及腾讯jar文件被混淆，请在proguard.cfg文件中添加以下代码避免被混淆
@@ -105,7 +105,6 @@
 -dontwarn android.support.v4.**
 -keep enum com.facebook.**
 -keepattributes Exceptions,InnerClasses,Signature
--keepattributes *Annotation*
 -keepattributes SourceFile,LineNumberTable
 
 -keep public interface com.facebook.**
@@ -211,3 +210,14 @@ public static final ** CREATOR;
 #百度混淆
 -keep class com.baidu.** { *; }
 -keep class vi.com.gdi.bgl.android.**{*;}
+
+# eventbus
+-keepclassmembers class ** {
+    @org.greenrobot.eventbus.Subscribe <methods>;
+}
+-keep enum org.greenrobot.eventbus.ThreadMode { *; }
+
+# Only required if you use AsyncExecutor
+-keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent {
+    <init>(java.lang.Throwable);
+}
