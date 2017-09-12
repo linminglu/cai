@@ -71,7 +71,8 @@ public class HttpUtil
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         builder.sslSocketFactory(sslContext.getSocketFactory());
-        mNewUrl = url;
+        //        mNewUrl = url;
+        mNewUrl = "https://m.cp89001.com";
         retrofit = new Retrofit.Builder().client(builder.build())
                 .baseUrl(url)
                 .addConverterFactory(MyGsonConverterFactory.create())
@@ -324,7 +325,8 @@ public class HttpUtil
         postBase(call, null, null, clazz, mActivity, listener, intent);
     }
 
-    public static String getRequestSecondUrl(String name, String second, HashMap<String, String> map) {
+    public static String getRequestSecondUrl(String name, String second, HashMap<String, String> map)
+    {
         Call<String> call;
         FirstService firstService = retrofit.create(FirstService.class);
         HashMap<String, String> params = CreateCode.getParams(map);
