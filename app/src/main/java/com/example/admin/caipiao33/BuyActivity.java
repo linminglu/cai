@@ -514,7 +514,14 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
                 startActivity(mainIntent);
                 break;
             case R.id.action_record: // 投注记录
-
+                TokenBean token = UserConfig.getInstance().getToken(this);
+                if (null == token || token.getIsLogin() == 0) {
+                    // 未登录
+                    Intent intent = new Intent(this, LoginActivity.class);
+                    startActivityForResult(intent, Constants.REQUEST_CODE_Main2_LOGIN);
+                } else {
+                    startActivity(new Intent(this, BuyRecordActivity.class));
+                }
                 break;
             case R.id.action_new: // 最新开奖
                 Intent intent = new Intent(this, WebUrlActivity.class);
