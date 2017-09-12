@@ -25,6 +25,7 @@ public interface Constants
     int REQUEST_CODE_Main2_LOGIN = 3001;
     int REQUEST_CODE_Main2_LOGOUT = 3004;
     int REQUEST_CODE_Main2_REGISTER = 3005;
+    int REQUEST_CODE_Main2_REGISTER_2LOGIN = 3006;
     int REQUEST_CODE_2_APPLY_SALE = 3013;
 
     /*jzp start*/ int REQUEST_ENTERPRISE = 1001;

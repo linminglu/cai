@@ -130,7 +130,7 @@
         <TextView
             android:id="@+id/tv_register"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/s_register_now"
@@ -146,7 +146,7 @@
         <TextView
             android:id="@+id/tv_find_pwd"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/s_find_password"

@@ -193,6 +193,10 @@ public class LoginActivity extends ToolbarActivity implements Toolbar.OnMenuItem
         {
             edTxtAccount.setText(data.getStringExtra("username"));
         }
+        if (resultCode == Constants.REQUEST_CODE_Main2_REGISTER_2LOGIN)
+        {
+            finish();
+        }
         super.onActivityResult(requestCode, resultCode, data);
     }
 

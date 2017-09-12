@@ -65,6 +65,8 @@ public class RegisterActivity extends ToolbarActivity implements Toolbar.OnMenuI
     TextView registerProtocolTv;
     @BindView(R.id.register_btn)
     Button registerBtn;
+    @BindView(R.id.gologin_btn)
+    Button gologinBtn;
     private IRegisterContract.Presenter mPresenter;
 
     @Override
@@ -179,7 +181,7 @@ public class RegisterActivity extends ToolbarActivity implements Toolbar.OnMenuI
         finish();
     }
 
-    @OnClick({R.id.register_vcode_iv, R.id.register_protocol_cb, R.id.register_protocol_tv, R.id.register_btn})
+    @OnClick({R.id.gologin_btn, R.id.register_vcode_iv, R.id.register_protocol_cb, R.id.register_protocol_tv, R.id.register_btn})
     public void onViewClicked(View view)
     {
         switch (view.getId())
@@ -209,6 +211,12 @@ public class RegisterActivity extends ToolbarActivity implements Toolbar.OnMenuI
                 {
                     ToastUtil.show("请同意注册协议！");
                 }
+            case R.id.gologin_btn:
+                Intent intento = new Intent();
+                setResult(Constants.REQUEST_CODE_Main2_REGISTER_2LOGIN, intento);
+                finish();
+                Intent intentn = new Intent(RegisterActivity.this, LoginActivity.class);
+                startActivity(intentn);
                 break;
         }
     }
