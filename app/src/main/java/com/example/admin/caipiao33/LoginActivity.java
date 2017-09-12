@@ -54,6 +54,8 @@ public class LoginActivity extends ToolbarActivity implements Toolbar.OnMenuItem
     @BindView(R.id.btn_kefu)
     Button btnKefu;
 
+    private String userName = "";
+
     private ILoginContract.Presenter mPresenter;
 
     @Override
@@ -63,11 +65,16 @@ public class LoginActivity extends ToolbarActivity implements Toolbar.OnMenuItem
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         mPresenter = new LoginPresenter(this, null);
+        userName = getIntent().getStringExtra("userName");
         initView();
     }
 
     private void initView()
     {
+        if (!StringUtils.isEmpty2(userName))
+        {
+            edTxtAccount.setText(userName);
+        }
         cBoxPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
         {
             @Override
@@ -132,7 +139,8 @@ public class LoginActivity extends ToolbarActivity implements Toolbar.OnMenuItem
                 break;
             case R.id.tv_register:
                 intent = new Intent(LoginActivity.this, RegisterActivity.class);
-                startActivityForResult(intent, Constants.REQUEST_CODE_Main2_REGISTER);
+                startActivity(intent);
+                finish();
                 break;
             case R.id.tv_find_pwd:
                 intent = new Intent(LoginActivity.this, FindPasswordActivity.class);
@@ -189,10 +197,6 @@ public class LoginActivity extends ToolbarActivity implements Toolbar.OnMenuItem
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        if (resultCode == Constants.REQUEST_CODE_Main2_REGISTER)
-        {
-            edTxtAccount.setText(data.getStringExtra("username"));
-        }
         if (resultCode == Constants.REQUEST_CODE_Main2_REGISTER_2LOGIN)
         {
             finish();

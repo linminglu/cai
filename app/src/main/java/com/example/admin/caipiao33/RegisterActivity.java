@@ -19,7 +19,10 @@ import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.presenter.RegisterPresenter;
 import com.example.admin.caipiao33.utils.CodeUtils;
 import com.example.admin.caipiao33.utils.Constants;
+import com.example.admin.caipiao33.utils.LoginEvent;
 import com.example.admin.caipiao33.utils.ToastUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -175,10 +178,11 @@ public class RegisterActivity extends ToolbarActivity implements Toolbar.OnMenuI
     public void registerOk(RegisterSubmitBean result)
     {
         ToastUtil.show("注册成功！");
-        Intent intent = new Intent();
-        intent.putExtra("username", registerUsernameEt.getText().toString());
-        setResult(Constants.REQUEST_CODE_Main2_REGISTER, intent);
+//        EventBus.getDefault().post(new LoginEvent(""));
         finish();
+        //        Intent intentn = new Intent(RegisterActivity.this, LoginActivity.class);
+        //        intentn.putExtra("userName", registerUsernameEt.getText().toString());
+        //        startActivity(intentn);
     }
 
     @OnClick({R.id.gologin_btn, R.id.register_vcode_iv, R.id.register_protocol_cb, R.id.register_protocol_tv, R.id.register_btn})
