@@ -20,9 +20,9 @@ import android.widget.ImageView;
 
 import com.example.admin.caipiao33.BaseActivity;
 import com.example.admin.caipiao33.BaseFragment;
+import com.example.admin.caipiao33.KaiJiangUrlActivity;
 import com.example.admin.caipiao33.MainActivity;
 import com.example.admin.caipiao33.R;
-import com.example.admin.caipiao33.WebUrlActivity;
 import com.example.admin.caipiao33.bean.KaiJiangDTBean;
 import com.example.admin.caipiao33.contract.IKaiJiangContract;
 import com.example.admin.caipiao33.httputils.HttpUtil;
@@ -111,7 +111,7 @@ public class KaiJiangFragment extends BaseFragment implements View.OnClickListen
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url)
             {
-                Intent intent = new Intent(getActivity(), WebUrlActivity.class);
+                Intent intent = new Intent(getActivity(), KaiJiangUrlActivity.class);
                 intent.putExtra(Constants.EXTRA_URL, url);
                 int pid = 9999;
                 try

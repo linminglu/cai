@@ -40,6 +40,7 @@ import com.example.admin.caipiao33.contract.IHomePageContract;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.presenter.HomePagePresenter;
 import com.example.admin.caipiao33.utils.Constants;
+import com.example.admin.caipiao33.utils.LoginEvent;
 import com.example.admin.caipiao33.utils.MyImageLoader;
 import com.example.admin.caipiao33.utils.ResourcesUtil;
 import com.example.admin.caipiao33.utils.ToastUtil;
@@ -53,6 +54,10 @@ import com.example.admin.caipiao33.views.banner.ImageCycleViewListener;
 import com.example.admin.caipiao33.views.banner.MyBanner;
 import com.example.admin.caipiao33.views.banner.MyVerticalBanner;
 import com.socks.library.KLog;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -144,6 +149,7 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
         mPresenter = new HomePagePresenter(this);
         initView();
         mPresenter.loadData();
+        EventBus.getDefault().register(this);
 
         //        String s = "xpIzvGq0MbOAufA6w2uDq3KP5eitmt/pXLC1kIHUfkU=";
         //        KLog.e("asdfasdf", P2PNative.getInstance().decrypt(s));
@@ -165,7 +171,8 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
                 // 更多彩种
-                if (position == parent.getCount() - 1) {
+                if (position == parent.getCount() - 1)
+                {
                     ((MainActivity) getActivity()).tabSwitchCenter(GouCaiFragment.class);
                     return;
                 }
@@ -205,19 +212,23 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
     private void changeToolbar()
     {
         TokenBean token = UserConfig.getInstance().getToken(getActivity());
-        if (null == token || token.getIsLogin() == 0) {
+        if (null == token || token.getIsLogin() == 0)
+        {
             // 未登录
             tvLeft.setBackgroundDrawable(null);
             tvLeft.setText("登录");
             tvRight.setText("注册");
-        } else {
+        }
+        else
+        {
             tvLeft.setText("");
             tvLeft.setBackgroundResource(R.mipmap.user);
             tvRight.setText("签到");
         }
     }
 
-    class MyAdapter extends BaseAdapter {
+    class MyAdapter extends BaseAdapter
+    {
 
         private List<HomePageBean.TypeListBean> list;
 
@@ -229,7 +240,8 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
         @Override
         public int getCount()
         {
-            if (null == list) {
+            if (null == list)
+            {
                 return 0;
             }
             // 加一表示最后放一个更多彩种
@@ -254,7 +266,8 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
         @Override
         public View getView(int position, View convertView, ViewGroup parent)
         {
-            if (null == convertView) {
+            if (null == convertView)
+            {
                 convertView = mInflater.inflate(R.layout.item_home_page_hot, null);
             }
             ImageView iv = ViewHolder.get(convertView, R.id.iv);
@@ -307,7 +320,8 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
     public void onResume()
     {
         super.onResume();
-        if (isPause) {
+        if (isPause)
+        {
             isPause = false;
             bannerStart();
         }
@@ -348,7 +362,8 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
 
     private void bannerStart()
     {
-        if (!isvisible) {
+        if (!isvisible)
+        {
             return;
         }
         if (null != myBanner)
@@ -370,10 +385,13 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
         tvScroll.setText(bean.getScrollNotice());
         tvScroll.setEnabled(true);
         mTypeListBeanList = bean.getTypeList();
-        if (null == adapter) {
+        if (null == adapter)
+        {
             adapter = new MyAdapter(mTypeListBeanList);
             gridView4ScrollView.setAdapter(adapter);
-        } else {
+        }
+        else
+        {
             adapter.updateData(mTypeListBeanList);
             adapter.notifyDataSetChanged();
         }
@@ -387,7 +405,8 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
         }
 
         HomePageBean.PopNoticeBean popNotice = bean.getPopNotice();
-        if (null != popNotice) {
+        if (null != popNotice)
+        {
             // 弹出提示框
             View view = LayoutInflater.from(mainActivity)
                     .inflate(R.layout.item_home_page_tips, null);
@@ -470,7 +489,15 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
     {
         super.onDestroyView();
         unbinder.unbind();
+        EventBus.getDefault().unregister(this);
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMoonEvent(LoginEvent messageEvent)
+    {
+        mPresenter.refreshData();
+    }
+
 
     @OnClick({R.id.tv_scroll, R.id.ll_func_1, R.id.ll_func_2, R.id.ll_func_3, R.id.ll_func_4, R.id.myVerticalBanner, R.id.tv_left, R.id.tv_right})
     public void onViewClicked(View view)
@@ -480,20 +507,26 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
             case R.id.tv_left: // 登录
                 // 未登录
                 TokenBean token = UserConfig.getInstance().getToken(getActivity());
-                if (null == token || token.getIsLogin() == 0) {
+                if (null == token || token.getIsLogin() == 0)
+                {
                     // 未登录
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
                     startActivity(intent);
-                } else {
+                }
+                else
+                {
                     mainActivity.tabSwitchCenter(UserFragment.class);
                 }
                 break;
             case R.id.tv_right: // 注册  或  签到
                 TokenBean token1 = UserConfig.getInstance().getToken(getActivity());
-                if (null == token1 || token1.getIsLogin() == 0) {
+                if (null == token1 || token1.getIsLogin() == 0)
+                {
                     // 未登录
                     startActivity(new Intent(getActivity(), RegisterActivity.class));
-                } else {
+                }
+                else
+                {
                     startActivity(new Intent(getActivity(), QianDaoActivity.class));
                 }
                 break;
@@ -505,11 +538,14 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
                 break;
             case R.id.ll_func_2: // 投注记录
                 TokenBean token2 = UserConfig.getInstance().getToken(getActivity());
-                if (null == token2 || token2.getIsLogin() == 0) {
+                if (null == token2 || token2.getIsLogin() == 0)
+                {
                     // 未登录
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
                     startActivityForResult(intent, Constants.REQUEST_CODE_Main2_LOGIN);
-                } else {
+                }
+                else
+                {
                     startActivity(new Intent(getActivity(), BuyRecordActivity.class));
                 }
                 break;

@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.admin.caipiao33.bean.ChangeBankCardBean;
 import com.example.admin.caipiao33.contract.IChangeBankCardContract;
-import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.presenter.ChangeBankCardPresenter;
 import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.StringUtils;
@@ -88,6 +87,7 @@ public class ChangeBankActivity extends ToolbarActivity implements Toolbar.OnMen
     @Override
     public void updata(ChangeBankCardBean result)
     {
+        kaihubank = result.getBankName();
         changebankcardKaihuyinhangTv.setText(result.getBankName());
         changebankcardZhanghaoEt.setText(result.getAccountCode());
         changebankcardKaihurenEt.setText(result.getAccountName());
