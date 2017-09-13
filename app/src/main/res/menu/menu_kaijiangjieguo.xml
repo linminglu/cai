@@ -1,0 +1,18 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_jintian"
+        android:orderInCategory="100"
+        android:title="今天"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_zuotian"
+        android:orderInCategory="100"
+        android:title="昨天"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_qiantian"
+        android:orderInCategory="100"
+        android:title="前天"
+        app:showAsAction="never"/>
+</menu>
