@@ -129,11 +129,11 @@ public class KaiJiangUrlActivity extends ToolbarActivity implements Toolbar.OnMe
                 webView.loadUrl(mUrl);
                 break;
             case R.id.action_zuotian: // 昨天
-                mUrl = getIntent().getStringExtra(Constants.EXTRA_URL) + "&dayType=5";
+                mUrl = getIntent().getStringExtra(Constants.EXTRA_URL) + "&dayType=-1";
                 webView.loadUrl(mUrl);
                 break;
             case R.id.action_qiantian: // 前天
-                mUrl = getIntent().getStringExtra(Constants.EXTRA_URL) + "&dayType=6";
+                mUrl = getIntent().getStringExtra(Constants.EXTRA_URL) + "&dayType=-2";
                 webView.loadUrl(mUrl);
                 break;
             default:
