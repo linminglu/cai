@@ -37,8 +37,7 @@
     <com.example.admin.caipiao33.views.LoadingLayout
         android:id="@+id/loadingLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
+        android:layout_height="match_parent">
     </com.example.admin.caipiao33.views.LoadingLayout>
 
     <android.support.v4.widget.SwipeRefreshLayout
