@@ -163,6 +163,7 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
         if (num.equals(MyBaseBuyAdapter.TYPE_SIX)) {
             if (mBuyRoomBean.getPlayName().equals("连肖连尾")) {
                 mTitleArray = new String[]{"连肖", "连尾"};
+                buyTab.notifyDataSetChanged();
             }
         }
         toolbarTitle.setText(getString(R.string.s_play_options, bean.getPlayName()));
@@ -226,10 +227,20 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
             }
         } else {
             List<Fragment> fragments = fragmentManager.getFragments();
+            List<BuyRoomBean.PlayDetailListBean> playDetailList = new ArrayList<>();
+            for (BuyRoomBean.PlayDetailListBean p : bean.getPlayDetailList())
+            {
+                playDetailList.add(p.clone());
+            }
+            int temp = 0;
             for (Fragment f: fragments)
             {
                 QuickBuyFragment fragment = (QuickBuyFragment) f;
+                if (temp == 1) {
+                    bean.setPlayDetailList(playDetailList);
+                }
                 fragment.updateBuyRoomBean(bean);
+                temp++;
             }
         }
     }

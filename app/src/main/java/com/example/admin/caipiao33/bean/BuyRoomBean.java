@@ -1,5 +1,10 @@
 package com.example.admin.caipiao33.bean;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.List;
 
@@ -143,7 +148,7 @@ public class BuyRoomBean implements Serializable
         this.playList = playList;
     }
 
-    public static class PlayDetailListBean implements Serializable
+    public static class PlayDetailListBean implements Serializable, Cloneable
     {
         /**
          * list : [{"playName":"01","playId":"1-1-1101","bonus":43},{"playName":"02","playId":"1-1-1102","bonus":43},{"playName":"03","playId":"1-1-1103","bonus":43},{"playName":"04","playId":"1-1-1104","bonus":43},{"playName":"05","playId":"1-1-1105","bonus":43},{"playName":"06","playId":"1-1-1106","bonus":43},{"playName":"07","playId":"1-1-1107","bonus":43},{"playName":"08","playId":"1-1-1108","bonus":43},{"playName":"09","playId":"1-1-1109","bonus":43},{"playName":"10","playId":"1-1-1110","bonus":43},{"playName":"11","playId":"1-1-1111","bonus":43},{"playName":"12","playId":"1-1-1112","bonus":43},{"playName":"13","playId":"1-1-1113","bonus":43},{"playName":"14","playId":"1-1-1114","bonus":43},{"playName":"15","playId":"1-1-1115","bonus":43},{"playName":"16","playId":"1-1-1116","bonus":43},{"playName":"17","playId":"1-1-1117","bonus":43},{"playName":"18","playId":"1-1-1118","bonus":43},{"playName":"19","playId":"1-1-1119","bonus":43},{"playName":"20","playId":"1-1-1120","bonus":43},{"playName":"21","playId":"1-1-1121","bonus":43},{"playName":"22","playId":"1-1-1122","bonus":43},{"playName":"23","playId":"1-1-1123","bonus":43},{"playName":"24","playId":"1-1-1124","bonus":43},{"playName":"25","playId":"1-1-1125","bonus":43},{"playName":"26","playId":"1-1-1126","bonus":43},{"playName":"27","playId":"1-1-1127","bonus":43},{"playName":"28","playId":"1-1-1128","bonus":43},{"playName":"29","playId":"1-1-1129","bonus":43},{"playName":"30","playId":"1-1-1130","bonus":43},{"playName":"31","playId":"1-1-1131","bonus":43},{"playName":"32","playId":"1-1-1132","bonus":43},{"playName":"33","playId":"1-1-1133","bonus":43},{"playName":"34","playId":"1-1-1134","bonus":43},{"playName":"35","playId":"1-1-1135","bonus":43},{"playName":"36","playId":"1-1-1136","bonus":43},{"playName":"37","playId":"1-1-1137","bonus":43},{"playName":"38","playId":"1-1-1138","bonus":43},{"playName":"39","playId":"1-1-1139","bonus":43},{"playName":"40","playId":"1-1-1140","bonus":43},{"playName":"41","playId":"1-1-1141","bonus":43},{"playName":"42","playId":"1-1-1142","bonus":43},{"playName":"43","playId":"1-1-1143","bonus":43},{"playName":"44","playId":"1-1-1144","bonus":43},{"playName":"45","playId":"1-1-1145","bonus":43},{"playName":"46","playId":"1-1-1146","bonus":43},{"playName":"47","playId":"1-1-1147","bonus":43},{"playName":"48","playId":"1-1-1148","bonus":43},{"playName":"49","playId":"1-1-1149","bonus":43}]
@@ -182,6 +187,30 @@ public class BuyRoomBean implements Serializable
         public void setList(List<ListBean> list)
         {
             this.list = list;
+        }
+
+        @Override
+        public PlayDetailListBean clone()
+        {
+            PlayDetailListBean p = null;
+            ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
+            ObjectOutputStream out;
+            ByteArrayInputStream byteIn;
+            ObjectInputStream in;
+            try {
+                out = new ObjectOutputStream(byteOut);
+                out.writeObject(this);
+                byteIn = new ByteArrayInputStream(byteOut.toByteArray());
+                in =new ObjectInputStream(byteIn);
+                p = (PlayDetailListBean) in.readObject();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            return p;
         }
 
         public static class ListBean implements Serializable, Cloneable

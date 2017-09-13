@@ -88,7 +88,7 @@ public class TypeSixAdapter extends TypeBeforeAdapter
                     int temp = 0;
                     while (iterator.hasNext()) {
                         BuyRoomBean.PlayDetailListBean next = iterator.next();
-                        if (temp >= 4) {
+                        if (temp < 4) {
                             iterator.remove();
                         }
                         temp++;
@@ -102,7 +102,7 @@ public class TypeSixAdapter extends TypeBeforeAdapter
                     int temp = 0;
                     while (iterator.hasNext()) {
                         BuyRoomBean.PlayDetailListBean next = iterator.next();
-                        if (temp < 4) {
+                        if (temp >= 4) {
                             iterator.remove();
                         }
                         temp++;
