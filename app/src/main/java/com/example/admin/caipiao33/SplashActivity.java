@@ -1,14 +1,10 @@
 package com.example.admin.caipiao33;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
-
-import com.example.admin.caipiao33.httputils.HttpUtil;
-import com.example.admin.caipiao33.httputils.MyResponseListener;
 
 
 public class SplashActivity extends BaseActivity
@@ -26,7 +22,6 @@ public class SplashActivity extends BaseActivity
         mImageView = (ImageView) findViewById(R.id.splash_iv);
 
         mImageView.setVisibility(View.VISIBLE);
-        reconfirmBaseUrl();
         handler.postDelayed(initRunnbale, 500);
     }
 

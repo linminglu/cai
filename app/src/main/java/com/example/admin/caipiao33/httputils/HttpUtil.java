@@ -2,8 +2,10 @@ package com.example.admin.caipiao33.httputils;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 
+import com.example.admin.caipiao33.bean.BaseUrlBean;
 import com.example.admin.caipiao33.encryption.CreateCode;
 import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.StringUtils;
@@ -177,7 +179,7 @@ public class HttpUtil
         post(map, null, clazz, mActivity, listener, intent);
     }
 
-    public static void postBase(Call<String> call, TreeMap<String, String> map, TreeMap<String, File> fileMap, final Type clazz, final Activity mActivity, final MyResponseListener listener, final Intent intent) // 带参数，获取json对象或者数组
+    public static void postBase(Call<String> call, TreeMap<String, String> map, TreeMap<String, File> fileMap, final Type clazz, final Context mActivity, final MyResponseListener listener, final Intent intent) // 带参数，获取json对象或者数组
     {
         call.enqueue(new Callback<String>()
         {
@@ -335,4 +337,15 @@ public class HttpUtil
         return call.request().url().toString();
     }
 
+    public static void reConfirmUrl(Context context, final MyResponseListener listener) {
+        if (!StringUtils.isEmpty(mNewUrl)) {
+            return;
+        }
+        Call<String> call;
+        FirstService firstService = retrofit.create(FirstService.class);
+        HashMap<String, String> params = CreateCode.getParams(null);
+        call = firstService.getFirstRepos("index", params);
+        KLog.e("requestFirst: " + call.request().url().toString());
+        postBase(call, null, null, BaseUrlBean.class, context, listener, null);
+    }
 }

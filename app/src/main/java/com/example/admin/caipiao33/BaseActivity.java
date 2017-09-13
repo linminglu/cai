@@ -208,31 +208,4 @@ public class BaseActivity extends AppCompatActivity implements IBaseView
         }
     };
 
-    /**
-     * 重新确认baseUrl
-     */
-    public void reconfirmBaseUrl()
-    {
-        HttpUtil.requestFirst("index", BaseUrlBean.class, this, new MyResponseListener<BaseUrlBean>()
-        {
-            @Override
-            public void onSuccess(BaseUrlBean result)
-            {
-                HttpUtil.changeBaseUrl(result.getUrl());
-                MyApplication.getInstance().setBaseUrlBean(result);
-            }
-
-            @Override
-            public void onFailed(int code, String msg)
-            {
-
-            }
-
-            @Override
-            public void onFinish()
-            {
-
-            }
-        }, null);
-    }
 }

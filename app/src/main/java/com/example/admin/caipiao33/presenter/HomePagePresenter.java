@@ -5,8 +5,10 @@ import com.example.admin.caipiao33.bean.HomePageBean;
 import com.example.admin.caipiao33.contract.IHomePageContract;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.httputils.MyResponseListener;
+import com.socks.library.KLog;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by mac on 2017/8/1.
@@ -29,6 +31,11 @@ public class HomePagePresenter implements IHomePageContract.Presenter
             @Override
             public void onSuccess(HomePageBean result)
             {
+                List<HomePageBean.TypeListBean> typeList = result.getTypeList();
+                if (null == typeList || typeList.size() == 0) {
+                    mView.showLoadingLayoutError();
+                    return;
+                }
                 mView.hideLoadingLayout();
                 mView.updateHomePage(result);
             }

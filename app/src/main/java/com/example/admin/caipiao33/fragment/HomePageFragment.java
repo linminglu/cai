@@ -158,6 +158,7 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
 
         myBanner.setSwipeRefresh(swipeRefreshLayout);
         mLoadingLayout = (LoadingLayout) parentView.findViewById(R.id.loadingLayout);
+        mLoadingLayout.setFirtst(true);
         gridView4ScrollView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
@@ -283,7 +284,9 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
 
         public void updateData(List<HomePageBean.TypeListBean> typeListBeanList)
         {
-            list.clear();
+            if (null != list) {
+                list.clear();
+            }
             this.list = typeListBeanList;
         }
     }

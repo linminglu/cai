@@ -1,12 +1,16 @@
 package com.example.admin.caipiao33.fragment;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.TintTypedArray;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,6 +27,7 @@ import com.example.admin.caipiao33.R;
 import com.example.admin.caipiao33.bean.GouCaiBean;
 import com.example.admin.caipiao33.contract.IGouCaiContract;
 import com.example.admin.caipiao33.presenter.GouCaiPresenter;
+import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.views.LoadingLayout;
 import com.socks.library.KLog;
 
@@ -110,6 +115,18 @@ public class GouCaiFragment extends BaseFragment implements IGouCaiContract.View
                         break;
                 }
                 return false;
+            }
+        });
+        TintTypedArray a = TintTypedArray.obtainStyledAttributes(mainActivity, null, android.support.v7.appcompat.R.styleable.ActionBar, android.support.v7.appcompat.R.attr.actionBarStyle, 0);
+        Drawable drawable = a.getDrawable(android.support.v7.appcompat.R.styleable.ActionBar_homeAsUpIndicator);
+        drawable.setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY);
+        toolbar.setNavigationIcon(drawable);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                mainActivity.tabSwitchCenter(HomePageFragment.class);
             }
         });
         mLoadingLayout = (LoadingLayout) parentView.findViewById(R.id.loadingLayout);
