@@ -44,6 +44,7 @@ public class QqPayFragment extends BaseFragment implements View.OnClickListener
     private LayoutInflater mInflater;
     private TopupActivity topupActivity;
     private QqPayAdapter payAdapter;
+    private View mNotifyNullLayout;
 
     public QqPayFragment()
     {
@@ -60,6 +61,7 @@ public class QqPayFragment extends BaseFragment implements View.OnClickListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View parentView = inflater.inflate(R.layout.fragment_qq_pay, container, false);
+        mNotifyNullLayout = parentView.findViewById(R.id.notify_null_layout);
         mInflater = inflater;
         topupActivity = (TopupActivity) getActivity();
         unbinder = ButterKnife.bind(this, parentView);
@@ -77,6 +79,18 @@ public class QqPayFragment extends BaseFragment implements View.OnClickListener
             @Override
             public void onSuccess(ArrayList<QqPayBean> result)
             {
+                if (null == result || result.size() == 0)
+                {
+                    qqPayLv.setVisibility(View.GONE);
+                    qqPayBtn.setVisibility(View.GONE);
+                    mNotifyNullLayout.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    qqPayLv.setVisibility(View.VISIBLE);
+                    qqPayBtn.setVisibility(View.VISIBLE);
+                    mNotifyNullLayout.setVisibility(View.GONE);
+                }
                 result.get(0).setSelete(true);
                 payAdapter = new QqPayAdapter(result, mInflater, qqPayLv, topupActivity);
                 qqPayLv.setAdapter(payAdapter);

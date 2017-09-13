@@ -45,6 +45,7 @@ public class WeiXinPayFragment extends BaseFragment implements View.OnClickListe
     private LayoutInflater mInflater;
     private TopupActivity topupActivity;
     private WeiXinPayAdapter payAdapter;
+    private View mNotifyNullLayout;
 
     public WeiXinPayFragment()
     {
@@ -61,6 +62,7 @@ public class WeiXinPayFragment extends BaseFragment implements View.OnClickListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View parentView = inflater.inflate(R.layout.fragment_weixin_pay, container, false);
+        mNotifyNullLayout = parentView.findViewById(R.id.notify_null_layout);
         mInflater = inflater;
         topupActivity = (TopupActivity) getActivity();
         unbinder = ButterKnife.bind(this, parentView);
@@ -78,6 +80,18 @@ public class WeiXinPayFragment extends BaseFragment implements View.OnClickListe
             @Override
             public void onSuccess(ArrayList<WeiXinPayBean> result)
             {
+                if (null == result || result.size() == 0)
+                {
+                    weixinPayLv.setVisibility(View.GONE);
+                    weixinPayBtn.setVisibility(View.GONE);
+                    mNotifyNullLayout.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    weixinPayLv.setVisibility(View.VISIBLE);
+                    weixinPayBtn.setVisibility(View.VISIBLE);
+                    mNotifyNullLayout.setVisibility(View.GONE);
+                }
                 result.get(0).setSelete(true);
                 payAdapter = new WeiXinPayAdapter(result, mInflater, weixinPayLv, topupActivity);
                 weixinPayLv.setAdapter(payAdapter);

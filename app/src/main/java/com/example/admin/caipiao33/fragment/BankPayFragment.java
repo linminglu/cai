@@ -43,6 +43,7 @@ public class BankPayFragment extends BaseFragment implements View.OnClickListene
     private LayoutInflater mInflater;
     private TopupActivity topupActivity;
     private BankPayAdapter payAdapter;
+    private View mNotifyNullLayout;
 
     public BankPayFragment()
     {
@@ -60,6 +61,7 @@ public class BankPayFragment extends BaseFragment implements View.OnClickListene
     {
         View parentView = inflater.inflate(R.layout.fragment_bank_pay, container, false);
         mInflater = inflater;
+        mNotifyNullLayout = parentView.findViewById(R.id.notify_null_layout);
         topupActivity = (TopupActivity) getActivity();
         unbinder = ButterKnife.bind(this, parentView);
         initView();
@@ -76,6 +78,18 @@ public class BankPayFragment extends BaseFragment implements View.OnClickListene
             @Override
             public void onSuccess(ArrayList<BankPayBean> result)
             {
+                if (null == result || result.size() == 0)
+                {
+                    bankPayLv.setVisibility(View.GONE);
+                    bankPayBtn.setVisibility(View.GONE);
+                    mNotifyNullLayout.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    bankPayLv.setVisibility(View.VISIBLE);
+                    bankPayBtn.setVisibility(View.VISIBLE);
+                    mNotifyNullLayout.setVisibility(View.GONE);
+                }
                 result.get(0).setSelete(true);
                 payAdapter = new BankPayAdapter(result, mInflater, bankPayLv, topupActivity);
                 bankPayLv.setAdapter(payAdapter);

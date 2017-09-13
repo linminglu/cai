@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">89彩票</string>
+    <string name="app_name">彩票89</string>
 
     <string name="s_network_error_or_page_not_find">网页找不到或者网络异常</string>
     <string name="s_refresh_page">刷新页面</string>
@@ -13,6 +13,7 @@
 
     <string name="s_load_more_end">已经到底啦~</string>
     <string name="s_not_message">列表是空的！</string>
+    <string name="s_not_message1">该支付方式未设置，给您带来的不便敬请谅解！\n 您可以选择其他的支付方式，谢谢！</string>
 
     <string name="main_tab_homepage">首页</string>
     <string name="main_tab_goucai">购彩</string>

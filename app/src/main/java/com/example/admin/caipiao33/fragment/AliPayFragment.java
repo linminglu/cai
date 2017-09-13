@@ -46,6 +46,7 @@ public class AliPayFragment extends BaseFragment implements View.OnClickListener
     private LayoutInflater mInflater;
     private TopupActivity topupActivity;
     private AliPayAdapter payAdapter;
+    private View mNotifyNullLayout;
 
     public AliPayFragment()
     {
@@ -62,6 +63,7 @@ public class AliPayFragment extends BaseFragment implements View.OnClickListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View parentView = inflater.inflate(R.layout.fragment_ali_pay, container, false);
+        mNotifyNullLayout = parentView.findViewById(R.id.notify_null_layout);
         mInflater = inflater;
         topupActivity = (TopupActivity) getActivity();
         unbinder = ButterKnife.bind(this, parentView);
@@ -79,6 +81,18 @@ public class AliPayFragment extends BaseFragment implements View.OnClickListener
             @Override
             public void onSuccess(ArrayList<AliPayBean> result)
             {
+                if (null == result || result.size() == 0)
+                {
+                    aliPayLv.setVisibility(View.GONE);
+                    aliPayBtn.setVisibility(View.GONE);
+                    mNotifyNullLayout.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    aliPayLv.setVisibility(View.VISIBLE);
+                    aliPayBtn.setVisibility(View.VISIBLE);
+                    mNotifyNullLayout.setVisibility(View.GONE);
+                }
                 result.get(0).setSelete(true);
                 payAdapter = new AliPayAdapter(result, mInflater, aliPayLv, topupActivity);
                 aliPayLv.setAdapter(payAdapter);
