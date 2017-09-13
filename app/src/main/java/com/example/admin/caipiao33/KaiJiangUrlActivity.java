@@ -10,10 +10,8 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.example.admin.caipiao33.utils.Constants;
-import com.socks.library.KLog;
 
 /**
  * 网页web
@@ -26,11 +24,9 @@ public class KaiJiangUrlActivity extends ToolbarActivity implements Toolbar.OnMe
 
     private WebView webView;
     private ProgressBar mProgressbar;
-    private Toolbar mToolbar;
     private String mUrl;
     private String mTitle;
     private View layoutError;
-    private TextView tvTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -111,7 +107,10 @@ public class KaiJiangUrlActivity extends ToolbarActivity implements Toolbar.OnMe
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        getMenuInflater().inflate(R.menu.menu_kaijiangjieguo, menu);
+        if (!(mTitle.equals("福彩3D") || mTitle.equals("排列三") || mTitle.equals("六合彩")))
+        {
+            getMenuInflater().inflate(R.menu.menu_kaijiangjieguo, menu);
+        }
         return true;
     }
 
@@ -126,15 +125,15 @@ public class KaiJiangUrlActivity extends ToolbarActivity implements Toolbar.OnMe
         switch (item.getItemId())
         {
             case R.id.action_jintian: // 今天
-                mUrl = getIntent().getStringExtra(Constants.EXTRA_URL);
+                mUrl = getIntent().getStringExtra(Constants.EXTRA_URL) + "&dayType=4";
                 webView.loadUrl(mUrl);
                 break;
             case R.id.action_zuotian: // 昨天
-                mUrl = getIntent().getStringExtra(Constants.EXTRA_URL);
+                mUrl = getIntent().getStringExtra(Constants.EXTRA_URL) + "&dayType=5";
                 webView.loadUrl(mUrl);
                 break;
             case R.id.action_qiantian: // 前天
-                mUrl = getIntent().getStringExtra(Constants.EXTRA_URL);
+                mUrl = getIntent().getStringExtra(Constants.EXTRA_URL) + "&dayType=6";
                 webView.loadUrl(mUrl);
                 break;
             default:

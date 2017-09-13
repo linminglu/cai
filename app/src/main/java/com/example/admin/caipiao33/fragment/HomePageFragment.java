@@ -492,7 +492,7 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMoonEvent(LoginEvent messageEvent)
     {
-        mPresenter.loadData();
+        mPresenter.refreshData();
     }
 
 
