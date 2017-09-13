@@ -38,7 +38,7 @@ public class QuickBuyFragment extends BaseFragment
     private BuyRoomBean mBuyRoomBean;
     private MyBaseBuyAdapter adapter;
     private int mType;
-
+    private String mPlayId;
 
 
     //若Fragement定义有带参构造函数，则一定要定义public的默认的构造函数
@@ -78,13 +78,16 @@ public class QuickBuyFragment extends BaseFragment
         if (adapter instanceof TypeBeforeAdapter) {
             TypeBeforeAdapter typeBeforeAdapter = (TypeBeforeAdapter) adapter;
             typeBeforeAdapter.updateData(bean);
-            adapter.notifyDataSetChanged();
-            //遍历所有group,将所有项设置成默认展开
-            int groupCount = adapter.getGroupCount();
-            for (int i=0; i < groupCount; i++)
-            {
-                listView.expandGroup(i);
-            }
+        } else if (adapter instanceof TypeSixAdapter) {
+            TypeSixAdapter typeBeforeAdapter = (TypeSixAdapter) adapter;
+            typeBeforeAdapter.updateData(bean);
+        }
+        adapter.notifyDataSetChanged();
+        //遍历所有group,将所有项设置成默认展开
+        int groupCount = adapter.getGroupCount();
+        for (int i=0; i < groupCount; i++)
+        {
+            listView.expandGroup(i);
         }
     }
 
@@ -100,9 +103,8 @@ public class QuickBuyFragment extends BaseFragment
     private void initView()
     {
         unbinder = ButterKnife.bind(this, parentView);
-
         String num = mBuyRoomBean.getNum();
-        if (num.equals(MyBaseBuyAdapter.TYPE_SIX) && mType == QuickBuyFragment.TYPE_SELF_SELECT) {
+        if (num.equals(MyBaseBuyAdapter.TYPE_SIX)) {
             adapter = new TypeSixAdapter(mInflater, mBuyRoomBean, mType);
         } else {
             adapter = new TypeBeforeAdapter(mInflater, mBuyRoomBean, mType);

@@ -140,7 +140,6 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
                 mPresenter.loadData(mNumber, mRoomId, mPlayId, mPlayId1);
             }
         });
-        mTitleArray = getResources().getStringArray(R.array.s_array_buy);
     }
 
     @Override
@@ -158,6 +157,14 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
     public void updateHomePage(BuyRoomBean bean)
     {
         this.mBuyRoomBean = bean;
+        mTitleArray = getResources().getStringArray(R.array.s_array_buy);
+        // 区配6合的连肖连尾
+        String num = mBuyRoomBean.getNum();
+        if (num.equals(MyBaseBuyAdapter.TYPE_SIX)) {
+            if (mBuyRoomBean.getPlayName().equals("连肖连尾")) {
+                mTitleArray = new String[]{"连肖", "连尾"};
+            }
+        }
         toolbarTitle.setText(getString(R.string.s_play_options, bean.getPlayName()));
         SpannableString ss = new SpannableString(mTitleStr + " " + mBuyRoomBean.getRoomName() + " " + bean.getPeriod() + "期");
         int start = mTitleStr.length() + mBuyRoomBean.getRoomName().length() + 2;
@@ -212,7 +219,6 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
             buyTab.setViewPager(buyPager);
 
             // 区分六 合 彩种
-            String num = mBuyRoomBean.getNum();
             if (num.equals(MyBaseBuyAdapter.TYPE_SIX)) {
                 buyPager.setCurrentItem(0);
             } else {

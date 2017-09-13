@@ -53,11 +53,19 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
 
 
     private static final int COUNT = 4;
-    private BuyRoomBean mBuyRoomBean;
-    private final LayoutInflater mInflater;
-    private final int mType;
-    private List<BuyRoomBean.PlayDetailListBean.ListBean> mCheckedList = new ArrayList<>();
-    private List<BeanGroup> mDataList;
+    protected BuyRoomBean mBuyRoomBean;
+    protected LayoutInflater mInflater;
+    protected int mType;
+    protected List<BuyRoomBean.PlayDetailListBean.ListBean> mCheckedList = new ArrayList<>();
+    protected List<BeanGroup> mDataList;
+    // 用来区分是当前这种类型的view，子类中TypeSixAdapter可能会调用父类的getGroupView，这时这个contentView不能复用
+    private final int GROUP_VIEW_TYPE = 1001;
+    // 用来区分是当前这种类型的view，子类中TypeSixAdapter可能会调用父类的getChildView，这时这个contentView不能复用
+    private final int CHILD_VIEW_TYPE = 1002;
+
+    public TypeBeforeAdapter() {
+
+    }
 
     public TypeBeforeAdapter(LayoutInflater inflater, BuyRoomBean bean, int type) {
         this.mInflater = inflater;
@@ -330,7 +338,14 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
     {
         if (null == convertView) {
             convertView = mInflater.inflate(R.layout.item_buy_quick_group, null);
+        } else {
+            // 不能复用的情况
+            Object tag = convertView.getTag(R.id.buy_view_type);
+            if (null == tag || (int)tag != GROUP_VIEW_TYPE) {
+                convertView = mInflater.inflate(R.layout.item_buy_quick_group, null);
+            }
         }
+
         TextView tv1 = ViewHolder.get(convertView, R.id.tv_1);
         TextView tv2 = ViewHolder.get(convertView, R.id.tv_2);
         TextView tv3 = ViewHolder.get(convertView, R.id.tv_3);
@@ -366,6 +381,7 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
                     break;
             }
         }
+        convertView.setTag(R.id.buy_view_type, GROUP_VIEW_TYPE);
         return convertView;
     }
 
@@ -380,6 +396,16 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
                 ViewHolder.get(convertView, R.id.layout2).setOnClickListener(this);
                 ViewHolder.get(convertView, R.id.layout3).setOnClickListener(this);
                 ViewHolder.get(convertView, R.id.layout4).setOnClickListener(this);
+            } else {
+                // 不能复用的情况
+                Object tag = convertView.getTag(R.id.buy_view_type);
+                if (null == tag || (int)tag != GROUP_VIEW_TYPE) {
+                    convertView = mInflater.inflate(R.layout.item_buy_quick, null);
+                    ViewHolder.get(convertView, R.id.layout1).setOnClickListener(this);
+                    ViewHolder.get(convertView, R.id.layout2).setOnClickListener(this);
+                    ViewHolder.get(convertView, R.id.layout3).setOnClickListener(this);
+                    ViewHolder.get(convertView, R.id.layout4).setOnClickListener(this);
+                }
             }
             View layout1 = ViewHolder.get(convertView, R.id.layout1);
             TextView tvName1 = ViewHolder.get(convertView, R.id.tv_name1);
@@ -445,157 +471,20 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
                     layout.setBackgroundResource(R.drawable.liuhecai_btn_weixuan_01);
                 }
             }
+            convertView.setTag(R.id.buy_view_type, CHILD_VIEW_TYPE);
             return convertView;
         } else {
             // 自选下注的类型
             if (null == convertView) {
                 convertView = mInflater.inflate(R.layout.item_buy_self_select, null);
-
-                InputFilter[] filters = {new NumberInputFilter()};
-                final EditText etNum1 = ViewHolder.get(convertView, R.id.et_num1);
-                etNum1.setFilters(filters);
-                etNum1.addTextChangedListener(new TextWatcher()
-                {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after)
-                    {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count)
-                    {
-
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s)
-                    {
-                        String s1 = s.toString();
-                        BuyRoomBean.PlayDetailListBean.ListBean listBean = (BuyRoomBean.PlayDetailListBean.ListBean) etNum1.getTag(R.id.buy_data);
-                        if (TextUtils.isEmpty(s1)) {
-                            // 如果最新值为空，直接移除该项目
-                            if (mCheckedList.contains(listBean)) {
-                                mCheckedList.remove(listBean);
-                            }
-                            // 原来没有保存值，最新的值也是为空的话就直接忽略
-                            return;
-                        }
-                        listBean.setMoney(s1);
-                        if (mCheckedList.contains(listBean)) {
-                            mCheckedList.remove(listBean);
-                        }
-                        mCheckedList.add(listBean);
-                    }
-                });
-                final EditText etNum2 = ViewHolder.get(convertView, R.id.et_num2);
-                etNum2.setFilters(filters);
-                etNum2.addTextChangedListener(new TextWatcher()
-                {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after)
-                    {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count)
-                    {
-
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s)
-                    {
-                        String s1 = s.toString();
-                        BuyRoomBean.PlayDetailListBean.ListBean listBean = (BuyRoomBean.PlayDetailListBean.ListBean) etNum2.getTag(R.id.buy_data);
-                        if (TextUtils.isEmpty(s1)) {
-                            // 如果最新值为空，直接移除该项目
-                            if (mCheckedList.contains(listBean)) {
-                                mCheckedList.remove(listBean);
-                            }
-                            // 原来没有保存值，最新的值也是为空的话就直接忽略
-                            return;
-                        }
-                        listBean.setMoney(s1);
-                        if (mCheckedList.contains(listBean)) {
-                            mCheckedList.remove(listBean);
-                        }
-                        mCheckedList.add(listBean);
-                    }
-                });
-                final EditText etNum3 = ViewHolder.get(convertView, R.id.et_num3);
-                etNum3.setFilters(filters);
-                etNum3.addTextChangedListener(new TextWatcher()
-                {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after)
-                    {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count)
-                    {
-
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s)
-                    {
-                        String s1 = s.toString();
-                        BuyRoomBean.PlayDetailListBean.ListBean listBean = (BuyRoomBean.PlayDetailListBean.ListBean) etNum3.getTag(R.id.buy_data);
-                        if (TextUtils.isEmpty(s1)) {
-                            // 如果最新值为空，直接移除该项目
-                            if (mCheckedList.contains(listBean)) {
-                                mCheckedList.remove(listBean);
-                            }
-                            // 原来没有保存值，最新的值也是为空的话就直接忽略
-                            return;
-                        }
-                        listBean.setMoney(s1);
-                        if (mCheckedList.contains(listBean)) {
-                            mCheckedList.remove(listBean);
-                        }
-                        mCheckedList.add(listBean);
-                    }
-                });
-                final EditText etNum4 = ViewHolder.get(convertView, R.id.et_num4);
-                etNum4.setFilters(filters);
-                etNum4.addTextChangedListener(new TextWatcher()
-                {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after)
-                    {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count)
-                    {
-
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s)
-                    {
-                        String s1 = s.toString();
-                        BuyRoomBean.PlayDetailListBean.ListBean listBean = (BuyRoomBean.PlayDetailListBean.ListBean) etNum4.getTag(R.id.buy_data);
-                        if (TextUtils.isEmpty(s1)) {
-                            // 如果最新值为空，直接移除该项目
-                            if (mCheckedList.contains(listBean)) {
-                                mCheckedList.remove(listBean);
-                            }
-                            // 原来没有保存值，最新的值也是为空的话就直接忽略
-                            return;
-                        }
-                        listBean.setMoney(s1);
-                        if (mCheckedList.contains(listBean)) {
-                            mCheckedList.remove(listBean);
-                        }
-                        mCheckedList.add(listBean);
-                    }
-                });
+                initSelfContentView(convertView);
+            }  else {
+                // 不能复用的情况
+                Object tag = convertView.getTag(R.id.buy_view_type);
+                if (null == tag || (int)tag != GROUP_VIEW_TYPE) {
+                    convertView = mInflater.inflate(R.layout.item_buy_self_select, null);
+                    initSelfContentView(convertView);
+                }
             }
             View layout1 = ViewHolder.get(convertView, R.id.layout1);
             View layout2 = ViewHolder.get(convertView, R.id.layout2);
@@ -663,8 +552,162 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
                     etNum.setText("");
                 }
             }
+            convertView.setTag(R.id.buy_view_type, CHILD_VIEW_TYPE);
             return convertView;
         }
+    }
+
+    /**
+     * 初始化自选下注类型的contentView
+     * @param convertView
+     */
+    private void initSelfContentView(View convertView)
+    {
+        InputFilter[] filters = {new NumberInputFilter()};
+        final EditText etNum1 = ViewHolder.get(convertView, R.id.et_num1);
+        etNum1.setFilters(filters);
+        etNum1.addTextChangedListener(new TextWatcher()
+        {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after)
+            {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+            {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s)
+            {
+                String s1 = s.toString();
+                BuyRoomBean.PlayDetailListBean.ListBean listBean = (BuyRoomBean.PlayDetailListBean.ListBean) etNum1.getTag(R.id.buy_data);
+                if (TextUtils.isEmpty(s1)) {
+                    // 如果最新值为空，直接移除该项目
+                    if (mCheckedList.contains(listBean)) {
+                        mCheckedList.remove(listBean);
+                    }
+                    // 原来没有保存值，最新的值也是为空的话就直接忽略
+                    return;
+                }
+                listBean.setMoney(s1);
+                if (mCheckedList.contains(listBean)) {
+                    mCheckedList.remove(listBean);
+                }
+                mCheckedList.add(listBean);
+            }
+        });
+        final EditText etNum2 = ViewHolder.get(convertView, R.id.et_num2);
+        etNum2.setFilters(filters);
+        etNum2.addTextChangedListener(new TextWatcher()
+        {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after)
+            {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+            {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s)
+            {
+                String s1 = s.toString();
+                BuyRoomBean.PlayDetailListBean.ListBean listBean = (BuyRoomBean.PlayDetailListBean.ListBean) etNum2.getTag(R.id.buy_data);
+                if (TextUtils.isEmpty(s1)) {
+                    // 如果最新值为空，直接移除该项目
+                    if (mCheckedList.contains(listBean)) {
+                        mCheckedList.remove(listBean);
+                    }
+                    // 原来没有保存值，最新的值也是为空的话就直接忽略
+                    return;
+                }
+                listBean.setMoney(s1);
+                if (mCheckedList.contains(listBean)) {
+                    mCheckedList.remove(listBean);
+                }
+                mCheckedList.add(listBean);
+            }
+        });
+        final EditText etNum3 = ViewHolder.get(convertView, R.id.et_num3);
+        etNum3.setFilters(filters);
+        etNum3.addTextChangedListener(new TextWatcher()
+        {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after)
+            {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+            {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s)
+            {
+                String s1 = s.toString();
+                BuyRoomBean.PlayDetailListBean.ListBean listBean = (BuyRoomBean.PlayDetailListBean.ListBean) etNum3.getTag(R.id.buy_data);
+                if (TextUtils.isEmpty(s1)) {
+                    // 如果最新值为空，直接移除该项目
+                    if (mCheckedList.contains(listBean)) {
+                        mCheckedList.remove(listBean);
+                    }
+                    // 原来没有保存值，最新的值也是为空的话就直接忽略
+                    return;
+                }
+                listBean.setMoney(s1);
+                if (mCheckedList.contains(listBean)) {
+                    mCheckedList.remove(listBean);
+                }
+                mCheckedList.add(listBean);
+            }
+        });
+        final EditText etNum4 = ViewHolder.get(convertView, R.id.et_num4);
+        etNum4.setFilters(filters);
+        etNum4.addTextChangedListener(new TextWatcher()
+        {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after)
+            {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+            {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s)
+            {
+                String s1 = s.toString();
+                BuyRoomBean.PlayDetailListBean.ListBean listBean = (BuyRoomBean.PlayDetailListBean.ListBean) etNum4.getTag(R.id.buy_data);
+                if (TextUtils.isEmpty(s1)) {
+                    // 如果最新值为空，直接移除该项目
+                    if (mCheckedList.contains(listBean)) {
+                        mCheckedList.remove(listBean);
+                    }
+                    // 原来没有保存值，最新的值也是为空的话就直接忽略
+                    return;
+                }
+                listBean.setMoney(s1);
+                if (mCheckedList.contains(listBean)) {
+                    mCheckedList.remove(listBean);
+                }
+                mCheckedList.add(listBean);
+            }
+        });
     }
 
     @Override

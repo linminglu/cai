@@ -2,4 +2,5 @@
 <resources>
     <item name="buy_holder" type="id"/>
     <item name="buy_data" type="id"/>
+    <item name="buy_view_type" type="id"/>
 </resources>
