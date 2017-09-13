@@ -2,8 +2,12 @@ package com.example.admin.caipiao33.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.TintTypedArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +16,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
 
 import com.example.admin.caipiao33.BaseActivity;
 import com.example.admin.caipiao33.BaseFragment;
@@ -30,6 +35,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -43,6 +49,8 @@ public class KaiJiangFragment extends BaseFragment implements View.OnClickListen
     Unbinder unbinder;
     @BindView(R.id.kaijiang_webView)
     WebView kaijiangWebView;
+    @BindView(R.id.toolbar_back_iv)
+    ImageView toolbarBackIv;
     @BindView(R.id.swipeRefreshLayout)
     SwipeRefreshLayout swipeRefreshLayout;
     private MainActivity mainActivity;
@@ -77,7 +85,10 @@ public class KaiJiangFragment extends BaseFragment implements View.OnClickListen
                 kaijiangWebView.loadUrl(HttpUtil.mNewUrl + "/api/draw1");
             }
         });
-
+        TintTypedArray a = TintTypedArray.obtainStyledAttributes(mainActivity, null, android.support.v7.appcompat.R.styleable.ActionBar, android.support.v7.appcompat.R.attr.actionBarStyle, 0);
+        Drawable drawable = a.getDrawable(android.support.v7.appcompat.R.styleable.ActionBar_homeAsUpIndicator);
+        drawable.setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY);
+        toolbarBackIv.setImageDrawable(drawable);
         WebSettings webSettings = kaijiangWebView.getSettings();
         webSettings.setSavePassword(false);
         webSettings.setSaveFormData(false);
@@ -154,6 +165,19 @@ public class KaiJiangFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onClick(final View v)
     {
+    }
+
+    @OnClick(R.id.toolbar_back_iv)
+    public void onViewClicked(View view)
+    {
+        switch (view.getId())
+        {
+            case R.id.toolbar_back_iv: //返回首页
+                mainActivity.tabSwitchCenter(HomePageFragment.class);
+                break;
+            default:
+                break;
+        }
     }
 
     @Override

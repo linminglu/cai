@@ -2,8 +2,12 @@ package com.example.admin.caipiao33.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.TintTypedArray;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -115,6 +119,8 @@ public class UserFragment extends BaseFragment implements View.OnClickListener, 
     RelativeLayout userFragmentGerenRl;
     @BindView(R.id.swipeRefreshLayout)
     SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.toolbar_back_iv)
+    ImageView toolbarBackIv;
     Unbinder unbinder;
     private MainActivity mainActivity;
     private LayoutInflater mInflater;
@@ -156,7 +162,10 @@ public class UserFragment extends BaseFragment implements View.OnClickListener, 
                 mPresenter.loadData();
             }
         });
-
+        TintTypedArray a = TintTypedArray.obtainStyledAttributes(mainActivity, null, android.support.v7.appcompat.R.styleable.ActionBar, android.support.v7.appcompat.R.attr.actionBarStyle, 0);
+        Drawable drawable = a.getDrawable(android.support.v7.appcompat.R.styleable.ActionBar_homeAsUpIndicator);
+        drawable.setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY);
+        toolbarBackIv.setImageDrawable(drawable);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
         {
             @Override
@@ -214,7 +223,7 @@ public class UserFragment extends BaseFragment implements View.OnClickListener, 
         userFragmentYueTv.setText(bean.getBalance() + "元");
     }
 
-    @OnClick({R.id.user_fragment_tixian_tv, R.id.user_fragment_kefu_tv, R.id.user_fragment_chongzhi_tv, R.id.user_fragment_qiandao_tv, R.id.user_fragment_tuijian_rl, R.id.user_fragment_gonggao_rl, R.id.user_fragment_touzhujilu_rl, R.id.user_fragment_zhongjiangjilu_rl, R.id.user_fragment_mingxi_rl, R.id.user_fragment_chongzhijilu_rl, R.id.user_fragment_tikuanjilu_rl, R.id.user_fragment_qiandaojilu_rl, R.id.user_fragment_geren_rl})
+    @OnClick({R.id.toolbar_back_iv, R.id.user_fragment_tixian_tv, R.id.user_fragment_kefu_tv, R.id.user_fragment_chongzhi_tv, R.id.user_fragment_qiandao_tv, R.id.user_fragment_tuijian_rl, R.id.user_fragment_gonggao_rl, R.id.user_fragment_touzhujilu_rl, R.id.user_fragment_zhongjiangjilu_rl, R.id.user_fragment_mingxi_rl, R.id.user_fragment_chongzhijilu_rl, R.id.user_fragment_tikuanjilu_rl, R.id.user_fragment_qiandaojilu_rl, R.id.user_fragment_geren_rl})
     public void onViewClicked(View view)
     {
         Intent intent;
@@ -289,6 +298,9 @@ public class UserFragment extends BaseFragment implements View.OnClickListener, 
             case R.id.user_fragment_geren_rl:
                 intent = new Intent(mainActivity, GeRenXiaoXiActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.toolbar_back_iv: //返回首页
+                mainActivity.tabSwitchCenter(HomePageFragment.class);
                 break;
         }
     }

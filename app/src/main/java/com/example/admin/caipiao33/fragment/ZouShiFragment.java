@@ -1,8 +1,12 @@
 package com.example.admin.caipiao33.fragment;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.TintTypedArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +15,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -47,6 +52,8 @@ public class ZouShiFragment extends BaseFragment implements View.OnClickListener
     SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
+    @BindView(R.id.toolbar_back_iv)
+    ImageView toolbarBackIv;
     private MainActivity mainActivity;
     private LayoutInflater mInflater;
     private View parentView;
@@ -84,7 +91,10 @@ public class ZouShiFragment extends BaseFragment implements View.OnClickListener
                 mPresenter.loadData();
             }
         });
-
+        TintTypedArray a = TintTypedArray.obtainStyledAttributes(mainActivity, null, android.support.v7.appcompat.R.styleable.ActionBar, android.support.v7.appcompat.R.attr.actionBarStyle, 0);
+        Drawable drawable = a.getDrawable(android.support.v7.appcompat.R.styleable.ActionBar_homeAsUpIndicator);
+        drawable.setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY);
+        toolbarBackIv.setImageDrawable(drawable);
         WebSettings webSettings = zoushiWebView.getSettings();
         webSettings.setSavePassword(false);
         webSettings.setSaveFormData(false);
@@ -145,13 +155,16 @@ public class ZouShiFragment extends BaseFragment implements View.OnClickListener
         unbinder.unbind();
     }
 
-    @OnClick(R.id.toolbar_title)
+    @OnClick({R.id.toolbar_title, R.id.toolbar_back_iv})
     public void onViewClicked(View view)
     {
         switch (view.getId())
         {
             case R.id.toolbar_title: // 玩法选择
                 showOptionsDialog();
+                break;
+            case R.id.toolbar_back_iv: // 返回首页
+                mainActivity.tabSwitchCenter(HomePageFragment.class);
                 break;
             default:
                 break;
