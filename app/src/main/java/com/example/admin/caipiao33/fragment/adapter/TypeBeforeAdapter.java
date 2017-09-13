@@ -37,14 +37,6 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
         2. 前四个四个折叠
         3. 第一个不折叠，后四个四个折叠
      */
-    /**
-     * 18 - 香港⑥合彩
-     */
-    private final String six = "18";
-
-    private final int[] NUMBER_RED = new int[]{1, 2, 7, 8, 12, 13, 18, 19, 23, 24, 29, 30, 34, 35, 40, 45, 46};
-    private final int[] NUMBER_GREEN = new int[]{3, 4, 9, 10, 14, 15, 20, 25, 26, 31, 36, 37, 41, 42, 47, 48};
-    private final int[] NUMBER_BLUE = new int[]{5, 6, 11, 16, 17, 21, 22, 27, 28, 32, 33, 38, 39, 43, 44, 49};
 
     /**
      * 52 - 三分PK10

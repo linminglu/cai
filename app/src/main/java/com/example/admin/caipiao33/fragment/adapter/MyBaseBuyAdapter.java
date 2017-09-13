@@ -12,6 +12,11 @@ import java.util.List;
 
 public abstract class MyBaseBuyAdapter extends BaseExpandableListAdapter
 {
+    /**
+     * 18 - 香港⑥合彩
+     */
+    public static final String TYPE_SIX = "18";
+
     public abstract void clearChecked();
     public abstract List<BuyRoomBean.PlayDetailListBean.ListBean> getCheckedList();
 }

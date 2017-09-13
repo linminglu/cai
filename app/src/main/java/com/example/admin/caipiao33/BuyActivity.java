@@ -26,6 +26,7 @@ import com.example.admin.caipiao33.bean.GouCaiBean;
 import com.example.admin.caipiao33.bean.TokenBean;
 import com.example.admin.caipiao33.contract.IBuyContract;
 import com.example.admin.caipiao33.fragment.QuickBuyFragment;
+import com.example.admin.caipiao33.fragment.adapter.MyBaseBuyAdapter;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.presenter.BuyPresenter;
 import com.example.admin.caipiao33.utils.Constants;
@@ -209,7 +210,14 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
                 }
             });
             buyTab.setViewPager(buyPager);
-            buyPager.setCurrentItem(1);
+
+            // 区分六 合 彩种
+            String num = mBuyRoomBean.getNum();
+            if (num.equals(MyBaseBuyAdapter.TYPE_SIX)) {
+                buyPager.setCurrentItem(0);
+            } else {
+                buyPager.setCurrentItem(1);
+            }
         } else {
             List<Fragment> fragments = fragmentManager.getFragments();
             for (Fragment f: fragments)

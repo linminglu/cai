@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import com.example.admin.caipiao33.R;
 import com.example.admin.caipiao33.bean.BuyRoomBean;
+import com.example.admin.caipiao33.fragment.adapter.MyBaseBuyAdapter;
+import com.example.admin.caipiao33.fragment.adapter.TypeSixAdapter;
 import com.example.admin.caipiao33.utils.StringUtils;
 
 import java.util.ArrayList;
@@ -19,6 +21,7 @@ import java.util.List;
 
 public class ResultAssist
 {
+    private BuyRoomBean mBuyRoomBean;
     private LayoutInflater mInflater;
     private LinearLayout layoutResult;
     private String mLastOpen;
@@ -28,25 +31,12 @@ public class ResultAssist
     public ResultAssist(LayoutInflater layoutInflater, LinearLayout layoutResult, BuyRoomBean bean, String lastOpen) {
         this.mInflater = layoutInflater;
         this.layoutResult = layoutResult;
-        if (StringUtils.isEmpty(lastOpen)) {
-            tvWait = (TextView) mInflater.inflate(R.layout.item_wait_text, layoutResult, false);
-            layoutResult.addView(tvWait);
-        } else {
-            String[] split = lastOpen.split(",");
-            for (int i = 0; i < split.length; i++) {
-                TextView tv = (TextView) mInflater.inflate(R.layout.item_result_text, layoutResult, false);
-                tv.setGravity(Gravity.CENTER);
-                tv.setText(split[i]);
-                recyclerList.add(tv);
-                layoutResult.addView(tv);
-            }
-        }
-        this.mLastOpen = lastOpen;
+        this.mBuyRoomBean = bean;
+        updateData(lastOpen);
     }
 
     public void updateData(String lastOpen)
     {
-
         if (StringUtils.isEmpty(lastOpen)) {
             if (StringUtils.isEmpty(mLastOpen)) {
                 return;
@@ -63,17 +53,29 @@ public class ResultAssist
             layoutResult.removeAllViews();
             String[] split = lastOpen.split(",");
             for (int i = 0; i < split.length; i++) {
+                TextView tv;
                 if (i < recyclerList.size()) {
-                    TextView textView = recyclerList.get(i);
-                    textView.setText(split[i]);
-                    layoutResult.addView(textView);
+                    tv = recyclerList.get(i);
                 } else {
-                    TextView tv = (TextView) mInflater.inflate(R.layout.item_result_text, layoutResult, false);
+                    tv = (TextView) mInflater.inflate(R.layout.item_result_text, layoutResult, false);
                     tv.setGravity(Gravity.CENTER);
-                    tv.setText(split[i]);
                     recyclerList.add(tv);
-                    layoutResult.addView(tv);
                 }
+                String text = split[i];
+                tv.setText(text);
+                // 适配六 合 的情况
+                if (mBuyRoomBean.getNum().equals(MyBaseBuyAdapter.TYPE_SIX)) {
+                    if (TypeSixAdapter.NUMBER_RED.contains(text)) {
+                        tv.setBackgroundResource(R.drawable.shape_circle_red);
+                    } else if (TypeSixAdapter.NUMBER_GREEN.contains(text)){
+                        tv.setBackgroundResource(R.drawable.shape_circle_green);
+                    } else if (TypeSixAdapter.NUMBER_BLUE.contains(text)) {
+                        tv.setBackgroundResource(R.drawable.shape_circle_blue);
+                    } else {
+                        tv.setBackgroundDrawable(null);
+                    }
+                }
+                layoutResult.addView(tv);
             }
         }
         mLastOpen = lastOpen;

@@ -11,6 +11,7 @@ import com.example.admin.caipiao33.R;
 import com.example.admin.caipiao33.bean.BuyRoomBean;
 import com.example.admin.caipiao33.fragment.adapter.MyBaseBuyAdapter;
 import com.example.admin.caipiao33.fragment.adapter.TypeBeforeAdapter;
+import com.example.admin.caipiao33.fragment.adapter.TypeSixAdapter;
 
 import java.util.List;
 
@@ -99,7 +100,14 @@ public class QuickBuyFragment extends BaseFragment
     private void initView()
     {
         unbinder = ButterKnife.bind(this, parentView);
-        adapter = new TypeBeforeAdapter(mInflater, mBuyRoomBean, mType);
+
+        String num = mBuyRoomBean.getNum();
+        if (num.equals(MyBaseBuyAdapter.TYPE_SIX) && mType == QuickBuyFragment.TYPE_SELF_SELECT) {
+            adapter = new TypeSixAdapter(mInflater, mBuyRoomBean, mType);
+        } else {
+            adapter = new TypeBeforeAdapter(mInflater, mBuyRoomBean, mType);
+        }
+
         listView.setAdapter(adapter);
         //遍历所有group,将所有项设置成默认展开
         int groupCount = listView.getCount();
