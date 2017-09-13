@@ -220,15 +220,19 @@ public class UserFragment extends BaseFragment implements View.OnClickListener, 
     {
         swipeRefreshLayout.setRefreshing(false);
         userFragmentNameTv.setText(UserConfig.getInstance().getToken(mainActivity).getMemberName());
-        userFragmentYueTv.setText(bean.getBalance() + "元");
+        userFragmentYueTv.setText("余额[刷新]\n" + bean.getBalance() + "元");
     }
 
-    @OnClick({R.id.toolbar_back_iv, R.id.user_fragment_tixian_tv, R.id.user_fragment_kefu_tv, R.id.user_fragment_chongzhi_tv, R.id.user_fragment_qiandao_tv, R.id.user_fragment_tuijian_rl, R.id.user_fragment_gonggao_rl, R.id.user_fragment_touzhujilu_rl, R.id.user_fragment_zhongjiangjilu_rl, R.id.user_fragment_mingxi_rl, R.id.user_fragment_chongzhijilu_rl, R.id.user_fragment_tikuanjilu_rl, R.id.user_fragment_qiandaojilu_rl, R.id.user_fragment_geren_rl})
+    @OnClick({R.id.user_fragment_yue_tv, R.id.toolbar_back_iv, R.id.user_fragment_tixian_tv, R.id.user_fragment_kefu_tv, R.id.user_fragment_chongzhi_tv, R.id.user_fragment_qiandao_tv, R.id.user_fragment_tuijian_rl, R.id.user_fragment_gonggao_rl, R.id.user_fragment_touzhujilu_rl, R.id.user_fragment_zhongjiangjilu_rl, R.id.user_fragment_mingxi_rl, R.id.user_fragment_chongzhijilu_rl, R.id.user_fragment_tikuanjilu_rl, R.id.user_fragment_qiandaojilu_rl, R.id.user_fragment_geren_rl})
     public void onViewClicked(View view)
     {
         Intent intent;
         switch (view.getId())
         {
+
+            case R.id.user_fragment_yue_tv:
+                mPresenter.refreshData();
+                break;
             case R.id.user_fragment_chongzhi_tv:
                 intent = new Intent(mainActivity, TopupActivity.class);
                 startActivity(intent);
