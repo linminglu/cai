@@ -53,7 +53,6 @@ public class TuiJianJiLuPresenter implements ITuiJianJiLuContract.Presenter
                 if (isFirst)
                 {
                     mView.showLoadingLayoutError4Ami(hideView);
-                    isFirst = false;
                 }
                 ToastUtil.show(msg);
             }
