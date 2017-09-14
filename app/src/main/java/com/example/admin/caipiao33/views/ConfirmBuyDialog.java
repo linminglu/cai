@@ -56,7 +56,7 @@ public class ConfirmBuyDialog implements View.OnClickListener
     private float totalWinMoney;
 
 
-    public ConfirmBuyDialog(Context context, List<BuyRoomBean.PlayDetailListBean.ListBean> checked, ConfirmBuyListener callBack)
+    public ConfirmBuyDialog(Context context, List<BuyRoomBean.PlayDetailListBean.ListBean> checked, int gridNumColumns, ConfirmBuyListener callBack)
     {
         this.mContext = context;
         this.checkedList.clear();
@@ -129,6 +129,8 @@ public class ConfirmBuyDialog implements View.OnClickListener
             }
         });
 
+        setGridNumColumns(gridNumColumns);
+
         updateUI(checked);
     }
 
@@ -167,6 +169,12 @@ public class ConfirmBuyDialog implements View.OnClickListener
                     }
                 })
                 .show();
+    }
+
+    public void setGridNumColumns(int gridNumColumns) {
+        if (null != gridView) {
+            gridView.setNumColumns(gridNumColumns);
+        }
     }
 
     public void updateUI(List<BuyRoomBean.PlayDetailListBean.ListBean> checked)

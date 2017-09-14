@@ -11,6 +11,9 @@ import com.example.admin.caipiao33.R;
 import com.example.admin.caipiao33.bean.BuyRoomBean;
 import com.example.admin.caipiao33.fragment.adapter.MyBaseBuyAdapter;
 import com.example.admin.caipiao33.fragment.adapter.TypeBeforeAdapter;
+import com.example.admin.caipiao33.fragment.adapter.TypeSix26Adapter;
+import com.example.admin.caipiao33.fragment.adapter.TypeSix28Adapter;
+import com.example.admin.caipiao33.fragment.adapter.TypeSix6Adapter;
 import com.example.admin.caipiao33.fragment.adapter.TypeSixAdapter;
 
 import java.util.List;
@@ -71,18 +74,28 @@ public class QuickBuyFragment extends BaseFragment
     }
 
     public void updateBuyRoomBean(BuyRoomBean bean) {
+        mBuyRoomBean = bean;
         List<BuyRoomBean.PlayDetailListBean> playDetailList = bean.getPlayDetailList();
         if (null == playDetailList) {
             return;
         }
-        if (adapter instanceof TypeBeforeAdapter) {
-            TypeBeforeAdapter typeBeforeAdapter = (TypeBeforeAdapter) adapter;
-            typeBeforeAdapter.updateData(bean);
-        } else if (adapter instanceof TypeSixAdapter) {
-            TypeSixAdapter typeBeforeAdapter = (TypeSixAdapter) adapter;
-            typeBeforeAdapter.updateData(bean);
+        String num = mBuyRoomBean.getNum();
+        if (num.equals(MyBaseBuyAdapter.TYPE_SIX)) {
+            String playName = mBuyRoomBean.getPlayName();
+            if (mType == TYPE_SELF_SELECT && playName.equals("自选不中")) {
+                adapter = new TypeSix26Adapter(mInflater, mBuyRoomBean, mType);
+            } else if (mType == TYPE_SELF_SELECT && playName.equals("连码")) {
+                adapter = new TypeSix28Adapter(mInflater, mBuyRoomBean, mType);
+            } else if (mType == TYPE_SELF_SELECT && playName.equals("合肖")) {
+                adapter = new TypeSix6Adapter(mInflater, mBuyRoomBean, mType);
+            } else {
+                adapter = new TypeSixAdapter(mInflater, mBuyRoomBean, mType);
+            }
+
+        } else {
+            adapter = new TypeBeforeAdapter(mInflater, mBuyRoomBean, mType);
         }
-        adapter.notifyDataSetChanged();
+        listView.setAdapter(adapter);
         //遍历所有group,将所有项设置成默认展开
         int groupCount = adapter.getGroupCount();
         for (int i=0; i < groupCount; i++)
@@ -103,20 +116,7 @@ public class QuickBuyFragment extends BaseFragment
     private void initView()
     {
         unbinder = ButterKnife.bind(this, parentView);
-        String num = mBuyRoomBean.getNum();
-        if (num.equals(MyBaseBuyAdapter.TYPE_SIX)) {
-            adapter = new TypeSixAdapter(mInflater, mBuyRoomBean, mType);
-        } else {
-            adapter = new TypeBeforeAdapter(mInflater, mBuyRoomBean, mType);
-        }
-
-        listView.setAdapter(adapter);
-        //遍历所有group,将所有项设置成默认展开
-        int groupCount = listView.getCount();
-        for (int i=0; i < groupCount; i++)
-        {
-            listView.expandGroup(i);
-        }
+        updateBuyRoomBean(mBuyRoomBean);
     }
 
     @Override

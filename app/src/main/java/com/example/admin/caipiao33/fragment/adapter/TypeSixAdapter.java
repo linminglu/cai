@@ -54,7 +54,8 @@ public class TypeSixAdapter extends TypeBeforeAdapter
     private static final List<String> CURR_EXECUTE = Arrays.asList("1", "2", "8", "9", "10", "11", "12", "13", "14");
     // 连肖连尾
     private final String PLAY_ID_27 = "27";
-
+    // 自选不中
+    private final String PLAY_ID_26 = "26";
 
     public TypeSixAdapter(LayoutInflater inflater, BuyRoomBean bean, int type) {
         this.mInflater = inflater;
@@ -87,7 +88,7 @@ public class TypeSixAdapter extends TypeBeforeAdapter
                     Iterator<BuyRoomBean.PlayDetailListBean> iterator = list.iterator();
                     int temp = 0;
                     while (iterator.hasNext()) {
-                        BuyRoomBean.PlayDetailListBean next = iterator.next();
+                        iterator.next();
                         if (temp < 4) {
                             iterator.remove();
                         }
@@ -101,7 +102,7 @@ public class TypeSixAdapter extends TypeBeforeAdapter
                     Iterator<BuyRoomBean.PlayDetailListBean> iterator = list.iterator();
                     int temp = 0;
                     while (iterator.hasNext()) {
-                        BuyRoomBean.PlayDetailListBean next = iterator.next();
+                        iterator.next();
                         if (temp >= 4) {
                             iterator.remove();
                         }
@@ -150,11 +151,6 @@ public class TypeSixAdapter extends TypeBeforeAdapter
                     itemList.add(e);
                 }
                 childList.add(itemList);
-                if ("1".equals(mPlayId)) {// 表示玩法为特码B，取前49个数据
-                    if (j == 48) {
-                        break;
-                    }
-                }
             }
             beanGroup.setChildList(childList);
             mDataList.add(beanGroup);

@@ -163,12 +163,12 @@
                 app:underlineHeight="@dimen/common_divider_line">
             </com.example.admin.caipiao33.views.PagerSlidingTabStrip>
 
-            <android.support.v4.view.ViewPager
+            <com.example.admin.caipiao33.views.NoScrollViewPager
                 android:id="@+id/buy_pager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/buy_tab">
-            </android.support.v4.view.ViewPager>
+            </com.example.admin.caipiao33.views.NoScrollViewPager>
 
         </RelativeLayout>
 

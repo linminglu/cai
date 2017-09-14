@@ -15,6 +15,7 @@ import java.util.List;
 public class BuyRoomBean implements Serializable
 {
 
+
     private String num;
     private String page;
     private String roomName;
@@ -27,6 +28,11 @@ public class BuyRoomBean implements Serializable
     private List<PlayDetailListBean> playDetailList;
     private List<PlayListBean> playList;
     private List<RoomListBean> roomList;
+    /**
+     * sxNames : {"鼠":"10,22,34,46","鸡":"01,13,25,37,49","猴":"02,14,26,38","龙":"06,18,30,42","兔":"07,19,31,43","马":"04,16,28,40","狗":"12,24,36,48","猪":"11,23,35,47","羊":"03,15,27,39","牛":"09,21,33,45","蛇":"05,17,29,41","虎":"08,20,32,44"}
+     */
+
+    private SxNamesBean sxNames;
 
     public List<RoomListBean> getRoomList()
     {
@@ -146,6 +152,16 @@ public class BuyRoomBean implements Serializable
     public void setPlayList(List<PlayListBean> playList)
     {
         this.playList = playList;
+    }
+
+    public SxNamesBean getSxNames()
+    {
+        return sxNames;
+    }
+
+    public void setSxNames(SxNamesBean sxNames)
+    {
+        this.sxNames = sxNames;
     }
 
     public static class PlayDetailListBean implements Serializable, Cloneable
@@ -414,6 +430,157 @@ public class BuyRoomBean implements Serializable
         public void setId(String id)
         {
             this.id = id;
+        }
+    }
+
+    public static class SxNamesBean
+    {
+        /**
+         * 鼠 : 10,22,34,46
+         * 鸡 : 01,13,25,37,49
+         * 猴 : 02,14,26,38
+         * 龙 : 06,18,30,42
+         * 兔 : 07,19,31,43
+         * 马 : 04,16,28,40
+         * 狗 : 12,24,36,48
+         * 猪 : 11,23,35,47
+         * 羊 : 03,15,27,39
+         * 牛 : 09,21,33,45
+         * 蛇 : 05,17,29,41
+         * 虎 : 08,20,32,44
+         */
+
+        private String 鼠;
+        private String 鸡;
+        private String 猴;
+        private String 龙;
+        private String 兔;
+        private String 马;
+        private String 狗;
+        private String 猪;
+        private String 羊;
+        private String 牛;
+        private String 蛇;
+        private String 虎;
+
+        public String get鼠()
+        {
+            return 鼠;
+        }
+
+        public void set鼠(String 鼠)
+        {
+            this.鼠 = 鼠;
+        }
+
+        public String get鸡()
+        {
+            return 鸡;
+        }
+
+        public void set鸡(String 鸡)
+        {
+            this.鸡 = 鸡;
+        }
+
+        public String get猴()
+        {
+            return 猴;
+        }
+
+        public void set猴(String 猴)
+        {
+            this.猴 = 猴;
+        }
+
+        public String get龙()
+        {
+            return 龙;
+        }
+
+        public void set龙(String 龙)
+        {
+            this.龙 = 龙;
+        }
+
+        public String get兔()
+        {
+            return 兔;
+        }
+
+        public void set兔(String 兔)
+        {
+            this.兔 = 兔;
+        }
+
+        public String get马()
+        {
+            return 马;
+        }
+
+        public void set马(String 马)
+        {
+            this.马 = 马;
+        }
+
+        public String get狗()
+        {
+            return 狗;
+        }
+
+        public void set狗(String 狗)
+        {
+            this.狗 = 狗;
+        }
+
+        public String get猪()
+        {
+            return 猪;
+        }
+
+        public void set猪(String 猪)
+        {
+            this.猪 = 猪;
+        }
+
+        public String get羊()
+        {
+            return 羊;
+        }
+
+        public void set羊(String 羊)
+        {
+            this.羊 = 羊;
+        }
+
+        public String get牛()
+        {
+            return 牛;
+        }
+
+        public void set牛(String 牛)
+        {
+            this.牛 = 牛;
+        }
+
+        public String get蛇()
+        {
+            return 蛇;
+        }
+
+        public void set蛇(String 蛇)
+        {
+            this.蛇 = 蛇;
+        }
+
+        public String get虎()
+        {
+            return 虎;
+        }
+
+        public void set虎(String 虎)
+        {
+            this.虎 = 虎;
         }
     }
 }

@@ -36,11 +36,13 @@ import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.utils.UserConfig;
 import com.example.admin.caipiao33.views.ConfirmBuyDialog;
 import com.example.admin.caipiao33.views.LoadingLayout;
+import com.example.admin.caipiao33.views.NoScrollViewPager;
 import com.example.admin.caipiao33.views.PagerSlidingTabStrip;
 import com.example.admin.caipiao33.views.ResultAssist;
 import com.example.admin.caipiao33.views.ZoomOutPageTransformer;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -81,7 +83,7 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
     @BindView(R.id.buy_tab)
     PagerSlidingTabStrip buyTab;
     @BindView(R.id.buy_pager)
-    ViewPager buyPager;
+    NoScrollViewPager buyPager;
     @BindView(R.id.tv_amount)
     TextView tvAmount;
     private String mNumber;
@@ -160,10 +162,35 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
         mTitleArray = getResources().getStringArray(R.array.s_array_buy);
         // 区配6合的连肖连尾
         String num = mBuyRoomBean.getNum();
+        buyTab.setVisibility(View.VISIBLE);
+        buyPager.setNoScroll(false);
         if (num.equals(MyBaseBuyAdapter.TYPE_SIX)) {
-            if (mBuyRoomBean.getPlayName().equals("连肖连尾")) {
+            String playName = mBuyRoomBean.getPlayName();
+            if (playName.equals("连肖连尾")) {
                 mTitleArray = new String[]{"连肖", "连尾"};
                 buyTab.notifyDataSetChanged();
+            } else if (playName.equals("自选不中") || playName.equals("连码") || playName.equals("合肖")) {
+                buyTab.setVisibility(View.GONE);
+                buyPager.setNoScroll(true);
+            } else if (playName.equals("特码B")) {
+                // 保留前49个数据
+                List<BuyRoomBean.PlayDetailListBean> playDetailList = bean.getPlayDetailList();
+                if (null != playDetailList && playDetailList.size() > 0) {
+                    BuyRoomBean.PlayDetailListBean playDetailListBean = playDetailList.get(0);
+                    if (null != playDetailListBean && null != playDetailListBean.getList()) {
+                        int temp = 0;
+                        Iterator<BuyRoomBean.PlayDetailListBean.ListBean> iterator = playDetailListBean
+                                .getList()
+                                .iterator();
+                        while (iterator.hasNext()) {
+                            iterator.next();
+                            if (temp > 48) {
+                                iterator.remove();
+                            }
+                            temp++;
+                        }
+                    }
+                }
             }
         }
         toolbarTitle.setText(getString(R.string.s_play_options, bean.getPlayName()));
@@ -218,13 +245,6 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
                 }
             });
             buyTab.setViewPager(buyPager);
-
-            // 区分六 合 彩种
-            if (num.equals(MyBaseBuyAdapter.TYPE_SIX)) {
-                buyPager.setCurrentItem(0);
-            } else {
-                buyPager.setCurrentItem(1);
-            }
         } else {
             List<Fragment> fragments = fragmentManager.getFragments();
             List<BuyRoomBean.PlayDetailListBean> playDetailList = new ArrayList<>();
@@ -242,6 +262,12 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
                 fragment.updateBuyRoomBean(bean);
                 temp++;
             }
+        }
+        // 区分6 合 彩种
+        if (num.equals(MyBaseBuyAdapter.TYPE_SIX)) {
+            buyPager.setCurrentItem(0);
+        } else {
+            buyPager.setCurrentItem(1);
         }
     }
 
@@ -464,6 +490,31 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
         int currentItem = buyPager.getCurrentItem();
         QuickBuyFragment fragment = (QuickBuyFragment) fragmentManager.getFragments().get(currentItem);
         List<BuyRoomBean.PlayDetailListBean.ListBean> checked = fragment.getChecked();
+        int gridNumColumns = 4;
+        // 特殊处理
+        // 自选不中
+        String playName = mBuyRoomBean.getPlayName();
+        boolean isSeleSelect = false;
+        if (playName.equals("自选不中")) {
+            if (null == checked) {
+                return;
+            }
+            gridNumColumns = 1;
+            isSeleSelect = true;
+        } else if (playName.equals("连码")) {
+            if (null == checked) {
+                return;
+            }
+            gridNumColumns = 2;
+            isSeleSelect = true;
+        } else if (playName.equals("合肖")) {
+            if (null == checked) {
+                return;
+            }
+            gridNumColumns = 1;
+            isSeleSelect = true;
+        }
+
         if (null == checked || checked.size() == 0) {
             ToastUtil.show("请选择下注的内容");
             return;
@@ -472,19 +523,25 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
         // 投注成功，选中清空，弹出提示，页面余额变化
 
         if (null == confirmBuyDialog) {
-            confirmBuyDialog = new ConfirmBuyDialog(this, checked, new ConfirmBuyDialog.ConfirmBuyListener()
+            final boolean finalIsSeleSelect = isSeleSelect;
+            confirmBuyDialog = new ConfirmBuyDialog(this, checked, gridNumColumns, new ConfirmBuyDialog.ConfirmBuyListener()
             {
                 @Override
                 public void onConfirmBuyListener(List<BuyRoomBean.PlayDetailListBean.ListBean> checked)
                 {
                     StringBuilder sb = new StringBuilder();
                     for (BuyRoomBean.PlayDetailListBean.ListBean bean : checked) {
-                        sb.append(bean.getPlayName()).append("|").append(bean.getPlayId()).append("|").append(bean.getMoney()).append(";");
+                        String playName1 = bean.getPlayName();
+                        if (finalIsSeleSelect) {
+                            playName1 = playName1.replaceAll(" ", "");
+                        }
+                        sb.append(playName1).append("|").append(bean.getPlayId()).append("|").append(bean.getMoney()).append(";");
                     }
                     mPresenter.submit(mBuyRoomBean.getNum(), mBuyRoomBean.getRoomId(), mBuyRoomBean.getPeriod(), sb.toString());
                 }
             });
         } else {
+            confirmBuyDialog.setGridNumColumns(gridNumColumns);
             confirmBuyDialog.updateUI(checked);
         }
         confirmBuyDialog.show();
