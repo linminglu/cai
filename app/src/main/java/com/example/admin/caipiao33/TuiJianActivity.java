@@ -115,7 +115,7 @@ public class TuiJianActivity extends ToolbarActivity implements Toolbar.OnMenuIt
         {
 
         }
-        tvTuijianId.setText(id + 10000 + "");
+        tvTuijianId.setText(id + 100000 + "");
         tvTuijianUrl.setText(HttpUtil.mNewUrl + "/common/register?tj=" + UserConfig.getInstance()
                 .getToken(TuiJianActivity.this)
                 .getMemberId());
