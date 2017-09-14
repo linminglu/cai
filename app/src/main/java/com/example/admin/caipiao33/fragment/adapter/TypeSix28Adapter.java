@@ -517,13 +517,16 @@ public class TypeSix28Adapter extends TypeBeforeAdapter
                         checkedList5.remove(listBean);
                     }
                 } else {
-                    if (checkedList1.size() >= 7 || checkedList2.size() >= 7 || checkedList3.size() >= 7 || checkedList4.size() >= 7
-                            || checkedList5.size() >= 7) {
+                    String playId = listBean.getPlayId();
+                    if ((playId.contains("三中二") && checkedList1.size() >= 7)
+                            || playId.contains("三全中") && checkedList2.size() >= 7
+                            || playId.contains("二全中") && checkedList3.size() >= 7
+                            || playId.contains("二中特") && checkedList4.size() >= 7
+                            || playId.contains("特串") && checkedList5.size() >= 7) {
                         ToastUtil.show("一种类型最多选择7个！");
                         return;
                     }
                     mCheckedList.add(listBean);
-                    String playId = listBean.getPlayId();
                     if (playId.contains("三中二")) {
                         checkedList1.add(listBean);
                     } else if (playId.contains("三全中")) {
