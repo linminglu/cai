@@ -433,7 +433,7 @@ public class BuyRoomBean implements Serializable
         }
     }
 
-    public static class SxNamesBean
+    public static class SxNamesBean implements Serializable
     {
         /**
          * 鼠 : 10,22,34,46
