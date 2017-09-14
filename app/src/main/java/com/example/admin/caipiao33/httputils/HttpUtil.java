@@ -73,8 +73,8 @@ public class HttpUtil
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         builder.sslSocketFactory(sslContext.getSocketFactory());
-        //        mNewUrl = url;
-        mNewUrl = "https://m.cp89001.com";
+        mNewUrl = url;
+        //        mNewUrl = "https://m.cp89001.com";
         retrofit = new Retrofit.Builder().client(builder.build())
                 .baseUrl(url)
                 .addConverterFactory(MyGsonConverterFactory.create())
@@ -337,8 +337,10 @@ public class HttpUtil
         return call.request().url().toString();
     }
 
-    public static void reConfirmUrl(Context context, final MyResponseListener listener) {
-        if (!StringUtils.isEmpty(mNewUrl)) {
+    public static void reConfirmUrl(Context context, final MyResponseListener listener)
+    {
+        if (!StringUtils.isEmpty(mNewUrl))
+        {
             return;
         }
         Call<String> call;

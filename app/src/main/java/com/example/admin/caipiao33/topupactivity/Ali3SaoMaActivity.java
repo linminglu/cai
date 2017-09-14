@@ -1,8 +1,10 @@
 package com.example.admin.caipiao33.topupactivity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
@@ -10,8 +12,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.admin.caipiao33.ChongZhiJiLuActivity;
 import com.example.admin.caipiao33.R;
 import com.example.admin.caipiao33.ToolbarActivity;
+import com.example.admin.caipiao33.TopupActivity;
+import com.example.admin.caipiao33.WebUrlActivity;
 import com.example.admin.caipiao33.bean.Ali3SaoMaBean;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.httputils.MyResponseListener;
@@ -111,6 +116,61 @@ public class Ali3SaoMaActivity extends ToolbarActivity implements Toolbar.OnMenu
         }, null);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.menu_topup, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case R.id.action_jilu: // 充值记录.
+                Intent intent = new Intent(Ali3SaoMaActivity.this, ChongZhiJiLuActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.action_kefu: // 在线客服
+                showLoadingDialog();
+                HttpUtil.requestFirst("kefu", String.class, Ali3SaoMaActivity.this, new MyResponseListener<String>()
+                {
+                    @Override
+                    public void onSuccess(String result)
+                    {
+                        toWebUrlActivity(result, "在线客服");
+                    }
+
+                    @Override
+                    public void onFailed(int code, String msg)
+                    {
+
+                    }
+
+                    @Override
+                    public void onFinish()
+                    {
+                        hideLoadingDialog();
+                    }
+                }, null);
+                break;
+            default:
+                break;
+        }
+        return false;
+    }
+
+
+    // 跳转到网页
+    private void toWebUrlActivity(String url, String title)
+    {
+        Intent intent = new Intent(Ali3SaoMaActivity.this, WebUrlActivity.class);
+        intent.putExtra(Constants.EXTRA_URL, url);
+        intent.putExtra(Constants.EXTRA_TITLE, title);
+        startActivity(intent);
+    }
+
     public void onCreateCustomToolBar(Toolbar toolbar)
     {
         super.onCreateCustomToolBar(toolbar);
@@ -131,12 +191,6 @@ public class Ali3SaoMaActivity extends ToolbarActivity implements Toolbar.OnMenu
                 initData();
             }
         });
-    }
-
-    @Override
-    public boolean onMenuItemClick(MenuItem item)
-    {
-        return false;
     }
 
 
