@@ -3,6 +3,6 @@
     <item
         android:id="@+id/action_tuijianjilu"
         android:orderInCategory="100"
-        android:title="推荐记录"
+        android:title="收益记录"
         app:showAsAction="ifRoom"/>
 </menu>
