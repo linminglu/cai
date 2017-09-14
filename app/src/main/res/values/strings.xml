@@ -88,6 +88,7 @@
     <!-- 设置页面 -->
     <string name="s_setting_changepassword">修改登录密码</string>
     <string name="s_setting_changetikuanpassword">修改提现密码</string>
+    <string name="s_setting_changebank">修改银行卡</string>
     <string name="s_setting_setmibao">设置密保问题</string>
     <string name="s_setting_changemibao">密码找回</string>
     <string name="s_setting_submit">立即修改</string>

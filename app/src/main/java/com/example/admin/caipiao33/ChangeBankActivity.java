@@ -65,7 +65,7 @@ public class ChangeBankActivity extends ToolbarActivity implements Toolbar.OnMen
     public void onCreateCustomToolBar(Toolbar toolbar)
     {
         super.onCreateCustomToolBar(toolbar);
-        toolbar.setTitle(R.string.s_setting_changetikuanpassword);
+        toolbar.setTitle(R.string.s_setting_changebank);
         setSupportActionBar(toolbar);
         toolbar.setOnMenuItemClickListener(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -80,7 +80,7 @@ public class ChangeBankActivity extends ToolbarActivity implements Toolbar.OnMen
     @Override
     public void successFul(String result)
     {
-        ToastUtil.show("提款密码修改成功！");
+        ToastUtil.show("银行卡修改成功！");
         finish();
     }
 
@@ -136,19 +136,20 @@ public class ChangeBankActivity extends ToolbarActivity implements Toolbar.OnMen
                 }
                 if (kaihubank.equals("其他"))
                 {
-                    mPresenter.changeBankCard("null", changebankcardZhanghaoEt.getText()
+                    mPresenter.changeBankCard(changebankcardPasswordEt.getText()
                             .toString(), changebankcardKaihurenEt.getText()
-                            .toString(), changebankcardShengfenEt.getText()
-                            .toString(), changebankcardCityEt.getText()
-                            .toString(), changebankcardPasswordEt.getText().toString(), "other");
+                            .toString(), changebankcardZhanghaoEt.getText()
+                            .toString(), "null", changebankcardShengfenEt.getText()
+                            .toString(), changebankcardCityEt.getText().toString(), "other");
                 }
                 else
                 {
-                    mPresenter.changeBankCard(kaihubank, changebankcardZhanghaoEt.getText()
+
+                    mPresenter.changeBankCard(changebankcardPasswordEt.getText()
                             .toString(), changebankcardKaihurenEt.getText()
-                            .toString(), changebankcardShengfenEt.getText()
-                            .toString(), changebankcardCityEt.getText()
-                            .toString(), changebankcardPasswordEt.getText().toString(), "");
+                            .toString(), changebankcardZhanghaoEt.getText()
+                            .toString(), kaihubank, changebankcardShengfenEt.getText()
+                            .toString(), changebankcardCityEt.getText().toString(), "");
                 }
                 break;
         }
