@@ -1,5 +1,6 @@
 package com.example.admin.caipiao33;
 
+import android.annotation.SuppressLint;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +18,7 @@ import com.example.admin.caipiao33.presenter.TuiJianPresenter;
 import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.utils.UserConfig;
 import com.example.admin.caipiao33.views.LoadingLayout;
+import com.socks.library.KLog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -113,7 +115,7 @@ public class TuiJianActivity extends ToolbarActivity implements Toolbar.OnMenuIt
         }
         catch (Exception e)
         {
-
+            KLog.e(e);
         }
         tvTuijianId.setText(id + 100000 + "");
         tvTuijianUrl.setText(HttpUtil.mNewUrl + "/common/register?tj=" + UserConfig.getInstance()
@@ -128,11 +130,13 @@ public class TuiJianActivity extends ToolbarActivity implements Toolbar.OnMenuIt
         {
             if (result.getMySpread().getSpreadMember().get(i).getIsDanger() == 0)
             {
-                buffer.append(result.getMySpread().getSpreadMember().get(i).getCode() + "        ");
+                buffer.append(result.getMySpread().getSpreadMember().get(i).getCode())
+                        .append("        ");
             }
             else
             {
-                buffer.append(result.getMySpread().getSpreadMember().get(i).getCode() + "（风险）");
+                buffer.append(result.getMySpread().getSpreadMember().get(i).getCode())
+                        .append("（风险）");
             }
         }
         tvTuijianHuiyuan.setText(buffer);
