@@ -118,9 +118,7 @@ public class TuiJianActivity extends ToolbarActivity implements Toolbar.OnMenuIt
             KLog.e(e);
         }
         tvTuijianId.setText(id + 100000 + "");
-        tvTuijianUrl.setText(HttpUtil.mNewUrl + "/common/register?tj=" + UserConfig.getInstance()
-                .getToken(TuiJianActivity.this)
-                .getMemberId());
+        tvTuijianUrl.setText(HttpUtil.mNewUrl + "/common/register?tj=" + (id + 100000));
         tvTuijianShouyi.setText("¥" + result.getMySpread().getSpreadIn());
         tvTuijianShuoming.setText("说明：每天的7点更新收益，如3号7点，会计算2号0点-24点之间的所以胡数据，然后增加您的收益。您的收益=推荐会员的有效投注额度总和÷100 x " + result
                 .getSpread() + "（转换率），小输部分四舍五入！（风险账号不参与收益计算）");

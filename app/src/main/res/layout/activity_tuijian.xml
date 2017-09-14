@@ -64,9 +64,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="3dp"
-            android:text="www.baidu.com"
             android:textColor="@color/red"
-            android:textSize="15sp"/>
+            android:textSize="14sp"/>
 
         <TextView
             android:layout_width="wrap_content"
