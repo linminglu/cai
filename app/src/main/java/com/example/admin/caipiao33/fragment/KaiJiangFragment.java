@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.TintTypedArray;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
+import static com.example.admin.caipiao33.R.id.toolbar;
+
 /**
  * Description : 开奖页面
  * Author : cxy
@@ -49,8 +52,8 @@ public class KaiJiangFragment extends BaseFragment implements View.OnClickListen
     Unbinder unbinder;
     @BindView(R.id.kaijiang_webView)
     WebView kaijiangWebView;
-    @BindView(R.id.toolbar_back_iv)
-    ImageView toolbarBackIv;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
     @BindView(R.id.swipeRefreshLayout)
     SwipeRefreshLayout swipeRefreshLayout;
     private MainActivity mainActivity;
@@ -88,7 +91,15 @@ public class KaiJiangFragment extends BaseFragment implements View.OnClickListen
         TintTypedArray a = TintTypedArray.obtainStyledAttributes(mainActivity, null, android.support.v7.appcompat.R.styleable.ActionBar, android.support.v7.appcompat.R.attr.actionBarStyle, 0);
         Drawable drawable = a.getDrawable(android.support.v7.appcompat.R.styleable.ActionBar_homeAsUpIndicator);
         drawable.setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY);
-        toolbarBackIv.setImageDrawable(drawable);
+        toolbar.setNavigationIcon(drawable);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                mainActivity.tabSwitchCenter(HomePageFragment.class);
+            }
+        });
         WebSettings webSettings = kaijiangWebView.getSettings();
         webSettings.setSavePassword(false);
         webSettings.setSaveFormData(false);
@@ -165,19 +176,6 @@ public class KaiJiangFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onClick(final View v)
     {
-    }
-
-    @OnClick(R.id.toolbar_back_iv)
-    public void onViewClicked(View view)
-    {
-        switch (view.getId())
-        {
-            case R.id.toolbar_back_iv: //返回首页
-                mainActivity.tabSwitchCenter(HomePageFragment.class);
-                break;
-            default:
-                break;
-        }
     }
 
     @Override

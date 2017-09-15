@@ -11,7 +11,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -43,7 +42,6 @@ import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.LoginEvent;
 import com.example.admin.caipiao33.utils.MyImageLoader;
 import com.example.admin.caipiao33.utils.ResourcesUtil;
-import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.utils.Tools;
 import com.example.admin.caipiao33.utils.UserConfig;
 import com.example.admin.caipiao33.utils.ViewHolder;
@@ -53,7 +51,6 @@ import com.example.admin.caipiao33.views.ScrollingTextView;
 import com.example.admin.caipiao33.views.banner.ImageCycleViewListener;
 import com.example.admin.caipiao33.views.banner.MyBanner;
 import com.example.admin.caipiao33.views.banner.MyVerticalBanner;
-import com.socks.library.KLog;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -297,7 +294,8 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
 
         public void updateData(List<HomePageBean.TypeListBean> typeListBeanList)
         {
-            if (null != list) {
+            if (null != list)
+            {
                 list.clear();
             }
             this.list = typeListBeanList;
