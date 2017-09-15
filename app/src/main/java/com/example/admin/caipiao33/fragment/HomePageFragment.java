@@ -147,9 +147,6 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
         initView();
         mPresenter.loadData();
         EventBus.getDefault().register(this);
-
-        //        String s = "xpIzvGq0MbOAufA6w2uDq3KP5eitmt/pXLC1kIHUfkU=";
-        //        KLog.e("asdfasdf", P2PNative.getInstance().decrypt(s));
         return parentView;
     }
 
