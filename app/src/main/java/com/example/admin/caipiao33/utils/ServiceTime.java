@@ -8,7 +8,7 @@ package com.example.admin.caipiao33.utils;
 public class ServiceTime
 {
     /*
-	 * 偏差 = 服务器时间 - 本地时间
+     * 偏差 = 服务器时间 - 本地时间
 	 */
 
     private static ServiceTime mServiceTime = null;
@@ -37,7 +37,7 @@ public class ServiceTime
     public void proofTime(long serviceTime)
     {
         long localTime = System.currentTimeMillis();
-        offsetTime = serviceTime - localTime;
+        offsetTime = 800 + serviceTime - localTime;
     }
 
     /**

@@ -7,23 +7,24 @@
     >
 
     <android.support.v7.widget.Toolbar
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/toolbar"
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:theme="@style/AppTheme.AppBarOverlay"
+        android:background="?attr/colorPrimary"
         android:gravity="center"
-        android:background="?attr/colorPrimary">
+        android:theme="@style/AppTheme.AppBarOverlay">
 
         <TextView
             android:id="@+id/tv_left"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="left"
-            android:textSize="16sp"
-            android:textColor="@color/white"
+            android:gravity="center"
             android:singleLine="true"
-            android:text="登录"/>
+            android:text="登录"
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -35,32 +36,35 @@
         <TextView
             android:id="@+id/tv_right"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="right"
-            android:textSize="16sp"
-            android:textColor="@color/white"
-            android:singleLine="true"
             android:layout_marginRight="16dp"
-            android:text="注册"/>
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="注册"
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
 
     </android.support.v7.widget.Toolbar>
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
-        android:layout_below="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
         android:addStatesFromChildren="true">
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="none">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 >
+
                 <com.example.admin.caipiao33.views.banner.MyBanner
                     android:id="@+id/myBanner"
                     android:layout_width="match_parent"
@@ -71,18 +75,18 @@
                     android:id="@+id/tv_scroll"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
+                    android:drawableLeft="@mipmap/ilabandex"
+                    android:drawablePadding="10dp"
+                    android:drawableRight="@mipmap/index_pic_08"
+                    android:ellipsize="marquee"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
-                    android:ellipsize="marquee"
                     android:marqueeRepeatLimit="marquee_forever"
-                    android:drawableLeft="@mipmap/ilabandex"
-                    android:drawableRight="@mipmap/index_pic_08"
-                    android:drawablePadding="10dp"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
+                    android:maxLines="1"
+                    android:padding="10dp"
                     android:singleLine="true"
-                    android:maxLines="1"/>
+                    android:textColor="@color/black"
+                    android:textSize="14sp"/>
 
                 <include layout="@layout/item_line"/>
 
@@ -95,10 +99,10 @@
                         android:id="@+id/ll_func_1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
+                        android:layout_weight="1"
                         android:gravity="center"
-                        android:padding="10dp"
-                        android:layout_weight="1">
+                        android:orientation="vertical"
+                        android:padding="10dp">
 
                         <ImageView
                             android:id="@+id/iv_homepage_1"
@@ -110,9 +114,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingTop="5dp"
-                            android:textSize="13sp"
                             android:text="@string/s_homepage_1"
-                            android:textColor="@color/c_homepage_1"/>
+                            android:textColor="@color/c_homepage_1"
+                            android:textSize="13sp"/>
 
                     </LinearLayout>
 
@@ -120,10 +124,10 @@
                         android:id="@+id/ll_func_2"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
+                        android:layout_weight="1"
                         android:gravity="center"
-                        android:padding="10dp"
-                        android:layout_weight="1">
+                        android:orientation="vertical"
+                        android:padding="10dp">
 
                         <ImageView
                             android:id="@+id/iv_homepage_2"
@@ -135,9 +139,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingTop="5dp"
-                            android:textSize="13sp"
                             android:text="@string/s_homepage_2"
-                            android:textColor="@color/c_homepage_2"/>
+                            android:textColor="@color/c_homepage_2"
+                            android:textSize="13sp"/>
 
                     </LinearLayout>
 
@@ -145,46 +149,48 @@
                         android:id="@+id/ll_func_3"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
+                        android:layout_weight="1"
                         android:gravity="center"
-                        android:padding="10dp"
-                        android:layout_weight="1">
+                        android:orientation="vertical"
+                        android:padding="10dp">
 
                         <ImageView
                             android:id="@+id/iv_homepage_3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:src="@mipmap/homepage_3"/>
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingTop="5dp"
-                            android:textSize="13sp"
                             android:text="@string/s_homepage_3"
-                            android:textColor="@color/c_homepage_3"/>
+                            android:textColor="@color/c_homepage_3"
+                            android:textSize="13sp"/>
                     </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/ll_func_4"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
+                        android:layout_weight="1"
                         android:gravity="center"
-                        android:padding="10dp"
-                        android:layout_weight="1">
+                        android:orientation="vertical"
+                        android:padding="10dp">
 
                         <ImageView
                             android:id="@+id/iv_homepage_4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:src="@mipmap/homepage_4"/>
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingTop="5dp"
-                            android:textSize="13sp"
                             android:text="@string/s_homepage_4"
-                            android:textColor="@color/c_homepage_4"/>
+                            android:textColor="@color/c_homepage_4"
+                            android:textSize="13sp"/>
                     </LinearLayout>
 
                 </LinearLayout>
@@ -192,8 +198,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
                     android:background="@color/layout_background"
+                    android:padding="5dp"
                     android:text="@string/s_hot_type"/>
 
                 <include layout="@layout/item_line"/>
@@ -203,13 +209,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/line"
-                    android:horizontalSpacing="1dp"
-                    android:verticalSpacing="1dp"
                     android:cacheColorHint="#00000000"
                     android:fadingEdge="none"
                     android:fadingEdgeLength="0dp"
+                    android:horizontalSpacing="1dp"
+                    android:numColumns="3"
                     android:scrollbars="none"
-                    android:numColumns="3">
+                    android:verticalSpacing="1dp">
 
                 </com.example.admin.caipiao33.views.GridView4ScrollView>
 
@@ -218,8 +224,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
                     android:background="@color/layout_background"
+                    android:padding="5dp"
                     android:text="@string/s_new_win"/>
 
                 <com.example.admin.caipiao33.views.banner.MyVerticalBanner
@@ -236,9 +242,9 @@
 
     <com.example.admin.caipiao33.views.LoadingLayout
         android:id="@+id/loadingLayout"
-        android:layout_below="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
         android:visibility="visible">
 
     </com.example.admin.caipiao33.views.LoadingLayout>
@@ -247,8 +253,8 @@
         android:id="@+id/tv_calc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/d_win_text_size"
         android:text="123"
+        android:textSize="@dimen/d_win_text_size"
         android:visibility="invisible"
         />
 
