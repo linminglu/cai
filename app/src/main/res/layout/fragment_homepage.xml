@@ -18,7 +18,7 @@
         <TextView
             android:id="@+id/tv_left"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:gravity="center"
             android:singleLine="true"
@@ -35,8 +35,8 @@
 
         <TextView
             android:id="@+id/tv_right"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
             android:layout_gravity="right"
             android:layout_marginRight="16dp"
             android:gravity="center"
