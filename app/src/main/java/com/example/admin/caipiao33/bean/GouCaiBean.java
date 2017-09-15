@@ -62,6 +62,7 @@ public class GouCaiBean
         private String endTime;
         private String period;
         private String lastPeriod;
+        private String opentime;
 
         public String getNum()
         {
@@ -131,6 +132,16 @@ public class GouCaiBean
         public void setLastPeriod(String lastPeriod)
         {
             this.lastPeriod = lastPeriod;
+        }
+
+        public String getOpenTime()
+        {
+            return opentime;
+        }
+
+        public void setOpenTime(String openTime)
+        {
+            this.opentime = openTime;
         }
     }
 }

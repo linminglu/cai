@@ -25,6 +25,7 @@ public class BuyRoomBean implements Serializable
     private String playName;
     private String lastPeriod;
     private String endTime;
+    private String opentime;
     private List<PlayDetailListBean> playDetailList;
     private List<PlayListBean> playList;
     private List<RoomListBean> roomList;
@@ -33,6 +34,16 @@ public class BuyRoomBean implements Serializable
      */
 
     private SxNamesBean sxNames;
+
+    public String getOpentime()
+    {
+        return opentime;
+    }
+
+    public void setOpentime(String opentime)
+    {
+        this.opentime = opentime;
+    }
 
     public List<RoomListBean> getRoomList()
     {

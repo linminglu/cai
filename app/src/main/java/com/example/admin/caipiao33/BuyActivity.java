@@ -201,7 +201,7 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
         tvRoom.setText(ss);
         mEndTime = bean.getEndTime();
         mLastOpen = bean.getLastOpen();
-        tvLotteryTime.setText(getString(R.string.s_lottery_time, DateUtils.getTimeStr(Long.valueOf(StringUtils.isEmpty2(mEndTime) ? "0" : mEndTime), "yyyy-MM-dd HH:mm:ss")));
+        setLotteryTime(bean.getOpentime(), bean.getEndTime());
         tvIndex.setText(bean.getLastPeriod() + "期");
         if (null == resultAssist) {
             resultAssist = new ResultAssist(getLayoutInflater(), layoutResult, bean, bean.getLastOpen());
@@ -288,12 +288,27 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
         int start = mTitleStr.length() + mBuyRoomBean.getRoomName().length() + 2;
         ss.setSpan(new ForegroundColorSpan(Color.parseColor("#C30D23")), start, start+result.getPeriod().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         tvRoom.setText(ss);
-        tvLotteryTime.setText(getString(R.string.s_lottery_time, DateUtils.getTimeStr(Long.valueOf(mEndTime), "yyyy-MM-dd HH:mm:ss")));
+        setLotteryTime(result.getOpenTime(), result.getEndTime());
         tvIndex.setText(result.getLastPeriod() + "期");
         if (null == resultAssist) {
             resultAssist = new ResultAssist(getLayoutInflater(), layoutResult, mBuyRoomBean, result.getLastOpen());
         } else {
             resultAssist.updateData(result.getLastOpen());
+        }
+    }
+
+    private void setLotteryTime(String openTime, String endTime) {
+        if (StringUtils.isEmpty(openTime)) {
+            if (StringUtils.isEmpty(endTime)) {
+                endTime = "0";
+            }
+            tvLotteryTime.setText(getString(R.string.s_lottery_time, DateUtils.getTimeStr(Long.valueOf(endTime), "yyyy-MM-dd HH:mm:ss")));
+            return;
+        }
+        try {
+            tvLotteryTime.setText(getString(R.string.s_lottery_time, DateUtils.getTimeStr(Long.valueOf(openTime), "yyyy-MM-dd HH:mm:ss")));
+        } catch (Exception e) {
+            tvLotteryTime.setText(openTime);
         }
     }
 
