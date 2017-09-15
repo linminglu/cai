@@ -25,15 +25,30 @@ import com.example.admin.caipiao33.BaseFragment;
 import com.example.admin.caipiao33.MainActivity;
 import com.example.admin.caipiao33.R;
 import com.example.admin.caipiao33.bean.GouCaiBean;
+import com.example.admin.caipiao33.bean.ServiceTimeBean;
 import com.example.admin.caipiao33.contract.IGouCaiContract;
+import com.example.admin.caipiao33.encryption.CreateCode;
+import com.example.admin.caipiao33.httputils.FirstService;
+import com.example.admin.caipiao33.httputils.MyGsonConverterFactory;
 import com.example.admin.caipiao33.presenter.GouCaiPresenter;
+import com.example.admin.caipiao33.utils.Constants;
+import com.example.admin.caipiao33.utils.ServiceTime;
 import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.views.LoadingLayout;
+import com.google.gson.Gson;
 import com.socks.library.KLog;
+
+import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import okhttp3.OkHttpClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 /**
  * Description : 购彩页面
@@ -83,7 +98,63 @@ public class GouCaiFragment extends BaseFragment implements IGouCaiContract.View
         initView();
         mPresenter = new GouCaiPresenter(this);
         mPresenter.loadData();
+
+        test();
+
         return parentView;
+    }
+
+    private void test()
+    {
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+
+        Retrofit build = new Retrofit.Builder().client(builder.build())
+                .baseUrl("http://api.k780.com:88/")
+                .addConverterFactory(MyGsonConverterFactory.create())
+                //                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .build();
+        Call<String> call;
+        FirstService firstService = build.create(FirstService.class);
+        HashMap<String, String> params = new HashMap<>();
+        params.put("app", "life.time");
+        params.put("appkey", "10003");
+        params.put("sign", "b59bc3ef6191eb9f747dd4e83c99f2a4");
+        params.put("format", "json");
+        call = firstService.getRepos(params);
+        call.enqueue(new Callback<String>()
+        {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response)
+            {
+                try
+                {
+                    int responseCode = response.code();
+                    if (responseCode != 200)
+                    {
+                        String string = "网络异常！";
+                        KLog.d("errorNo: " + responseCode + " strMsg: " + response.errorBody()
+                                .string());
+                        return;
+                    }
+                    String result = response.body();
+                    ServiceTimeBean o = new Gson().fromJson(result, ServiceTimeBean.class);
+                    String timestamp = o.getResult().getTimestamp();
+                    ServiceTime.getInstance().proofTime(Long.valueOf(timestamp + "000"));
+                }
+                catch (Exception e)
+                {
+                    KLog.d(response.body());
+                    e.printStackTrace();
+                    return;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t)
+            {
+
+            }
+        });
     }
 
     private void initView()

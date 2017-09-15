@@ -158,7 +158,7 @@ public class DateUtils
     }
 
     public static String getHMS(long totalSeconds) {
-        int hh = (int) (totalSeconds / 60 / 60 % 60);
+        int hh = (int) (totalSeconds / 60 / 60);
         int mm = (int) (totalSeconds / 60 % 60);
         int ss = (int) (totalSeconds % 60);
         return (hh < 10 ? "0" + hh : hh) + ":" +

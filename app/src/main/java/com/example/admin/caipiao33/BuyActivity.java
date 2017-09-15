@@ -31,6 +31,7 @@ import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.presenter.BuyPresenter;
 import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.DateUtils;
+import com.example.admin.caipiao33.utils.ServiceTime;
 import com.example.admin.caipiao33.utils.StringUtils;
 import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.utils.UserConfig;
@@ -279,6 +280,10 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
         }
         mEndTime = result.getEndTime();
         mLastOpen = result.getLastOpen();
+        // 更新期数
+        mBuyRoomBean.setEndTime(mEndTime);
+        mBuyRoomBean.setPeriod(result.getPeriod());
+        mBuyRoomBean.setLastPeriod(result.getLastPeriod());
         SpannableString ss = new SpannableString(mTitleStr + " " + mBuyRoomBean.getRoomName() + " " + result.getPeriod() + "期");
         int start = mTitleStr.length() + mBuyRoomBean.getRoomName().length() + 2;
         ss.setSpan(new ForegroundColorSpan(Color.parseColor("#C30D23")), start, start+result.getPeriod().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -409,10 +414,10 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
      */
     private void reSetPartUI()
     {
-        long currentTimeMillis = System.currentTimeMillis();
 
         if (!StringUtils.isEmpty(mEndTime)) {
             long lEndTime = Long.valueOf(mEndTime);
+            long currentTimeMillis = ServiceTime.getInstance().getCurrentTimeMillis();
             long temp = lEndTime - currentTimeMillis;
             if (temp <= 0) {
                 temp = 0;

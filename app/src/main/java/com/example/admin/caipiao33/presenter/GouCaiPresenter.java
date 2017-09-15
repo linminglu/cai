@@ -74,4 +74,5 @@ public class GouCaiPresenter implements IGouCaiContract.Presenter
     private void baseRequest(MyResponseListener listener) {
         HttpUtil.requestFirst("hall", GouCaiBean.class, mView.getBaseActivity(), listener, null);
     }
+
 }

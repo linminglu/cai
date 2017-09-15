@@ -29,6 +29,7 @@ import com.example.admin.caipiao33.presenter.GouCaiItemPresenter;
 import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.DateUtils;
 import com.example.admin.caipiao33.utils.MyImageLoader;
+import com.example.admin.caipiao33.utils.ServiceTime;
 import com.example.admin.caipiao33.utils.StringUtils;
 import com.example.admin.caipiao33.utils.Tools;
 import com.example.admin.caipiao33.views.DividerGridItemDecoration;
@@ -142,6 +143,7 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
         @Override
         public void run()
         {
+            long l = System.currentTimeMillis();
             GouCaiFragment fragment = (GouCaiFragment) getParentFragment();
             if (!fragment.isLinearLayout || !isVisible) {
                 mHandler.removeCallbacks(this);
@@ -150,9 +152,10 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
             // 页面不在滑动状态才更新
             if (recyclerView.getScrollState() == RecyclerView.SCROLL_STATE_IDLE) {
                 adapter.notifyDataSetChanged();
-            KLog.e("timerRunnable");
+                KLog.e("timerRunnable");
             }
-            mHandler.postDelayed(this, LIMIT_TIME);
+            long temp = System.currentTimeMillis() - l;
+            mHandler.postDelayed(this, LIMIT_TIME - temp);
         }
     };
 
@@ -264,7 +267,7 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
                 updateUILayout();
             }
             mHandler.removeCallbacks(timerRunnable);
-            mHandler.postDelayed(timerRunnable, LIMIT_TIME);
+            mHandler.post(timerRunnable);
         } else {
             RecyclerView.Adapter adapter = recyclerView.getAdapter();
             if (adapter != null && adapter instanceof MyGouCaiGrideAdapter) {
@@ -278,6 +281,8 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
     public void updateUILayout() {
         GouCaiFragment fragment = (GouCaiFragment) getParentFragment();
         if (fragment.isLinearLayout) {
+            mHandler.removeCallbacks(timerRunnable);
+            mHandler.post(timerRunnable);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerView.removeItemDecoration(gridDecor);
             recyclerView.addItemDecoration(lineDecor);
@@ -436,6 +441,9 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
             switch (view.getId()) {
                 case R.id.parent:
                     int position = getAdapterPosition();
+                    if (position == -1) {
+                        return;
+                    }
                     GouCaiBean.DataBean dataBean = mDataList.get(position);
                     mPresenter.requestRoomData(dataBean.getNum(), dataBean.getName());
                     break;
@@ -485,18 +493,18 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
             GouCaiBean.DataBean dataBean = mDataList.get(position);
             holder1.tvTitle.setText(dataBean.getName());
             MyImageLoader.displayImage(HttpUtil.mNewUrl + dataBean.getPic(), holder1.iv, getContext());
-            holder1.tvIndex.setText(getResources().getString(R.string.s_qishu, dataBean.getPeriod()));
-            holder1.tvRemainIndex.setText(getResources().getString(R.string.s_qishu_jiezhi, dataBean.getLastPeriod()));
+            holder1.tvIndex.setText(getResources().getString(R.string.s_qishu, dataBean.getLastPeriod()));
+            holder1.tvRemainIndex.setText(getResources().getString(R.string.s_qishu_jiezhi, dataBean.getPeriod()));
             String lastOpen = dataBean.getLastOpen();
             if (StringUtils.isEmpty(lastOpen)) {
                 holder1.tvResult.setText("等待开奖");
             } else {
                 holder1.tvResult.setText(lastOpen);
             }
-            long currentTimeMillis = System.currentTimeMillis();
             String endTime = dataBean.getEndTime();
             if (!StringUtils.isEmpty(endTime)) {
                 long lEndTime = Long.valueOf(endTime);
+                long currentTimeMillis = ServiceTime.getInstance().getCurrentTimeMillis();
                 long temp = lEndTime - currentTimeMillis;
                 if (temp <= 0) {
                     temp = 0;

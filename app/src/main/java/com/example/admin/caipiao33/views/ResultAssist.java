@@ -39,6 +39,13 @@ public class ResultAssist
     {
         if (StringUtils.isEmpty(lastOpen)) {
             if (StringUtils.isEmpty(mLastOpen)) {
+                // 首次就是为空的情况处理
+                if (layoutResult.getChildCount() == 0) {
+                    if (null == tvWait) {
+                        tvWait = (TextView) mInflater.inflate(R.layout.item_wait_text, layoutResult, false);
+                    }
+                    layoutResult.addView(tvWait);
+                }
                 return;
             }
             layoutResult.removeAllViews();
