@@ -67,7 +67,7 @@ public class MainActivity extends BaseActivity
                 if (StringUtils.isEmpty(updateUrl) || !updateUrl.endsWith("apk"))
                 {
                     ToastUtil.show("自动更新网址不对");
-                    return;
+//                    return;
                 }
                 boolean isNormal = false;
                 if (appVersionCode < intLowVersion)

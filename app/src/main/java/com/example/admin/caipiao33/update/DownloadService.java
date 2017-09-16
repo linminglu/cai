@@ -74,7 +74,7 @@ public class DownloadService extends IntentService
             in = urlConnection.getInputStream();
             File dir = StorageUtils.getCacheDirectory(this);
             //            String apkName = urlStr.substring(urlStr.lastIndexOf("/") + 1, urlStr.length());
-            String apkName = "xiaoyujia.apk";
+            String apkName = "cai89.apk";
             File apkFile = new File(dir, apkName);
             out = new FileOutputStream(apkFile);
             byte[] buffer = new byte[BUFFER_SIZE];
@@ -106,7 +106,7 @@ public class DownloadService extends IntentService
             if (Build.VERSION.SDK_INT >= 24)
             { //判读版本是否在7.0以上
                 //参数1 上下文, 参数2 Provider主机地址 和配置文件中保持一致   参数3  共享的文件
-                Uri apkUri = FileProvider.getUriForFile(this, "com.jiahome.user.fileprovider", apkFile);
+                Uri apkUri = FileProvider.getUriForFile(this, "com.example.admin.caipiao33.fileprovider", apkFile);
                 //添加这一句表示对目标应用临时授权该Uri所代表的文件
                 brIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 brIntent.putExtra("fileuri", apkUri);
