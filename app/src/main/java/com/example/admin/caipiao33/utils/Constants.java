@@ -50,4 +50,10 @@ public interface Constants
     String EXTRA_TOPUP_PAYID = "extra_topup_payid";
     String EXTRA_BUY_RECORD_ID = "extra_buy_record_id";
     String EXTRA_BUY_GAME_ID = "extra_buy_game_id";
+
+    int UPDATE_LOCAL_NOTIFICATION = 1;
+    int CREATE_LOCAL_NOTIFICATION = 2;
+    int ADD_LOCAL_NOTIFICATION = 3;
+    int CLEAR_LOCAL_NOTIFICATION = 4;
+    int DELETE_LOCAL_NOTIFICATION = 5;
 }

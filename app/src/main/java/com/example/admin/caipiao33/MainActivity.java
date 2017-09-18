@@ -1,5 +1,7 @@
 package com.example.admin.caipiao33;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,6 +28,7 @@ import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.StringUtils;
 import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.utils.UserConfig;
+import com.umeng.analytics.MobclickAgent;
 
 public class MainActivity extends BaseActivity
 {
@@ -34,6 +37,18 @@ public class MainActivity extends BaseActivity
     private Controller controller;
     private Handler handler = new Handler();
     private String type;
+    private MyReceiver myReceiver;
+    private Context mContext;
+    private final String mPageName = "MainActivity";
+
+    class MyReceiver extends BroadcastReceiver
+    {
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+        }
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -42,6 +57,12 @@ public class MainActivity extends BaseActivity
         setContentView(R.layout.activity_main);
         initView();
         showUpdateDialog();
+        mContext = this;
+        MobclickAgent.setDebugMode(true);
+        // SDK在统计Fragment时，需要关闭Activity自带的页面统计，
+        // 然后在每个页面中重新集成页面统计的代码(包括调用了 onResume 和 onPause 的Activity)。
+        MobclickAgent.openActivityDurationTrack(false);
+        MobclickAgent.setScenarioType(mContext, MobclickAgent.EScenarioType.E_UM_NORMAL);
 
     }
 
@@ -67,7 +88,7 @@ public class MainActivity extends BaseActivity
                 if (StringUtils.isEmpty(updateUrl) || !updateUrl.endsWith("apk"))
                 {
                     ToastUtil.show("自动更新网址不对");
-//                    return;
+                    //                    return;
                 }
                 boolean isNormal = false;
                 if (appVersionCode < intLowVersion)
@@ -132,6 +153,16 @@ public class MainActivity extends BaseActivity
     protected void onResume()
     {
         super.onResume();
+        MobclickAgent.onPageStart(mPageName);
+        MobclickAgent.onResume(mContext);
+    }
+
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        MobclickAgent.onPageEnd(mPageName);
+        MobclickAgent.onPause(mContext);
     }
 
     //解决onResume获取不到传递的Intent

@@ -20,6 +20,7 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
     <application
         android:name=".application.MyApplication"
@@ -50,7 +51,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
+                android:resource="@xml/file_paths"/>
         </provider>
 
         <activity
@@ -290,6 +291,15 @@
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait">
         </activity>
+
+        <!-- 使用完全自定义消息来开启应用的服务进程的示例服务配置 -->
+        <!-- 不是必需的服务，可以根据开发者的需求进行设置 -->
+        <service android:name="com.example.admin.caipiao33.notification.NotificationService"/>
+        <service android:name="com.example.admin.caipiao33.notification.MyPushIntentService"/>
+        <service android:name="com.example.admin.caipiao33.notification.UmengNotificationService"/>
+        <service android:name="com.example.admin.caipiao33.notification.MyNotificationService"/>
+
+        <receiver android:name="com.example.admin.caipiao33.notification.NotificationBroadcast"/>
     </application>
 
 </manifest>

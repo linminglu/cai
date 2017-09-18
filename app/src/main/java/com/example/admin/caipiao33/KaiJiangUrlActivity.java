@@ -1,5 +1,6 @@
 package com.example.admin.caipiao33;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -125,7 +126,7 @@ public class KaiJiangUrlActivity extends ToolbarActivity implements Toolbar.OnMe
         switch (item.getItemId())
         {
             case R.id.action_jintian: // 今天
-                mUrl = getIntent().getStringExtra(Constants.EXTRA_URL) + "&dayType=4";
+                mUrl = getIntent().getStringExtra(Constants.EXTRA_URL) + "&dayType=0";
                 webView.loadUrl(mUrl);
                 break;
             case R.id.action_zuotian: // 昨天
