@@ -60,7 +60,7 @@ public class MyApplication extends Application
         });
 
         PushAgent mPushAgent = PushAgent.getInstance(this);
-        mPushAgent.setResourcePackageName("com.example.admin.caipiao33");
+//        mPushAgent.setResourcePackageName("com.example.admin.caipiao33");
         //注册推送服务，每次调用register方法都会回调该接口
         mPushAgent.register(new IUmengRegisterCallback() {
 
