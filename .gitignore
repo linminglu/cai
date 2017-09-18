@@ -8,6 +8,6 @@
 /captures
 .externalNativeBuild
 app-release.apk
-libs/
+#libs/
 src/androidTest/
 src/test/
