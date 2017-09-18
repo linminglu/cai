@@ -411,7 +411,7 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
             tvContent.setText(Html.fromHtml(popNotice.getContent()));
             final String id = popNotice.getId();
             new MaterialDialog.Builder(mainActivity).title(popNotice.getTitle())
-                    .customView(view, false)
+                    .customView(view, true)
                     .positiveText("不再提示")
                     .positiveColor(getResources().getColor(R.color.blue))
                     .negativeText("知道了")
