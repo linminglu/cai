@@ -6,6 +6,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -37,6 +38,10 @@ public class ChangeBankActivity extends ToolbarActivity implements Toolbar.OnMen
     EditText changebankcardPasswordEt;
     @BindView(R.id.btn_changebankcard)
     Button btnChangebankcard;
+    @BindView(R.id.changebankcard_otherbank_et)
+    EditText changebankcardOtherbankEt;
+    @BindView(R.id.changebankcard_otherbank_ll)
+    LinearLayout changebankcardOtherbankLl;
     private IChangeBankCardContract.Presenter mPresenter;
     private int hasbank;
     private String kaihubank;
@@ -136,10 +141,16 @@ public class ChangeBankActivity extends ToolbarActivity implements Toolbar.OnMen
                 }
                 if (kaihubank.equals("其他"))
                 {
+                    if (StringUtils.isEmpty2(changebankcardOtherbankEt.getText().toString()))
+                    {
+                        ToastUtil.show("请输入其他银行的名称！");
+                        return;
+                    }
                     mPresenter.changeBankCard(changebankcardPasswordEt.getText()
                             .toString(), changebankcardKaihurenEt.getText()
                             .toString(), changebankcardZhanghaoEt.getText()
-                            .toString(), "null", changebankcardShengfenEt.getText()
+                            .toString(), changebankcardOtherbankEt.getText()
+                            .toString(), changebankcardShengfenEt.getText()
                             .toString(), changebankcardCityEt.getText().toString(), "other");
                 }
                 else
@@ -173,6 +184,12 @@ public class ChangeBankActivity extends ToolbarActivity implements Toolbar.OnMen
                         {
                             kaihubank = banknames[which];
                             changebankcardKaihuyinhangTv.setText(banknames[which]);
+                            changebankcardOtherbankLl.setVisibility(View.GONE);
+                        }
+                        if (banknames[which].equals("其他"))
+                        {
+                            //TODO
+                            changebankcardOtherbankLl.setVisibility(View.VISIBLE);
                         }
                         return true;
                     }

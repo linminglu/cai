@@ -62,6 +62,7 @@ public class WebUrlActivity extends BaseActivity
         webView = (WebView) findViewById(R.id.protocol_webView);
         webView.loadUrl(mUrl);
         webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setUserAgentString("Android_Lottery");
         mProgressbar = (ProgressBar) findViewById(R.id.protocol_progressbar);
         webView.setWebViewClient(new WebViewClient()
         {
