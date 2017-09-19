@@ -224,7 +224,7 @@ public class AliPayFragment extends BaseFragment implements View.OnClickListener
                                 {
                                     String url = payAdapter.getBeanContents()
                                             .get(i)
-                                            .getPayImg() + "/common/recharge/third?memberId=" + UserConfig
+                                            .getPayImg() + "/common/recharge/third?isH5=1&memberId=" + UserConfig
                                             .getInstance()
                                             .getToken(topupActivity)
                                             .getMemberId() + "&type=2&payId=" + payAdapter.getBeanContents()

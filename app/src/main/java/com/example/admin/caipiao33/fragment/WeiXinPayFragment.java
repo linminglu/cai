@@ -207,7 +207,7 @@ public class WeiXinPayFragment extends BaseFragment implements View.OnClickListe
                                 {
                                     String url = payAdapter.getBeanContents()
                                             .get(i)
-                                            .getPayImg() + "/common/recharge/third?memberId=" + UserConfig
+                                            .getPayImg() + "/common/recharge/third?isH5=1&memberId=" + UserConfig
                                             .getInstance()
                                             .getToken(topupActivity)
                                             .getMemberId() + "&type=1&payId=" + payAdapter.getBeanContents()

@@ -171,8 +171,10 @@ public class ConfirmBuyDialog implements View.OnClickListener
                 .show();
     }
 
-    public void setGridNumColumns(int gridNumColumns) {
-        if (null != gridView) {
+    public void setGridNumColumns(int gridNumColumns)
+    {
+        if (null != gridView)
+        {
             gridView.setNumColumns(gridNumColumns);
         }
     }
@@ -229,23 +231,23 @@ public class ConfirmBuyDialog implements View.OnClickListener
                 etMoney.setSelection(etMoney.length());
                 break;
             case R.id.tv_500:
-                etMoney.setText(updateMoney(100));
+                etMoney.setText(updateMoney(500));
                 etMoney.setSelection(etMoney.length());
                 break;
             case R.id.tv_1000:
-                etMoney.setText(updateMoney(100));
+                etMoney.setText(updateMoney(1000));
                 etMoney.setSelection(etMoney.length());
                 break;
             case R.id.tv_5000:
-                etMoney.setText(updateMoney(100));
+                etMoney.setText(updateMoney(5000));
                 etMoney.setSelection(etMoney.length());
                 break;
             case R.id.tv_10000:
-                etMoney.setText(updateMoney(100));
+                etMoney.setText(updateMoney(10000));
                 etMoney.setSelection(etMoney.length());
                 break;
             case R.id.tv_50000:
-                etMoney.setText(updateMoney(100));
+                etMoney.setText(updateMoney(50000));
                 etMoney.setSelection(etMoney.length());
                 break;
             case R.id.tv_clear:

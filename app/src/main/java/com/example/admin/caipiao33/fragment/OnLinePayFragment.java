@@ -130,7 +130,7 @@ public class OnLinePayFragment extends BaseFragment implements View.OnClickListe
                         if (isCanNext(topupActivity.getTopupAmount(), onLinePayBean.getMinAmount(), onLinePayBean
                                 .getMaxAmount()))
                         {
-                            String url = onLinePayBean.getPayUrl() + "/common/recharge/third?memberId=" + UserConfig
+                            String url = onLinePayBean.getPayUrl() + "/common/recharge/third?isH5=1&memberId=" + UserConfig
                                     .getInstance()
                                     .getToken(topupActivity)
                                     .getMemberId() + "&type=4&payId=" + onLinePayBean.getId() + "&amount=" + topupActivity
