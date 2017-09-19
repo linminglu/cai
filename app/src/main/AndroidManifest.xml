@@ -32,11 +32,11 @@
 
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="59bf16fd5312dd58d200012d">
+            android:value="59c06d245312dd8ec100000e">
         </meta-data>
         <meta-data
             android:name="UMENG_MESSAGE_SECRET"
-            android:value="77b8998ece2867cb5a2287a8c58f5f09">
+            android:value="57a87e9008e13a8a06865938e87f5931">
         </meta-data>
 
         <service
