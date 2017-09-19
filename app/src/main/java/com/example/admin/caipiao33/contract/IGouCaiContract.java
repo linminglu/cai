@@ -10,13 +10,17 @@ import com.example.admin.caipiao33.bean.GouCaiBean;
 
 public interface IGouCaiContract
 {
-    interface View extends IBaseView {
+    interface View extends IBaseView
+    {
         void updateHomePage(GouCaiBean bean);
+
         void hideRefreshing();
     }
 
-    interface Presenter extends IBasePresenter {
+    interface Presenter extends IBasePresenter
+    {
         void loadData();
+
         void refreshData();
     }
 }

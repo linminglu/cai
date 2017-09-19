@@ -17,16 +17,16 @@ public class StringConverter implements Converter<ResponseBody, String>
     @Override
     public String convert(ResponseBody value) throws IOException
     {
-//        Gson gson = new Gson();
-//        BaseResponseBean baseResponseBean = gson.fromJson(value.string(), BaseResponseBean.class);
-//        String result1 = baseResponseBean.getResult();
-//        if (!StringUtils.isEmpty(result1))
-//        {
-//            String decrypt = P2PNative.getInstance().decrypt(result1);
-//            baseResponseBean.setResult(decrypt);
-//        }
-//        String result = gson.toJson(baseResponseBean, BaseResponseBean.class);
-//        KLog.e(result);
+        //        Gson gson = new Gson();
+        //        BaseResponseBean baseResponseBean = gson.fromJson(value.string(), BaseResponseBean.class);
+        //        String result1 = baseResponseBean.getResult();
+        //        if (!StringUtils.isEmpty(result1))
+        //        {
+        //            String decrypt = P2PNative.getInstance().decrypt(result1);
+        //            baseResponseBean.setResult(decrypt);
+        //        }
+        //        String result = gson.toJson(baseResponseBean, BaseResponseBean.class);
+        //        KLog.e(result);
         return value.string();
     }
 }

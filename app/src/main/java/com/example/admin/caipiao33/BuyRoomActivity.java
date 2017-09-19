@@ -2,7 +2,6 @@ package com.example.admin.caipiao33;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -24,9 +23,9 @@ import butterknife.OnClick;
 
 /**
  * 需要调用者传入
- *   title -- Constants.EXTRA_TITLE
- *   bean -- Constants.EXTRA_BUY_ROOM_BEAN
- *
+ * title -- Constants.EXTRA_TITLE
+ * bean -- Constants.EXTRA_BUY_ROOM_BEAN
+ * <p>
  * 购彩房间列表页
  */
 public class BuyRoomActivity extends BaseActivity
@@ -91,11 +90,14 @@ public class BuyRoomActivity extends BaseActivity
         }
 
         @OnClick(R.id.parent)
-        public void onViewClicked(View view) {
-            switch (view.getId()) {
+        public void onViewClicked(View view)
+        {
+            switch (view.getId())
+            {
                 case R.id.parent:
                     int position = getAdapterPosition();
-                    BuyRoomBean.RoomListBean roomListBean = mBuyRoomBean.getRoomList().get(position);
+                    BuyRoomBean.RoomListBean roomListBean = mBuyRoomBean.getRoomList()
+                            .get(position);
                     Intent intent = new Intent(BuyRoomActivity.this, BuyActivity.class);
                     intent.putExtra(Constants.EXTRA_TITLE, mTitleStr);
                     intent.putExtra(Constants.EXTRA_NUMBER, mBuyRoomBean.getNum());

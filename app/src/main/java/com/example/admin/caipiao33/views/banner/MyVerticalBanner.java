@@ -91,13 +91,16 @@ public class MyVerticalBanner extends LinearLayout
         }
         mAdvAdapter = new VerticalCycleAdapter(mContext, winList);
         mAdvPager.setAdapter(mAdvAdapter);
-        try {
+        try
+        {
             Field mField = ViewPager.class.getDeclaredField("mScroller");
             mField.setAccessible(true);
             FixedSpeedScroller mScroller = new FixedSpeedScroller(mAdvPager.getContext(), new LinearInterpolator());
             mField.set(mAdvPager, mScroller);
             mScroller.setmDuration(800);
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
         startImageTimerTask();
@@ -246,11 +249,12 @@ public class MyVerticalBanner extends LinearLayout
             {
                 layout = new LinearLayout(mContext);
                 layout.setOrientation(LinearLayout.VERTICAL);
-//                ViewGroup.LayoutParams layoutParams = layout.getLayoutParams();
-//                if (null == layoutParams) {
-//                    layoutParams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-//                }
-                for (int i = 0; i < 5; i++) {
+                //                ViewGroup.LayoutParams layoutParams = layout.getLayoutParams();
+                //                if (null == layoutParams) {
+                //                    layoutParams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+                //                }
+                for (int i = 0; i < 5; i++)
+                {
                     View itemView = LayoutInflater.from(mContext)
                             .inflate(R.layout.item_vertical_view_pager, null);
                     layout.addView(itemView);
@@ -262,7 +266,8 @@ public class MyVerticalBanner extends LinearLayout
             }
 
             int childCount = layout.getChildCount();
-            for (int i = 0; i < childCount; i++) {
+            for (int i = 0; i < childCount; i++)
+            {
                 View itemView = layout.getChildAt(i);
                 TextView tvLeft = ViewHolder.get(itemView, R.id.tv_left);
                 TextView tvCenter = ViewHolder.get(itemView, R.id.tv_center);

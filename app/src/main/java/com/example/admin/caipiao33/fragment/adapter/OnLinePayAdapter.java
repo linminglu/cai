@@ -11,12 +11,9 @@ import android.widget.TextView;
 import com.example.admin.caipiao33.BaseActivity;
 import com.example.admin.caipiao33.R;
 import com.example.admin.caipiao33.bean.OnLinePayBean;
-import com.example.admin.caipiao33.bean.WeiXinPayBean;
 import com.example.admin.caipiao33.utils.ViewHolder;
 
 import java.util.ArrayList;
-
-import static com.example.admin.caipiao33.R.id.item_weixinpay_cb;
 
 /**
  * Description :

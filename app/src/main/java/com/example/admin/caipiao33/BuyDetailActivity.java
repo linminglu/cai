@@ -6,7 +6,6 @@ import android.speech.tts.TextToSpeech;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -14,18 +13,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.admin.caipiao33.bean.BuyRoomBean;
-import com.example.admin.caipiao33.encryption.CreateCode;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.httputils.MyResponseListener;
 import com.example.admin.caipiao33.utils.Constants;
-import com.socks.library.KLog;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,10 +26,10 @@ import butterknife.OnClick;
 
 /**
  * 投注中奖记录
- *
+ * <p>
  * 需要调用者传入
- *     Constants.EXTRA_BUY_RECORD_ID
- *     Constants.EXTRA_BUY_GAME_ID
+ * Constants.EXTRA_BUY_RECORD_ID
+ * Constants.EXTRA_BUY_GAME_ID
  */
 public class BuyDetailActivity extends BaseActivity
 {

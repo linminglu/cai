@@ -1,7 +1,6 @@
 package com.example.admin.caipiao33.presenter;
 
 import com.example.admin.caipiao33.bean.BuyRecordBean;
-import com.example.admin.caipiao33.bean.BuyRoomBean;
 import com.example.admin.caipiao33.contract.IBuyRecordContract;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.httputils.MyResponseListener;
@@ -17,7 +16,8 @@ public class BuyRecordPresenter implements IBuyRecordContract.Presenter
     private IBuyRecordContract.View mView;
     private boolean isFirst;
 
-    public BuyRecordPresenter(IBuyRecordContract.View view) {
+    public BuyRecordPresenter(IBuyRecordContract.View view)
+    {
         this.mView = view;
     }
 
@@ -102,7 +102,8 @@ public class BuyRecordPresenter implements IBuyRecordContract.Presenter
         });
     }
 
-    private void requset(String type, String page, MyResponseListener listener) {
+    private void requset(String type, String page, MyResponseListener listener)
+    {
         HashMap<String, String> map = new HashMap<>();
         map.put("type", type);
         map.put("page", page);

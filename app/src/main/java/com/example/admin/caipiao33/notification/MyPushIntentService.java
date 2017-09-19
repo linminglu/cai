@@ -23,8 +23,10 @@ public class MyPushIntentService extends UmengMessageService
     private static final String TAG = MyPushIntentService.class.getName();
 
     @Override
-    public void onMessage(Context context, Intent intent) {
-        try {
+    public void onMessage(Context context, Intent intent)
+    {
+        try
+        {
             //可以通过MESSAGE_BODY取得消息体
             String message = intent.getStringExtra(AgooConstants.MESSAGE_BODY);
             UMessage msg = new UMessage(new JSONObject(message));
@@ -37,10 +39,13 @@ public class MyPushIntentService extends UmengMessageService
 
             // 对完全自定义消息的处理方式，点击或者忽略
             boolean isClickOrDismissed = true;
-            if (isClickOrDismissed) {
+            if (isClickOrDismissed)
+            {
                 //完全自定义消息的点击统计
                 UTrack.getInstance(getApplicationContext()).trackMsgClick(msg);
-            } else {
+            }
+            else
+            {
                 //完全自定义消息的忽略统计
                 UTrack.getInstance(getApplicationContext()).trackMsgDismissed(msg);
             }
@@ -52,7 +57,8 @@ public class MyPushIntentService extends UmengMessageService
             JSONObject json = new JSONObject(msg.custom);
             String topic = json.getString("topic");
             UmLog.d(TAG, "topic=" + topic);
-            if (topic != null && topic.equals("appName:startService")) {
+            if (topic != null && topic.equals("appName:startService"))
+            {
                 // 在友盟portal上新建自定义消息，自定义消息文本如下
                 //{"topic":"appName:startService"}
                 if (Helper.isServiceRunning(context, NotificationService.class.getName()))
@@ -60,7 +66,9 @@ public class MyPushIntentService extends UmengMessageService
                 Intent intent1 = new Intent();
                 intent1.setClass(context, NotificationService.class);
                 context.startService(intent1);
-            } else if (topic != null && topic.equals("appName:stopService")) {
+            }
+            else if (topic != null && topic.equals("appName:stopService"))
+            {
                 // 在友盟portal上新建自定义消息，自定义消息文本如下
                 //{"topic":"appName:stopService"}
                 if (!Helper.isServiceRunning(context, NotificationService.class.getName()))
@@ -69,7 +77,9 @@ public class MyPushIntentService extends UmengMessageService
                 intent1.setClass(context, NotificationService.class);
                 context.stopService(intent1);
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             UmLog.e(TAG, e.getMessage());
         }
     }

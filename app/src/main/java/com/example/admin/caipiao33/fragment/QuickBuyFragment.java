@@ -73,32 +73,44 @@ public class QuickBuyFragment extends BaseFragment
         }
     }
 
-    public void updateBuyRoomBean(BuyRoomBean bean) {
+    public void updateBuyRoomBean(BuyRoomBean bean)
+    {
         mBuyRoomBean = bean;
         List<BuyRoomBean.PlayDetailListBean> playDetailList = bean.getPlayDetailList();
-        if (null == playDetailList) {
+        if (null == playDetailList)
+        {
             return;
         }
         String num = mBuyRoomBean.getNum();
-        if (num.equals(MyBaseBuyAdapter.TYPE_SIX)) {
+        if (num.equals(MyBaseBuyAdapter.TYPE_SIX))
+        {
             String playName = mBuyRoomBean.getPlayName();
-            if (mType == TYPE_SELF_SELECT && playName.equals("自选不中")) {
+            if (mType == TYPE_SELF_SELECT && playName.equals("自选不中"))
+            {
                 adapter = new TypeSix26Adapter(mInflater, mBuyRoomBean, mType);
-            } else if (mType == TYPE_SELF_SELECT && playName.equals("连码")) {
+            }
+            else if (mType == TYPE_SELF_SELECT && playName.equals("连码"))
+            {
                 adapter = new TypeSix28Adapter(mInflater, mBuyRoomBean, mType);
-            } else if (mType == TYPE_SELF_SELECT && playName.equals("合肖")) {
+            }
+            else if (mType == TYPE_SELF_SELECT && playName.equals("合肖"))
+            {
                 adapter = new TypeSix6Adapter(mInflater, mBuyRoomBean, mType);
-            } else {
+            }
+            else
+            {
                 adapter = new TypeSixAdapter(mInflater, mBuyRoomBean, mType);
             }
 
-        } else {
+        }
+        else
+        {
             adapter = new TypeBeforeAdapter(mInflater, mBuyRoomBean, mType);
         }
         listView.setAdapter(adapter);
         //遍历所有group,将所有项设置成默认展开
         int groupCount = adapter.getGroupCount();
-        for (int i=0; i < groupCount; i++)
+        for (int i = 0; i < groupCount; i++)
         {
             listView.expandGroup(i);
         }
@@ -129,11 +141,13 @@ public class QuickBuyFragment extends BaseFragment
     /**
      * 清空已选中的内容
      */
-    public void clearChecked() {
+    public void clearChecked()
+    {
         adapter.clearChecked();
     }
 
-    public List<BuyRoomBean.PlayDetailListBean.ListBean> getChecked() {
+    public List<BuyRoomBean.PlayDetailListBean.ListBean> getChecked()
+    {
         return adapter.getCheckedList();
     }
 }

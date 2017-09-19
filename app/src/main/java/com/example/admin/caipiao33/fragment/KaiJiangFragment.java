@@ -17,7 +17,6 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ImageView;
 
 import com.example.admin.caipiao33.BaseActivity;
 import com.example.admin.caipiao33.BaseFragment;
@@ -36,10 +35,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
-
-import static com.example.admin.caipiao33.R.id.toolbar;
 
 /**
  * Description : 开奖页面

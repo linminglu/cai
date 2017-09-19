@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.example.admin.caipiao33.BaseActivity;
 import com.example.admin.caipiao33.R;
-import com.example.admin.caipiao33.bean.AliPayBean;
 import com.example.admin.caipiao33.bean.QqPayBean;
 import com.example.admin.caipiao33.utils.ViewHolder;
 

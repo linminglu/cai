@@ -57,7 +57,8 @@ public class TypeSixAdapter extends TypeBeforeAdapter
     // 自选不中
     private final String PLAY_ID_26 = "26";
 
-    public TypeSixAdapter(LayoutInflater inflater, BuyRoomBean bean, int type) {
+    public TypeSixAdapter(LayoutInflater inflater, BuyRoomBean bean, int type)
+    {
         this.mInflater = inflater;
         this.mBuyRoomBean = bean;
         this.mType = type;
@@ -66,44 +67,57 @@ public class TypeSixAdapter extends TypeBeforeAdapter
 
     /**
      * 重置数据
+     *
      * @param bean
      */
-    public void updateData(BuyRoomBean bean) {
+    public void updateData(BuyRoomBean bean)
+    {
         this.mBuyRoomBean = bean;
         mPlayName = bean.getPlayName();
         List<BuyRoomBean.PlayListBean> playList = bean.getPlayList();
-        for (BuyRoomBean.PlayListBean beanPlayList:playList)
+        for (BuyRoomBean.PlayListBean beanPlayList : playList)
         {
             String playName = beanPlayList.getPlayName();
-            if (mPlayName.equals(playName)) {
+            if (mPlayName.equals(playName))
+            {
                 mPlayId = beanPlayList.getPlayId();
                 break;
             }
         }
-        if (PLAY_ID_27.equals(mPlayId)) {
-            if (mType == QuickBuyFragment.TYPE_QUICK) {
+        if (PLAY_ID_27.equals(mPlayId))
+        {
+            if (mType == QuickBuyFragment.TYPE_QUICK)
+            {
                 // 连肖
                 List<BuyRoomBean.PlayDetailListBean> list = mBuyRoomBean.getPlayDetailList();
-                if (null != list && list.size() == 8) {
+                if (null != list && list.size() == 8)
+                {
                     Iterator<BuyRoomBean.PlayDetailListBean> iterator = list.iterator();
                     int temp = 0;
-                    while (iterator.hasNext()) {
+                    while (iterator.hasNext())
+                    {
                         iterator.next();
-                        if (temp < 4) {
+                        if (temp < 4)
+                        {
                             iterator.remove();
                         }
                         temp++;
                     }
                 }
-            } else {
+            }
+            else
+            {
                 // 连尾
                 List<BuyRoomBean.PlayDetailListBean> list = mBuyRoomBean.getPlayDetailList();
-                if (null != list && list.size() == 8) {
+                if (null != list && list.size() == 8)
+                {
                     Iterator<BuyRoomBean.PlayDetailListBean> iterator = list.iterator();
                     int temp = 0;
-                    while (iterator.hasNext()) {
+                    while (iterator.hasNext())
+                    {
                         iterator.next();
-                        if (temp >= 4) {
+                        if (temp >= 4)
+                        {
                             iterator.remove();
                         }
                         temp++;
@@ -111,10 +125,13 @@ public class TypeSixAdapter extends TypeBeforeAdapter
                 }
             }
         }
-        if (CURR_EXECUTE.contains(mPlayId) && mType == QuickBuyFragment.TYPE_SELF_SELECT) {
+        if (CURR_EXECUTE.contains(mPlayId) && mType == QuickBuyFragment.TYPE_SELF_SELECT)
+        {
             isCurrExecute = true;
             creatDataNormal();
-        } else {
+        }
+        else
+        {
             isCurrExecute = false;
             super.updateData(this.mBuyRoomBean);
         }
@@ -125,25 +142,33 @@ public class TypeSixAdapter extends TypeBeforeAdapter
     {
         int totalSize = mBuyRoomBean.getPlayDetailList().size();
         mDataList = new ArrayList<>(totalSize);
-        for (int i =0; i < totalSize; i++) {
+        for (int i = 0; i < totalSize; i++)
+        {
             BeanGroup beanGroup = new BeanGroup();
-            BuyRoomBean.PlayDetailListBean playDetailListBean = mBuyRoomBean.getPlayDetailList().get(i);
+            BuyRoomBean.PlayDetailListBean playDetailListBean = mBuyRoomBean.getPlayDetailList()
+                    .get(i);
             List<String> groupNameList = new ArrayList<>(1);
             groupNameList.add(playDetailListBean.getName());
             beanGroup.setGroupNameList(groupNameList);
             List<BuyRoomBean.PlayDetailListBean.ListBean> list = playDetailListBean.getList();
             int childListSize;
-            if (list.size() % COUNT1 == 0) {
+            if (list.size() % COUNT1 == 0)
+            {
                 childListSize = list.size() / COUNT1;
-            } else {
+            }
+            else
+            {
                 childListSize = list.size() / COUNT1 + 1;
             }
             List<List<BuyRoomBean.PlayDetailListBean.ListBean>> childList = new ArrayList<>(childListSize);
-            for (int j = 0; j < childListSize; j++) {
+            for (int j = 0; j < childListSize; j++)
+            {
                 List<BuyRoomBean.PlayDetailListBean.ListBean> itemList = new ArrayList<>(COUNT1);
-                for (int k = 0; k < COUNT1; k++) {
+                for (int k = 0; k < COUNT1; k++)
+                {
                     int index = j * COUNT1 + k;
-                    if (index >= list.size()) {
+                    if (index >= list.size())
+                    {
                         break;
                     }
                     BuyRoomBean.PlayDetailListBean.ListBean e = list.get(index);
@@ -202,15 +227,20 @@ public class TypeSixAdapter extends TypeBeforeAdapter
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent)
     {
-        if (!isCurrExecute || mType == QuickBuyFragment.TYPE_QUICK) {
+        if (!isCurrExecute || mType == QuickBuyFragment.TYPE_QUICK)
+        {
             // 父类处理
             return super.getGroupView(groupPosition, isExpanded, convertView, parent);
         }
-        if (null == convertView) {
+        if (null == convertView)
+        {
             convertView = mInflater.inflate(R.layout.item_buy_quick_group_six, null);
-        } else {
+        }
+        else
+        {
             Object tag = convertView.getTag(R.id.buy_view_type);
-            if (null == tag || (int) tag != GROUP_VIEW_TYPE) {
+            if (null == tag || (int) tag != GROUP_VIEW_TYPE)
+            {
                 convertView = mInflater.inflate(R.layout.item_buy_quick_group_six, null);
             }
         }
@@ -221,7 +251,8 @@ public class TypeSixAdapter extends TypeBeforeAdapter
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
     {
-        if (!isCurrExecute|| mType == QuickBuyFragment.TYPE_QUICK) {
+        if (!isCurrExecute || mType == QuickBuyFragment.TYPE_QUICK)
+        {
             // 父类处理
             return super.getChildView(groupPosition, childPosition, isLastChild, convertView, parent);
         }
@@ -230,9 +261,12 @@ public class TypeSixAdapter extends TypeBeforeAdapter
         {
             convertView = mInflater.inflate(R.layout.item_buy_self_select_six, null);
             initSelfContentView(convertView);
-        } else {
+        }
+        else
+        {
             Object tag = convertView.getTag(R.id.buy_view_type);
-            if (null == tag || (int) tag != CHILD_VIEW_TYPE) {
+            if (null == tag || (int) tag != CHILD_VIEW_TYPE)
+            {
                 convertView = mInflater.inflate(R.layout.item_buy_self_select_six, null);
                 initSelfContentView(convertView);
             }
@@ -249,24 +283,42 @@ public class TypeSixAdapter extends TypeBeforeAdapter
             BuyRoomBean.PlayDetailListBean.ListBean listBean = listBeen.get(i);
             String playName = listBean.getPlayName();
             ViewGroup.LayoutParams layoutParams = tvNum.getLayoutParams();
-            layoutParams.height = mInflater.getContext().getResources().getDimensionPixelSize(R.dimen.d_circle_height1);
-            layoutParams.width = mInflater.getContext().getResources().getDimensionPixelSize(R.dimen.d_circle_height1);
-            if (NUMBER_RED.contains(playName)) {
+            layoutParams.height = mInflater.getContext()
+                    .getResources()
+                    .getDimensionPixelSize(R.dimen.d_circle_height1);
+            layoutParams.width = mInflater.getContext()
+                    .getResources()
+                    .getDimensionPixelSize(R.dimen.d_circle_height1);
+            if (NUMBER_RED.contains(playName))
+            {
                 tvNum.setBackgroundResource(R.drawable.shape_circle_red);
-            } else if (NUMBER_GREEN.contains(playName)){
+            }
+            else if (NUMBER_GREEN.contains(playName))
+            {
                 tvNum.setBackgroundResource(R.drawable.shape_circle_green);
-            } else if (NUMBER_BLUE.contains(playName)) {
+            }
+            else if (NUMBER_BLUE.contains(playName))
+            {
                 tvNum.setBackgroundResource(R.drawable.shape_circle_blue);
-            } else {
+            }
+            else
+            {
                 layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
                 layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT;
-                if (playName.contains("红")) {
+                if (playName.contains("红"))
+                {
                     tvNum.setBackgroundResource(R.drawable.shape_circle_red);
-                } else if (playName.contains("绿")){
+                }
+                else if (playName.contains("绿"))
+                {
                     tvNum.setBackgroundResource(R.drawable.shape_circle_green);
-                } else if (playName.contains("蓝")) {
+                }
+                else if (playName.contains("蓝"))
+                {
                     tvNum.setBackgroundResource(R.drawable.shape_circle_blue);
-                } else {
+                }
+                else
+                {
                     tvNum.setBackgroundResource(R.drawable.shape_circle_gray);
                 }
             }

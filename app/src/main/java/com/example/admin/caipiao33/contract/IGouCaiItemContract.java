@@ -11,14 +11,19 @@ import com.example.admin.caipiao33.bean.GouCaiBean;
 
 public interface IGouCaiItemContract
 {
-    interface View extends IBaseView {
+    interface View extends IBaseView
+    {
         void updateItem(GouCaiBean.DataBean bean, int what);
+
         void refreshDataFailed(String num, int what);
+
         void toBuyRoom(BuyRoomBean bean, String title);
     }
 
-    interface Presenter extends IBasePresenter {
+    interface Presenter extends IBasePresenter
+    {
         void refreshData(String num, int what);
+
         void requestRoomData(String num, String title);
     }
 }

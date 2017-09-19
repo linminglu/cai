@@ -2,7 +2,6 @@ package com.example.admin.caipiao33.bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 网银支付列表

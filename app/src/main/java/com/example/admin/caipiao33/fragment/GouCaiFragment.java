@@ -13,7 +13,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.TintTypedArray;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,19 +26,15 @@ import com.example.admin.caipiao33.R;
 import com.example.admin.caipiao33.bean.GouCaiBean;
 import com.example.admin.caipiao33.bean.ServiceTimeBean;
 import com.example.admin.caipiao33.contract.IGouCaiContract;
-import com.example.admin.caipiao33.encryption.CreateCode;
 import com.example.admin.caipiao33.httputils.FirstService;
 import com.example.admin.caipiao33.httputils.MyGsonConverterFactory;
 import com.example.admin.caipiao33.presenter.GouCaiPresenter;
-import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.ServiceTime;
-import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.views.LoadingLayout;
 import com.google.gson.Gson;
 import com.socks.library.KLog;
 
 import java.util.HashMap;
-import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -167,20 +162,29 @@ public class GouCaiFragment extends BaseFragment implements IGouCaiContract.View
             @Override
             public boolean onMenuItemClick(MenuItem item)
             {
-                switch (item.getItemId()) {
+                switch (item.getItemId())
+                {
                     case R.id.action_switch:
-                        if (isLinearLayout) {
+                        if (isLinearLayout)
+                        {
                             item.setIcon(R.mipmap.goucai_list);
-                        } else {
+                        }
+                        else
+                        {
                             item.setIcon(R.mipmap.goucai_gride);
                         }
                         isLinearLayout = !isLinearLayout;
                         int currentItem = goucaiPager.getCurrentItem();
-                        if (currentItem == 0) {
+                        if (currentItem == 0)
+                        {
                             fragmentAll.updateUILayout();
-                        } else if (currentItem == 1) {
+                        }
+                        else if (currentItem == 1)
+                        {
                             fragmentGP.updateUILayout();
-                        } else {
+                        }
+                        else
+                        {
                             fragmentDP.updateUILayout();
                         }
                         break;
@@ -258,11 +262,16 @@ public class GouCaiFragment extends BaseFragment implements IGouCaiContract.View
         @Override
         public Fragment getItem(int position)
         {
-            if (position == 0) {
+            if (position == 0)
+            {
                 return fragmentAll;
-            } else if (position == 1) {
+            }
+            else if (position == 1)
+            {
                 return fragmentGP;
-            } else {
+            }
+            else
+            {
                 return fragmentDP;
             }
         }
@@ -295,11 +304,16 @@ public class GouCaiFragment extends BaseFragment implements IGouCaiContract.View
         fragmentAll.setGouCaiBean(bean);
         fragmentGP.setGouCaiBean(bean);
         fragmentDP.setGouCaiBean(bean);
-        if (currentItem == 0) {
+        if (currentItem == 0)
+        {
             fragmentAll.refreshRecyclerView();
-        } else if (currentItem == 1) {
+        }
+        else if (currentItem == 1)
+        {
             fragmentGP.refreshRecyclerView();
-        } else {
+        }
+        else
+        {
             fragmentDP.refreshRecyclerView();
         }
     }
@@ -308,16 +322,22 @@ public class GouCaiFragment extends BaseFragment implements IGouCaiContract.View
     public void hideRefreshing()
     {
         int currentItem = goucaiPager.getCurrentItem();
-        if (currentItem == 0) {
+        if (currentItem == 0)
+        {
             fragmentAll.hideRefreshing();
-        } else if (currentItem == 1) {
+        }
+        else if (currentItem == 1)
+        {
             fragmentGP.hideRefreshing();
-        } else {
+        }
+        else
+        {
             fragmentDP.hideRefreshing();
         }
     }
 
-    public void toRefreshData() {
+    public void toRefreshData()
+    {
         mPresenter.refreshData();
     }
 
@@ -331,7 +351,8 @@ public class GouCaiFragment extends BaseFragment implements IGouCaiContract.View
     @Override
     public void onCheckedChanged(RadioGroup group, @IdRes int checkedId)
     {
-        switch (group.getCheckedRadioButtonId()) {
+        switch (group.getCheckedRadioButtonId())
+        {
             case R.id.goucai_all:
                 goucaiPager.setCurrentItem(0);
                 break;
@@ -344,32 +365,46 @@ public class GouCaiFragment extends BaseFragment implements IGouCaiContract.View
         }
     }
 
-    public void fragmentShow(){
+    public void fragmentShow()
+    {
         this.isvisible = true;
-        if (null == goucaiPager) {
+        if (null == goucaiPager)
+        {
             return;
         }
         int currentItem = goucaiPager.getCurrentItem();
-        if (currentItem == 0) {
+        if (currentItem == 0)
+        {
             fragmentAll.timerResume();
-        } else if (currentItem == 1) {
+        }
+        else if (currentItem == 1)
+        {
             fragmentGP.timerResume();
-        } else {
+        }
+        else
+        {
             fragmentDP.timerResume();
         }
     }
 
-    public void fragmentHide(){
+    public void fragmentHide()
+    {
         this.isvisible = false;
-        if (null == goucaiPager) {
+        if (null == goucaiPager)
+        {
             return;
         }
         int currentItem = goucaiPager.getCurrentItem();
-        if (currentItem == 0) {
+        if (currentItem == 0)
+        {
             fragmentAll.timerPause();
-        } else if (currentItem == 1) {
+        }
+        else if (currentItem == 1)
+        {
             fragmentGP.timerPause();
-        } else {
+        }
+        else
+        {
             fragmentDP.timerPause();
         }
     }

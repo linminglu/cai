@@ -5,7 +5,6 @@ import com.example.admin.caipiao33.bean.HomePageBean;
 import com.example.admin.caipiao33.contract.IHomePageContract;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.httputils.MyResponseListener;
-import com.socks.library.KLog;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,7 +17,8 @@ public class HomePagePresenter implements IHomePageContract.Presenter
 {
     private final IHomePageContract.View mView;
 
-    public HomePagePresenter(IHomePageContract.View view) {
+    public HomePagePresenter(IHomePageContract.View view)
+    {
         this.mView = view;
     }
 
@@ -32,7 +32,8 @@ public class HomePagePresenter implements IHomePageContract.Presenter
             public void onSuccess(HomePageBean result)
             {
                 List<HomePageBean.TypeListBean> typeList = result.getTypeList();
-                if (null == typeList || typeList.size() == 0) {
+                if (null == typeList || typeList.size() == 0)
+                {
                     mView.showLoadingLayoutError();
                     return;
                 }
@@ -105,7 +106,8 @@ public class HomePagePresenter implements IHomePageContract.Presenter
         }, null);
     }
 
-    private void baseRequest(MyResponseListener listener){
+    private void baseRequest(MyResponseListener listener)
+    {
         HttpUtil.requestFirst("index", HomePageBean.class, mView.getBaseActivity(), listener, null);
     }
 

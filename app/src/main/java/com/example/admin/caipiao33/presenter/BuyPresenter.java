@@ -19,23 +19,27 @@ public class BuyPresenter implements IBuyContract.Presenter
     private final IBuyContract.View mView;
     private boolean isFirst = true;
 
-    public BuyPresenter(IBuyContract.View view) {
+    public BuyPresenter(IBuyContract.View view)
+    {
         this.mView = view;
     }
 
     @Override
     public void loadData(String num, String roomId, String playId, String playId1)
     {
-        if (!isFirst) {
+        if (!isFirst)
+        {
             mView.showLoadingDialog();
         }
         HashMap<String, String> map = new HashMap<>();
         map.put("gid", num);
         map.put("roomId", roomId);
-        if (!StringUtils.isEmpty(playId)) {
+        if (!StringUtils.isEmpty(playId))
+        {
             map.put("playId", playId);
         }
-        if (!StringUtils.isEmpty(playId1)) {
+        if (!StringUtils.isEmpty(playId1))
+        {
             map.put("playId1", playId1);
         }
         HttpUtil.requestFirst("buy", map, BuyRoomBean.class, mView.getBaseActivity(), new MyResponseListener<BuyRoomBean>()
@@ -43,7 +47,8 @@ public class BuyPresenter implements IBuyContract.Presenter
             @Override
             public void onSuccess(BuyRoomBean result)
             {
-                if (isFirst) {
+                if (isFirst)
+                {
                     mView.hideLoadingLayout();
                     isFirst = false;
                 }
@@ -53,7 +58,8 @@ public class BuyPresenter implements IBuyContract.Presenter
             @Override
             public void onFailed(int code, String msg)
             {
-                if (isFirst) {
+                if (isFirst)
+                {
                     mView.showLoadingLayoutError();
                 }
             }
@@ -61,7 +67,8 @@ public class BuyPresenter implements IBuyContract.Presenter
             @Override
             public void onFinish()
             {
-                if (!isFirst) {
+                if (!isFirst)
+                {
                     mView.hideLoadingDialog();
                 }
             }

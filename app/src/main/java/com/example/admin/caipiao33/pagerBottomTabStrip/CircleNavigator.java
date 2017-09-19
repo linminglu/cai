@@ -10,7 +10,6 @@ import android.view.ViewConfiguration;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 
-
 import com.example.admin.caipiao33.indicator.indicinterface.IPagerNavigator;
 import com.example.admin.caipiao33.indicator.navigator.UIUtil;
 

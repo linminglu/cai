@@ -157,12 +157,11 @@ public class DateUtils
         return 0;
     }
 
-    public static String getHMS(long totalSeconds) {
+    public static String getHMS(long totalSeconds)
+    {
         int hh = (int) (totalSeconds / 60 / 60);
         int mm = (int) (totalSeconds / 60 % 60);
         int ss = (int) (totalSeconds % 60);
-        return (hh < 10 ? "0" + hh : hh) + ":" +
-                (mm < 10 ? "0" + mm : mm) + ":" +
-                (ss < 10 ? "0" + ss : ss);
+        return (hh < 10 ? "0" + hh : hh) + ":" + (mm < 10 ? "0" + mm : mm) + ":" + (ss < 10 ? "0" + ss : ss);
     }
 }

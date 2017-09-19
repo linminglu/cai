@@ -16,17 +16,18 @@ public class NumberInputFilter implements InputFilter
     private static final String ZERO = "0";
     Pattern mPattern;
 
-    public NumberInputFilter() {
+    public NumberInputFilter()
+    {
         mPattern = Pattern.compile("[0-9]*");
     }
 
     /**
      * @param source 新输入的字符串
-     * @param start 新输入的字符串起始下标，一般为0c
-     * @param end 新输入的字符串终点下标，一般为source长度-1
-     * @param dest 输入之前文本框内容
+     * @param start  新输入的字符串起始下标，一般为0c
+     * @param end    新输入的字符串终点下标，一般为source长度-1
+     * @param dest   输入之前文本框内容
      * @param dstart 原内容起始坐标，一般为0
-     * @param dend 原内容终点坐标，一般为dest长度-1
+     * @param dend   原内容终点坐标，一般为dest长度-1
      * @return
      */
     @Override
@@ -35,15 +36,18 @@ public class NumberInputFilter implements InputFilter
         String sourceStr = source.toString();
         String destStr = dest.toString();
 
-        if (TextUtils.isEmpty(sourceStr)) {
+        if (TextUtils.isEmpty(sourceStr))
+        {
             return "";
         }
 
         Matcher matcher = mPattern.matcher(sourceStr);
-        if (!matcher.matches()) {
+        if (!matcher.matches())
+        {
             return "";
         }
-        if (sourceStr.startsWith(ZERO) && TextUtils.isEmpty(destStr)) {
+        if (sourceStr.startsWith(ZERO) && TextUtils.isEmpty(destStr))
+        {
             return "";
         }
 

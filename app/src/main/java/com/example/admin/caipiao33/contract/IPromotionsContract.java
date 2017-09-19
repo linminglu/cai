@@ -9,13 +9,17 @@ import com.example.admin.caipiao33.IBaseView;
 
 public interface IPromotionsContract
 {
-    interface View extends IBaseView {
+    interface View extends IBaseView
+    {
         void updateHomePage(Object bean);
+
         void hideRefreshing();
     }
 
-    interface Presenter extends IBasePresenter {
+    interface Presenter extends IBasePresenter
+    {
         void loadData();
+
         void refreshData();
     }
 }

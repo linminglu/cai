@@ -3,7 +3,6 @@ package com.example.admin.caipiao33.contract;
 import com.example.admin.caipiao33.IBasePresenter;
 import com.example.admin.caipiao33.IBaseView;
 import com.example.admin.caipiao33.bean.KaiJiangDTBean;
-import com.example.admin.caipiao33.bean.UserInfoBean;
 
 import java.util.ArrayList;
 

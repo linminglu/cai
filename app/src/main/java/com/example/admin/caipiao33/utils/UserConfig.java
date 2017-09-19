@@ -38,9 +38,12 @@ public class UserConfig
                 e.printStackTrace();
             }
         }
-        try {
+        try
+        {
             mTokenBean = gson.fromJson(P2PNative.getInstance().decrypt(mToken), TokenBean.class);
-        } catch(Exception e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
             mTokenBean = null;
         }

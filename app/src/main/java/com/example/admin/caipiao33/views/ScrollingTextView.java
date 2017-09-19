@@ -58,7 +58,8 @@ public class ScrollingTextView extends android.support.v7.widget.AppCompatTextVi
      * 页面页面中有控件改变布局触发layoutchange时的处理
      */
     @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+    protected void onSizeChanged(int w, int h, int oldw, int oldh)
+    {
         super.onSizeChanged(w, h, oldw, oldh);
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) getLayoutParams();
         params.width = w;

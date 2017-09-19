@@ -66,14 +66,16 @@ public class FlowLayout extends ViewGroup
         mViewsLineList.clear();
         mLineHeights.clear();
         List<View> currLineList = new ArrayList<>();
-        for (int i = 0; i < childCount; i++) {
+        for (int i = 0; i < childCount; i++)
+        {
             View childView = getChildAt(i);
             measureChild(childView, widthMeasureSpec, heightMeasureSpec);
             MarginLayoutParams lp = (MarginLayoutParams) childView.getLayoutParams();
             childWidth = lp.leftMargin + lp.rightMargin + childView.getMeasuredWidth();
             childHeight = lp.topMargin + lp.bottomMargin + childView.getMeasuredHeight();
 
-            if (currWidth + childWidth > widthSize) {
+            if (currWidth + childWidth > widthSize)
+            {
                 // 换行
                 // 记录该行的高度和该行的views
                 mLineHeights.add(currHeight);
@@ -87,7 +89,9 @@ public class FlowLayout extends ViewGroup
                 // 重新创建一个列表记录行内view
                 currLineList = new ArrayList<>();
                 currLineList.add(childView);
-            } else {
+            }
+            else
+            {
                 // 当前行的宽度累加，高度取最大值
                 currWidth += childWidth;
                 currHeight = Math.max(currHeight, childHeight);
@@ -103,7 +107,8 @@ public class FlowLayout extends ViewGroup
         mViewsLineList.add(currLineList);
 
         // 如果模式是EXACTLY时直接就是给定的值
-        if (widthMode == MeasureSpec.EXACTLY && heightMode == MeasureSpec.EXACTLY) {
+        if (widthMode == MeasureSpec.EXACTLY && heightMode == MeasureSpec.EXACTLY)
+        {
             measureWidth = widthSize;
             measureHeight = heightSize;
         }
@@ -118,11 +123,13 @@ public class FlowLayout extends ViewGroup
         int currTop = 0;
         int currLeft = 0;
         int lineCount = mViewsLineList.size();
-        for (int i = 0; i < lineCount; i++) {
+        for (int i = 0; i < lineCount; i++)
+        {
             // 取出当前行的总views
             List<View> views = mViewsLineList.get(i);
             int viewsCount = views.size();
-            for (int j = 0; j < viewsCount; j++) {
+            for (int j = 0; j < viewsCount; j++)
+            {
                 View childView = views.get(j);
                 MarginLayoutParams lp = (MarginLayoutParams) childView.getLayoutParams();
                 l = currLeft + lp.leftMargin;

@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.admin.caipiao33.bean.BuyRecordBean;
 import com.example.admin.caipiao33.contract.IBuyRecordContract;
 import com.example.admin.caipiao33.presenter.BuyRecordPresenter;
@@ -76,7 +75,7 @@ public class BuyWinRecordActivity extends BaseActivity implements IBuyRecordCont
             @Override
             public void onLoadMore()
             {
-                mPresenter.loadMore(mType, String.valueOf(mBuyRecordBean.getPageNo()+1));
+                mPresenter.loadMore(mType, String.valueOf(mBuyRecordBean.getPageNo() + 1));
             }
         });
         helper.setBindingRecyclerView(recyclerView, adapter);
@@ -123,7 +122,8 @@ public class BuyWinRecordActivity extends BaseActivity implements IBuyRecordCont
         adapter.notifyDataSetChanged();
         int pageNo = mBuyRecordBean.getPageNo();
         int totalPage = mBuyRecordBean.getTotalPage();
-        if (pageNo == totalPage) {
+        if (pageNo == totalPage)
+        {
             helper.loadMoreEnd();
         }
     }
@@ -131,20 +131,25 @@ public class BuyWinRecordActivity extends BaseActivity implements IBuyRecordCont
     @Override
     public void updateMoreData(BuyRecordBean bean)
     {
-        if (null == bean) {
+        if (null == bean)
+        {
             return;
         }
         int pageNo = bean.getPageNo();
         int totalPage = bean.getTotalPage();
         mBuyRecordBean.setPageNo(pageNo);
         mBuyRecordBean.setTotalPage(totalPage);
-        if (pageNo == totalPage) {
+        if (pageNo == totalPage)
+        {
             helper.loadMoreEnd();
-        } else {
+        }
+        else
+        {
             helper.loadMoreComplete();
         }
         List<BuyRecordBean.ItemsBean> items = bean.getItems();
-        if (null == items) {
+        if (null == items)
+        {
             return;
         }
         List<BuyRecordBean.ItemsBean> items1 = mBuyRecordBean.getItems();
@@ -178,8 +183,10 @@ public class BuyWinRecordActivity extends BaseActivity implements IBuyRecordCont
         }
 
         @OnClick(R.id.parent)
-        public void onViewClicked(View view) {
-            switch (view.getId()) {
+        public void onViewClicked(View view)
+        {
+            switch (view.getId())
+            {
                 case R.id.parent:
                     int position = getAdapterPosition();
                     BuyRecordBean.ItemsBean itemsBean = mBuyRecordBean.getItems().get(position);
@@ -208,12 +215,15 @@ public class BuyWinRecordActivity extends BaseActivity implements IBuyRecordCont
             BuyRecordBean.ItemsBean itemsBean = mBuyRecordBean.getItems().get(position);
             holder.tvName.setText(itemsBean.getGameName());
             holder.tvIndex.setText(getString(R.string.s_qishu, itemsBean.getPeriod()));
-            holder.tvMoney.setText(getString(R.string.s_money, "-"+itemsBean.getAmount()));
+            holder.tvMoney.setText(getString(R.string.s_money, "-" + itemsBean.getAmount()));
             holder.tvTime.setText(itemsBean.getAddTime());
-            if (itemsBean.getIsWin() == 1) { // isWin=1中奖 -1未中奖
+            if (itemsBean.getIsWin() == 1)
+            { // isWin=1中奖 -1未中奖
                 holder.tvWin.setTextColor(getResources().getColor(R.color.c_homepage_4));
                 holder.tvWin.setText(getString(R.string.s_win_money, itemsBean.getWinAmount()));
-            } else {
+            }
+            else
+            {
                 holder.tvWin.setTextColor(getResources().getColor(R.color.middle_gray));
                 holder.tvWin.setText(getString(R.string.s_not_win));
             }
@@ -222,7 +232,8 @@ public class BuyWinRecordActivity extends BaseActivity implements IBuyRecordCont
         @Override
         public int getItemCount()
         {
-            if (null == mBuyRecordBean) {
+            if (null == mBuyRecordBean)
+            {
                 return 0;
             }
             List<BuyRecordBean.ItemsBean> items = mBuyRecordBean.getItems();

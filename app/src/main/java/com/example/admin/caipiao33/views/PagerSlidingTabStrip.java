@@ -40,7 +40,6 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
 import com.example.admin.caipiao33.R;
 
 import java.util.Locale;
@@ -336,7 +335,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView
         tab.setFocusable(true);
         tab.setGravity(Gravity.CENTER);
         //Todo 为了解决换行问题所以把当行注视掉-jzp
-//        tab.setSingleLine();
+        //        tab.setSingleLine();
         tab.setTag(position);
         tab.setOnClickListener(new OnClickListener()
         {

@@ -33,7 +33,8 @@ public class TypeSix28Adapter extends TypeBeforeAdapter
     private List<BuyRoomBean.PlayDetailListBean.ListBean> checkedList5 = new ArrayList<>();
 
 
-    public TypeSix28Adapter(LayoutInflater inflater, BuyRoomBean bean, int type) {
+    public TypeSix28Adapter(LayoutInflater inflater, BuyRoomBean bean, int type)
+    {
         this.mInflater = inflater;
         this.mBuyRoomBean = bean;
         this.mType = type;
@@ -42,9 +43,11 @@ public class TypeSix28Adapter extends TypeBeforeAdapter
 
     /**
      * 重置数据
+     *
      * @param bean
      */
-    public void updateData(BuyRoomBean bean) {
+    public void updateData(BuyRoomBean bean)
+    {
         this.mBuyRoomBean = bean;
         creatDataNormal();
     }
@@ -53,27 +56,34 @@ public class TypeSix28Adapter extends TypeBeforeAdapter
     {
         int totalSize = mBuyRoomBean.getPlayDetailList().size();
         mDataList = new ArrayList<>(totalSize);
-        for (int i =0; i < totalSize; i++) {
+        for (int i = 0; i < totalSize; i++)
+        {
             BeanGroup beanGroup = new BeanGroup();
-            BuyRoomBean.PlayDetailListBean playDetailListBean = mBuyRoomBean.getPlayDetailList().get(i);
-            if (playDetailListBean.getName().equals("四全中")) {
+            BuyRoomBean.PlayDetailListBean playDetailListBean = mBuyRoomBean.getPlayDetailList()
+                    .get(i);
+            if (playDetailListBean.getName().equals("四全中"))
+            {
                 break;
             }
             List<String> groupNameList = new ArrayList<>(2);
             groupNameList.add(playDetailListBean.getName());
             StringBuilder sb = new StringBuilder();
-            for(BuyRoomBean.PlayDetailListBean.ListBean bean : playDetailListBean.getList()) {
+            for (BuyRoomBean.PlayDetailListBean.ListBean bean : playDetailListBean.getList())
+            {
                 sb.append(bean.getBonus()).append("/");
             }
             groupNameList.add(sb.deleteCharAt(sb.length() - 1).toString());
             beanGroup.setGroupNameList(groupNameList);
             int childListSize = 49 / COUNT + 1;
             List<List<BuyRoomBean.PlayDetailListBean.ListBean>> childList = new ArrayList<>(childListSize);
-            for (int j = 0; j < childListSize; j++) {
+            for (int j = 0; j < childListSize; j++)
+            {
                 List<BuyRoomBean.PlayDetailListBean.ListBean> itemList = new ArrayList<>(COUNT);
-                for (int k = 0; k < COUNT; k++) {
+                for (int k = 0; k < COUNT; k++)
+                {
                     int index = j * COUNT + k;
-                    if (index >= 49) {
+                    if (index >= 49)
+                    {
                         break;
                     }
                     BuyRoomBean.PlayDetailListBean.ListBean e = new BuyRoomBean.PlayDetailListBean.ListBean();
@@ -135,7 +145,8 @@ public class TypeSix28Adapter extends TypeBeforeAdapter
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent)
     {
-        if (null == convertView) {
+        if (null == convertView)
+        {
             convertView = mInflater.inflate(R.layout.item_buy_quick_group, null);
         }
 
@@ -149,15 +160,20 @@ public class TypeSix28Adapter extends TypeBeforeAdapter
         tv2.setText("");
         tv3.setText("");
         tv4.setText("");
-        if (isExpanded) {
+        if (isExpanded)
+        {
             ivArrow.setVisibility(View.GONE);
-        } else {
+        }
+        else
+        {
             ivArrow.setVisibility(View.VISIBLE);
         }
         BeanGroup beanGroup = mDataList.get(groupPosition);
         List<String> groupNameList = beanGroup.getGroupNameList();
-        for (int i = 0; i < groupNameList.size(); i++) {
-            switch (i) {
+        for (int i = 0; i < groupNameList.size(); i++)
+        {
+            switch (i)
+            {
                 case 0:
                     tv1.setText(groupNameList.get(i));
                     break;
@@ -181,7 +197,8 @@ public class TypeSix28Adapter extends TypeBeforeAdapter
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
     {
         // 快捷下注的类型
-        if (null == convertView) {
+        if (null == convertView)
+        {
             convertView = mInflater.inflate(R.layout.item_buy_quick_26, null);
             ViewHolder.get(convertView, R.id.layout1).setOnClickListener(this);
             ViewHolder.get(convertView, R.id.layout2).setOnClickListener(this);
@@ -209,11 +226,13 @@ public class TypeSix28Adapter extends TypeBeforeAdapter
         List<BuyRoomBean.PlayDetailListBean.ListBean> listBeen = mDataList.get(groupPosition)
                 .getChildList()
                 .get(childPosition);
-        for (int i = 0; i < listBeen.size(); i++) {
+        for (int i = 0; i < listBeen.size(); i++)
+        {
             BuyRoomBean.PlayDetailListBean.ListBean listBean = listBeen.get(i);
             View layout = null;
             TextView tvName = null;
-            switch (i) {
+            switch (i)
+            {
                 case 0:
                     layout = layout1;
                     tvName = tvName1;
@@ -236,10 +255,13 @@ public class TypeSix28Adapter extends TypeBeforeAdapter
             layout.setVisibility(View.VISIBLE);
             layout.setTag(R.id.buy_data, listBean);
             tvName.setText(listBean.getPlayName());
-            if (mCheckedList.contains(listBean)) {
+            if (mCheckedList.contains(listBean))
+            {
                 tvName.setBackgroundResource(R.drawable.shape_circle_red);
                 tvName.setTextColor(mInflater.getContext().getResources().getColor(R.color.white));
-            } else {
+            }
+            else
+            {
                 tvName.setBackgroundResource(R.drawable.shape_circle_red_hollow);
                 tvName.setTextColor(mInflater.getContext().getResources().getColor(R.color.red));
             }
@@ -252,8 +274,10 @@ public class TypeSix28Adapter extends TypeBeforeAdapter
      * 清空已选中的内容
      */
     @Override
-    public void clearChecked() {
-        if (mCheckedList.size() > 0) {
+    public void clearChecked()
+    {
+        if (mCheckedList.size() > 0)
+        {
             mCheckedList.clear();
             notifyDataSetChanged();
         }
@@ -266,6 +290,7 @@ public class TypeSix28Adapter extends TypeBeforeAdapter
 
     /**
      * 获取已选中的列表
+     *
      * @return
      */
     @Override
@@ -273,33 +298,39 @@ public class TypeSix28Adapter extends TypeBeforeAdapter
     {
         // 区分是3中2、3全中、2全中、2中特、特串
         int size1 = checkedList1.size();
-        if (size1 > 0 && size1 < 3) {
+        if (size1 > 0 && size1 < 3)
+        {
             ToastUtil.show("三中二下注号码有误！");
             return null;
         }
         int size2 = checkedList2.size();
-        if (size2 > 0 && size2 < 3) {
+        if (size2 > 0 && size2 < 3)
+        {
             ToastUtil.show("三全中下注号码有误！");
             return null;
         }
         int size3 = checkedList3.size();
-        if (size3 > 0 && size3 < 2) {
+        if (size3 > 0 && size3 < 2)
+        {
             ToastUtil.show("二全中下注号码有误！");
             return null;
         }
         int size4 = checkedList4.size();
-        if (size4 > 0 && size4 < 2) {
+        if (size4 > 0 && size4 < 2)
+        {
             ToastUtil.show("二中特下注号码有误！");
             return null;
         }
         int size5 = checkedList5.size();
-        if (size5 > 0 && size5 < 2) {
+        if (size5 > 0 && size5 < 2)
+        {
             ToastUtil.show("特串下注号码有误！");
             return null;
         }
 
         // 排序
-        if (size1 > 0) {
+        if (size1 > 0)
+        {
             Collections.sort(checkedList1, new Comparator<BuyRoomBean.PlayDetailListBean.ListBean>()
             {
                 @Override
@@ -311,7 +342,8 @@ public class TypeSix28Adapter extends TypeBeforeAdapter
                 }
             });
         }
-        if (size2 > 0) {
+        if (size2 > 0)
+        {
             Collections.sort(checkedList2, new Comparator<BuyRoomBean.PlayDetailListBean.ListBean>()
             {
                 @Override
@@ -323,7 +355,8 @@ public class TypeSix28Adapter extends TypeBeforeAdapter
                 }
             });
         }
-        if (checkedList3.size() > 0) {
+        if (checkedList3.size() > 0)
+        {
             Collections.sort(checkedList3, new Comparator<BuyRoomBean.PlayDetailListBean.ListBean>()
             {
                 @Override
@@ -335,7 +368,8 @@ public class TypeSix28Adapter extends TypeBeforeAdapter
                 }
             });
         }
-        if (size4 > 0) {
+        if (size4 > 0)
+        {
             Collections.sort(checkedList4, new Comparator<BuyRoomBean.PlayDetailListBean.ListBean>()
             {
                 @Override
@@ -347,7 +381,8 @@ public class TypeSix28Adapter extends TypeBeforeAdapter
                 }
             });
         }
-        if (size5 > 0) {
+        if (size5 > 0)
+        {
             Collections.sort(checkedList5, new Comparator<BuyRoomBean.PlayDetailListBean.ListBean>()
             {
                 @Override
@@ -362,23 +397,28 @@ public class TypeSix28Adapter extends TypeBeforeAdapter
 
         // 寻找已选中玩法的具体对象
         List<BuyRoomBean.PlayDetailListBean.ListBean> checkedList = new ArrayList<>();
-        if (size1 > 0) {
+        if (size1 > 0)
+        {
             // 组合
             Combine<BuyRoomBean.PlayDetailListBean.ListBean> c = new Combine<>();
             c.combine(0, 3, checkedList1);
             List<List<BuyRoomBean.PlayDetailListBean.ListBean>> result = c.getResult();
 
-            BuyRoomBean.PlayDetailListBean playDetailListBean = mBuyRoomBean.getPlayDetailList().get(0);
+            BuyRoomBean.PlayDetailListBean playDetailListBean = mBuyRoomBean.getPlayDetailList()
+                    .get(0);
             List<BuyRoomBean.PlayDetailListBean.ListBean> list = playDetailListBean.getList();
             BuyRoomBean.PlayDetailListBean.ListBean listBean = list.get(list.size() - 1);
 
-            for(List<BuyRoomBean.PlayDetailListBean.ListBean> tmp : result) {
+            for (List<BuyRoomBean.PlayDetailListBean.ListBean> tmp : result)
+            {
                 BuyRoomBean.PlayDetailListBean.ListBean clone = listBean.clone();
                 clone.setParentName(playDetailListBean.getName());
                 StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < tmp.size(); i++) {
+                for (int i = 0; i < tmp.size(); i++)
+                {
                     BuyRoomBean.PlayDetailListBean.ListBean bean = tmp.get(i);
-                    if (i != 0) {
+                    if (i != 0)
+                    {
                         sb.append(" & ");
                     }
                     sb.append(bean.getPlayName());
@@ -387,23 +427,28 @@ public class TypeSix28Adapter extends TypeBeforeAdapter
                 checkedList.add(clone);
             }
         }
-        if (size2 > 0) {
+        if (size2 > 0)
+        {
             // 组合
             Combine<BuyRoomBean.PlayDetailListBean.ListBean> c = new Combine<>();
             c.combine(0, 3, checkedList2);
             List<List<BuyRoomBean.PlayDetailListBean.ListBean>> result = c.getResult();
 
-            BuyRoomBean.PlayDetailListBean playDetailListBean = mBuyRoomBean.getPlayDetailList().get(1);
+            BuyRoomBean.PlayDetailListBean playDetailListBean = mBuyRoomBean.getPlayDetailList()
+                    .get(1);
             List<BuyRoomBean.PlayDetailListBean.ListBean> list = playDetailListBean.getList();
             BuyRoomBean.PlayDetailListBean.ListBean listBean = list.get(list.size() - 1);
 
-            for(List<BuyRoomBean.PlayDetailListBean.ListBean> tmp : result) {
+            for (List<BuyRoomBean.PlayDetailListBean.ListBean> tmp : result)
+            {
                 BuyRoomBean.PlayDetailListBean.ListBean clone = listBean.clone();
                 clone.setParentName(playDetailListBean.getName());
                 StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < tmp.size(); i++) {
+                for (int i = 0; i < tmp.size(); i++)
+                {
                     BuyRoomBean.PlayDetailListBean.ListBean bean = tmp.get(i);
-                    if (i != 0) {
+                    if (i != 0)
+                    {
                         sb.append(" & ");
                     }
                     sb.append(bean.getPlayName());
@@ -412,23 +457,28 @@ public class TypeSix28Adapter extends TypeBeforeAdapter
                 checkedList.add(clone);
             }
         }
-        if (checkedList3.size() > 0) {
+        if (checkedList3.size() > 0)
+        {
             // 组合
             Combine<BuyRoomBean.PlayDetailListBean.ListBean> c = new Combine<>();
             c.combine(0, 2, checkedList3);
             List<List<BuyRoomBean.PlayDetailListBean.ListBean>> result = c.getResult();
 
-            BuyRoomBean.PlayDetailListBean playDetailListBean = mBuyRoomBean.getPlayDetailList().get(2);
+            BuyRoomBean.PlayDetailListBean playDetailListBean = mBuyRoomBean.getPlayDetailList()
+                    .get(2);
             List<BuyRoomBean.PlayDetailListBean.ListBean> list = playDetailListBean.getList();
             BuyRoomBean.PlayDetailListBean.ListBean listBean = list.get(list.size() - 1);
 
-            for(List<BuyRoomBean.PlayDetailListBean.ListBean> tmp : result) {
+            for (List<BuyRoomBean.PlayDetailListBean.ListBean> tmp : result)
+            {
                 BuyRoomBean.PlayDetailListBean.ListBean clone = listBean.clone();
                 clone.setParentName(playDetailListBean.getName());
                 StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < tmp.size(); i++) {
+                for (int i = 0; i < tmp.size(); i++)
+                {
                     BuyRoomBean.PlayDetailListBean.ListBean bean = tmp.get(i);
-                    if (i != 0) {
+                    if (i != 0)
+                    {
                         sb.append(" & ");
                     }
                     sb.append(bean.getPlayName());
@@ -437,23 +487,28 @@ public class TypeSix28Adapter extends TypeBeforeAdapter
                 checkedList.add(clone);
             }
         }
-        if (size4 > 0) {
+        if (size4 > 0)
+        {
             // 组合
             Combine<BuyRoomBean.PlayDetailListBean.ListBean> c = new Combine<>();
             c.combine(0, 2, checkedList4);
             List<List<BuyRoomBean.PlayDetailListBean.ListBean>> result = c.getResult();
 
-            BuyRoomBean.PlayDetailListBean playDetailListBean = mBuyRoomBean.getPlayDetailList().get(3);
+            BuyRoomBean.PlayDetailListBean playDetailListBean = mBuyRoomBean.getPlayDetailList()
+                    .get(3);
             List<BuyRoomBean.PlayDetailListBean.ListBean> list = playDetailListBean.getList();
             BuyRoomBean.PlayDetailListBean.ListBean listBean = list.get(list.size() - 1);
 
-            for(List<BuyRoomBean.PlayDetailListBean.ListBean> tmp : result) {
+            for (List<BuyRoomBean.PlayDetailListBean.ListBean> tmp : result)
+            {
                 BuyRoomBean.PlayDetailListBean.ListBean clone = listBean.clone();
                 clone.setParentName(playDetailListBean.getName());
                 StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < tmp.size(); i++) {
+                for (int i = 0; i < tmp.size(); i++)
+                {
                     BuyRoomBean.PlayDetailListBean.ListBean bean = tmp.get(i);
-                    if (i != 0) {
+                    if (i != 0)
+                    {
                         sb.append(" & ");
                     }
                     sb.append(bean.getPlayName());
@@ -462,23 +517,28 @@ public class TypeSix28Adapter extends TypeBeforeAdapter
                 checkedList.add(clone);
             }
         }
-        if (size5 > 0) {
+        if (size5 > 0)
+        {
             // 组合
             Combine<BuyRoomBean.PlayDetailListBean.ListBean> c = new Combine<>();
             c.combine(0, 2, checkedList5);
             List<List<BuyRoomBean.PlayDetailListBean.ListBean>> result = c.getResult();
 
-            BuyRoomBean.PlayDetailListBean playDetailListBean = mBuyRoomBean.getPlayDetailList().get(4);
+            BuyRoomBean.PlayDetailListBean playDetailListBean = mBuyRoomBean.getPlayDetailList()
+                    .get(4);
             List<BuyRoomBean.PlayDetailListBean.ListBean> list = playDetailListBean.getList();
             BuyRoomBean.PlayDetailListBean.ListBean listBean = list.get(list.size() - 1);
 
-            for(List<BuyRoomBean.PlayDetailListBean.ListBean> tmp : result) {
+            for (List<BuyRoomBean.PlayDetailListBean.ListBean> tmp : result)
+            {
                 BuyRoomBean.PlayDetailListBean.ListBean clone = listBean.clone();
                 clone.setParentName(playDetailListBean.getName());
                 StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < tmp.size(); i++) {
+                for (int i = 0; i < tmp.size(); i++)
+                {
                     BuyRoomBean.PlayDetailListBean.ListBean bean = tmp.get(i);
-                    if (i != 0) {
+                    if (i != 0)
+                    {
                         sb.append(" & ");
                     }
                     sb.append(bean.getPlayName());
@@ -493,61 +553,92 @@ public class TypeSix28Adapter extends TypeBeforeAdapter
     @Override
     public void onClick(View v)
     {
-        switch (v.getId()) {
+        switch (v.getId())
+        {
             case R.id.layout1:
             case R.id.layout2:
             case R.id.layout3:
             case R.id.layout4:
-                BuyRoomBean.PlayDetailListBean.ListBean listBean = (BuyRoomBean.PlayDetailListBean.ListBean) v.getTag(R.id.buy_data);
-                if (null == listBean) {
+                BuyRoomBean.PlayDetailListBean.ListBean listBean = (BuyRoomBean.PlayDetailListBean.ListBean) v
+                        .getTag(R.id.buy_data);
+                if (null == listBean)
+                {
                     return;
                 }
-                if (mCheckedList.contains(listBean)) {
+                if (mCheckedList.contains(listBean))
+                {
                     mCheckedList.remove(listBean);
                     String playId = listBean.getPlayId();
-                    if (playId.contains("三中二")) {
+                    if (playId.contains("三中二"))
+                    {
                         checkedList1.remove(listBean);
-                    } else if (playId.contains("三全中")) {
+                    }
+                    else if (playId.contains("三全中"))
+                    {
                         checkedList2.remove(listBean);
-                    } else if (playId.contains("二全中")) {
+                    }
+                    else if (playId.contains("二全中"))
+                    {
                         checkedList3.remove(listBean);
-                    } else if (playId.contains("二中特")) {
+                    }
+                    else if (playId.contains("二中特"))
+                    {
                         checkedList4.remove(listBean);
-                    } else if (playId.contains("特串")) {
+                    }
+                    else if (playId.contains("特串"))
+                    {
                         checkedList5.remove(listBean);
                     }
-                } else {
+                }
+                else
+                {
                     String playId = listBean.getPlayId();
-                    if ((playId.contains("三中二") && checkedList1.size() >= 7)
-                            || playId.contains("三全中") && checkedList2.size() >= 7
-                            || playId.contains("二全中") && checkedList3.size() >= 7
-                            || playId.contains("二中特") && checkedList4.size() >= 7
-                            || playId.contains("特串") && checkedList5.size() >= 7) {
+                    if ((playId.contains("三中二") && checkedList1.size() >= 7) || playId.contains("三全中") && checkedList2
+                            .size() >= 7 || playId.contains("二全中") && checkedList3.size() >= 7 || playId
+                            .contains("二中特") && checkedList4.size() >= 7 || playId.contains("特串") && checkedList5
+                            .size() >= 7)
+                    {
                         ToastUtil.show("一种类型最多选择7个！");
                         return;
                     }
                     mCheckedList.add(listBean);
-                    if (playId.contains("三中二")) {
+                    if (playId.contains("三中二"))
+                    {
                         checkedList1.add(listBean);
-                    } else if (playId.contains("三全中")) {
+                    }
+                    else if (playId.contains("三全中"))
+                    {
                         checkedList2.add(listBean);
-                    } else if (playId.contains("二全中")) {
+                    }
+                    else if (playId.contains("二全中"))
+                    {
                         checkedList3.add(listBean);
-                    } else if (playId.contains("二中特")) {
+                    }
+                    else if (playId.contains("二中特"))
+                    {
                         checkedList4.add(listBean);
-                    } else if (playId.contains("特串")) {
+                    }
+                    else if (playId.contains("特串"))
+                    {
                         checkedList5.add(listBean);
                     }
                 }
 
                 LinearLayout layout = (LinearLayout) v;
                 TextView tvName = (TextView) layout.getChildAt(0);
-                if (mCheckedList.contains(listBean)) {
+                if (mCheckedList.contains(listBean))
+                {
                     tvName.setBackgroundResource(R.drawable.shape_circle_red);
-                    tvName.setTextColor(mInflater.getContext().getResources().getColor(R.color.white));
-                } else {
+                    tvName.setTextColor(mInflater.getContext()
+                            .getResources()
+                            .getColor(R.color.white));
+                }
+                else
+                {
                     tvName.setBackgroundResource(R.drawable.shape_circle_red_hollow);
-                    tvName.setTextColor(mInflater.getContext().getResources().getColor(R.color.red));
+                    tvName.setTextColor(mInflater.getContext()
+                            .getResources()
+                            .getColor(R.color.red));
                 }
                 break;
             default:

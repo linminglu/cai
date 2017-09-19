@@ -3,13 +3,10 @@ package com.example.admin.caipiao33.presenter;
 import android.view.View;
 
 import com.example.admin.caipiao33.bean.QianDaoBean;
-import com.example.admin.caipiao33.contract.ILoginContract;
 import com.example.admin.caipiao33.contract.IQianDaoContract;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.httputils.MyResponseListener;
 import com.example.admin.caipiao33.utils.ToastUtil;
-
-import java.util.HashMap;
 
 /**
  * Created by cxy on 2017/8/8

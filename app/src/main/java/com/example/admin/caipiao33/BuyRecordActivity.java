@@ -9,23 +9,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.admin.caipiao33.bean.BuyRecordBean;
-import com.example.admin.caipiao33.bean.BuyRoomBean;
 import com.example.admin.caipiao33.contract.IBuyRecordContract;
-import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.presenter.BuyRecordPresenter;
 import com.example.admin.caipiao33.utils.Constants;
-import com.example.admin.caipiao33.utils.MyImageLoader;
 import com.example.admin.caipiao33.utils.Tools;
 import com.example.admin.caipiao33.views.DividerItemDecoration;
 import com.example.admin.caipiao33.views.LoadingLayout;
 import com.example.admin.caipiao33.views.loadmore.LoadMoreHelper;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -86,7 +81,7 @@ public class BuyRecordActivity extends BaseActivity implements IBuyRecordContrac
             @Override
             public void onLoadMore()
             {
-                mPresenter.loadMore(mType, String.valueOf(mBuyRecordBean.getPageNo()+1));
+                mPresenter.loadMore(mType, String.valueOf(mBuyRecordBean.getPageNo() + 1));
             }
         });
         helper.setBindingRecyclerView(recyclerView, adapter);
@@ -131,14 +126,18 @@ public class BuyRecordActivity extends BaseActivity implements IBuyRecordContrac
         new MaterialDialog.Builder(this).title("类型选择")
                 .items(mArrays)
                 .positiveText(R.string.dialog_ok)
-                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
+                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice()
+                {
                     @Override
-                    public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                        if (which == -1) {
+                    public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text)
+                    {
+                        if (which == -1)
+                        {
                             return true;
                         }
                         mToolbarTitle.setText(mArrays[which]);
-                        switch (which) {
+                        switch (which)
+                        {
                             case 0:
                                 mType = TYPE_ALL;
                                 break;
@@ -181,7 +180,8 @@ public class BuyRecordActivity extends BaseActivity implements IBuyRecordContrac
         adapter.notifyDataSetChanged();
         int pageNo = mBuyRecordBean.getPageNo();
         int totalPage = mBuyRecordBean.getTotalPage();
-        if (pageNo == totalPage) {
+        if (pageNo == totalPage)
+        {
             helper.loadMoreEnd();
         }
     }
@@ -189,20 +189,25 @@ public class BuyRecordActivity extends BaseActivity implements IBuyRecordContrac
     @Override
     public void updateMoreData(BuyRecordBean bean)
     {
-        if (null == bean) {
+        if (null == bean)
+        {
             return;
         }
         int pageNo = bean.getPageNo();
         int totalPage = bean.getTotalPage();
         mBuyRecordBean.setPageNo(pageNo);
         mBuyRecordBean.setTotalPage(totalPage);
-        if (pageNo == totalPage) {
+        if (pageNo == totalPage)
+        {
             helper.loadMoreEnd();
-        } else {
+        }
+        else
+        {
             helper.loadMoreComplete();
         }
         List<BuyRecordBean.ItemsBean> items = bean.getItems();
-        if (null == items) {
+        if (null == items)
+        {
             return;
         }
         List<BuyRecordBean.ItemsBean> items1 = mBuyRecordBean.getItems();
@@ -236,8 +241,10 @@ public class BuyRecordActivity extends BaseActivity implements IBuyRecordContrac
         }
 
         @OnClick(R.id.parent)
-        public void onViewClicked(View view) {
-            switch (view.getId()) {
+        public void onViewClicked(View view)
+        {
+            switch (view.getId())
+            {
                 case R.id.parent:
                     int position = getAdapterPosition();
                     BuyRecordBean.ItemsBean itemsBean = mBuyRecordBean.getItems().get(position);
@@ -266,12 +273,15 @@ public class BuyRecordActivity extends BaseActivity implements IBuyRecordContrac
             BuyRecordBean.ItemsBean itemsBean = mBuyRecordBean.getItems().get(position);
             holder.tvName.setText(itemsBean.getGameName());
             holder.tvIndex.setText(getString(R.string.s_qishu, itemsBean.getPeriod()));
-            holder.tvMoney.setText(getString(R.string.s_money, "-"+itemsBean.getAmount()));
+            holder.tvMoney.setText(getString(R.string.s_money, "-" + itemsBean.getAmount()));
             holder.tvTime.setText(itemsBean.getAddTime());
-            if (itemsBean.getIsWin() == 1) { // isWin=1中奖 -1未中奖
+            if (itemsBean.getIsWin() == 1)
+            { // isWin=1中奖 -1未中奖
                 holder.tvWin.setTextColor(getResources().getColor(R.color.c_homepage_4));
                 holder.tvWin.setText(getString(R.string.s_win_money, itemsBean.getWinAmount()));
-            } else {
+            }
+            else
+            {
                 holder.tvWin.setTextColor(getResources().getColor(R.color.middle_gray));
                 holder.tvWin.setText(getString(R.string.s_not_win));
             }
@@ -280,7 +290,8 @@ public class BuyRecordActivity extends BaseActivity implements IBuyRecordContrac
         @Override
         public int getItemCount()
         {
-            if (null == mBuyRecordBean) {
+            if (null == mBuyRecordBean)
+            {
                 return 0;
             }
             List<BuyRecordBean.ItemsBean> items = mBuyRecordBean.getItems();

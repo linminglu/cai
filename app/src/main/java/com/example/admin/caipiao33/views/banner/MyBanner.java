@@ -19,8 +19,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.admin.caipiao33.R;
-
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -188,13 +186,16 @@ public class MyBanner extends RelativeLayout
 
         mAdvAdapter = new ImageCycleAdapter(mContext, imageUrlList, imageCycleViewListener);
         mAdvPager.setAdapter(mAdvAdapter);
-        try {
+        try
+        {
             Field mField = ViewPager.class.getDeclaredField("mScroller");
             mField.setAccessible(true);
             FixedSpeedScroller mScroller = new FixedSpeedScroller(mAdvPager.getContext(), new DecelerateInterpolator());
             mField.set(mAdvPager, mScroller);
             mScroller.setmDuration(800);
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
         startImageTimerTask();
@@ -205,7 +206,8 @@ public class MyBanner extends RelativeLayout
      */
     public void startImageCycle()
     {
-        if (null == mGroup || mGroup.getChildCount() <= 0) {
+        if (null == mGroup || mGroup.getChildCount() <= 0)
+        {
             return;
         }
         startImageTimerTask();
@@ -216,21 +218,25 @@ public class MyBanner extends RelativeLayout
      */
     public void pushImageCycle()
     {
-        if (null == mGroup || mGroup.getChildCount() <= 0) {
+        if (null == mGroup || mGroup.getChildCount() <= 0)
+        {
             return;
         }
         stopImageTimerTask();
     }
 
-    public void recycle() {
-        if (null != mPointViews) {
-            for (int i = 0; i < mPointViews.length; i ++)
+    public void recycle()
+    {
+        if (null != mPointViews)
+        {
+            for (int i = 0; i < mPointViews.length; i++)
             {
                 mPointViews[i] = null;
             }
             mPointViews = null;
         }
-        if (null != mAdvAdapter) {
+        if (null != mAdvAdapter)
+        {
             mAdvAdapter.recycle();
         }
         mGroup.removeAllViews();
@@ -244,7 +250,8 @@ public class MyBanner extends RelativeLayout
     private void startImageTimerTask()
     {
         stopImageTimerTask();
-        if (mPointViews.length <= 1) {
+        if (mPointViews.length <= 1)
+        {
             return;
         }
         isStop = false;
@@ -271,7 +278,8 @@ public class MyBanner extends RelativeLayout
         @Override
         public void run()
         {
-            if (isStop) {
+            if (isStop)
+            {
                 return;
             }
             if (mPointViews != null)
@@ -309,7 +317,8 @@ public class MyBanner extends RelativeLayout
         @Override
         public void onPageScrollStateChanged(int state)
         {
-            if (state == ViewPager.SCROLL_STATE_IDLE) {
+            if (state == ViewPager.SCROLL_STATE_IDLE)
+            {
                 startImageTimerTask();
             }
         }
@@ -423,7 +432,8 @@ public class MyBanner extends RelativeLayout
 
         }
 
-        public void recycle() {
+        public void recycle()
+        {
             mAdList.clear();
             mAdList = null;
             mImageViewCacheList.clear();

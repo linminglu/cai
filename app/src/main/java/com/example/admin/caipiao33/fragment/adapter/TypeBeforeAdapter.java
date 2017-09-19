@@ -63,11 +63,13 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
     // 用来区分是当前这种类型的view，子类中TypeSixAdapter可能会调用父类的getChildView，这时这个contentView不能复用
     private final int CHILD_VIEW_TYPE = 1002;
 
-    public TypeBeforeAdapter() {
+    public TypeBeforeAdapter()
+    {
 
     }
 
-    public TypeBeforeAdapter(LayoutInflater inflater, BuyRoomBean bean, int type) {
+    public TypeBeforeAdapter(LayoutInflater inflater, BuyRoomBean bean, int type)
+    {
         this.mInflater = inflater;
         this.mBuyRoomBean = bean;
         this.mType = type;
@@ -76,16 +78,23 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
 
     /**
      * 重置数据
+     *
      * @param bean
      */
-    public void updateData(BuyRoomBean bean) {
+    public void updateData(BuyRoomBean bean)
+    {
         this.mBuyRoomBean = bean;
         String num = bean.getNum();
-        if (beforeList.contains(num)) {
+        if (beforeList.contains(num))
+        {
             creatDataBefore();
-        } else if (afterList.contains(num)) {
+        }
+        else if (afterList.contains(num))
+        {
             creatDataAfter();
-        } else {
+        }
+        else
+        {
             creatDataNormal();
         }
     }
@@ -94,25 +103,33 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
     {
         int totalSize = mBuyRoomBean.getPlayDetailList().size();
         mDataList = new ArrayList<>(totalSize);
-        for (int i =0; i < totalSize; i++) {
+        for (int i = 0; i < totalSize; i++)
+        {
             BeanGroup beanGroup = new BeanGroup();
-            BuyRoomBean.PlayDetailListBean playDetailListBean = mBuyRoomBean.getPlayDetailList().get(i);
+            BuyRoomBean.PlayDetailListBean playDetailListBean = mBuyRoomBean.getPlayDetailList()
+                    .get(i);
             List<String> groupNameList = new ArrayList<>(1);
             groupNameList.add(playDetailListBean.getName());
             beanGroup.setGroupNameList(groupNameList);
             List<BuyRoomBean.PlayDetailListBean.ListBean> list = playDetailListBean.getList();
             int childListSize;
-            if (list.size() % COUNT == 0) {
+            if (list.size() % COUNT == 0)
+            {
                 childListSize = list.size() / COUNT;
-            } else {
+            }
+            else
+            {
                 childListSize = list.size() / COUNT + 1;
             }
             List<List<BuyRoomBean.PlayDetailListBean.ListBean>> childList = new ArrayList<>(childListSize);
-            for (int j = 0; j < childListSize; j++) {
+            for (int j = 0; j < childListSize; j++)
+            {
                 List<BuyRoomBean.PlayDetailListBean.ListBean> itemList = new ArrayList<>(COUNT);
-                for (int k = 0; k < COUNT; k++) {
+                for (int k = 0; k < COUNT; k++)
+                {
                     int index = j * COUNT + k;
-                    if (index >= list.size()) {
+                    if (index >= list.size())
+                    {
                         break;
                     }
                     BuyRoomBean.PlayDetailListBean.ListBean e = list.get(index);
@@ -134,15 +151,20 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
         int totalSize = mBuyRoomBean.getPlayDetailList().size();
         int groupSize = 1 + (totalSize - 1) / COUNT + (totalSize - 1) % COUNT;
         mDataList = new ArrayList<>(groupSize);
-        for (int i =0; i < groupSize; i++) {
+        for (int i = 0; i < groupSize; i++)
+        {
             BeanGroup beanGroup = new BeanGroup();
-            if (i > 0 && i <= (totalSize - 1) / COUNT) {
+            if (i > 0 && i <= (totalSize - 1) / COUNT)
+            {
                 List<String> groupNameList = new ArrayList<>(COUNT);
                 int childListSize = 0;
-                for (int j = 0; j < COUNT; j++) {
-                    BuyRoomBean.PlayDetailListBean playDetailListBean = mBuyRoomBean.getPlayDetailList().get(1 + COUNT * (i - 1) + j);
+                for (int j = 0; j < COUNT; j++)
+                {
+                    BuyRoomBean.PlayDetailListBean playDetailListBean = mBuyRoomBean.getPlayDetailList()
+                            .get(1 + COUNT * (i - 1) + j);
                     List<BuyRoomBean.PlayDetailListBean.ListBean> itemList = playDetailListBean.getList();
-                    if (childListSize < itemList.size()) {
+                    if (childListSize < itemList.size())
+                    {
                         childListSize = itemList.size();
                     }
                     groupNameList.add(playDetailListBean.getName());
@@ -150,12 +172,16 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
                 beanGroup.setGroupNameList(groupNameList);
 
                 List<List<BuyRoomBean.PlayDetailListBean.ListBean>> childList = new ArrayList<>(childListSize);
-                for (int j = 0; j < childListSize; j++) {
+                for (int j = 0; j < childListSize; j++)
+                {
                     List<BuyRoomBean.PlayDetailListBean.ListBean> itemList = new ArrayList<>(COUNT);
-                    for (int k = 0; k < COUNT; k++) {
-                        BuyRoomBean.PlayDetailListBean playDetailListBean = mBuyRoomBean.getPlayDetailList().get(1 + COUNT * (i - 1) + k);
+                    for (int k = 0; k < COUNT; k++)
+                    {
+                        BuyRoomBean.PlayDetailListBean playDetailListBean = mBuyRoomBean.getPlayDetailList()
+                                .get(1 + COUNT * (i - 1) + k);
                         List<BuyRoomBean.PlayDetailListBean.ListBean> list = playDetailListBean.getList();
-                        if (j < list.size()) {
+                        if (j < list.size())
+                        {
                             BuyRoomBean.PlayDetailListBean.ListBean e = list.get(j);
                             e.setParentName(playDetailListBean.getName());
                             itemList.add(e);
@@ -164,11 +190,16 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
                     childList.add(itemList);
                 }
                 beanGroup.setChildList(childList);
-            } else {
+            }
+            else
+            {
                 BuyRoomBean.PlayDetailListBean playDetailListBean;
-                if (i == 0) {
+                if (i == 0)
+                {
                     playDetailListBean = mBuyRoomBean.getPlayDetailList().get(i);
-                } else {
+                }
+                else
+                {
                     playDetailListBean = mBuyRoomBean.getPlayDetailList()
                             .get(1 + ((totalSize - 1) / COUNT) * COUNT + (i - (totalSize - 1) / COUNT) - 1);
                 }
@@ -177,17 +208,23 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
                 beanGroup.setGroupNameList(groupNameList);
                 List<BuyRoomBean.PlayDetailListBean.ListBean> list = playDetailListBean.getList();
                 int childListSize;
-                if (list.size() % COUNT == 0) {
+                if (list.size() % COUNT == 0)
+                {
                     childListSize = list.size() / COUNT;
-                } else {
+                }
+                else
+                {
                     childListSize = list.size() / COUNT + 1;
                 }
                 List<List<BuyRoomBean.PlayDetailListBean.ListBean>> childList = new ArrayList<>(childListSize);
-                for (int j = 0; j < childListSize; j++) {
+                for (int j = 0; j < childListSize; j++)
+                {
                     List<BuyRoomBean.PlayDetailListBean.ListBean> itemList = new ArrayList<>(COUNT);
-                    for (int k = 0; k < COUNT; k++) {
+                    for (int k = 0; k < COUNT; k++)
+                    {
                         int index = j * COUNT + k;
-                        if (index >= list.size()) {
+                        if (index >= list.size())
+                        {
                             break;
                         }
                         BuyRoomBean.PlayDetailListBean.ListBean e = list.get(index);
@@ -207,15 +244,20 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
         int totalSize = mBuyRoomBean.getPlayDetailList().size();
         int groupSize = totalSize / COUNT + totalSize % COUNT;
         mDataList = new ArrayList<>(groupSize);
-        for (int i =0; i < groupSize; i++) {
+        for (int i = 0; i < groupSize; i++)
+        {
             BeanGroup beanGroup = new BeanGroup();
-            if (i < totalSize / COUNT) {
+            if (i < totalSize / COUNT)
+            {
                 List<String> groupNameList = new ArrayList<>(COUNT);
                 int childListSize = 0;
-                for (int j = 0; j < COUNT; j++) {
-                    BuyRoomBean.PlayDetailListBean playDetailListBean = mBuyRoomBean.getPlayDetailList().get(COUNT * i + j);
+                for (int j = 0; j < COUNT; j++)
+                {
+                    BuyRoomBean.PlayDetailListBean playDetailListBean = mBuyRoomBean.getPlayDetailList()
+                            .get(COUNT * i + j);
                     List<BuyRoomBean.PlayDetailListBean.ListBean> itemList = playDetailListBean.getList();
-                    if (childListSize < itemList.size()) {
+                    if (childListSize < itemList.size())
+                    {
                         childListSize = itemList.size();
                     }
                     groupNameList.add(playDetailListBean.getName());
@@ -223,12 +265,16 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
                 beanGroup.setGroupNameList(groupNameList);
 
                 List<List<BuyRoomBean.PlayDetailListBean.ListBean>> childList = new ArrayList<>(childListSize);
-                for (int j = 0; j < childListSize; j++) {
+                for (int j = 0; j < childListSize; j++)
+                {
                     List<BuyRoomBean.PlayDetailListBean.ListBean> itemList = new ArrayList<>(COUNT);
-                    for (int k = 0; k < COUNT; k++) {
-                        BuyRoomBean.PlayDetailListBean playDetailListBean = mBuyRoomBean.getPlayDetailList().get(COUNT * i + k);
+                    for (int k = 0; k < COUNT; k++)
+                    {
+                        BuyRoomBean.PlayDetailListBean playDetailListBean = mBuyRoomBean.getPlayDetailList()
+                                .get(COUNT * i + k);
                         List<BuyRoomBean.PlayDetailListBean.ListBean> list = playDetailListBean.getList();
-                        if (j < list.size()) {
+                        if (j < list.size())
+                        {
                             BuyRoomBean.PlayDetailListBean.ListBean e = list.get(j);
                             e.setParentName(playDetailListBean.getName());
                             itemList.add(e);
@@ -237,7 +283,9 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
                     childList.add(itemList);
                 }
                 beanGroup.setChildList(childList);
-            } else {
+            }
+            else
+            {
                 BuyRoomBean.PlayDetailListBean playDetailListBean = mBuyRoomBean.getPlayDetailList()
                         .get((totalSize / COUNT) * COUNT + (i - totalSize / COUNT));
                 List<String> groupNameList = new ArrayList<>(1);
@@ -245,17 +293,23 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
                 beanGroup.setGroupNameList(groupNameList);
                 List<BuyRoomBean.PlayDetailListBean.ListBean> list = playDetailListBean.getList();
                 int childListSize;
-                if (list.size() % COUNT == 0) {
+                if (list.size() % COUNT == 0)
+                {
                     childListSize = list.size() / COUNT;
-                } else {
+                }
+                else
+                {
                     childListSize = list.size() / COUNT + 1;
                 }
                 List<List<BuyRoomBean.PlayDetailListBean.ListBean>> childList = new ArrayList<>(childListSize);
-                for (int j = 0; j < childListSize; j++) {
+                for (int j = 0; j < childListSize; j++)
+                {
                     List<BuyRoomBean.PlayDetailListBean.ListBean> itemList = new ArrayList<>(COUNT);
-                    for (int k = 0; k < COUNT; k++) {
+                    for (int k = 0; k < COUNT; k++)
+                    {
                         int index = j * COUNT + k;
-                        if (index >= list.size()) {
+                        if (index >= list.size())
+                        {
                             break;
                         }
                         BuyRoomBean.PlayDetailListBean.ListBean e = list.get(index);
@@ -274,8 +328,10 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
      * 清空已选中的内容
      */
     @Override
-    public void clearChecked() {
-        if (mCheckedList.size() > 0) {
+    public void clearChecked()
+    {
+        if (mCheckedList.size() > 0)
+        {
             mCheckedList.clear();
             notifyDataSetChanged();
         }
@@ -283,6 +339,7 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
 
     /**
      * 获取已选中的列表
+     *
      * @return
      */
     @Override
@@ -336,12 +393,16 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent)
     {
-        if (null == convertView) {
+        if (null == convertView)
+        {
             convertView = mInflater.inflate(R.layout.item_buy_quick_group, null);
-        } else {
+        }
+        else
+        {
             // 不能复用的情况
             Object tag = convertView.getTag(R.id.buy_view_type);
-            if (null == tag || (int)tag != GROUP_VIEW_TYPE) {
+            if (null == tag || (int) tag != GROUP_VIEW_TYPE)
+            {
                 convertView = mInflater.inflate(R.layout.item_buy_quick_group, null);
             }
         }
@@ -356,15 +417,20 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
         tv2.setText("");
         tv3.setText("");
         tv4.setText("");
-        if (isExpanded) {
+        if (isExpanded)
+        {
             ivArrow.setVisibility(View.GONE);
-        } else {
+        }
+        else
+        {
             ivArrow.setVisibility(View.VISIBLE);
         }
         BeanGroup beanGroup = mDataList.get(groupPosition);
         List<String> groupNameList = beanGroup.getGroupNameList();
-        for (int i = 0; i < groupNameList.size(); i++) {
-            switch (i) {
+        for (int i = 0; i < groupNameList.size(); i++)
+        {
+            switch (i)
+            {
                 case 0:
                     tv1.setText(groupNameList.get(i));
                     break;
@@ -388,18 +454,23 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
     {
-        if (mType == QuickBuyFragment.TYPE_QUICK) {
+        if (mType == QuickBuyFragment.TYPE_QUICK)
+        {
             // 快捷下注的类型
-            if (null == convertView) {
+            if (null == convertView)
+            {
                 convertView = mInflater.inflate(R.layout.item_buy_quick, null);
                 ViewHolder.get(convertView, R.id.layout1).setOnClickListener(this);
                 ViewHolder.get(convertView, R.id.layout2).setOnClickListener(this);
                 ViewHolder.get(convertView, R.id.layout3).setOnClickListener(this);
                 ViewHolder.get(convertView, R.id.layout4).setOnClickListener(this);
-            } else {
+            }
+            else
+            {
                 // 不能复用的情况
                 Object tag = convertView.getTag(R.id.buy_view_type);
-                if (null == tag || (int)tag != GROUP_VIEW_TYPE) {
+                if (null == tag || (int) tag != GROUP_VIEW_TYPE)
+                {
                     convertView = mInflater.inflate(R.layout.item_buy_quick, null);
                     ViewHolder.get(convertView, R.id.layout1).setOnClickListener(this);
                     ViewHolder.get(convertView, R.id.layout2).setOnClickListener(this);
@@ -432,12 +503,14 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
             List<BuyRoomBean.PlayDetailListBean.ListBean> listBeen = mDataList.get(groupPosition)
                     .getChildList()
                     .get(childPosition);
-            for (int i = 0; i < listBeen.size(); i++) {
+            for (int i = 0; i < listBeen.size(); i++)
+            {
                 BuyRoomBean.PlayDetailListBean.ListBean listBean = listBeen.get(i);
                 View layout = null;
                 TextView tvName = null;
                 TextView tvOdds = null;
-                switch (i) {
+                switch (i)
+                {
                     case 0:
                         layout = layout1;
                         tvName = tvName1;
@@ -465,23 +538,32 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
                 layout.setTag(R.id.buy_data, listBean);
                 tvName.setText(listBean.getPlayName());
                 tvOdds.setText(listBean.getBonus());
-                if (mCheckedList.contains(listBean)) {
+                if (mCheckedList.contains(listBean))
+                {
                     layout.setBackgroundResource(R.drawable.liuhecai_btn_xuanzhong_02);
-                } else {
+                }
+                else
+                {
                     layout.setBackgroundResource(R.drawable.liuhecai_btn_weixuan_01);
                 }
             }
             convertView.setTag(R.id.buy_view_type, CHILD_VIEW_TYPE);
             return convertView;
-        } else {
+        }
+        else
+        {
             // 自选下注的类型
-            if (null == convertView) {
+            if (null == convertView)
+            {
                 convertView = mInflater.inflate(R.layout.item_buy_self_select, null);
                 initSelfContentView(convertView);
-            }  else {
+            }
+            else
+            {
                 // 不能复用的情况
                 Object tag = convertView.getTag(R.id.buy_view_type);
-                if (null == tag || (int)tag != GROUP_VIEW_TYPE) {
+                if (null == tag || (int) tag != GROUP_VIEW_TYPE)
+                {
                     convertView = mInflater.inflate(R.layout.item_buy_self_select, null);
                     initSelfContentView(convertView);
                 }
@@ -511,12 +593,14 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
             List<BuyRoomBean.PlayDetailListBean.ListBean> listBeen = mDataList.get(groupPosition)
                     .getChildList()
                     .get(childPosition);
-            for (int i = 0; i < listBeen.size(); i++) {
+            for (int i = 0; i < listBeen.size(); i++)
+            {
                 BuyRoomBean.PlayDetailListBean.ListBean listBean = listBeen.get(i);
                 View layout = null;
                 TextView tvName = null;
                 EditText etNum = null;
-                switch (i) {
+                switch (i)
+                {
                     case 0:
                         layout = layout1;
                         tvName = tvName1;
@@ -543,12 +627,17 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
                 layout.setVisibility(View.VISIBLE);
                 SpannableString ss = new SpannableString(listBean.getPlayName() + " " + listBean.getBonus());
                 int start = listBean.getPlayName().length() + 1;
-                ss.setSpan(new ForegroundColorSpan(Color.parseColor("#C30D23")), start, start+listBean.getBonus().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                ss.setSpan(new ForegroundColorSpan(Color.parseColor("#C30D23")), start, start + listBean
+                        .getBonus()
+                        .length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 tvName.setText(ss);
                 etNum.setTag(R.id.buy_data, listBean);
-                if (mCheckedList.contains(listBean)) {
+                if (mCheckedList.contains(listBean))
+                {
                     etNum.setText(listBean.getMoney());
-                } else {
+                }
+                else
+                {
                     etNum.setText("");
                 }
             }
@@ -559,6 +648,7 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
 
     /**
      * 初始化自选下注类型的contentView
+     *
      * @param convertView
      */
     private void initSelfContentView(View convertView)
@@ -584,17 +674,21 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
             public void afterTextChanged(Editable s)
             {
                 String s1 = s.toString();
-                BuyRoomBean.PlayDetailListBean.ListBean listBean = (BuyRoomBean.PlayDetailListBean.ListBean) etNum1.getTag(R.id.buy_data);
-                if (TextUtils.isEmpty(s1)) {
+                BuyRoomBean.PlayDetailListBean.ListBean listBean = (BuyRoomBean.PlayDetailListBean.ListBean) etNum1
+                        .getTag(R.id.buy_data);
+                if (TextUtils.isEmpty(s1))
+                {
                     // 如果最新值为空，直接移除该项目
-                    if (mCheckedList.contains(listBean)) {
+                    if (mCheckedList.contains(listBean))
+                    {
                         mCheckedList.remove(listBean);
                     }
                     // 原来没有保存值，最新的值也是为空的话就直接忽略
                     return;
                 }
                 listBean.setMoney(s1);
-                if (mCheckedList.contains(listBean)) {
+                if (mCheckedList.contains(listBean))
+                {
                     mCheckedList.remove(listBean);
                 }
                 mCheckedList.add(listBean);
@@ -620,17 +714,21 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
             public void afterTextChanged(Editable s)
             {
                 String s1 = s.toString();
-                BuyRoomBean.PlayDetailListBean.ListBean listBean = (BuyRoomBean.PlayDetailListBean.ListBean) etNum2.getTag(R.id.buy_data);
-                if (TextUtils.isEmpty(s1)) {
+                BuyRoomBean.PlayDetailListBean.ListBean listBean = (BuyRoomBean.PlayDetailListBean.ListBean) etNum2
+                        .getTag(R.id.buy_data);
+                if (TextUtils.isEmpty(s1))
+                {
                     // 如果最新值为空，直接移除该项目
-                    if (mCheckedList.contains(listBean)) {
+                    if (mCheckedList.contains(listBean))
+                    {
                         mCheckedList.remove(listBean);
                     }
                     // 原来没有保存值，最新的值也是为空的话就直接忽略
                     return;
                 }
                 listBean.setMoney(s1);
-                if (mCheckedList.contains(listBean)) {
+                if (mCheckedList.contains(listBean))
+                {
                     mCheckedList.remove(listBean);
                 }
                 mCheckedList.add(listBean);
@@ -656,17 +754,21 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
             public void afterTextChanged(Editable s)
             {
                 String s1 = s.toString();
-                BuyRoomBean.PlayDetailListBean.ListBean listBean = (BuyRoomBean.PlayDetailListBean.ListBean) etNum3.getTag(R.id.buy_data);
-                if (TextUtils.isEmpty(s1)) {
+                BuyRoomBean.PlayDetailListBean.ListBean listBean = (BuyRoomBean.PlayDetailListBean.ListBean) etNum3
+                        .getTag(R.id.buy_data);
+                if (TextUtils.isEmpty(s1))
+                {
                     // 如果最新值为空，直接移除该项目
-                    if (mCheckedList.contains(listBean)) {
+                    if (mCheckedList.contains(listBean))
+                    {
                         mCheckedList.remove(listBean);
                     }
                     // 原来没有保存值，最新的值也是为空的话就直接忽略
                     return;
                 }
                 listBean.setMoney(s1);
-                if (mCheckedList.contains(listBean)) {
+                if (mCheckedList.contains(listBean))
+                {
                     mCheckedList.remove(listBean);
                 }
                 mCheckedList.add(listBean);
@@ -692,17 +794,21 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
             public void afterTextChanged(Editable s)
             {
                 String s1 = s.toString();
-                BuyRoomBean.PlayDetailListBean.ListBean listBean = (BuyRoomBean.PlayDetailListBean.ListBean) etNum4.getTag(R.id.buy_data);
-                if (TextUtils.isEmpty(s1)) {
+                BuyRoomBean.PlayDetailListBean.ListBean listBean = (BuyRoomBean.PlayDetailListBean.ListBean) etNum4
+                        .getTag(R.id.buy_data);
+                if (TextUtils.isEmpty(s1))
+                {
                     // 如果最新值为空，直接移除该项目
-                    if (mCheckedList.contains(listBean)) {
+                    if (mCheckedList.contains(listBean))
+                    {
                         mCheckedList.remove(listBean);
                     }
                     // 原来没有保存值，最新的值也是为空的话就直接忽略
                     return;
                 }
                 listBean.setMoney(s1);
-                if (mCheckedList.contains(listBean)) {
+                if (mCheckedList.contains(listBean))
+                {
                     mCheckedList.remove(listBean);
                 }
                 mCheckedList.add(listBean);
@@ -719,23 +825,32 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
     @Override
     public void onClick(View v)
     {
-        switch (v.getId()) {
+        switch (v.getId())
+        {
             case R.id.layout1:
             case R.id.layout2:
             case R.id.layout3:
             case R.id.layout4:
-                BuyRoomBean.PlayDetailListBean.ListBean listBean = (BuyRoomBean.PlayDetailListBean.ListBean) v.getTag(R.id.buy_data);
-                if (null == listBean) {
+                BuyRoomBean.PlayDetailListBean.ListBean listBean = (BuyRoomBean.PlayDetailListBean.ListBean) v
+                        .getTag(R.id.buy_data);
+                if (null == listBean)
+                {
                     return;
                 }
-                if (mCheckedList.contains(listBean)) {
+                if (mCheckedList.contains(listBean))
+                {
                     mCheckedList.remove(listBean);
-                } else {
+                }
+                else
+                {
                     mCheckedList.add(listBean);
                 }
-                if (mCheckedList.contains(listBean)) {
+                if (mCheckedList.contains(listBean))
+                {
                     v.setBackgroundResource(R.drawable.liuhecai_btn_xuanzhong_02);
-                } else {
+                }
+                else
+                {
                     v.setBackgroundResource(R.drawable.liuhecai_btn_weixuan_01);
                 }
                 break;

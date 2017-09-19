@@ -15,7 +15,6 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.example.admin.caipiao33.httputils.HttpUtil;
@@ -25,9 +24,6 @@ import com.example.admin.caipiao33.utils.StringUtils;
 import com.example.admin.caipiao33.utils.UserConfig;
 import com.example.admin.caipiao33.wheelview.ProgressDialogBar;
 import com.socks.library.KLog;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.TreeMap;
 

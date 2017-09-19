@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-
 import com.example.admin.caipiao33.R;
 
 import org.jetbrains.annotations.NotNull;

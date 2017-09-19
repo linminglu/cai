@@ -12,7 +12,8 @@ public class PromotionsPresenter implements IPromotionsContract.Presenter
 {
     private final IPromotionsContract.View mView;
 
-    public PromotionsPresenter(IPromotionsContract.View view) {
+    public PromotionsPresenter(IPromotionsContract.View view)
+    {
         this.mView = view;
     }
 
@@ -68,7 +69,8 @@ public class PromotionsPresenter implements IPromotionsContract.Presenter
         });
     }
 
-    private void baseRequest(MyResponseListener listener) {
+    private void baseRequest(MyResponseListener listener)
+    {
         HttpUtil.requestFirst("activity", String.class, mView.getBaseActivity(), listener, null);
     }
 

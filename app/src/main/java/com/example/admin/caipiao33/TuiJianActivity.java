@@ -1,6 +1,5 @@
 package com.example.admin.caipiao33;
 
-import android.annotation.SuppressLint;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;

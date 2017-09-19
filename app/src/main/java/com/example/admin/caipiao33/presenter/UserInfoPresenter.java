@@ -2,7 +2,6 @@ package com.example.admin.caipiao33.presenter;
 
 import android.view.View;
 
-import com.example.admin.caipiao33.bean.HomePageBean;
 import com.example.admin.caipiao33.bean.UserInfoBean;
 import com.example.admin.caipiao33.contract.IUserContract;
 import com.example.admin.caipiao33.httputils.HttpUtil;

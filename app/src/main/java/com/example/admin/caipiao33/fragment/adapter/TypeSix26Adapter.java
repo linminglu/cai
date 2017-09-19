@@ -25,7 +25,8 @@ public class TypeSix26Adapter extends TypeBeforeAdapter
 {
     private static final int COUNT = 4;
 
-    public TypeSix26Adapter(LayoutInflater inflater, BuyRoomBean bean, int type) {
+    public TypeSix26Adapter(LayoutInflater inflater, BuyRoomBean bean, int type)
+    {
         this.mInflater = inflater;
         this.mBuyRoomBean = bean;
         this.mType = type;
@@ -34,9 +35,11 @@ public class TypeSix26Adapter extends TypeBeforeAdapter
 
     /**
      * 重置数据
+     *
      * @param bean
      */
-    public void updateData(BuyRoomBean bean) {
+    public void updateData(BuyRoomBean bean)
+    {
         this.mBuyRoomBean = bean;
         creatDataNormal();
 
@@ -52,11 +55,14 @@ public class TypeSix26Adapter extends TypeBeforeAdapter
         beanGroup.setGroupNameList(groupNameList);
         int childListSize = 49 / COUNT + 1;
         List<List<BuyRoomBean.PlayDetailListBean.ListBean>> childList = new ArrayList<>(childListSize);
-        for (int j = 0; j < childListSize; j++) {
+        for (int j = 0; j < childListSize; j++)
+        {
             List<BuyRoomBean.PlayDetailListBean.ListBean> itemList = new ArrayList<>(COUNT);
-            for (int k = 0; k < COUNT; k++) {
+            for (int k = 0; k < COUNT; k++)
+            {
                 int index = j * COUNT + k;
-                if (index >= 49) {
+                if (index >= 49)
+                {
                     break;
                 }
                 BuyRoomBean.PlayDetailListBean.ListBean e = new BuyRoomBean.PlayDetailListBean.ListBean();
@@ -117,7 +123,8 @@ public class TypeSix26Adapter extends TypeBeforeAdapter
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent)
     {
-        if (null == convertView) {
+        if (null == convertView)
+        {
             convertView = mInflater.inflate(R.layout.item_buy_quick_group, null);
         }
 
@@ -131,15 +138,20 @@ public class TypeSix26Adapter extends TypeBeforeAdapter
         tv2.setText("");
         tv3.setText("");
         tv4.setText("");
-        if (isExpanded) {
+        if (isExpanded)
+        {
             ivArrow.setVisibility(View.GONE);
-        } else {
+        }
+        else
+        {
             ivArrow.setVisibility(View.VISIBLE);
         }
         BeanGroup beanGroup = mDataList.get(groupPosition);
         List<String> groupNameList = beanGroup.getGroupNameList();
-        for (int i = 0; i < groupNameList.size(); i++) {
-            switch (i) {
+        for (int i = 0; i < groupNameList.size(); i++)
+        {
+            switch (i)
+            {
                 case 0:
                     tv1.setText(groupNameList.get(i));
                     break;
@@ -163,7 +175,8 @@ public class TypeSix26Adapter extends TypeBeforeAdapter
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
     {
         // 快捷下注的类型
-        if (null == convertView) {
+        if (null == convertView)
+        {
             convertView = mInflater.inflate(R.layout.item_buy_quick_26, null);
             ViewHolder.get(convertView, R.id.layout1).setOnClickListener(this);
             ViewHolder.get(convertView, R.id.layout2).setOnClickListener(this);
@@ -191,11 +204,13 @@ public class TypeSix26Adapter extends TypeBeforeAdapter
         List<BuyRoomBean.PlayDetailListBean.ListBean> listBeen = mDataList.get(groupPosition)
                 .getChildList()
                 .get(childPosition);
-        for (int i = 0; i < listBeen.size(); i++) {
+        for (int i = 0; i < listBeen.size(); i++)
+        {
             BuyRoomBean.PlayDetailListBean.ListBean listBean = listBeen.get(i);
             View layout = null;
             TextView tvName = null;
-            switch (i) {
+            switch (i)
+            {
                 case 0:
                     layout = layout1;
                     tvName = tvName1;
@@ -218,10 +233,13 @@ public class TypeSix26Adapter extends TypeBeforeAdapter
             layout.setVisibility(View.VISIBLE);
             layout.setTag(R.id.buy_data, listBean);
             tvName.setText(listBean.getPlayName());
-            if (mCheckedList.contains(listBean)) {
+            if (mCheckedList.contains(listBean))
+            {
                 tvName.setBackgroundResource(R.drawable.shape_circle_red);
                 tvName.setTextColor(mInflater.getContext().getResources().getColor(R.color.white));
-            } else {
+            }
+            else
+            {
                 tvName.setBackgroundResource(R.drawable.shape_circle_red_hollow);
                 tvName.setTextColor(mInflater.getContext().getResources().getColor(R.color.red));
             }
@@ -231,12 +249,14 @@ public class TypeSix26Adapter extends TypeBeforeAdapter
 
     /**
      * 获取已选中的列表
+     *
      * @return
      */
     @Override
     public List<BuyRoomBean.PlayDetailListBean.ListBean> getCheckedList()
     {
-        if (mCheckedList.size() < 6) {
+        if (mCheckedList.size() < 6)
+        {
             ToastUtil.show("下注号码有误，请检查！");
             return null;
         }
@@ -261,9 +281,11 @@ public class TypeSix26Adapter extends TypeBeforeAdapter
         clone.setParentName(clone.getPlayName());
         StringBuilder sb = new StringBuilder();
         int size = mCheckedList.size();
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < size; i++)
+        {
             BuyRoomBean.PlayDetailListBean.ListBean bean = mCheckedList.get(i);
-            if (i != 0) {
+            if (i != 0)
+            {
                 sb.append(" & ");
             }
             sb.append(bean.getPlayName());
@@ -276,19 +298,26 @@ public class TypeSix26Adapter extends TypeBeforeAdapter
     @Override
     public void onClick(View v)
     {
-        switch (v.getId()) {
+        switch (v.getId())
+        {
             case R.id.layout1:
             case R.id.layout2:
             case R.id.layout3:
             case R.id.layout4:
-                BuyRoomBean.PlayDetailListBean.ListBean listBean = (BuyRoomBean.PlayDetailListBean.ListBean) v.getTag(R.id.buy_data);
-                if (null == listBean) {
+                BuyRoomBean.PlayDetailListBean.ListBean listBean = (BuyRoomBean.PlayDetailListBean.ListBean) v
+                        .getTag(R.id.buy_data);
+                if (null == listBean)
+                {
                     return;
                 }
-                if (mCheckedList.contains(listBean)) {
+                if (mCheckedList.contains(listBean))
+                {
                     mCheckedList.remove(listBean);
-                } else {
-                    if (mCheckedList.size() >= 11) {
+                }
+                else
+                {
+                    if (mCheckedList.size() >= 11)
+                    {
                         ToastUtil.show("只能选择6-11个不中");
                         return;
                     }
@@ -296,12 +325,19 @@ public class TypeSix26Adapter extends TypeBeforeAdapter
                 }
                 LinearLayout layout = (LinearLayout) v;
                 TextView tvName = (TextView) layout.getChildAt(0);
-                if (mCheckedList.contains(listBean)) {
+                if (mCheckedList.contains(listBean))
+                {
                     tvName.setBackgroundResource(R.drawable.shape_circle_red);
-                    tvName.setTextColor(mInflater.getContext().getResources().getColor(R.color.white));
-                } else {
+                    tvName.setTextColor(mInflater.getContext()
+                            .getResources()
+                            .getColor(R.color.white));
+                }
+                else
+                {
                     tvName.setBackgroundResource(R.drawable.shape_circle_red_hollow);
-                    tvName.setTextColor(mInflater.getContext().getResources().getColor(R.color.red));
+                    tvName.setTextColor(mInflater.getContext()
+                            .getResources()
+                            .getColor(R.color.red));
                 }
                 break;
             default:

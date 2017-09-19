@@ -16,7 +16,8 @@ public class GouCaiPresenter implements IGouCaiContract.Presenter
 {
     private final IGouCaiContract.View mView;
 
-    public GouCaiPresenter(IGouCaiContract.View view) {
+    public GouCaiPresenter(IGouCaiContract.View view)
+    {
         this.mView = view;
     }
 
@@ -71,7 +72,8 @@ public class GouCaiPresenter implements IGouCaiContract.Presenter
         });
     }
 
-    private void baseRequest(MyResponseListener listener) {
+    private void baseRequest(MyResponseListener listener)
+    {
         HttpUtil.requestFirst("hall", GouCaiBean.class, mView.getBaseActivity(), listener, null);
     }
 

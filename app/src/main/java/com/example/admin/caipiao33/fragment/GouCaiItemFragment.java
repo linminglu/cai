@@ -102,25 +102,30 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
         @Override
         public boolean handleMessage(Message msg)
         {
-            switch (msg.what) {
+            switch (msg.what)
+            {
                 case WHAT_REFRESH_ITEM:
                     String obj = (String) msg.obj; // 彩票编码
-                    if (refreshList.contains(obj)) {
+                    if (refreshList.contains(obj))
+                    {
                         // 表示有内容正在刷新，不用再次请求网络
                         break;
                     }
-                    synchronized (refreshList) {
+                    synchronized (refreshList)
+                    {
                         refreshList.add(obj);
                     }
                     mPresenter.refreshData(obj, WHAT_REFRESH_ITEM);
                     break;
                 case WHAT_REFRESH_RESULT:
                     String num = (String) msg.obj; // 彩票编码
-                    if (refreshList.contains(num)) {
+                    if (refreshList.contains(num))
+                    {
                         // 表示有内容正在刷新，不用再次请求网络
                         break;
                     }
-                    synchronized (refreshList) {
+                    synchronized (refreshList)
+                    {
                         refreshList.add(num);
                     }
                     mPresenter.refreshData(num, WHAT_REFRESH_RESULT);
@@ -145,12 +150,14 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
         {
             long l = System.currentTimeMillis();
             GouCaiFragment fragment = (GouCaiFragment) getParentFragment();
-            if (!fragment.isLinearLayout || !isVisible) {
+            if (!fragment.isLinearLayout || !isVisible)
+            {
                 mHandler.removeCallbacks(this);
                 return;
             }
             // 页面不在滑动状态才更新
-            if (recyclerView.getScrollState() == RecyclerView.SCROLL_STATE_IDLE) {
+            if (recyclerView.getScrollState() == RecyclerView.SCROLL_STATE_IDLE)
+            {
                 adapter.notifyDataSetChanged();
                 KLog.e("timerRunnable");
             }
@@ -170,13 +177,16 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
     public void timerResume()
     {
         GouCaiFragment pf = (GouCaiFragment) getParentFragment();
-        if (!pf.isvisible) {
+        if (!pf.isvisible)
+        {
             return;
         }
-        if (isPause) {
+        if (isPause)
+        {
             // 页面暂停过，需要重新加载
             isPause = false;
-            if (isVisible) {
+            if (isVisible)
+            {
                 swipeRefreshLayout.setRefreshing(true);
                 GouCaiFragment fragment = (GouCaiFragment) getParentFragment();
                 fragment.toRefreshData();
@@ -242,8 +252,10 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
         this.mGouCaiBean = bean;
     }
 
-    public void refreshRecyclerView() {
-        if (null == mGouCaiBean) {
+    public void refreshRecyclerView()
+    {
+        if (null == mGouCaiBean)
+        {
             return;
         }
         if (mType == TYPE_ALL)
@@ -259,35 +271,48 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
             mDataList = mGouCaiBean.getDpc();
         }
         GouCaiFragment fragment = (GouCaiFragment) getParentFragment();
-        if (fragment.isLinearLayout) {
+        if (fragment.isLinearLayout)
+        {
             RecyclerView.Adapter adapter = recyclerView.getAdapter();
-            if (adapter != null && adapter instanceof MyGouCaiAdapter) {
+            if (adapter != null && adapter instanceof MyGouCaiAdapter)
+            {
                 adapter.notifyDataSetChanged();
-            } else {
+            }
+            else
+            {
                 updateUILayout();
             }
             mHandler.removeCallbacks(timerRunnable);
             mHandler.post(timerRunnable);
-        } else {
+        }
+        else
+        {
             RecyclerView.Adapter adapter = recyclerView.getAdapter();
-            if (adapter != null && adapter instanceof MyGouCaiGrideAdapter) {
+            if (adapter != null && adapter instanceof MyGouCaiGrideAdapter)
+            {
                 adapter.notifyDataSetChanged();
-            } else {
+            }
+            else
+            {
                 updateUILayout();
             }
         }
     }
 
-    public void updateUILayout() {
+    public void updateUILayout()
+    {
         GouCaiFragment fragment = (GouCaiFragment) getParentFragment();
-        if (fragment.isLinearLayout) {
+        if (fragment.isLinearLayout)
+        {
             mHandler.removeCallbacks(timerRunnable);
             mHandler.post(timerRunnable);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerView.removeItemDecoration(gridDecor);
             recyclerView.addItemDecoration(lineDecor);
             recyclerView.setAdapter(adapter);
-        } else {
+        }
+        else
+        {
             recyclerView.removeItemDecoration(lineDecor);
             recyclerView.addItemDecoration(gridDecor);
             recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
@@ -322,7 +347,7 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
     @Override
     public BaseActivity getBaseActivity()
     {
-        return (MainActivity)getParentFragment().getActivity();
+        return (MainActivity) getParentFragment().getActivity();
     }
 
     @Override
@@ -335,20 +360,26 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
     public void updateItem(GouCaiBean.DataBean bean, int what)
     {
         String num = bean.getNum();
-        if (what == WHAT_REFRESH_RESULT) {
+        if (what == WHAT_REFRESH_RESULT)
+        {
             String lastOpen = bean.getLastOpen();
-            if (StringUtils.isEmpty(lastOpen)) {
-                if (refreshList.contains(num)) {
-                    synchronized (refreshList) {
+            if (StringUtils.isEmpty(lastOpen))
+            {
+                if (refreshList.contains(num))
+                {
+                    synchronized (refreshList)
+                    {
                         refreshList.remove(num);
                     }
                 }
                 return;
             }
         }
-        for (int i = 0;i < mDataList.size(); i++ ) {
+        for (int i = 0; i < mDataList.size(); i++)
+        {
             GouCaiBean.DataBean item = mDataList.get(i);
-            if (item.getNum().equals(num)) {
+            if (item.getNum().equals(num))
+            {
                 changeItemDataNotify(i, item, bean);
                 break;
             }
@@ -358,7 +389,8 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
     @Override
     public void refreshDataFailed(String num, int what)
     {
-        synchronized (refreshList) {
+        synchronized (refreshList)
+        {
             refreshList.remove(num);
         }
     }
@@ -374,17 +406,21 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
          *  -- 立即购买页面
          */
 
-        if (bean.getPage().equals("room")) {
+        if (bean.getPage().equals("room"))
+        {
             Intent intent = new Intent(getActivity(), BuyRoomActivity.class);
             intent.putExtra(Constants.EXTRA_TITLE, title);
             intent.putExtra(Constants.EXTRA_BUY_ROOM_BEAN, bean);
             startActivity(intent);
-        } else {
+        }
+        else
+        {
             String roomId = bean.getRoomId();
             String playId = null;
             String playId1 = null;
             List<BuyRoomBean.PlayListBean> playList = bean.getPlayList();
-            if (null != playList && playList.size() > 0) {
+            if (null != playList && playList.size() > 0)
+            {
                 BuyRoomBean.PlayListBean playListBean = playList.get(0);
                 playId = playListBean.getPlayId();
                 playId1 = playListBean.getPlayId1();
@@ -399,7 +435,8 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
         }
     }
 
-    private void changeItemDataNotify(int position, GouCaiBean.DataBean item, GouCaiBean.DataBean newData) {
+    private void changeItemDataNotify(int position, GouCaiBean.DataBean item, GouCaiBean.DataBean newData)
+    {
         item.setEndTime(newData.getEndTime());
         item.setLastOpen(newData.getLastOpen());
         item.setLastPeriod(newData.getLastPeriod());
@@ -407,10 +444,12 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
         item.setPeriod(newData.getPeriod());
         item.setPic(newData.getPic());
         // 页面不在滑动状态才更新
-        if (recyclerView.getScrollState() == RecyclerView.SCROLL_STATE_IDLE) {
+        if (recyclerView.getScrollState() == RecyclerView.SCROLL_STATE_IDLE)
+        {
             adapter.notifyItemChanged(position);
         }
-        synchronized (refreshList) {
+        synchronized (refreshList)
+        {
             refreshList.remove(item.getNum());
         }
     }
@@ -437,11 +476,14 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
         }
 
         @OnClick(R.id.parent)
-        public void onViewClicked(View view) {
-            switch (view.getId()) {
+        public void onViewClicked(View view)
+        {
+            switch (view.getId())
+            {
                 case R.id.parent:
                     int position = getAdapterPosition();
-                    if (position == -1) {
+                    if (position == -1)
+                    {
                         return;
                     }
                     GouCaiBean.DataBean dataBean = mDataList.get(position);
@@ -465,8 +507,10 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
         }
 
         @OnClick(R.id.parent)
-        public void onViewClicked(View view) {
-            switch (view.getId()) {
+        public void onViewClicked(View view)
+        {
+            switch (view.getId())
+            {
                 case R.id.parent:
                     int position = getAdapterPosition();
                     GouCaiBean.DataBean dataBean = mDataList.get(position);
@@ -494,40 +538,50 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
             holder1.tvTitle.setText(dataBean.getName());
             MyImageLoader.displayImage(HttpUtil.mNewUrl + dataBean.getPic(), holder1.iv, getContext());
             holder1.tvIndex.setText(getResources().getString(R.string.s_qishu, dataBean.getLastPeriod()));
-            holder1.tvRemainIndex.setText(getResources().getString(R.string.s_qishu_jiezhi, dataBean.getPeriod()));
+            holder1.tvRemainIndex.setText(getResources().getString(R.string.s_qishu_jiezhi, dataBean
+                    .getPeriod()));
             String lastOpen = dataBean.getLastOpen();
-            if (StringUtils.isEmpty(lastOpen)) {
+            if (StringUtils.isEmpty(lastOpen))
+            {
                 holder1.tvResult.setText("等待开奖");
-            } else {
+            }
+            else
+            {
                 holder1.tvResult.setText(lastOpen);
             }
             String endTime = dataBean.getEndTime();
-            if (!StringUtils.isEmpty(endTime)) {
+            if (!StringUtils.isEmpty(endTime))
+            {
                 long lEndTime = Long.valueOf(endTime);
                 long currentTimeMillis = ServiceTime.getInstance().getCurrentTimeMillis();
                 long temp = lEndTime - currentTimeMillis;
-                if (temp <= 0) {
+                if (temp <= 0)
+                {
                     temp = 0;
                 }
                 long second = temp / 1000;
-                if (second <= 0) {
+                if (second <= 0)
+                {
                     Message msg = new Message();
                     msg.what = WHAT_REFRESH_ITEM;
                     msg.obj = dataBean.getNum();
                     mHandler.sendMessage(msg);
                     holder1.tvRemainTime.setText("");
-                } else {
+                }
+                else
+                {
                     String timeStr = DateUtils.getHMS(second);
                     holder1.tvRemainTime.setText(timeStr);
                 }
 
                 // 独立分支用于计时5秒发送请求开奖结果
-                if (second % LOOP_TIME == 0 && StringUtils.isEmpty(lastOpen)) {
+                if (second % LOOP_TIME == 0 && StringUtils.isEmpty(lastOpen))
+                {
                     Message msg = new Message();
                     msg.what = WHAT_REFRESH_RESULT;
                     msg.obj = dataBean.getNum();
                     mHandler.sendMessage(msg);
-//                    ToastUtil.show("发送请求开奖结果");
+                    //                    ToastUtil.show("发送请求开奖结果");
                 }
 
             }
@@ -547,8 +601,7 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
         @Override
         public MyGouCaiViewHolderGride onCreateViewHolder(ViewGroup parent, int viewType)
         {
-            View view = LayoutInflater.from(getContext())
-                    .inflate(R.layout.item_gride_goucai, null);
+            View view = LayoutInflater.from(getContext()).inflate(R.layout.item_gride_goucai, null);
             return new MyGouCaiViewHolderGride(view);
         }
 

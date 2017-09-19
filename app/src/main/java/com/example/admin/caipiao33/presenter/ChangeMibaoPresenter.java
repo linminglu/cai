@@ -3,7 +3,6 @@ package com.example.admin.caipiao33.presenter;
 import android.view.View;
 
 import com.example.admin.caipiao33.contract.IChangeMibaoContract;
-import com.example.admin.caipiao33.contract.IChangePasswordContract;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.httputils.MyResponseListener;
 import com.example.admin.caipiao33.utils.ToastUtil;

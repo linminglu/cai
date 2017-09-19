@@ -27,8 +27,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.example.admin.caipiao33.R.id.view;
-
 //账户明细
 public class ChongZhiJiLuActivity extends BaseActivity implements Toolbar.OnMenuItemClickListener, IChongZhiJiLuContract.View
 {

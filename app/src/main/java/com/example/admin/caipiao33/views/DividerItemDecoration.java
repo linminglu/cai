@@ -63,7 +63,8 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration
         final int childCount = parent.getChildCount();
         for (int i = 0; i < childCount; i++)
         {
-            if (i == childCount - 1) {
+            if (i == childCount - 1)
+            {
                 return;
             }
             final View child = parent.getChildAt(i);

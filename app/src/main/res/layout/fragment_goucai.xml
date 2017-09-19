@@ -34,6 +34,7 @@
         android:layout_height="52dp"
         android:layout_below="@+id/toolbar"
         android:orientation="horizontal">
+
         <RadioButton
             android:id="@+id/goucai_all"
             android:layout_width="0dp"

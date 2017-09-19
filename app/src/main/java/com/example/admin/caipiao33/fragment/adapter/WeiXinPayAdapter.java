@@ -5,13 +5,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.admin.caipiao33.BaseActivity;
 import com.example.admin.caipiao33.R;
-import com.example.admin.caipiao33.bean.KaiJiangDTBean;
 import com.example.admin.caipiao33.bean.WeiXinPayBean;
 import com.example.admin.caipiao33.utils.ViewHolder;
 

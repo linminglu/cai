@@ -17,7 +17,6 @@ import com.example.admin.caipiao33.bean.BankPayBean;
 import com.example.admin.caipiao33.fragment.adapter.BankPayAdapter;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.httputils.MyResponseListener;
-import com.example.admin.caipiao33.topupactivity.Ali3SaoMaActivity;
 import com.example.admin.caipiao33.topupactivity.BankPayActivity;
 import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.ToastUtil;

@@ -2,9 +2,7 @@ package com.example.admin.caipiao33.presenter;
 
 import android.view.View;
 
-import com.example.admin.caipiao33.bean.ChongZhiDetailBean;
 import com.example.admin.caipiao33.bean.TiKuanDetailBean;
-import com.example.admin.caipiao33.contract.IChongZhiDetailContract;
 import com.example.admin.caipiao33.contract.ITiKuanDetailContract;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.httputils.MyResponseListener;

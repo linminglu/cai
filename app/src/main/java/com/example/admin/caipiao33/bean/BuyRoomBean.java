@@ -224,16 +224,21 @@ public class BuyRoomBean implements Serializable
             ObjectOutputStream out;
             ByteArrayInputStream byteIn;
             ObjectInputStream in;
-            try {
+            try
+            {
                 out = new ObjectOutputStream(byteOut);
                 out.writeObject(this);
                 byteIn = new ByteArrayInputStream(byteOut.toByteArray());
-                in =new ObjectInputStream(byteIn);
+                in = new ObjectInputStream(byteIn);
                 p = (PlayDetailListBean) in.readObject();
-            } catch (IOException e) {
+            }
+            catch (IOException e)
+            {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
-            } catch (ClassNotFoundException e) {
+            }
+            catch (ClassNotFoundException e)
+            {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
@@ -251,9 +256,13 @@ public class BuyRoomBean implements Serializable
             private String playName;
             private String playId;
             private String bonus;
-            /** 投注金额 自选时为输入的金额，快捷时为0 */
+            /**
+             * 投注金额 自选时为输入的金额，快捷时为0
+             */
             private String money;
-            /** 玩法列表名称 例如：万位千位百位... */
+            /**
+             * 玩法列表名称 例如：万位千位百位...
+             */
             private String parentName;
 
             public String getParentName()
@@ -333,7 +342,9 @@ public class BuyRoomBean implements Serializable
                 try
                 {
                     o = (ListBean) super.clone();
-                } catch (CloneNotSupportedException e) {
+                }
+                catch (CloneNotSupportedException e)
+                {
                     e.printStackTrace();
                 }
                 return o;

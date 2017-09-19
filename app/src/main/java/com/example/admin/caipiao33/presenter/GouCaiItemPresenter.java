@@ -2,7 +2,6 @@ package com.example.admin.caipiao33.presenter;
 
 import com.example.admin.caipiao33.bean.BuyRoomBean;
 import com.example.admin.caipiao33.bean.GouCaiBean;
-import com.example.admin.caipiao33.contract.IGouCaiContract;
 import com.example.admin.caipiao33.contract.IGouCaiItemContract;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.httputils.MyResponseListener;
@@ -20,7 +19,8 @@ public class GouCaiItemPresenter implements IGouCaiItemContract.Presenter
 {
     private final IGouCaiItemContract.View mView;
 
-    public GouCaiItemPresenter(IGouCaiItemContract.View view) {
+    public GouCaiItemPresenter(IGouCaiItemContract.View view)
+    {
         this.mView = view;
     }
 

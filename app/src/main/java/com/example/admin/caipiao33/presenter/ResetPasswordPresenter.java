@@ -2,7 +2,6 @@ package com.example.admin.caipiao33.presenter;
 
 import android.view.View;
 
-import com.example.admin.caipiao33.contract.IFindPasswordContract;
 import com.example.admin.caipiao33.contract.IResetPasswordContract;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.httputils.MyResponseListener;

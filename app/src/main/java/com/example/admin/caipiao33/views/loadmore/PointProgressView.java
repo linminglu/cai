@@ -8,7 +8,6 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
-
 import com.example.admin.caipiao33.R;
 import com.example.admin.caipiao33.utils.Tools;
 

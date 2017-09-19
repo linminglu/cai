@@ -4,7 +4,6 @@ import android.view.View;
 
 import com.example.admin.caipiao33.bean.ChongZhiDetailBean;
 import com.example.admin.caipiao33.contract.IChongZhiDetailContract;
-import com.example.admin.caipiao33.contract.ILoginContract;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.httputils.MyResponseListener;
 import com.example.admin.caipiao33.utils.ToastUtil;
