@@ -35,7 +35,6 @@ public class Combine<T>
             for (int i = index; i < aar.size(); i++)
             {
                 tmpArr.add(aar.get(i));
-                System.out.println(tmpArr.toString());
                 List<T> tmp = new ArrayList<>();
                 for (T t : tmpArr)
                 {

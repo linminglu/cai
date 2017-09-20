@@ -100,7 +100,7 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
     private FragmentManager fragmentManager;
     private ConfirmBuyDialog confirmBuyDialog;
     private ResultAssist resultAssist;
-
+    private boolean isTitleArrayChange = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -169,9 +169,14 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
         buyPager.setNoScroll(false);
         if (num.equals(MyBaseBuyAdapter.TYPE_SIX))
         {
+            if (isTitleArrayChange) {
+                isTitleArrayChange = false;
+                buyTab.notifyDataSetChanged();
+            }
             String playName = mBuyRoomBean.getPlayName();
             if (playName.equals("连肖连尾"))
             {
+                isTitleArrayChange = true;
                 mTitleArray = new String[]{"连肖", "连尾"};
                 buyTab.notifyDataSetChanged();
             }
@@ -599,6 +604,14 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
                 return;
             }
             gridNumColumns = 1;
+            isSeleSelect = true;
+        }
+        else if (playName.equals("连肖连尾")) {
+            if (null == checked)
+            {
+                return;
+            }
+            gridNumColumns = 2;
             isSeleSelect = true;
         }
 

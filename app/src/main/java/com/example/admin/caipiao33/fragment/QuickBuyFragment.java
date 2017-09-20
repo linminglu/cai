@@ -12,6 +12,7 @@ import com.example.admin.caipiao33.bean.BuyRoomBean;
 import com.example.admin.caipiao33.fragment.adapter.MyBaseBuyAdapter;
 import com.example.admin.caipiao33.fragment.adapter.TypeBeforeAdapter;
 import com.example.admin.caipiao33.fragment.adapter.TypeSix26Adapter;
+import com.example.admin.caipiao33.fragment.adapter.TypeSix27Adapter;
 import com.example.admin.caipiao33.fragment.adapter.TypeSix28Adapter;
 import com.example.admin.caipiao33.fragment.adapter.TypeSix6Adapter;
 import com.example.admin.caipiao33.fragment.adapter.TypeSixAdapter;
@@ -96,6 +97,9 @@ public class QuickBuyFragment extends BaseFragment
             else if (mType == TYPE_SELF_SELECT && playName.equals("合肖"))
             {
                 adapter = new TypeSix6Adapter(mInflater, mBuyRoomBean, mType);
+            }
+            else if (playName.equals("连肖连尾")) {
+                adapter = new TypeSix27Adapter(mInflater, mBuyRoomBean, mType);
             }
             else
             {

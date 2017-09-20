@@ -213,7 +213,7 @@
 
     <!-- 投注内页 -->
     <string name="s_clear_options">清空选项</string>
-    <string name="s_trend">趋势</string>
+    <string name="s_trend">历史开奖</string>
     <string name="s_buy">投注</string>
     <string name="s_lottery_time">开奖时间：%1$s</string>
     <string-array name="s_array_buy">

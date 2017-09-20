@@ -52,10 +52,6 @@ public class TypeSixAdapter extends TypeBeforeAdapter
      * 14 -- 正六
      */
     private static final List<String> CURR_EXECUTE = Arrays.asList("1", "2", "8", "9", "10", "11", "12", "13", "14");
-    // 连肖连尾
-    private final String PLAY_ID_27 = "27";
-    // 自选不中
-    private final String PLAY_ID_26 = "26";
 
     public TypeSixAdapter(LayoutInflater inflater, BuyRoomBean bean, int type)
     {
@@ -82,47 +78,6 @@ public class TypeSixAdapter extends TypeBeforeAdapter
             {
                 mPlayId = beanPlayList.getPlayId();
                 break;
-            }
-        }
-        if (PLAY_ID_27.equals(mPlayId))
-        {
-            if (mType == QuickBuyFragment.TYPE_QUICK)
-            {
-                // 连肖
-                List<BuyRoomBean.PlayDetailListBean> list = mBuyRoomBean.getPlayDetailList();
-                if (null != list && list.size() == 8)
-                {
-                    Iterator<BuyRoomBean.PlayDetailListBean> iterator = list.iterator();
-                    int temp = 0;
-                    while (iterator.hasNext())
-                    {
-                        iterator.next();
-                        if (temp < 4)
-                        {
-                            iterator.remove();
-                        }
-                        temp++;
-                    }
-                }
-            }
-            else
-            {
-                // 连尾
-                List<BuyRoomBean.PlayDetailListBean> list = mBuyRoomBean.getPlayDetailList();
-                if (null != list && list.size() == 8)
-                {
-                    Iterator<BuyRoomBean.PlayDetailListBean> iterator = list.iterator();
-                    int temp = 0;
-                    while (iterator.hasNext())
-                    {
-                        iterator.next();
-                        if (temp >= 4)
-                        {
-                            iterator.remove();
-                        }
-                        temp++;
-                    }
-                }
             }
         }
         if (CURR_EXECUTE.contains(mPlayId) && mType == QuickBuyFragment.TYPE_SELF_SELECT)
