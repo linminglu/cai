@@ -55,7 +55,6 @@ public class SettingActivity extends ToolbarActivity implements Toolbar.OnMenuIt
         ButterKnife.bind(this);
         mPresenter = new SettingPresenter(this, null);
         initView();
-        mPresenter.getSettingOp();
     }
 
     private void initView()
@@ -68,6 +67,14 @@ public class SettingActivity extends ToolbarActivity implements Toolbar.OnMenuIt
                 mPresenter.getSettingOp();
             }
         });
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        swipeRefreshLayout.setRefreshing(true);
+        mPresenter.getSettingOp();
     }
 
     public void onCreateCustomToolBar(Toolbar toolbar)

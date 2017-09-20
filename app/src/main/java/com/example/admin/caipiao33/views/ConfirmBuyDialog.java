@@ -46,7 +46,7 @@ public class ConfirmBuyDialog implements View.OnClickListener
     TextView tv5000;
     TextView tv10000;
     TextView tv50000;
-    FlowLayout layoutQuickMoney;
+    LinearLayout layoutQuickMoney;
     TextView tvTips;
     private final View view;
 
@@ -77,7 +77,7 @@ public class ConfirmBuyDialog implements View.OnClickListener
         tv5000 = (TextView) view.findViewById(R.id.tv_5000);
         tv10000 = (TextView) view.findViewById(R.id.tv_10000);
         tv50000 = (TextView) view.findViewById(R.id.tv_50000);
-        layoutQuickMoney = (FlowLayout) view.findViewById(R.id.layout_quick_money);
+        layoutQuickMoney = (LinearLayout) view.findViewById(R.id.layout_quick_money);
         tvTips = (TextView) view.findViewById(R.id.tv_tips);
         tv100.setOnClickListener(this);
         tv500.setOnClickListener(this);

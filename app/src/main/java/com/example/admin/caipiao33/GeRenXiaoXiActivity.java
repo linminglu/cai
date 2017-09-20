@@ -43,7 +43,6 @@ public class GeRenXiaoXiActivity extends ToolbarActivity implements Toolbar.OnMe
         setContentView(R.layout.activity_qiandaojilu);
         initView();
         mPresenter = new GeRenXiaoXiPresenter(this, mNotifySwipe);
-        mPresenter.getGeRenXiaoXi();
     }
 
 
@@ -54,6 +53,14 @@ public class GeRenXiaoXiActivity extends ToolbarActivity implements Toolbar.OnMe
         setSupportActionBar(toolbar);
         toolbar.setOnMenuItemClickListener(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        mNotifySwipe.setRefreshing(true);
+        mPresenter.getGeRenXiaoXi();
     }
 
     @Override

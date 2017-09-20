@@ -9,19 +9,19 @@
         android:id="@+id/gridView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:maxHeight="100dp"
         android:layout_margin="10dp"
-        android:scrollbars="vertical"
         android:listSelector="@android:color/transparent"
-        android:numColumns="4">
+        android:numColumns="4"
+        android:scrollbars="vertical"
+        app:maxHeight="100dp">
     </com.example.admin.caipiao33.views.MaxHeightGridView>
 
     <LinearLayout
         android:id="@+id/layout_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
         android:layout_margin="10dp"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <EditText
@@ -40,126 +40,116 @@
             android:id="@+id/tv_clear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="清空"
             android:layout_marginLeft="10dp"
-            android:padding="10dp"
             android:background="@drawable/button_gray_bg"
+            android:padding="10dp"
+            android:text="清空"
             />
 
     </LinearLayout>
 
-    <com.example.admin.caipiao33.views.FlowLayout
+    <LinearLayout
         android:id="@+id/layout_quick_money"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@color/white"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/tv_100"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
             android:layout_marginBottom="5dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
             android:background="@drawable/button_gray_bg"
-            android:textColor="@color/black"
-            android:text="100"/>
+            android:gravity="center"
+            android:text="100"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/tv_500"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
             android:layout_marginBottom="5dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
             android:background="@drawable/button_gray_bg"
-            android:textColor="@color/black"
-            android:text="500"/>
+            android:gravity="center"
+            android:text="500"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/tv_1000"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
             android:layout_marginBottom="5dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
             android:background="@drawable/button_gray_bg"
-            android:textColor="@color/black"
-            android:text="1000"/>
+            android:gravity="center"
+            android:text="一千"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/tv_5000"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
             android:layout_marginBottom="5dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
             android:background="@drawable/button_gray_bg"
-            android:textColor="@color/black"
-            android:text="5000"/>
+            android:gravity="center"
+            android:text="五千"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/tv_10000"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
             android:layout_marginBottom="5dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
             android:background="@drawable/button_gray_bg"
-            android:textColor="@color/black"
-            android:text="10000"/>
+            android:gravity="center"
+            android:text="一万"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/tv_50000"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
             android:layout_marginBottom="5dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
             android:background="@drawable/button_gray_bg"
-            android:textColor="@color/black"
-            android:text="50000"/>
+            android:gravity="center"
+            android:text="五万"
+            android:textColor="@color/black"/>
 
-    </com.example.admin.caipiao33.views.FlowLayout>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tv_tips"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
         android:layout_marginTop="5dp"
         android:background="#FFD18F"
         android:gravity="center"
+        android:padding="10dp"
         />
 
 </LinearLayout>

@@ -3,6 +3,7 @@ package com.example.admin.caipiao33;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.example.admin.caipiao33.bean.GeRenMsgBean;
@@ -22,6 +23,8 @@ public class GeRenMsgActivity extends ToolbarActivity implements Toolbar.OnMenuI
     TextView gerenmsgTitleTv;
     @BindView(R.id.gerenmsg_content_tv)
     TextView gerenmsgContentTv;
+    @BindView(R.id.gerenmsg_content_wv)
+    WebView gerenmsgContentWv;
     private String id;
 
     @Override
@@ -53,7 +56,8 @@ public class GeRenMsgActivity extends ToolbarActivity implements Toolbar.OnMenuI
             public void onSuccess(GeRenMsgBean result)
             {
                 gerenmsgTitleTv.setText(result.getTitle());
-                gerenmsgContentTv.setText(result.getContent());
+                //                gerenmsgContentTv.setText(result.getContent());
+                gerenmsgContentWv.loadDataWithBaseURL("about:blank", result.getContent(), "text/html", "utf-8", null);
             }
 
             @Override
