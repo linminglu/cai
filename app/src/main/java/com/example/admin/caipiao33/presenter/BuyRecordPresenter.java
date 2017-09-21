@@ -78,14 +78,13 @@ public class BuyRecordPresenter implements IBuyRecordContract.Presenter
     @Override
     public void loadMore(String type, String page)
     {
-        mView.showLoadingDialog();
         requset(type, page, new MyResponseListener<BuyRecordBean>()
         {
 
             @Override
             public void onSuccess(BuyRecordBean result)
             {
-                mView.updateHomePage(result);
+                mView.updateMoreData(result);
             }
 
             @Override
@@ -97,7 +96,7 @@ public class BuyRecordPresenter implements IBuyRecordContract.Presenter
             @Override
             public void onFinish()
             {
-                mView.hideLoadingDialog();
+
             }
         });
     }
