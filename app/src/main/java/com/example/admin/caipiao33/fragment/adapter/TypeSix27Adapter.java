@@ -3,20 +3,14 @@ package com.example.admin.caipiao33.fragment.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.example.admin.caipiao33.R;
 import com.example.admin.caipiao33.bean.BuyRoomBean;
 import com.example.admin.caipiao33.fragment.QuickBuyFragment;
 import com.example.admin.caipiao33.utils.Combine;
 import com.example.admin.caipiao33.utils.ToastUtil;
-import com.example.admin.caipiao33.utils.ViewHolder;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -34,6 +28,7 @@ public class TypeSix27Adapter extends TypeBeforeAdapter
     private List<BuyRoomBean.PlayDetailListBean.ListBean> checkedList4 = new ArrayList<>();
 
     private boolean isLX = false;
+    private List<BuyRoomBean.PlayDetailListBean> mPlayDetailList;
 
     public TypeSix27Adapter(LayoutInflater inflater, BuyRoomBean bean, int type)
     {
@@ -55,10 +50,10 @@ public class TypeSix27Adapter extends TypeBeforeAdapter
         {
             isLX = false;
             // 连尾
-            List<BuyRoomBean.PlayDetailListBean> list = mBuyRoomBean.getPlayDetailList();
-            if (null != list && list.size() == 8)
+            mPlayDetailList = mBuyRoomBean.getPlayDetailList();
+            if (null != mPlayDetailList && mPlayDetailList.size() == 8)
             {
-                Iterator<BuyRoomBean.PlayDetailListBean> iterator = list.iterator();
+                Iterator<BuyRoomBean.PlayDetailListBean> iterator = mPlayDetailList.iterator();
                 int temp = 0;
                 while (iterator.hasNext())
                 {
@@ -76,10 +71,10 @@ public class TypeSix27Adapter extends TypeBeforeAdapter
             isLX = true;
             mType = QuickBuyFragment.TYPE_QUICK;
             // 连肖
-            List<BuyRoomBean.PlayDetailListBean> list = mBuyRoomBean.getPlayDetailList();
-            if (null != list && list.size() == 8)
+            mPlayDetailList = mBuyRoomBean.getPlayDetailList();
+            if (null != mPlayDetailList && mPlayDetailList.size() == 8)
             {
-                Iterator<BuyRoomBean.PlayDetailListBean> iterator = list.iterator();
+                Iterator<BuyRoomBean.PlayDetailListBean> iterator = mPlayDetailList.iterator();
                 int temp = 0;
                 while (iterator.hasNext())
                 {
@@ -97,13 +92,12 @@ public class TypeSix27Adapter extends TypeBeforeAdapter
 
     private void creatDataNormal()
     {
-        int totalSize = mBuyRoomBean.getPlayDetailList().size();
+        int totalSize = mPlayDetailList.size();
         mDataList = new ArrayList<>(totalSize);
         for (int i = 0; i < totalSize; i++)
         {
             BeanGroup beanGroup = new BeanGroup();
-            BuyRoomBean.PlayDetailListBean playDetailListBean = mBuyRoomBean.getPlayDetailList()
-                    .get(i);
+            BuyRoomBean.PlayDetailListBean playDetailListBean = mPlayDetailList.get(i);
             List<String> groupNameList = new ArrayList<>(1);
             groupNameList.add(playDetailListBean.getName());
             beanGroup.setGroupNameList(groupNameList);
@@ -254,8 +248,7 @@ public class TypeSix27Adapter extends TypeBeforeAdapter
             c.combine(0, 2, checkedList1);
             List<List<BuyRoomBean.PlayDetailListBean.ListBean>> result = c.getResult();
 
-            BuyRoomBean.PlayDetailListBean playDetailListBean = mBuyRoomBean.getPlayDetailList()
-                    .get(0);
+            BuyRoomBean.PlayDetailListBean playDetailListBean = mPlayDetailList.get(0);
             List<BuyRoomBean.PlayDetailListBean.ListBean> list = playDetailListBean.getList();
             BuyRoomBean.PlayDetailListBean.ListBean listBean = list.get(list.size() - 1);
 
@@ -283,8 +276,7 @@ public class TypeSix27Adapter extends TypeBeforeAdapter
             c.combine(0, 3, checkedList2);
             List<List<BuyRoomBean.PlayDetailListBean.ListBean>> result = c.getResult();
 
-            BuyRoomBean.PlayDetailListBean playDetailListBean = mBuyRoomBean.getPlayDetailList()
-                    .get(1);
+            BuyRoomBean.PlayDetailListBean playDetailListBean = mPlayDetailList.get(1);
             List<BuyRoomBean.PlayDetailListBean.ListBean> list = playDetailListBean.getList();
             BuyRoomBean.PlayDetailListBean.ListBean listBean = list.get(list.size() - 1);
 
@@ -312,8 +304,7 @@ public class TypeSix27Adapter extends TypeBeforeAdapter
             c.combine(0, 4, checkedList3);
             List<List<BuyRoomBean.PlayDetailListBean.ListBean>> result = c.getResult();
 
-            BuyRoomBean.PlayDetailListBean playDetailListBean = mBuyRoomBean.getPlayDetailList()
-                    .get(2);
+            BuyRoomBean.PlayDetailListBean playDetailListBean = mPlayDetailList.get(2);
             List<BuyRoomBean.PlayDetailListBean.ListBean> list = playDetailListBean.getList();
             BuyRoomBean.PlayDetailListBean.ListBean listBean = list.get(list.size() - 1);
 
@@ -341,8 +332,7 @@ public class TypeSix27Adapter extends TypeBeforeAdapter
             c.combine(0, 5, checkedList4);
             List<List<BuyRoomBean.PlayDetailListBean.ListBean>> result = c.getResult();
 
-            BuyRoomBean.PlayDetailListBean playDetailListBean = mBuyRoomBean.getPlayDetailList()
-                    .get(3);
+            BuyRoomBean.PlayDetailListBean playDetailListBean = mPlayDetailList.get(3);
             List<BuyRoomBean.PlayDetailListBean.ListBean> list = playDetailListBean.getList();
             BuyRoomBean.PlayDetailListBean.ListBean listBean = list.get(list.size() - 1);
 

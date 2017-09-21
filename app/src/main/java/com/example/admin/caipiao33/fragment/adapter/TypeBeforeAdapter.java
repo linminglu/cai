@@ -469,7 +469,7 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
             {
                 // 不能复用的情况
                 Object tag = convertView.getTag(R.id.buy_view_type);
-                if (null == tag || (int) tag != GROUP_VIEW_TYPE)
+                if (null == tag || (int) tag != CHILD_VIEW_TYPE)
                 {
                     convertView = mInflater.inflate(R.layout.item_buy_quick, null);
                     ViewHolder.get(convertView, R.id.layout1).setOnClickListener(this);
@@ -562,7 +562,7 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
             {
                 // 不能复用的情况
                 Object tag = convertView.getTag(R.id.buy_view_type);
-                if (null == tag || (int) tag != GROUP_VIEW_TYPE)
+                if (null == tag || (int) tag != CHILD_VIEW_TYPE)
                 {
                     convertView = mInflater.inflate(R.layout.item_buy_self_select, null);
                     initSelfContentView(convertView);
