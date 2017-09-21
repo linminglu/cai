@@ -138,10 +138,6 @@ public class MainActivity extends BaseActivity
                         })
                         .show();
             }
-            catch (NumberFormatException e)
-            {
-                e.printStackTrace();
-            }
             catch (Exception e)
             {
                 e.printStackTrace();
