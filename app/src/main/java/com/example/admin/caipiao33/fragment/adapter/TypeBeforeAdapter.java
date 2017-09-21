@@ -91,7 +91,37 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
         }
         else if (afterList.contains(num))
         {
-            creatDataAfter();
+            String playName = bean.getPlayName();
+            if ("数字盘".equals(playName)) {
+                creatDataNormal();
+            } else if (playName.startsWith("第") && playName.endsWith("球")) {
+                // 数据处理
+                List<BuyRoomBean.PlayDetailListBean> playDetailList = bean.getPlayDetailList();
+                BuyRoomBean.PlayDetailListBean result = new BuyRoomBean.PlayDetailListBean();
+                result.setName(playName);
+                for (BuyRoomBean.PlayDetailListBean playDetailListBean : playDetailList) {
+                    String name = playDetailListBean.getName();
+                    if (playName.equals(name)) {
+                        List<BuyRoomBean.PlayDetailListBean.ListBean> list = result.getList();
+                        if (null == list) {
+                            list = new ArrayList<>();
+                            result.setList(list);
+                        }
+                        List<BuyRoomBean.PlayDetailListBean.ListBean> list1 = playDetailListBean
+                                .getList();
+                        if (list1.size() >= 20) {
+                            list.addAll(0, list1);
+                        } else {
+                            list.addAll(list1);
+                        }
+                    }
+                }
+                mBuyRoomBean.getPlayDetailList().clear();
+                mBuyRoomBean.getPlayDetailList().add(result);
+                creatDataNormal();
+            } else {
+                creatDataAfter();
+            }
         }
         else
         {
