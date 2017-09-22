@@ -185,11 +185,12 @@ public class ChangeBankActivity extends ToolbarActivity implements Toolbar.OnMen
                             kaihubank = banknames[which];
                             changebankcardKaihuyinhangTv.setText(banknames[which]);
                             changebankcardOtherbankLl.setVisibility(View.GONE);
-                        }
-                        if (banknames[which].equals("其他"))
-                        {
-                            //TODO
-                            changebankcardOtherbankLl.setVisibility(View.VISIBLE);
+
+                            if (banknames[which].equals("其他"))
+                            {
+                                //TODO
+                                changebankcardOtherbankLl.setVisibility(View.VISIBLE);
+                            }
                         }
                         return true;
                     }
