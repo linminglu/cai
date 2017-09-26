@@ -9,11 +9,12 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 房间信息
+ * 房间信息·
  */
 
 public class BuyRoomBean implements Serializable
 {
+
 
 
     private String num;
