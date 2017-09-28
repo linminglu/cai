@@ -253,10 +253,14 @@ public class ZouShiFragment extends BaseFragment implements View.OnClickListener
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text)
                     {
-                        zoushiWebView.loadUrl(HttpUtil.mNewUrl + "/api/trend?gid=" + mGouCaiBean.getAll()
-                                .get(which)
-                                .getNum());
-                        toolbarTitle.setText(mGouCaiBean.getAll().get(which).getName() + "的走势");
+                        if (which != -1)
+                        {
+                            zoushiWebView.loadUrl(HttpUtil.mNewUrl + "/api/trend?gid=" + mGouCaiBean
+                                    .getAll()
+                                    .get(which)
+                                    .getNum());
+                            toolbarTitle.setText(mGouCaiBean.getAll().get(which).getName() + "的走势");
+                        }
                         return true;
                     }
                 })
