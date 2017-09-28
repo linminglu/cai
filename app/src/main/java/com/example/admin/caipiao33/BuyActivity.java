@@ -578,7 +578,6 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
         // 特殊处理
         // 自选不中
         String playName = mBuyRoomBean.getPlayName();
-        boolean isSeleSelect = false;
         if (playName.equals("自选不中"))
         {
             if (null == checked)
@@ -586,7 +585,6 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
                 return;
             }
             gridNumColumns = 1;
-            isSeleSelect = true;
         }
         else if (playName.equals("连码"))
         {
@@ -595,7 +593,6 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
                 return;
             }
             gridNumColumns = 2;
-            isSeleSelect = true;
         }
         else if (playName.equals("合肖"))
         {
@@ -604,7 +601,6 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
                 return;
             }
             gridNumColumns = 1;
-            isSeleSelect = true;
         }
         else if (playName.equals("连肖连尾")) {
             if (null == checked)
@@ -612,7 +608,6 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
                 return;
             }
             gridNumColumns = 2;
-            isSeleSelect = true;
         }
 
         if (null == checked || checked.size() == 0)
@@ -625,7 +620,6 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
 
         if (null == confirmBuyDialog)
         {
-            final boolean finalIsSeleSelect = isSeleSelect;
             confirmBuyDialog = new ConfirmBuyDialog(this, checked, gridNumColumns, new ConfirmBuyDialog.ConfirmBuyListener()
             {
                 @Override
@@ -635,10 +629,7 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
                     for (BuyRoomBean.PlayDetailListBean.ListBean bean : checked)
                     {
                         String playName1 = bean.getPlayName();
-                        if (finalIsSeleSelect)
-                        {
-                            playName1 = playName1.replaceAll(" ", "");
-                        }
+                        playName1 = playName1.replaceAll(" ", "");
                         sb.append(playName1)
                                 .append("|")
                                 .append(bean.getPlayId())
