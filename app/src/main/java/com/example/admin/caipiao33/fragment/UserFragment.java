@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.admin.caipiao33.BaseActivity;
@@ -120,6 +121,8 @@ public class UserFragment extends BaseFragment implements View.OnClickListener, 
     @BindView(R.id.swipeRefreshLayout)
     SwipeRefreshLayout swipeRefreshLayout;
     Unbinder unbinder;
+    @BindView(R.id.user_fragment_sv)
+    ScrollView userFragmentSv;
     private MainActivity mainActivity;
     private LayoutInflater mInflater;
     private View parentView;
@@ -318,6 +321,7 @@ public class UserFragment extends BaseFragment implements View.OnClickListener, 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMoonEvent(LoginEvent messageEvent)
     {
+        userFragmentSv.fullScroll(ScrollView.FOCUS_UP);
         mPresenter.loadData();
     }
 
