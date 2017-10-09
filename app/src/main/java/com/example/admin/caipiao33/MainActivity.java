@@ -38,8 +38,6 @@ public class MainActivity extends BaseActivity
     private Fragment mCurFragment;
     private Controller controller;
     private Handler handler = new Handler();
-    private String type;
-    private MyReceiver myReceiver;
     private Context mContext;
     private final String mPageName = "MainActivity";
 

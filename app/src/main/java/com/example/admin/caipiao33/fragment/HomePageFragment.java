@@ -529,8 +529,18 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
                 toWebUrlActivity(HttpUtil.mNewUrl + "/api/systemNotice", "公告");
                 break;
             case R.id.ll_func_1: // 存/取款
-                mainActivity.tabSwitchCenter(UserFragment.class);
-                //                EventBus.getDefault().post(new LoginEvent(""));
+                TokenBean token3 = UserConfig.getInstance().getToken(getActivity());
+                if (null == token3 || token3.getIsLogin() == 0)
+                {
+                    // 未登录
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    startActivityForResult(intent, Constants.REQUEST_CODE_Main2_LOGIN);
+                }
+                else
+                {
+                    mainActivity.tabSwitchCenter(UserFragment.class);
+                    EventBus.getDefault().post(new LoginEvent(""));
+                }
                 break;
             case R.id.ll_func_2: // 投注记录
                 TokenBean token2 = UserConfig.getInstance().getToken(getActivity());
