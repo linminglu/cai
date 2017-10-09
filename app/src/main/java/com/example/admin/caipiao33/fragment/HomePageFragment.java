@@ -530,7 +530,7 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
                 break;
             case R.id.ll_func_1: // 存/取款
                 mainActivity.tabSwitchCenter(UserFragment.class);
-                EventBus.getDefault().post(new LoginEvent(""));
+                //                EventBus.getDefault().post(new LoginEvent(""));
                 break;
             case R.id.ll_func_2: // 投注记录
                 TokenBean token2 = UserConfig.getInstance().getToken(getActivity());

@@ -281,3 +281,7 @@ public static final int *;
  -dontwarn com.google.**
  -keep class com.google.gson.** {*;}
  -keep class com.google.protobuf.** {*;}
+
+ -keep public class cn.jiguang.analytics.android.api.** {
+         *;
+     }
