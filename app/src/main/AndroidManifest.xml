@@ -231,7 +231,7 @@
         </activity>
         <activity
             android:name=".WebUrlActivity"
-            android:configChanges="keyboardHidden|orientation"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait">
         </activity>
         <activity

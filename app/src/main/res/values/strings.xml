@@ -234,4 +234,9 @@
         <item>待开奖</item>
         <item>我的撤单</item>
     </string-array>
+
+    <string-array name="options">
+        <item>相机</item>
+        <item>相册 </item>
+    </string-array>
 </resources>
