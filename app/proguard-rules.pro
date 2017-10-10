@@ -282,6 +282,9 @@ public static final int *;
  -keep class com.google.gson.** {*;}
  -keep class com.google.protobuf.** {*;}
 
- -keepclassmembers class * extends android.webkit.WebChromeClient{
- public void openFileChooser(...);
- }
+ -keep public class cn.jiguang.analytics.android.api.** {
+         *;
+     }
+-keepclassmembers class * extends android.webkit.WebChromeClient{
+public void openFileChooser(...);
+}

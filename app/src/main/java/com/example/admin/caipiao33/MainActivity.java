@@ -30,14 +30,14 @@ import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.utils.UserConfig;
 import com.umeng.analytics.MobclickAgent;
 
+import cn.jiguang.analytics.android.api.JAnalyticsInterface;
+
 public class MainActivity extends BaseActivity
 {
     private int mClicks = 0;
     private Fragment mCurFragment;
     private Controller controller;
     private Handler handler = new Handler();
-    private String type;
-    private MyReceiver myReceiver;
     private Context mContext;
     private final String mPageName = "MainActivity";
 
@@ -151,6 +151,8 @@ public class MainActivity extends BaseActivity
         super.onResume();
         MobclickAgent.onPageStart(mPageName);
         MobclickAgent.onResume(mContext);
+        JAnalyticsInterface.onPageStart(getApplicationContext(), this.getClass()
+                .getCanonicalName());
     }
 
     @Override
@@ -159,6 +161,7 @@ public class MainActivity extends BaseActivity
         super.onPause();
         MobclickAgent.onPageEnd(mPageName);
         MobclickAgent.onPause(mContext);
+        JAnalyticsInterface.onPageEnd(getApplicationContext(), this.getClass().getCanonicalName());
     }
 
     //解决onResume获取不到传递的Intent
