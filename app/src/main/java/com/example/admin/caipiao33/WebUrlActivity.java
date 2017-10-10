@@ -1,14 +1,10 @@
 package com.example.admin.caipiao33;
 
-import android.*;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -35,8 +31,6 @@ import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.FileManager;
 import com.socks.library.KLog;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 /**
@@ -74,7 +68,7 @@ public class WebUrlActivity extends BaseActivity
                 webView.loadUrl(mUrl);
             }
         });
-//        mUrl = "https://test.doraemoney.com/newCube/SourceTestPage.html";
+        //        mUrl = "https://test.doraemoney.com/newCube/SourceTestPage.html";
         mUrl = getIntent().getStringExtra(Constants.EXTRA_URL);
         mTitle = getIntent().getStringExtra(Constants.EXTRA_TITLE);
 
@@ -93,7 +87,7 @@ public class WebUrlActivity extends BaseActivity
         settings.setDomStorageEnabled(true);
         settings.setDatabaseEnabled(true);
         settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
-//        settings.setUserAgentString("Android_Lottery");
+        //        settings.setUserAgentString("Android_Lottery");
         settings.setBuiltInZoomControls(true);
         settings.setJavaScriptEnabled(true);
         mProgressbar = (ProgressBar) findViewById(R.id.protocol_progressbar);
@@ -163,8 +157,8 @@ public class WebUrlActivity extends BaseActivity
 
             // 配置权限（同样在WebChromeClient中实现）
             @Override
-            public void onGeolocationPermissionsShowPrompt(String origin,
-                                                           GeolocationPermissions.Callback callback) {
+            public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback)
+            {
                 callback.invoke(origin, true, false);
                 super.onGeolocationPermissionsShowPrompt(origin, callback);
             }
@@ -199,23 +193,32 @@ public class WebUrlActivity extends BaseActivity
             {
                 if (which == 0)
                 {
-                    if (Build.VERSION.SDK_INT >= 23) {
+                    if (Build.VERSION.SDK_INT >= 23)
+                    {
                         int check = ContextCompat.checkSelfPermission(WebUrlActivity.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
                         // 权限是否已经 授权 GRANTED---授权  DINIED---拒绝
-                        if (check == PackageManager.PERMISSION_GRANTED) {
+                        if (check == PackageManager.PERMISSION_GRANTED)
+                        {
                             //调用相机
                             check = ContextCompat.checkSelfPermission(WebUrlActivity.this, Manifest.permission.CAMERA);
-                            if (check == PackageManager.PERMISSION_GRANTED) {
+                            if (check == PackageManager.PERMISSION_GRANTED)
+                            {
                                 toCamera();
-                            } else {
+                            }
+                            else
+                            {
                                 // 申请CAMERA权限
                                 ActivityCompat.requestPermissions(WebUrlActivity.this, new String[]{android.Manifest.permission.CAMERA}, TYPE_REQUEST_PERMISSION);
                             }
-                        } else {
+                        }
+                        else
+                        {
                             // 申请WRITE_EXTERNAL_STORAGE权限
                             ActivityCompat.requestPermissions(WebUrlActivity.this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, TYPE_REQUEST_PERMISSION1);
                         }
-                    } else {
+                    }
+                    else
+                    {
                         toCamera();
                     }
                 }
@@ -234,7 +237,8 @@ public class WebUrlActivity extends BaseActivity
     private Uri getOutputMediaFileUri()
     {
         File imgFile = FileManager.getImgFile(MyApplication.getInstance().getApplicationContext());
-        if (Build.VERSION.SDK_INT >= 23) {
+        if (Build.VERSION.SDK_INT >= 23)
+        {
             //改变Uri  com.xykj.customview.fileprovider注意和xml中的一致
             Uri uri = FileProvider.getUriForFile(this, "com.example.admin.caipiao33.fileprovider", imgFile);
             return uri;
@@ -305,7 +309,6 @@ public class WebUrlActivity extends BaseActivity
     }
 
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
@@ -318,16 +321,25 @@ public class WebUrlActivity extends BaseActivity
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            if (requestCode == TYPE_CAMERA) { // 相册选择
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (resultCode == RESULT_OK)
+        {
+            if (requestCode == TYPE_CAMERA)
+            { // 相册选择
                 onActivityCallBack(true, null);
-            } else if (requestCode == TYPE_GALLERY) {// 相册选择
-                if (data != null) {
+            }
+            else if (requestCode == TYPE_GALLERY)
+            {// 相册选择
+                if (data != null)
+                {
                     Uri uri = data.getData();
-                    if (uri != null) {
+                    if (uri != null)
+                    {
                         onActivityCallBack(false, uri);
-                    } else {
+                    }
+                    else
+                    {
                         Toast.makeText(WebUrlActivity.this, "获取数据为空", Toast.LENGTH_LONG).show();
                     }
                 }
@@ -338,19 +350,25 @@ public class WebUrlActivity extends BaseActivity
 
     // 权限回调
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
+    {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == TYPE_REQUEST_PERMISSION1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        if (requestCode == TYPE_REQUEST_PERMISSION1 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+        {
             //调用相机
             int check = ContextCompat.checkSelfPermission(WebUrlActivity.this, Manifest.permission.CAMERA);
-            if (check == PackageManager.PERMISSION_GRANTED) {
+            if (check == PackageManager.PERMISSION_GRANTED)
+            {
                 toCamera();
-            } else {
+            }
+            else
+            {
                 // 申请CAMERA权限
                 ActivityCompat.requestPermissions(WebUrlActivity.this, new String[]{android.Manifest.permission.CAMERA}, TYPE_REQUEST_PERMISSION);
             }
-        } else if (requestCode == TYPE_REQUEST_PERMISSION && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        }
+        else if (requestCode == TYPE_REQUEST_PERMISSION && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+        {
             toCamera();// 到相机
         }
     }
