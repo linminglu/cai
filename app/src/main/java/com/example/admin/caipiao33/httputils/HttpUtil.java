@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
+import com.example.admin.caipiao33.SplashActivity;
+import com.example.admin.caipiao33.application.MyApplication;
 import com.example.admin.caipiao33.bean.BaseUrlBean;
 import com.example.admin.caipiao33.encryption.CreateCode;
 import com.example.admin.caipiao33.utils.Constants;
@@ -179,12 +181,12 @@ public class HttpUtil
         post(map, null, clazz, mActivity, listener, intent);
     }
 
-    public static void postBase(Call<String> call, TreeMap<String, String> map, TreeMap<String, File> fileMap, final Type clazz, final Context mActivity, final MyResponseListener listener, final Intent intent) // 带参数，获取json对象或者数组
+    public static void postBase(final Call<String> call, TreeMap<String, String> map, TreeMap<String, File> fileMap, final Type clazz, final Context mActivity, final MyResponseListener listener, final Intent intent) // 带参数，获取json对象或者数组
     {
         call.enqueue(new Callback<String>()
         {
             @Override
-            public void onResponse(Call<String> call, Response<String> response)
+            public void onResponse(Call<String> responseCall, Response<String> response)
             {
                 if (null != listener)
                 {
@@ -214,6 +216,18 @@ public class HttpUtil
                         }
                         //                                                String result = CreateCode.parseContent(object.optString("result"));
                         KLog.d(data);
+                        // 如果在非SplashActivity页面baseUrl为默认url，程序自动校验
+                        if (StringUtils.isEmpty(mNewUrl) && retrofit.baseUrl().toString().equals(Constants.URL) && !(mActivity instanceof SplashActivity)) {
+                            BaseUrlBean o = new Gson().fromJson(data, BaseUrlBean.class);
+                            String url = o.getUrl();
+                            if (!StringUtils.isEmpty(url)) {
+                                MyApplication.getInstance().setBaseUrlBean(o);
+                                changeBaseUrl(url);
+                                listener.onSuccess(o);
+                                return;
+                            }
+                        }
+
                         if (null == clazz)
                         {
                             listener.onSuccess(null);

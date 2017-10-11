@@ -38,31 +38,6 @@ public class MyApplication extends Application
         // 日志工具初始化
         KLog.init(BuildConfig.LOG_DEBUG);
         KLog.e("MyApplication onCreate");
-        HttpUtil.reConfirmUrl(this, new MyResponseListener<BaseUrlBean>()
-        {
-            @Override
-            public void onSuccess(BaseUrlBean result)
-            {
-                if (null == result)
-                {
-                    return;
-                }
-                mBaseUrlBean = result;
-                HttpUtil.changeBaseUrl(result.getUrl());
-            }
-
-            @Override
-            public void onFailed(int code, String msg)
-            {
-
-            }
-
-            @Override
-            public void onFinish()
-            {
-
-            }
-        });
 
         //        PushAgent mPushAgent = PushAgent.getInstance(this);
         //        mPushAgent.setResourcePackageName("com.example.admin.caipiao33");
