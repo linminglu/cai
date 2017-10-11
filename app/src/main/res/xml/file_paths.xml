@@ -4,9 +4,12 @@
         name="my_images"
         path="images/"/>
     <external-path
-        path="Android/data/com.example.admin.caipiao33/"
-        name="files_root"/>
+        name="files_root"
+        path="Android/data/com.example.admin.caipiao33/"/>
     <external-path
-        path="."
-        name="external_storage_root"/>
+        name="external_storage_root"
+        path="."/>
+    <root-path
+        name="root_path"
+        path="."/>
 </paths>
