@@ -2,6 +2,7 @@ package com.example.admin.caipiao33.topupactivity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -144,6 +145,13 @@ public class QqPay3SaoMaActivity extends ToolbarActivity implements Toolbar.OnMe
                     Bitmap bitmap = ZXingUtils.createQRImage(result.getPayUrl(), qq3saomaerweima.getWidth(), qq3saomaerweima
                             .getHeight());
                     qq3saomaerweima.setImageBitmap(bitmap);
+                }
+                else if (result.getNeedDown().equals("3"))
+                {
+                    final Uri uri = Uri.parse(result.getPayUrl());
+                    final Intent it = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(it);
+                    finish();
                 }
                 else
                 {
