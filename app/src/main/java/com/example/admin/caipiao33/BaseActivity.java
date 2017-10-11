@@ -216,7 +216,9 @@ public class BaseActivity extends AppCompatActivity implements IBaseView
                                 Intent i = new Intent();
                                 i.setAction(Intent.ACTION_VIEW);
                                 i.setDataAndType((Uri) intent.getParcelableExtra("fileuri"), "application/vnd.android.package-archive");
-                                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                i.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                                 startActivity(i);
                                 ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE))
                                         .cancel(0);
