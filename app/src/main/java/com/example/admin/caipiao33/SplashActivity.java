@@ -13,6 +13,7 @@ import com.example.admin.caipiao33.application.MyApplication;
 import com.example.admin.caipiao33.bean.BaseUrlBean;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.httputils.MyResponseListener;
+import com.example.admin.caipiao33.utils.StringUtils;
 
 
 public class SplashActivity extends BaseActivity
@@ -47,9 +48,14 @@ public class SplashActivity extends BaseActivity
                 {
                     return;
                 }
+                String url = result.getUrl();
+                if (StringUtils.isEmpty(url)) {
+                    showRetryDialog();
+                    return;
+                }
                 isLoadSuccess = true;
                 MyApplication.getInstance().setBaseUrlBean(result);
-                HttpUtil.changeBaseUrl(result.getUrl());
+                HttpUtil.changeBaseUrl(url);
                 if (isDelayTimeOver) {
                     toMainActivity();
                 }
