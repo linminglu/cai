@@ -95,7 +95,7 @@ public class DownloadService extends IntentService
                 oldProgress = progress;
             }
             // 下载完成
-            mBuilder.setContentText(getString(R.string.download_success)).setProgress(0, 0, false);
+            mBuilder.setContentText(getString(R.string.download_success)).setAutoCancel(true).setProgress(0, 0, false);
             String[] command = {"chmod", "777", apkFile.toString()};
             ProcessBuilder builder = new ProcessBuilder(command);
             builder.start();

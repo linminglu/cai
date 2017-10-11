@@ -7,13 +7,19 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.example.admin.caipiao33.application.MyApplication;
+import com.example.admin.caipiao33.bean.BaseUrlBean;
+import com.example.admin.caipiao33.utils.AppUtils;
 import com.example.admin.caipiao33.utils.Constants;
+import com.example.admin.caipiao33.utils.StringUtils;
+import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.views.LoadingLayout;
 import com.example.admin.caipiao33.wheelview.ProgressDialogBar;
 
@@ -181,10 +187,27 @@ public class BaseActivity extends AppCompatActivity implements IBaseView
         {
             if (isShow)
             {
+                BaseUrlBean baseUrlBean = MyApplication.getInstance().getBaseUrlBean();
+                int intCurrVersion = Integer.valueOf(baseUrlBean.getCurrentVersion());
+                int intLowVersion = Integer.valueOf(baseUrlBean.getLowVersion());
+                int appVersionCode = AppUtils.getAppVersionCode(BaseActivity.this);
+                boolean isNormal = false;
+                if (appVersionCode < intLowVersion)
+                {
+                    // 强制更新
+                    isNormal = false;
+                }
+                else
+                {
+                    // 普通更新
+                    isNormal = true;
+                }
+                final boolean finalNormal = isNormal;
                 new MaterialDialog.Builder(BaseActivity.this).title(R.string.update)
                         .content(R.string.download_success)
                         .positiveText(R.string.dialog_ok)
                         .negativeText(R.string.dialog_cancel)
+                        .cancelable(isNormal)
                         .onPositive(new MaterialDialog.SingleButtonCallback()
                         {
                             @Override
@@ -197,6 +220,18 @@ public class BaseActivity extends AppCompatActivity implements IBaseView
                                 startActivity(i);
                                 ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE))
                                         .cancel(0);
+                            }
+                        })
+                        .onNegative(new MaterialDialog.SingleButtonCallback()
+                        {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which)
+                            {
+                                // 强制更新
+                                if (!finalNormal)
+                                {
+                                    android.os.Process.killProcess(android.os.Process.myPid());
+                                }
                             }
                         })
                         .show();
