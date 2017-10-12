@@ -137,7 +137,7 @@ public class QqPayPingTaiActivity extends ToolbarActivity implements Toolbar.OnM
                     @Override
                     public void onFailed(int code, String msg)
                     {
-
+                        ToastUtil.show(msg);
                     }
 
                     @Override

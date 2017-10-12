@@ -120,7 +120,7 @@ public class ShiWanActivity extends ToolbarActivity implements Toolbar.OnMenuIte
                     @Override
                     public void onFailed(int code, String msg)
                     {
-
+                        ToastUtil.show(msg);
                     }
 
                     @Override

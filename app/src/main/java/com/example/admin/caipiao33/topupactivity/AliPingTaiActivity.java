@@ -137,7 +137,7 @@ public class AliPingTaiActivity extends ToolbarActivity implements Toolbar.OnMen
                     @Override
                     public void onFailed(int code, String msg)
                     {
-
+                        ToastUtil.show(msg);
                     }
 
                     @Override

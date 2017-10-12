@@ -172,7 +172,7 @@ public class LoginActivity extends ToolbarActivity implements Toolbar.OnMenuItem
                     @Override
                     public void onFailed(int code, String msg)
                     {
-
+                        ToastUtil.show(msg);
                     }
 
                     @Override

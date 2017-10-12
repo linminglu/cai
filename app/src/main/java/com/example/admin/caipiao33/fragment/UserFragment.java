@@ -42,6 +42,7 @@ import com.example.admin.caipiao33.httputils.MyResponseListener;
 import com.example.admin.caipiao33.presenter.UserInfoPresenter;
 import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.LoginEvent;
+import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.utils.UserConfig;
 import com.example.admin.caipiao33.views.CircleImageView;
 import com.example.admin.caipiao33.views.LoadingLayout;
@@ -271,7 +272,7 @@ public class UserFragment extends BaseFragment implements View.OnClickListener, 
                     @Override
                     public void onFailed(int code, String msg)
                     {
-
+                        ToastUtil.show(msg);
                     }
 
                     @Override

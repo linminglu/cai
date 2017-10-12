@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -56,6 +58,7 @@ public class KaiJiangFragment extends BaseFragment implements View.OnClickListen
     private LayoutInflater mInflater;
     private View parentView;
     private boolean isFirst = true;
+    private boolean isError = false;
 
     //若Fragement定义有带参构造函数，则一定要定义public的默认的构造函数
     public KaiJiangFragment()
@@ -81,6 +84,7 @@ public class KaiJiangFragment extends BaseFragment implements View.OnClickListen
             @Override
             public void onReload(View v)
             {
+                mLoadingLayout.setOnStartLoading(null);
                 kaijiangWebView.loadUrl(HttpUtil.mNewUrl + "/api/draw1");
             }
         });
@@ -135,23 +139,27 @@ public class KaiJiangFragment extends BaseFragment implements View.OnClickListen
             }
 
             @Override
-            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl)
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error)
             {
                 if (isFirst)
                 {
                     showLoadingLayoutError4Ami(swipeRefreshLayout);
                 }
-                super.onReceivedError(view, errorCode, description, failingUrl);
+                isError = true;
+                super.onReceivedError(view, request, error);
             }
-
 
             public void onPageFinished(WebView view, String url)
             {
-                if (isFirst)
+                if (!isError)
                 {
-                    hideLoadingLayout4Ami(swipeRefreshLayout);
-                    isFirst = false;
+                    if (isFirst)
+                    {
+                        hideLoadingLayout4Ami(swipeRefreshLayout);
+                        isFirst = false;
+                    }
                 }
+                isError = false;
                 swipeRefreshLayout.setRefreshing(false);
                 super.onPageFinished(view, url);
             }

@@ -134,7 +134,7 @@ public class AliBankActivity extends ToolbarActivity implements Toolbar.OnMenuIt
                     @Override
                     public void onFailed(int code, String msg)
                     {
-
+                        ToastUtil.show(msg);
                     }
 
                     @Override

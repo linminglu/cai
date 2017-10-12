@@ -21,6 +21,7 @@ import com.example.admin.caipiao33.utils.CodeUtils;
 import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.LoginEvent;
 import com.example.admin.caipiao33.utils.ToastUtil;
+import com.example.admin.caipiao33.views.LoadingLayout;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -85,7 +86,16 @@ public class RegisterActivity extends ToolbarActivity implements Toolbar.OnMenuI
 
     private void initView()
     {
-
+        mLoadingLayout = (LoadingLayout) findViewById(R.id.loadingLayout);
+        mLoadingLayout.setOnReloadingListener(new LoadingLayout.OnReloadingListener()
+        {
+            @Override
+            public void onReload(View v)
+            {
+                mLoadingLayout.setOnStartLoading(null);
+                mPresenter.getRegisterOp();
+            }
+        });
     }
 
     public void onCreateCustomToolBar(Toolbar toolbar)

@@ -17,6 +17,7 @@ import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.httputils.MyResponseListener;
 import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.MyImageLoader;
+import com.example.admin.caipiao33.utils.ToastUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -91,7 +92,7 @@ public class WeiXinHaoYouActivity extends ToolbarActivity implements Toolbar.OnM
                     @Override
                     public void onFailed(int code, String msg)
                     {
-
+                        ToastUtil.show(msg);
                     }
 
                     @Override

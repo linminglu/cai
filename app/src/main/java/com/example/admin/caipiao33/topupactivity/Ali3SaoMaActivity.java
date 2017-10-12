@@ -152,7 +152,7 @@ public class Ali3SaoMaActivity extends ToolbarActivity implements Toolbar.OnMenu
                     @Override
                     public void onFailed(int code, String msg)
                     {
-
+                        ToastUtil.show(msg);
                     }
 
                     @Override

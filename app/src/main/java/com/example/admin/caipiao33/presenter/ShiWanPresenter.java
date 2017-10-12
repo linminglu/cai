@@ -41,6 +41,7 @@ public class ShiWanPresenter implements IShiWanContract.Presenter
             public void onFailed(int code, String msg)
             {
                 ToastUtil.show(msg);
+                mView.getBaseActivity().finish();
             }
 
             @Override

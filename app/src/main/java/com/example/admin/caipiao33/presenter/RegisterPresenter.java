@@ -41,26 +41,26 @@ public class RegisterPresenter implements IRegisterContract.Presenter
             public void onSuccess(RegisterBean result)
             {
                 mView.updata(result);
+                if (isFirst)
+                {
+                    mView.hideLoadingLayout();
+                    isFirst = false;
+                }
             }
 
             @Override
             public void onFailed(int code, String msg)
             {
                 ToastUtil.show(msg);
+                if (isFirst)
+                {
+                    mView.showLoadingLayoutError();
+                }
             }
 
             @Override
             public void onFinish()
             {
-                if (isFirst)
-                {
-                    mView.hideLoadingLayout();
-                    isFirst = false;
-                }
-                else
-                {
-                    mView.hideLoadingDialog();
-                }
             }
         }, null);
     }

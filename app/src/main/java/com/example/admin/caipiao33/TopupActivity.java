@@ -25,6 +25,7 @@ import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.httputils.MyResponseListener;
 import com.example.admin.caipiao33.presenter.TopupPresenter;
 import com.example.admin.caipiao33.utils.Constants;
+import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.utils.TopupEvent;
 import com.example.admin.caipiao33.views.LoadingLayout;
 import com.example.admin.caipiao33.views.NumberInputFilter;
@@ -181,7 +182,7 @@ public class TopupActivity extends ToolbarActivity implements Toolbar.OnMenuItem
                     @Override
                     public void onFailed(int code, String msg)
                     {
-
+                        ToastUtil.show(msg);
                     }
 
                     @Override

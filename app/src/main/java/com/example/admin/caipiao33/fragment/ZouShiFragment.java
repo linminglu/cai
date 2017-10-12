@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -61,6 +63,7 @@ public class ZouShiFragment extends BaseFragment implements View.OnClickListener
     private GouCaiBean mGouCaiBean;
     private IZouShiContract.Presenter mPresenter;
     private ArrayList<String> names;
+    private boolean isError = false;
 
     //若Fragement定义有带参构造函数，则一定要定义public的默认的构造函数
     public ZouShiFragment()
@@ -88,6 +91,7 @@ public class ZouShiFragment extends BaseFragment implements View.OnClickListener
             @Override
             public void onReload(View v)
             {
+                mLoadingLayout.setOnStartLoading(null);
                 mPresenter.loadData();
             }
         });
@@ -126,14 +130,27 @@ public class ZouShiFragment extends BaseFragment implements View.OnClickListener
             }
 
             @Override
-            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl)
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error)
             {
-                super.onReceivedError(view, errorCode, description, failingUrl);
+                if (isFirst)
+                {
+                    showLoadingLayoutError4Ami(swipeRefreshLayout);
+                }
+                isError = true;
+                super.onReceivedError(view, request, error);
             }
-
 
             public void onPageFinished(WebView view, String url)
             {
+                if (!isError)
+                {
+                    if (isFirst)
+                    {
+                        hideLoadingLayout4Ami(swipeRefreshLayout);
+                        isFirst = false;
+                    }
+                }
+                isError = false;
                 swipeRefreshLayout.setRefreshing(false);
                 super.onPageFinished(view, url);
             }

@@ -97,7 +97,7 @@ public class QqPay3SaoMaActivity extends ToolbarActivity implements Toolbar.OnMe
                     @Override
                     public void onFailed(int code, String msg)
                     {
-
+                        ToastUtil.show(msg);
                     }
 
                     @Override
