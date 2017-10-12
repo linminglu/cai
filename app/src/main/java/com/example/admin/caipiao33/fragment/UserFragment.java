@@ -160,6 +160,7 @@ public class UserFragment extends BaseFragment implements View.OnClickListener, 
             @Override
             public void onReload(View v)
             {
+                mLoadingLayout.setOnStartLoading(null);
                 mPresenter.loadData();
             }
         });

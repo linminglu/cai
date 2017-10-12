@@ -49,14 +49,16 @@ public class SplashActivity extends BaseActivity
                     return;
                 }
                 String url = result.getUrl();
-                if (StringUtils.isEmpty(url)) {
-                    showRetryDialog();
+                if (StringUtils.isEmpty(url))
+                {
+                    showRetryDialog("");
                     return;
                 }
                 isLoadSuccess = true;
                 MyApplication.getInstance().setBaseUrlBean(result);
                 HttpUtil.changeBaseUrl(url);
-                if (isDelayTimeOver) {
+                if (isDelayTimeOver)
+                {
                     toMainActivity();
                 }
             }
@@ -65,7 +67,7 @@ public class SplashActivity extends BaseActivity
             public void onFailed(int code, String msg)
             {
                 // 提示网络问题，重试
-                showRetryDialog();
+                showRetryDialog(msg);
             }
 
             @Override
@@ -76,9 +78,9 @@ public class SplashActivity extends BaseActivity
         });
     }
 
-    private void showRetryDialog() {
-        new MaterialDialog.Builder(this)
-                .content("当前访问网络有问题，请检查重试")
+    private void showRetryDialog(String msg)
+    {
+        new MaterialDialog.Builder(this).content(StringUtils.isEmpty2(msg) ? "当前访问网络有问题，请检查重试" : msg)
                 .positiveText("重试")
                 .cancelable(false)
                 .onPositive(new MaterialDialog.SingleButtonCallback()
@@ -114,7 +116,8 @@ public class SplashActivity extends BaseActivity
         public void run()
         {
             isDelayTimeOver = true;
-            if (isLoadSuccess) {
+            if (isLoadSuccess)
+            {
                 toMainActivity();
             }
         }
@@ -122,7 +125,8 @@ public class SplashActivity extends BaseActivity
 
     private void toMainActivity()
     {
-        if (isJumpMain) {
+        if (isJumpMain)
+        {
             return;
         }
         isJumpMain = true;

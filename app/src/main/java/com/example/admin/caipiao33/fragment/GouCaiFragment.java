@@ -126,7 +126,6 @@ public class GouCaiFragment extends BaseFragment implements IGouCaiContract.View
                     int responseCode = response.code();
                     if (responseCode != 200)
                     {
-                        String string = "网络异常！";
                         KLog.d("errorNo: " + responseCode + " strMsg: " + response.errorBody()
                                 .string());
                         return;

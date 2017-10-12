@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
+import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.security.KeyManagementException;
 import java.security.KeyStore;
@@ -47,7 +48,7 @@ import retrofit2.Retrofit;
 
 public class HttpUtil
 {
-    private static final int DEFAULT_TIMEOUT = 30;
+    private static final int DEFAULT_TIMEOUT = 1;
     private static Retrofit retrofit;
     private static Retrofit retrofitBase;
     private static SSLContext sslContext;
@@ -217,10 +218,14 @@ public class HttpUtil
                         //                                                String result = CreateCode.parseContent(object.optString("result"));
                         KLog.d(data);
                         // 如果在非SplashActivity页面baseUrl为默认url，程序自动校验
-                        if (StringUtils.isEmpty(mNewUrl) && retrofit.baseUrl().toString().equals(Constants.URL) && !(mActivity instanceof SplashActivity)) {
+                        if (StringUtils.isEmpty(mNewUrl) && retrofit.baseUrl()
+                                .toString()
+                                .equals(Constants.URL) && !(mActivity instanceof SplashActivity))
+                        {
                             BaseUrlBean o = new Gson().fromJson(data, BaseUrlBean.class);
                             String url = o.getUrl();
-                            if (!StringUtils.isEmpty(url)) {
+                            if (!StringUtils.isEmpty(url))
+                            {
                                 MyApplication.getInstance().setBaseUrlBean(o);
                                 changeBaseUrl(url);
                                 listener.onSuccess(o);
@@ -269,7 +274,12 @@ public class HttpUtil
 
                 if (t instanceof UnknownHostException || StringUtils.isEmpty(strMsg))
                 {
-                    strMsg = "网络异常！";
+                    strMsg = "网络连接异常，请检查您的网络连接是否正确！";
+                    errorNo = Constants.NETWORK_ERROR;
+                }
+                if (t instanceof SocketTimeoutException)
+                {
+                    strMsg = "网络连接超时，请检查您的网络连接环境是否畅通！";
                     errorNo = Constants.NETWORK_ERROR;
                 }
                 KLog.d("errorNo: " + errorNo + " strMsg: " + strMsg);
