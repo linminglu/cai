@@ -198,7 +198,7 @@ public class HttpUtil
                     int responseCode = response.code();
                     if (responseCode != 200)
                     {
-                        String string = "网络异常！";
+                        String string = Constants.JSONERROR;
                         KLog.d("errorNo: " + responseCode + " strMsg: " + response.errorBody()
                                 .string());
                         listener.onFailed(responseCode, string);

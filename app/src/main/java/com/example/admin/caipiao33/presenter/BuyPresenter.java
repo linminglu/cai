@@ -119,7 +119,7 @@ public class BuyPresenter implements IBuyContract.Presenter
             @Override
             public void onFailed(int code, String msg)
             {
-
+                mView.showErrorMsg(msg);
             }
 
             @Override

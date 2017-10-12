@@ -30,6 +30,7 @@ import com.example.admin.caipiao33.httputils.FirstService;
 import com.example.admin.caipiao33.httputils.MyGsonConverterFactory;
 import com.example.admin.caipiao33.presenter.GouCaiPresenter;
 import com.example.admin.caipiao33.utils.ServiceTime;
+import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.views.LoadingLayout;
 import com.google.gson.Gson;
 import com.socks.library.KLog;
@@ -292,7 +293,7 @@ public class GouCaiFragment extends BaseFragment implements IGouCaiContract.View
     @Override
     public void showErrorMsg(String msg)
     {
-
+        ToastUtil.show(msg);
     }
 
     @Override

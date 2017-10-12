@@ -69,7 +69,7 @@ public class HomePagePresenter implements IHomePageContract.Presenter
             @Override
             public void onFailed(int code, String msg)
             {
-
+                mView.showErrorMsg(msg);
             }
 
             @Override
@@ -95,7 +95,7 @@ public class HomePagePresenter implements IHomePageContract.Presenter
             @Override
             public void onFailed(int code, String msg)
             {
-
+                mView.showErrorMsg(msg);
             }
 
             @Override
@@ -128,7 +128,7 @@ public class HomePagePresenter implements IHomePageContract.Presenter
             @Override
             public void onFailed(int code, String msg)
             {
-
+                mView.showErrorMsg(msg);
             }
 
             @Override
@@ -155,7 +155,7 @@ public class HomePagePresenter implements IHomePageContract.Presenter
             @Override
             public void onFailed(int code, String msg)
             {
-
+                mView.showErrorMsg(msg);
             }
 
             @Override

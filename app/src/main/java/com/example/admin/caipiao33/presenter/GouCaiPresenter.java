@@ -62,6 +62,7 @@ public class GouCaiPresenter implements IGouCaiContract.Presenter
             @Override
             public void onFailed(int code, String msg)
             {
+                mView.showErrorMsg(msg);
             }
 
             @Override

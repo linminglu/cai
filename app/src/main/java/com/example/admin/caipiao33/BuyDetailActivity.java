@@ -16,6 +16,7 @@ import com.example.admin.caipiao33.bean.BuyRoomBean;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.httputils.MyResponseListener;
 import com.example.admin.caipiao33.utils.Constants;
+import com.example.admin.caipiao33.utils.ToastUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -174,7 +175,7 @@ public class BuyDetailActivity extends BaseActivity
                     @Override
                     public void onFailed(int code, String msg)
                     {
-
+                        ToastUtil.show(msg);
                     }
 
                     @Override

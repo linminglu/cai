@@ -15,6 +15,7 @@ import com.example.admin.caipiao33.bean.BuyRecordBean;
 import com.example.admin.caipiao33.contract.IBuyRecordContract;
 import com.example.admin.caipiao33.presenter.BuyRecordPresenter;
 import com.example.admin.caipiao33.utils.Constants;
+import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.utils.Tools;
 import com.example.admin.caipiao33.views.DividerItemDecoration;
 import com.example.admin.caipiao33.views.LoadingLayout;
@@ -239,5 +240,11 @@ public class BuyWinRecordActivity extends BaseActivity implements IBuyRecordCont
             List<BuyRecordBean.ItemsBean> items = mBuyRecordBean.getItems();
             return items == null ? 0 : items.size();
         }
+    }
+
+    @Override
+    public void showErrorMsg(String msg)
+    {
+        ToastUtil.show(msg);
     }
 }

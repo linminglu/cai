@@ -31,6 +31,7 @@ import com.example.admin.caipiao33.utils.DateUtils;
 import com.example.admin.caipiao33.utils.MyImageLoader;
 import com.example.admin.caipiao33.utils.ServiceTime;
 import com.example.admin.caipiao33.utils.StringUtils;
+import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.utils.Tools;
 import com.example.admin.caipiao33.views.DividerGridItemDecoration;
 import com.example.admin.caipiao33.views.DividerItemDecoration;
@@ -353,7 +354,7 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
     @Override
     public void showErrorMsg(String msg)
     {
-
+        ToastUtil.show(msg);
     }
 
     @Override

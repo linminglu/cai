@@ -64,7 +64,7 @@ public class BuyRecordPresenter implements IBuyRecordContract.Presenter
             @Override
             public void onFailed(int code, String msg)
             {
-
+                mView.showErrorMsg(msg);
             }
 
             @Override
@@ -90,7 +90,7 @@ public class BuyRecordPresenter implements IBuyRecordContract.Presenter
             @Override
             public void onFailed(int code, String msg)
             {
-
+                mView.showErrorMsg(msg);
             }
 
             @Override

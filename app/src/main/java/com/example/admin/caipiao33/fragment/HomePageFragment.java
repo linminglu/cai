@@ -42,6 +42,7 @@ import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.LoginEvent;
 import com.example.admin.caipiao33.utils.MyImageLoader;
 import com.example.admin.caipiao33.utils.ResourcesUtil;
+import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.utils.Tools;
 import com.example.admin.caipiao33.utils.UserConfig;
 import com.example.admin.caipiao33.utils.ViewHolder;
@@ -308,7 +309,7 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
     @Override
     public void showErrorMsg(String msg)
     {
-
+        ToastUtil.show(msg);
     }
 
     @Override
