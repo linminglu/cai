@@ -136,6 +136,7 @@ public class ZouShiFragment extends BaseFragment implements View.OnClickListener
                 {
                     showLoadingLayoutError4Ami(swipeRefreshLayout);
                 }
+                ToastUtil.show("页面加载失败，请检查您的网络链接是否正确！");
                 isError = true;
                 super.onReceivedError(view, request, error);
             }
