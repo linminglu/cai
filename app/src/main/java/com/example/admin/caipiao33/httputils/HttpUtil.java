@@ -48,7 +48,7 @@ import retrofit2.Retrofit;
 
 public class HttpUtil
 {
-    private static final int DEFAULT_TIMEOUT = 1;
+    private static final int DEFAULT_TIMEOUT = 30;
     private static Retrofit retrofit;
     private static Retrofit retrofitBase;
     private static SSLContext sslContext;
