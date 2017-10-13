@@ -26,6 +26,14 @@
 
     </android.support.v7.widget.Toolbar>
 
+    <ProgressBar
+        android:id="@+id/protocol_progressbar"
+        style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:max="100"
+        android:progressDrawable="@drawable/progressbar_bg"/>
+
     <RelativeLayout
         android:id="@+id/protocol_error_layout"
         android:layout_width="match_parent"
@@ -60,14 +68,6 @@
             android:text="@string/s_refresh_page"
             android:textColor="@color/red"/>
     </RelativeLayout>
-
-    <ProgressBar
-        android:id="@+id/protocol_progressbar"
-        style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:max="100"
-        android:progressDrawable="@drawable/progressbar_bg"/>
 
     <WebView
         android:id="@+id/protocol_webView"

@@ -5,9 +5,11 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -29,6 +31,7 @@ import android.widget.Toast;
 import com.example.admin.caipiao33.application.MyApplication;
 import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.FileManager;
+import com.example.admin.caipiao33.views.WebviewProgressBar;
 import com.socks.library.KLog;
 
 import java.io.File;
@@ -43,12 +46,15 @@ public class WebUrlActivity extends BaseActivity
 {
 
     private WebView webView;
-    private ProgressBar mProgressbar;
+    private WebviewProgressBar mProgressbar;
     private Toolbar mToolbar;
     private String mUrl;
     private String mTitle;
     private View layoutError;
     private TextView tvTitle;
+    private View errorRefreshView;
+    // 标记是否页面已经出错了
+    private boolean isReceivedError;
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
@@ -59,12 +65,13 @@ public class WebUrlActivity extends BaseActivity
         setResult(RESULT_CANCELED);
 
         layoutError = findViewById(R.id.protocol_error_layout);
-        findViewById(R.id.protocol_refresh).setOnClickListener(new View.OnClickListener()
+        errorRefreshView = findViewById(R.id.protocol_refresh);
+        errorRefreshView.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                layoutError.setVisibility(View.GONE);
+                errorRefreshView.setEnabled(false);
                 webView.loadUrl(mUrl);
             }
         });
@@ -90,13 +97,15 @@ public class WebUrlActivity extends BaseActivity
         //        settings.setUserAgentString("Android_Lottery");
         settings.setBuiltInZoomControls(true);
         settings.setJavaScriptEnabled(true);
-        mProgressbar = (ProgressBar) findViewById(R.id.protocol_progressbar);
+        mProgressbar = new WebviewProgressBar((ProgressBar) findViewById(R.id.protocol_progressbar));
+
+
         webView.setWebViewClient(new WebViewClient()
         {
+
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url)
             {
-                mProgressbar.setVisibility(View.VISIBLE);
                 mUrl = url;
                 view.loadUrl(url);
                 return true;
@@ -107,22 +116,32 @@ public class WebUrlActivity extends BaseActivity
             {
                 super.onReceivedError(view, errorCode, description, failingUrl);
                 layoutError.setVisibility(View.VISIBLE);
+                isReceivedError = true;
+            }
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon)
+            {
+                isReceivedError = false;
+                mProgressbar.onProgressStart();
             }
         });
 
         webView.setWebChromeClient(new WebChromeClient()
         {
+
             @Override
             public void onProgressChanged(WebView view, int newProgress)
             {
-                super.onProgressChanged(view, newProgress);
-                if (newProgress == 100)
-                {
-                    mProgressbar.setVisibility(View.GONE);
+                // 页面已经销毁，进度后面达到
+                if (null != mProgressbar) {
+                    mProgressbar.onProgressChange(newProgress);
                 }
-                else
-                {
-                    mProgressbar.setProgress(newProgress);
+                if (newProgress == 100) {
+                    errorRefreshView.setEnabled(true);
+                    if (!isReceivedError) {
+                        layoutError.setVisibility(View.GONE);
+                    }
                 }
             }
 
@@ -370,6 +389,20 @@ public class WebUrlActivity extends BaseActivity
         else if (requestCode == TYPE_REQUEST_PERMISSION && grantResults[0] == PackageManager.PERMISSION_GRANTED)
         {
             toCamera();// 到相机
+        }
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        if(mProgressbar!=null){
+            mProgressbar.destroy();
+            mProgressbar = null;
+        }
+        if (null != webView) {
+            webView.setWebChromeClient(null);
+            webView.setWebViewClient(null);
+            webView = null;
         }
     }
 }
