@@ -164,7 +164,7 @@
 
 
                 <EditText
-                    android:id="@+id/bankpay_name_et"
+                    android:id="@+id/alibank_name_et"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"

@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.admin.caipiao33.ChongZhiJiLuActivity;
@@ -18,7 +19,10 @@ import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.httputils.MyResponseListener;
 import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.ToastUtil;
+import com.example.admin.caipiao33.utils.TopupEvent;
 import com.example.admin.caipiao33.views.LoadingLayout;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 
@@ -45,6 +49,8 @@ public class AliBankActivity extends ToolbarActivity implements Toolbar.OnMenuIt
     Button alibankShangyibu;
     @BindView(R.id.alibank_woyizhifu)
     Button alibankWoyizhifu;
+    @BindView(R.id.alibank_name_et)
+    EditText alibankNameEt;
     private String topupamount;
     private String payId;
     private AliBankBean aliBankBean;
@@ -181,10 +187,42 @@ public class AliBankActivity extends ToolbarActivity implements Toolbar.OnMenuIt
                 finish();
                 break;
             case R.id.alibank_woyizhifu:
-                ToastUtil.show("提交成功");
-                finish();
+                toNext();
                 break;
         }
+    }
+
+    private void toNext()
+    {
+        showLoadingDialog(false);
+
+        HashMap<String, String> map = new HashMap<>();
+        map.put("payId", payId);
+        map.put("amount", topupamount);
+        map.put("orderNo", aliBankBean.getOrderNo());
+
+        HttpUtil.requestSecond("user", "ralipayBankSubmit", map, String.class, AliBankActivity.this, new MyResponseListener<String>()
+        {
+            @Override
+            public void onSuccess(String result)
+            {
+                ToastUtil.show("提交成功，请稍后查询充值记录！");
+                finish();
+                EventBus.getDefault().post(new TopupEvent(""));
+            }
+
+            @Override
+            public void onFailed(int code, String msg)
+            {
+                ToastUtil.show(msg);
+            }
+
+            @Override
+            public void onFinish()
+            {
+                hideLoadingDialog();
+            }
+        }, null);
     }
 }
 

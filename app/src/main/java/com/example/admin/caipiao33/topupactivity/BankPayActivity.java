@@ -185,6 +185,7 @@ public class BankPayActivity extends ToolbarActivity implements Toolbar.OnMenuIt
         showLoadingDialog(false);
 
         HashMap<String, String> map = new HashMap<>();
+        map.put("id", payId);
         map.put("name", bankpayNameEt.getText().toString());
         map.put("time", bankPayDetailBean.getSaveTime());
         map.put("money", topupamount);
