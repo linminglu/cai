@@ -284,7 +284,22 @@ public class BuyRecordActivity extends BaseActivity implements IBuyRecordContrac
             else
             {
                 holder.tvWin.setTextColor(getResources().getColor(R.color.middle_gray));
-                holder.tvWin.setText(getString(R.string.s_not_win));
+                if (itemsBean.getStatus() == 0)
+                {
+                    holder.tvWin.setText(getString(R.string.s_weikaijiang));
+                }
+                else if (itemsBean.getStatus() == 1)
+                {
+                    holder.tvWin.setText(getString(R.string.s_yiquxiao));
+                }
+                else if (itemsBean.getStatus() == 2)
+                {
+                    holder.tvWin.setText(getString(R.string.s_yijiesuan));
+                }
+                else
+                {
+                    holder.tvWin.setText(getString(R.string.s_not_win));
+                }
             }
         }
 

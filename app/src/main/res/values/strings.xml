@@ -228,6 +228,9 @@
     <string name="s_money">%1$s元</string>
     <string name="s_win_money">赢%1$s元</string>
     <string name="s_not_win">未中奖</string>
+    <string name="s_weikaijiang">未开奖</string>
+    <string name="s_yiquxiao">已取消</string>
+    <string name="s_yijiesuan">已结算</string>
     <string-array name="s_array_buy_record">
         <item>全部订单</item>
         <item>我的中奖</item>
