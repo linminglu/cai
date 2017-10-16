@@ -119,6 +119,9 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
         @Override
         public void displayImage(String imageURL, ImageView imageView)
         {
+            if (!imageURL.startsWith("http")) {
+                imageURL = HttpUtil.mNewUrl + imageURL;
+            }
             MyImageLoader.displayImage(imageURL, imageView, getBaseActivity());
         }
 
