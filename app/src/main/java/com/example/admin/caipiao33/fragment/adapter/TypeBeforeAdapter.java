@@ -131,6 +131,11 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
 
     private void creatDataNormal()
     {
+        String playName = mBuyRoomBean.getPlayName();
+        boolean isNumberType = false;
+        if ("数字盘".equals(playName)) {
+            isNumberType = true;
+        }
         int totalSize = mBuyRoomBean.getPlayDetailList().size();
         mDataList = new ArrayList<>(totalSize);
         for (int i = 0; i < totalSize; i++)
@@ -164,6 +169,7 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
                     }
                     BuyRoomBean.PlayDetailListBean.ListBean e = list.get(index);
                     e.setParentName(playDetailListBean.getName());
+                    e.setPlayName(e.getPlayName() + (isNumberType ? "号" : ""));
                     itemList.add(e);
                 }
                 childList.add(itemList);
@@ -178,6 +184,11 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
      */
     private void creatDataAfter()
     {
+        String playName = mBuyRoomBean.getPlayName();
+        boolean isNumberType = false;
+        if ("数字盘".equals(playName)) {
+            isNumberType = true;
+        }
         int totalSize = mBuyRoomBean.getPlayDetailList().size();
         int groupSize = 1 + (totalSize - 1) / COUNT + (totalSize - 1) % COUNT;
         mDataList = new ArrayList<>(groupSize);
@@ -214,6 +225,7 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
                         {
                             BuyRoomBean.PlayDetailListBean.ListBean e = list.get(j);
                             e.setParentName(playDetailListBean.getName());
+                            e.setPlayName(e.getPlayName() + (isNumberType ? "号" : ""));
                             itemList.add(e);
                         }
                     }
@@ -259,6 +271,7 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
                         }
                         BuyRoomBean.PlayDetailListBean.ListBean e = list.get(index);
                         e.setParentName(playDetailListBean.getName());
+                        e.setPlayName(e.getPlayName() + (isNumberType ? "号" : ""));
                         itemList.add(e);
                     }
                     childList.add(itemList);
@@ -271,6 +284,11 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
 
     private void creatDataBefore()
     {
+        String playName = mBuyRoomBean.getPlayName();
+        boolean isNumberType = false;
+        if ("数字盘".equals(playName)) {
+            isNumberType = true;
+        }
         int totalSize = mBuyRoomBean.getPlayDetailList().size();
         int groupSize = totalSize / COUNT + totalSize % COUNT;
         mDataList = new ArrayList<>(groupSize);
@@ -307,6 +325,7 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
                         {
                             BuyRoomBean.PlayDetailListBean.ListBean e = list.get(j);
                             e.setParentName(playDetailListBean.getName());
+                            e.setPlayName(e.getPlayName() + (isNumberType ? "号" : ""));
                             itemList.add(e);
                         }
                     }
@@ -344,6 +363,7 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
                         }
                         BuyRoomBean.PlayDetailListBean.ListBean e = list.get(index);
                         e.setParentName(playDetailListBean.getName());
+                        e.setPlayName(e.getPlayName() + (isNumberType ? "号" : ""));
                         itemList.add(e);
                     }
                     childList.add(itemList);

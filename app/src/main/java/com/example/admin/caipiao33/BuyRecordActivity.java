@@ -234,6 +234,10 @@ public class BuyRecordActivity extends BaseActivity implements IBuyRecordContrac
         TextView tvTime;
         @BindView(R.id.tv_win)
         TextView tvWin;
+        @BindView(R.id.tv_play_name)
+        TextView tvPlayName;
+        @BindView(R.id.tv_number)
+        TextView tvNumber;
 
         public MyViewHolder(View itemView)
         {
@@ -276,10 +280,11 @@ public class BuyRecordActivity extends BaseActivity implements IBuyRecordContrac
             holder.tvIndex.setText(getString(R.string.s_qishu, itemsBean.getPeriod()));
             holder.tvMoney.setText(getString(R.string.s_money, "-" + itemsBean.getAmount()));
             holder.tvTime.setText(itemsBean.getAddTime());
+
             if (itemsBean.getIsWin() == 1)
             { // isWin=1中奖 -1未中奖
                 holder.tvWin.setTextColor(getResources().getColor(R.color.c_homepage_4));
-                holder.tvWin.setText(getString(R.string.s_win_money, itemsBean.getWinAmount()));
+                holder.tvWin.setText(getString(R.string.s_win_money, itemsBean.getRealWinAmount()));
             }
             else
             {
@@ -290,7 +295,7 @@ public class BuyRecordActivity extends BaseActivity implements IBuyRecordContrac
                 }
                 else if (itemsBean.getStatus() == 1)
                 {
-                    holder.tvWin.setText(getString(R.string.s_yiquxiao));
+                    holder.tvWin.setText(getString(R.string.s_not_win));
                 }
                 else if (itemsBean.getStatus() == 2)
                 {

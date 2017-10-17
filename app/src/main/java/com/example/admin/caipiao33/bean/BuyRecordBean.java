@@ -104,7 +104,7 @@ public class BuyRecordBean implements Serializable
         private double amount;
         private String id;
         private int status;
-        private double realWinAmount;
+        private String realWinAmount;
         private String gameName;
         private String period;
         private String addTime;
@@ -161,12 +161,12 @@ public class BuyRecordBean implements Serializable
             this.status = status;
         }
 
-        public double getRealWinAmount()
+        public String getRealWinAmount()
         {
             return realWinAmount;
         }
 
-        public void setRealWinAmount(double realWinAmount)
+        public void setRealWinAmount(String realWinAmount)
         {
             this.realWinAmount = realWinAmount;
         }
