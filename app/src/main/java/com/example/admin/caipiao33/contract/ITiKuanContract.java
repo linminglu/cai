@@ -2,6 +2,7 @@ package com.example.admin.caipiao33.contract;
 
 import com.example.admin.caipiao33.IBasePresenter;
 import com.example.admin.caipiao33.IBaseView;
+import com.example.admin.caipiao33.bean.SettingBean;
 import com.example.admin.caipiao33.bean.TiKuanBean;
 
 /**
@@ -15,6 +16,8 @@ public interface ITiKuanContract
         void updata(TiKuanBean result);
 
         void tiKuanOk(String result);
+
+        void hasmima(SettingBean result);
     }
 
     interface Presenter extends IBasePresenter
@@ -22,5 +25,7 @@ public interface ITiKuanContract
         void getTiKuan();
 
         void submitTiKuan(String amount, String password);
+
+        void getSettingOp();
     }
 }
