@@ -173,7 +173,7 @@ public class RegisterActivity extends ToolbarActivity implements Toolbar.OnMenuI
         registerVcodeIv.setImageBitmap(CodeUtils.getInstance()
                 .createBitmap(result.getVerifyCode()));
 
-        registerProtocolTv.setText("我已年满十八周岁，并且同意接受《法律声明》，请牢记凤凰彩票" + result.getWebName() + "官方永久域名：" + result
+        registerProtocolTv.setText("我已年满十八周岁，并且同意接受《法律声明》，请牢记" + result.getWebName() + "官方永久域名：" + result
                 .getDhUrl());
     }
 

@@ -10,9 +10,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.admin.caipiao33.bean.SettingBean;
 import com.example.admin.caipiao33.bean.TiKuanBean;
 import com.example.admin.caipiao33.contract.ITiKuanContract;
 import com.example.admin.caipiao33.presenter.TiKuanPresenter;
+import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.StringUtils;
 import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.views.LoadingLayout;
@@ -110,8 +112,7 @@ public class TiXianActivity extends ToolbarActivity implements Toolbar.OnMenuIte
     {
         if (result.getStatus().equals("-1"))
         {
-            ToastUtil.show("还未绑定银行卡！");
-            finish();
+            mPresenter.getSettingOp();
         }
         else if (result.getStatus().equals("1"))
         {
@@ -139,6 +140,26 @@ public class TiXianActivity extends ToolbarActivity implements Toolbar.OnMenuIte
     public void tiKuanOk(String result)
     {
         ToastUtil.show("提款申请成功，请等待后台审核！");
+        finish();
+    }
+
+    @Override
+    public void hasmima(SettingBean result)
+    {
+        if (result.getTkPasswd().equals("0"))
+        {
+            ToastUtil.show("还未绑定银行卡！请先设置提款密码！");
+            Intent intent = new Intent(TiXianActivity.this, ChangeTiKuanPasswordActivity.class);
+            intent.putExtra("fromtikuan", 1);
+            startActivity(intent);
+        }
+        else
+        {
+            ToastUtil.show("还未绑定银行卡，请先绑定银行卡才能提现！");
+            Intent intent = new Intent(TiXianActivity.this, ChangeBankActivity.class);
+            intent.putExtra(Constants.CHANGE_TIKUAN_PASSWORD, 0);
+            startActivity(intent);
+        }
         finish();
     }
 

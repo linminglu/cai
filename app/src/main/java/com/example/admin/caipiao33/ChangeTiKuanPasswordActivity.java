@@ -1,5 +1,6 @@
 package com.example.admin.caipiao33;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -28,12 +29,14 @@ public class ChangeTiKuanPasswordActivity extends ToolbarActivity implements Too
     Button btnChangetikuanpassword;
     private IChangeTiKuanPasswordContract.Presenter mPresenter;
     private int haspassword;
+    private int fromtikuan = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_changetikuanpassword);
+        fromtikuan = getIntent().getIntExtra("fromtikuan", 0);
         ButterKnife.bind(this);
         mPresenter = new ChangeTiKuanPasswordPresenter(this, null);
         haspassword = getIntent().getIntExtra(Constants.CHANGE_TIKUAN_PASSWORD, 1);
@@ -68,7 +71,16 @@ public class ChangeTiKuanPasswordActivity extends ToolbarActivity implements Too
     public void successFul(String result)
     {
         ToastUtil.show("提款密码修改成功！");
-        finish();
+        if (fromtikuan == 0)
+        {
+            finish();
+        }
+        else
+        {
+            Intent intent = new Intent(ChangeTiKuanPasswordActivity.this, ChangeBankActivity.class);
+            intent.putExtra(Constants.CHANGE_TIKUAN_PASSWORD, 0);
+            startActivity(intent);
+        }
     }
 
     @Override
