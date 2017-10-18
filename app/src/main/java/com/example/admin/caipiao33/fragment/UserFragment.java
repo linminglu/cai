@@ -42,6 +42,7 @@ import com.example.admin.caipiao33.httputils.MyResponseListener;
 import com.example.admin.caipiao33.presenter.UserInfoPresenter;
 import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.LoginEvent;
+import com.example.admin.caipiao33.utils.StringUtils;
 import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.utils.UserConfig;
 import com.example.admin.caipiao33.views.CircleImageView;
@@ -124,6 +125,8 @@ public class UserFragment extends BaseFragment implements View.OnClickListener, 
     Unbinder unbinder;
     @BindView(R.id.user_fragment_sv)
     ScrollView userFragmentSv;
+    @BindView(R.id.user_fragment_geren_tishi_iv)
+    ImageView userFragmentGerenTishiIv;
     private MainActivity mainActivity;
     private LayoutInflater mInflater;
     private View parentView;
@@ -232,6 +235,14 @@ public class UserFragment extends BaseFragment implements View.OnClickListener, 
         swipeRefreshLayout.setRefreshing(false);
         userFragmentNameTv.setText(UserConfig.getInstance().getToken(mainActivity).getMemberName());
         userFragmentYueTv.setText("余额[刷新]\n" + bean.getBalance() + "元");
+        if (!StringUtils.isEmpty2(bean.getUnReadCount()) && !bean.getUnReadCount().equals("0"))
+        {
+            userFragmentGerenTishiIv.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            userFragmentGerenTishiIv.setVisibility(View.GONE);
+        }
     }
 
     @OnClick({R.id.user_fragment_app_tv, R.id.user_fragment_yue_tv, R.id.user_fragment_tixian_tv, R.id.user_fragment_kefu_tv, R.id.user_fragment_chongzhi_tv, R.id.user_fragment_qiandao_tv, R.id.user_fragment_tuijian_rl, R.id.user_fragment_gonggao_rl, R.id.user_fragment_touzhujilu_rl, R.id.user_fragment_zhongjiangjilu_rl, R.id.user_fragment_mingxi_rl, R.id.user_fragment_chongzhijilu_rl, R.id.user_fragment_tikuanjilu_rl, R.id.user_fragment_qiandaojilu_rl, R.id.user_fragment_geren_rl})
@@ -314,6 +325,7 @@ public class UserFragment extends BaseFragment implements View.OnClickListener, 
                 startActivity(intent);
                 break;
             case R.id.user_fragment_geren_rl:
+                userFragmentGerenTishiIv.setVisibility(View.GONE);
                 intent = new Intent(mainActivity, GeRenXiaoXiActivity.class);
                 startActivity(intent);
                 break;

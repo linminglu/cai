@@ -624,6 +624,19 @@
                         android:textSize="16sp"/>
 
                     <ImageView
+                        android:id="@+id/user_fragment_geren_tishi_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_toLeftOf="@+id/imageView6"
+                        android:layout_toStartOf="@+id/imageView6"
+                        android:background="@mipmap/tishi_red"
+                        android:visibility="gone"/>
+
+                    <ImageView
+                        android:id="@+id/imageView6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"

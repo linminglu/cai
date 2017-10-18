@@ -58,6 +58,7 @@ public class ChangeBankActivity extends ToolbarActivity implements Toolbar.OnMen
         hasbank = getIntent().getIntExtra(Constants.CHANGE_TIKUAN_PASSWORD, 0);
         if (hasbank == 1)
         {
+            changebankcardKaihurenEt.setEnabled(false);
             mPresenter.getBankCard();
         }
         initView();
