@@ -98,6 +98,8 @@ public class BuyRecordBean implements Serializable
          * period : 2017098
          * addTime : 2017-08-22 08:53:52
          * winAmount : 0
+         * content  投注内容
+         * playName  玩法名称
          */
 
         private int isWin;
@@ -110,6 +112,8 @@ public class BuyRecordBean implements Serializable
         private String addTime;
         private String winAmount;
         private String gId;
+        private String content;
+        private String playName;
 
         public int getIsWin()
         {
@@ -209,6 +213,26 @@ public class BuyRecordBean implements Serializable
         public void setWinAmount(String winAmount)
         {
             this.winAmount = winAmount;
+        }
+
+        public String getContent()
+        {
+            return content;
+        }
+
+        public void setContent(String content)
+        {
+            this.content = content;
+        }
+
+        public String getPlayName()
+        {
+            return playName;
+        }
+
+        public void setPlayName(String playName)
+        {
+            this.playName = playName;
         }
     }
 }

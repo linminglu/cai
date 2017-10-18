@@ -534,7 +534,8 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
             case R.id.tv_trend: // 历史开奖
                 Intent webIntent = new Intent(this, WebUrlActivity.class);
                 webIntent.putExtra(Constants.EXTRA_URL, HttpUtil.mNewUrl + "/api/trend?gid=" + mNumber);
-                webIntent.putExtra(Constants.EXTRA_TITLE, "历史开奖");
+                webIntent.putExtra(Constants.EXTRA_PLAY_NAME, mTitleStr);
+                webIntent.putExtra(Constants.EXTRA_TITLE, getString(R.string.s_trend));
                 startActivity(webIntent);
                 break;
             case R.id.tv_buy: // 投注

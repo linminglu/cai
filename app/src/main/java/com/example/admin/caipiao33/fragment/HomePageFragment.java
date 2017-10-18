@@ -13,6 +13,7 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -411,9 +412,9 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
             View view = LayoutInflater.from(mainActivity)
                     .inflate(R.layout.item_home_page_tips, null);
             TextView tvTime = (TextView) view.findViewById(R.id.tv_time);
-            TextView tvContent = (TextView) view.findViewById(R.id.tv_content);
+            WebView tvContent = (WebView) view.findViewById(R.id.tv_content);
             tvTime.setText(popNotice.getTime());
-            tvContent.setText(Html.fromHtml(popNotice.getContent()));
+            tvContent.loadData(popNotice.getContent(), "text/html; charset=UTF-8", null);
             final String id = popNotice.getId();
             new MaterialDialog.Builder(mainActivity).title(popNotice.getTitle())
                     .customView(view, true)

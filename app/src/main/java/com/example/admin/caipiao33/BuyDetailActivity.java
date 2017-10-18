@@ -46,6 +46,7 @@ public class BuyDetailActivity extends BaseActivity
     private String mUrl;
     private TextToSpeech tts;
     private String mGameId;
+    private String mPlayName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -55,6 +56,7 @@ public class BuyDetailActivity extends BaseActivity
         Intent intent = getIntent();
         mRecordId = intent.getStringExtra(Constants.EXTRA_BUY_RECORD_ID);
         mGameId = intent.getStringExtra(Constants.EXTRA_BUY_GAME_ID);
+        mPlayName = intent.getStringExtra(Constants.EXTRA_PLAY_NAME);
         ButterKnife.bind(this);
         initView();
         // 修改toolbar内容
@@ -144,7 +146,7 @@ public class BuyDetailActivity extends BaseActivity
                         if (result.getPage().equals("room"))
                         {
                             Intent intent = new Intent(BuyDetailActivity.this, BuyRoomActivity.class);
-                            intent.putExtra(Constants.EXTRA_TITLE, result.getPlayName());
+                            intent.putExtra(Constants.EXTRA_TITLE, mPlayName);
                             intent.putExtra(Constants.EXTRA_BUY_ROOM_BEAN, result);
                             startActivity(intent);
                             finish();
@@ -162,7 +164,7 @@ public class BuyDetailActivity extends BaseActivity
                                 playId1 = playListBean.getPlayId1();
                             }
                             Intent intent = new Intent(BuyDetailActivity.this, BuyActivity.class);
-                            intent.putExtra(Constants.EXTRA_TITLE, result.getPlayName());
+                            intent.putExtra(Constants.EXTRA_TITLE, mPlayName);
                             intent.putExtra(Constants.EXTRA_NUMBER, result.getNum());
                             intent.putExtra(Constants.EXTRA_ROOM_ID, roomId);
                             intent.putExtra(Constants.EXTRA_PLAY_ID, playId);

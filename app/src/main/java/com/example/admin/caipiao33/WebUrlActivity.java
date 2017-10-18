@@ -16,6 +16,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.GeolocationPermissions;
@@ -28,21 +29,35 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.admin.caipiao33.application.MyApplication;
+import com.example.admin.caipiao33.bean.BuyRoomBean;
+import com.example.admin.caipiao33.bean.GouCaiBean;
+import com.example.admin.caipiao33.bean.TokenBean;
+import com.example.admin.caipiao33.httputils.HttpUtil;
+import com.example.admin.caipiao33.httputils.MyResponseListener;
+import com.example.admin.caipiao33.presenter.ZouShiPresenter;
 import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.FileManager;
+import com.example.admin.caipiao33.utils.ToastUtil;
+import com.example.admin.caipiao33.utils.UserConfig;
 import com.example.admin.caipiao33.views.WebviewProgressBar;
 import com.socks.library.KLog;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * 网页web
  * 从外部传入Constants.EXTRA_URL  访问的url
  * 从外部传入Constants.EXTRA_TITLE  该页面title
+ * 可选：
+ * Constants.EXTRA_PLAY_NAME 该页面对应的玩法名称
  * Created by lsd on 2016/3/14.
  */
-public class WebUrlActivity extends BaseActivity
+public class WebUrlActivity extends BaseActivity implements View.OnClickListener, Toolbar.OnMenuItemClickListener
 {
 
     private WebView webView;
@@ -55,6 +70,11 @@ public class WebUrlActivity extends BaseActivity
     private View errorRefreshView;
     // 标记是否页面已经出错了
     private boolean isReceivedError;
+    private TextView tvName;
+    private View layoutBottom;
+    private boolean isShowMenu;
+    private String mPlayName;
+    public GouCaiBean mGouCaiBean;
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
@@ -78,6 +98,7 @@ public class WebUrlActivity extends BaseActivity
         //        mUrl = "https://test.doraemoney.com/newCube/SourceTestPage.html";
         mUrl = getIntent().getStringExtra(Constants.EXTRA_URL);
         mTitle = getIntent().getStringExtra(Constants.EXTRA_TITLE);
+        mPlayName = getIntent().getStringExtra(Constants.EXTRA_PLAY_NAME);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("");
@@ -85,6 +106,10 @@ public class WebUrlActivity extends BaseActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         tvTitle = (TextView) findViewById(R.id.tv_title);
         tvTitle.setText(mTitle);
+
+        tvName = (TextView) findViewById(R.id.tv_name);
+        layoutBottom = findViewById(R.id.layout_bottom);
+        findViewById(R.id.tv_again).setOnClickListener(this);
 
         KLog.e(mUrl);
         webView = (WebView) findViewById(R.id.protocol_webView);
@@ -98,8 +123,6 @@ public class WebUrlActivity extends BaseActivity
         settings.setBuiltInZoomControls(true);
         settings.setJavaScriptEnabled(true);
         mProgressbar = new WebviewProgressBar((ProgressBar) findViewById(R.id.protocol_progressbar));
-
-
         webView.setWebViewClient(new WebViewClient()
         {
 
@@ -183,6 +206,96 @@ public class WebUrlActivity extends BaseActivity
             }
 
         });
+
+        if (getString(R.string.s_trend).equals(mTitle)) {
+            isShowMenu = true;
+            // 右上角显示彩种，底部显示再来一注
+            layoutBottom.setVisibility(View.VISIBLE);
+            tvName.setText(mPlayName);
+            mToolbar.setOnMenuItemClickListener(this);
+
+            HttpUtil.requestFirst("hall", GouCaiBean.class, this, new MyResponseListener<GouCaiBean>()
+            {
+
+                @Override
+                public void onSuccess(GouCaiBean result)
+                {
+                    if (result != null)
+                    {
+                        mGouCaiBean = result;
+                        names = new ArrayList<>();
+                        for (int i = 0; i < mGouCaiBean.getAll().size(); i++)
+                        {
+                            names.add(mGouCaiBean.getAll().get(i).getName());
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailed(int code, String msg)
+                {
+                    ToastUtil.show(msg);
+                }
+
+                @Override
+                public void onFinish()
+                {
+
+                }
+            }, null);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        if (isShowMenu) {
+            getMenuInflater().inflate(R.menu.menu_web, menu);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case R.id.action_more: // 彩种
+                showMoreDialog();
+                break;
+            default:
+                break;
+        }
+        return true;
+    }
+
+    private ArrayList<String> names;
+
+    private void showMoreDialog()
+    {
+        if (null == mGouCaiBean && null == names)
+        {
+            return;
+        }
+
+        new MaterialDialog.Builder(this).title("玩法选择")
+                .items(names)
+                .positiveText(R.string.dialog_ok)
+                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice()
+                {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text)
+                    {
+                        if (which != -1)
+                        {
+                            webView.loadUrl(HttpUtil.mNewUrl + "/api/trend?gid=" + mGouCaiBean.getAll().get(which).getNum());
+                            mPlayName = mGouCaiBean.getAll().get(which).getName();
+                            tvName.setText(mPlayName);
+                        }
+                        return true;
+                    }
+                })
+                .show();
     }
 
     private Uri fileUri;
@@ -263,6 +376,76 @@ public class WebUrlActivity extends BaseActivity
             return uri;
         }
         return Uri.fromFile(imgFile);
+    }
+
+    @Override
+    public void onClick(View v)
+    {
+        switch (v.getId()) {
+            case R.id.tv_again:
+                showLoadingDialog();
+                int i = mUrl.indexOf("gid=");
+                String mGameId = mUrl.substring(i + 4, mUrl.length());
+                HashMap<String, String> map = new HashMap<>();
+                map.put("gid", mGameId);
+                HttpUtil.requestFirst("buy", map, BuyRoomBean.class, WebUrlActivity.this, new MyResponseListener<BuyRoomBean>()
+                {
+                    @Override
+                    public void onSuccess(BuyRoomBean result)
+                    {
+                        /**
+                         * 两种情况
+                         * room
+                         *  -- 显示房间列表，再次选择一项进入page页面
+                         * page
+                         *  -- 立即购买页面
+                         */
+
+                        if (result.getPage().equals("room"))
+                        {
+                            Intent intent = new Intent(WebUrlActivity.this, BuyRoomActivity.class);
+                            intent.putExtra(Constants.EXTRA_TITLE, mPlayName);
+                            intent.putExtra(Constants.EXTRA_BUY_ROOM_BEAN, result);
+                            startActivity(intent);
+                        }
+                        else
+                        {
+                            String roomId = result.getRoomId();
+                            String playId = null;
+                            String playId1 = null;
+                            List<BuyRoomBean.PlayListBean> playList = result.getPlayList();
+                            if (null != playList && playList.size() > 0)
+                            {
+                                BuyRoomBean.PlayListBean playListBean = playList.get(0);
+                                playId = playListBean.getPlayId();
+                                playId1 = playListBean.getPlayId1();
+                            }
+                            Intent intent = new Intent(WebUrlActivity.this, BuyActivity.class);
+                            intent.putExtra(Constants.EXTRA_TITLE, mPlayName);
+                            intent.putExtra(Constants.EXTRA_NUMBER, result.getNum());
+                            intent.putExtra(Constants.EXTRA_ROOM_ID, roomId);
+                            intent.putExtra(Constants.EXTRA_PLAY_ID, playId);
+                            intent.putExtra(Constants.EXTRA_PLAY_ID1, playId1);
+                            startActivity(intent);
+                        }
+                    }
+
+                    @Override
+                    public void onFailed(int code, String msg)
+                    {
+                        ToastUtil.show(msg);
+                    }
+
+                    @Override
+                    public void onFinish()
+                    {
+                        hideLoadingDialog();
+                    }
+                }, null);
+                break;
+            default:
+                break;
+        }
     }
 
     private class ReOnCancelListener implements DialogInterface.OnCancelListener

@@ -16,6 +16,7 @@ import com.example.admin.caipiao33.bean.BuyRecordBean;
 import com.example.admin.caipiao33.contract.IBuyRecordContract;
 import com.example.admin.caipiao33.presenter.BuyRecordPresenter;
 import com.example.admin.caipiao33.utils.Constants;
+import com.example.admin.caipiao33.utils.StringUtils;
 import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.utils.Tools;
 import com.example.admin.caipiao33.views.DividerItemDecoration;
@@ -254,6 +255,7 @@ public class BuyRecordActivity extends BaseActivity implements IBuyRecordContrac
                     int position = getAdapterPosition();
                     BuyRecordBean.ItemsBean itemsBean = mBuyRecordBean.getItems().get(position);
                     Intent intent = new Intent(BuyRecordActivity.this, BuyDetailActivity.class);
+                    intent.putExtra(Constants.EXTRA_PLAY_NAME, itemsBean.getGameName());
                     intent.putExtra(Constants.EXTRA_BUY_RECORD_ID, itemsBean.getId());
                     intent.putExtra(Constants.EXTRA_BUY_GAME_ID, itemsBean.getgId());
                     startActivity(intent);
@@ -280,7 +282,8 @@ public class BuyRecordActivity extends BaseActivity implements IBuyRecordContrac
             holder.tvIndex.setText(getString(R.string.s_qishu, itemsBean.getPeriod()));
             holder.tvMoney.setText(getString(R.string.s_money, "-" + itemsBean.getAmount()));
             holder.tvTime.setText(itemsBean.getAddTime());
-
+            holder.tvPlayName.setText(getString(R.string.s_play_name, StringUtils.isEmpty(itemsBean.getPlayName()) ? "" : itemsBean.getPlayName()));
+            holder.tvNumber.setText(getString(R.string.s_buy_number, StringUtils.isEmpty(itemsBean.getContent()) ? "" : itemsBean.getContent()));
             if (itemsBean.getIsWin() == 1)
             { // isWin=1中奖 -1未中奖
                 holder.tvWin.setTextColor(getResources().getColor(R.color.c_homepage_4));
