@@ -150,6 +150,7 @@ public class TiXianActivity extends ToolbarActivity implements Toolbar.OnMenuIte
         {
             ToastUtil.show("还未绑定银行卡！请先设置提款密码！");
             Intent intent = new Intent(TiXianActivity.this, ChangeTiKuanPasswordActivity.class);
+            intent.putExtra(Constants.CHANGE_TIKUAN_PASSWORD, 0);
             intent.putExtra("fromtikuan", 1);
             startActivity(intent);
         }
