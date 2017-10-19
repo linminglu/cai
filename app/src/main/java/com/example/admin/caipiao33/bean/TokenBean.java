@@ -18,6 +18,7 @@ public class TokenBean
     private int isLogin;
     private String memberCode;
     private String memberName;
+    private int type;
 
     public String getMemberId()
     {
@@ -57,5 +58,15 @@ public class TokenBean
     public void setMemberName(String memberName)
     {
         this.memberName = memberName;
+    }
+
+    public int getType()
+    {
+        return type;
+    }
+
+    public void setType(int type)
+    {
+        this.type = type;
     }
 }

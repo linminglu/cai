@@ -58,6 +58,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 import static com.example.admin.caipiao33.R.id.toolbar;
+import static com.umeng.analytics.pro.x.G;
 
 
 /**
@@ -259,16 +260,37 @@ public class UserFragment extends BaseFragment implements View.OnClickListener, 
                 toWebUrlActivity("https://m.cp89003.com/common/app/down", "手机APP");
                 break;
             case R.id.user_fragment_chongzhi_tv:
-                intent = new Intent(mainActivity, TopupActivity.class);
-                startActivity(intent);
+                if (UserConfig.getInstance().getToken(mainActivity).getType() == 0)
+                {
+                    intent = new Intent(mainActivity, TopupActivity.class);
+                    startActivity(intent);
+                }
+                else
+                {
+                    ToastUtil.show("试玩账号不能进行存取款操作！");
+                }
                 break;
             case R.id.user_fragment_qiandao_tv:
-                intent = new Intent(mainActivity, QianDaoActivity.class);
-                startActivity(intent);
+                if (UserConfig.getInstance().getToken(mainActivity).getType() == 0)
+                {
+                    intent = new Intent(mainActivity, QianDaoActivity.class);
+                    startActivity(intent);
+                }
+                else
+                {
+                    ToastUtil.show("试玩账号不能进行签到！");
+                }
                 break;
             case R.id.user_fragment_tixian_tv:
-                intent = new Intent(mainActivity, TiXianActivity.class);
-                startActivity(intent);
+                if (UserConfig.getInstance().getToken(mainActivity).getType() == 0)
+                {
+                    intent = new Intent(mainActivity, TiXianActivity.class);
+                    startActivity(intent);
+                }
+                else
+                {
+                    ToastUtil.show("试玩账号不能进行存取款操作！");
+                }
                 break;
             case R.id.user_fragment_kefu_tv:
                 showLoadingDialog(false);

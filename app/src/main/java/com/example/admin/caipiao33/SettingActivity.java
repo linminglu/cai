@@ -21,6 +21,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.example.admin.caipiao33.R.id.setting_mibao_rl;
+
 
 public class SettingActivity extends ToolbarActivity implements Toolbar.OnMenuItemClickListener, ISettingContract.View
 {
@@ -28,7 +30,7 @@ public class SettingActivity extends ToolbarActivity implements Toolbar.OnMenuIt
     RelativeLayout settingPasswordRl;
     @BindView(R.id.setting_mibao_tv)
     TextView settingMibaoTv;
-    @BindView(R.id.setting_mibao_rl)
+    @BindView(setting_mibao_rl)
     RelativeLayout settingMibaoRl;
     @BindView(R.id.setting_tikuanmima_tv)
     TextView settingTikuanmimaTv;
@@ -59,6 +61,12 @@ public class SettingActivity extends ToolbarActivity implements Toolbar.OnMenuIt
 
     private void initView()
     {
+        if (UserConfig.getInstance().getToken(SettingActivity.this).getType() == 2)
+        {
+            settingMibaoRl.setVisibility(View.GONE);
+            settingTikuanmimaRl.setVisibility(View.GONE);
+            settingYinhangkaRl.setVisibility(View.GONE);
+        }
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
         {
             @Override
@@ -117,7 +125,7 @@ public class SettingActivity extends ToolbarActivity implements Toolbar.OnMenuIt
         finish();
     }
 
-    @OnClick({R.id.setting_password_rl, R.id.setting_mibao_rl, R.id.setting_tikuanmima_rl, R.id.setting_yinhangka_rl, R.id.setting_guanyu_rl, R.id.setting_logout_btn})
+    @OnClick({R.id.setting_password_rl, setting_mibao_rl, R.id.setting_tikuanmima_rl, R.id.setting_yinhangka_rl, R.id.setting_guanyu_rl, R.id.setting_logout_btn})
     public void onViewClicked(View view)
     {
         Intent intent;
@@ -127,7 +135,7 @@ public class SettingActivity extends ToolbarActivity implements Toolbar.OnMenuIt
                 intent = new Intent(SettingActivity.this, ChangePasswordActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.setting_mibao_rl:
+            case setting_mibao_rl:
                 if (settingBean.getQuestion().equals("1"))
                 {
                     intent = new Intent(SettingActivity.this, ChangeMibaoActivity.class);
