@@ -19,6 +19,7 @@ import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.presenter.RegisterPresenter;
 import com.example.admin.caipiao33.utils.CodeUtils;
 import com.example.admin.caipiao33.utils.Constants;
+import com.example.admin.caipiao33.utils.HomeEvent;
 import com.example.admin.caipiao33.utils.LoginEvent;
 import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.views.LoadingLayout;
@@ -189,6 +190,7 @@ public class RegisterActivity extends ToolbarActivity implements Toolbar.OnMenuI
     {
         ToastUtil.show("注册成功！");
         EventBus.getDefault().post(new LoginEvent(""));
+        EventBus.getDefault().post(new HomeEvent(""));
         finish();
         //        Intent intentn = new Intent(RegisterActivity.this, LoginActivity.class);
         //        intentn.putExtra("userName", registerUsernameEt.getText().toString());

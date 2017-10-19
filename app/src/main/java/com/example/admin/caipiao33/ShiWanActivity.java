@@ -14,6 +14,7 @@ import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.httputils.MyResponseListener;
 import com.example.admin.caipiao33.presenter.ShiWanPresenter;
 import com.example.admin.caipiao33.utils.Constants;
+import com.example.admin.caipiao33.utils.HomeEvent;
 import com.example.admin.caipiao33.utils.LoginEvent;
 import com.example.admin.caipiao33.utils.StringUtils;
 import com.example.admin.caipiao33.utils.ToastUtil;
@@ -82,6 +83,7 @@ public class ShiWanActivity extends ToolbarActivity implements Toolbar.OnMenuIte
         ToastUtil.show("登录成功！");
         setResult(Constants.REQUEST_CODE_2_LOGIN);
         EventBus.getDefault().post(new LoginEvent(""));
+        EventBus.getDefault().post(new HomeEvent(""));
         finish();
     }
 

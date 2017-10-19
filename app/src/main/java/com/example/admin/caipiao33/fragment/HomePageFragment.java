@@ -40,6 +40,7 @@ import com.example.admin.caipiao33.contract.IHomePageContract;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.presenter.HomePagePresenter;
 import com.example.admin.caipiao33.utils.Constants;
+import com.example.admin.caipiao33.utils.HomeEvent;
 import com.example.admin.caipiao33.utils.LoginEvent;
 import com.example.admin.caipiao33.utils.MyImageLoader;
 import com.example.admin.caipiao33.utils.ResourcesUtil;
@@ -494,7 +495,7 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMoonEvent(LoginEvent messageEvent)
+    public void onMoonEvent(HomeEvent messageEvent)
     {
         mPresenter.refreshData();
     }
