@@ -130,7 +130,20 @@ public class WebUrlActivity extends BaseActivity implements View.OnClickListener
             public boolean shouldOverrideUrlLoading(WebView view, String url)
             {
                 mUrl = url;
-                view.loadUrl(url);
+                if (url.contains("platformapi/startApp"))
+                {
+                    startAlipayActivity(url);
+                    // android  6.0 两种方式获取intent都可以跳转支付宝成功,7.1测试不成功
+                }
+                else if ((Build.VERSION.SDK_INT > Build.VERSION_CODES.M) && (url.contains("platformapi") && url
+                        .contains("startApp")))
+                {
+                    startAlipayActivity(url);
+                }
+                else
+                {
+                    view.loadUrl(url);
+                }
                 return true;
             }
 
@@ -157,12 +170,15 @@ public class WebUrlActivity extends BaseActivity implements View.OnClickListener
             public void onProgressChanged(WebView view, int newProgress)
             {
                 // 页面已经销毁，进度后面达到
-                if (null != mProgressbar) {
+                if (null != mProgressbar)
+                {
                     mProgressbar.onProgressChange(newProgress);
                 }
-                if (newProgress == 100) {
+                if (newProgress == 100)
+                {
                     errorRefreshView.setEnabled(true);
-                    if (!isReceivedError) {
+                    if (!isReceivedError)
+                    {
                         layoutError.setVisibility(View.GONE);
                     }
                 }
@@ -207,7 +223,8 @@ public class WebUrlActivity extends BaseActivity implements View.OnClickListener
 
         });
 
-        if (getString(R.string.s_trend).equals(mTitle)) {
+        if (getString(R.string.s_trend).equals(mTitle))
+        {
             isShowMenu = true;
             // 右上角显示彩种，底部显示再来一注
             layoutBottom.setVisibility(View.VISIBLE);
@@ -249,7 +266,8 @@ public class WebUrlActivity extends BaseActivity implements View.OnClickListener
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        if (isShowMenu) {
+        if (isShowMenu)
+        {
             getMenuInflater().inflate(R.menu.menu_web, menu);
         }
         return true;
@@ -288,7 +306,9 @@ public class WebUrlActivity extends BaseActivity implements View.OnClickListener
                     {
                         if (which != -1)
                         {
-                            webView.loadUrl(HttpUtil.mNewUrl + "/api/trend?gid=" + mGouCaiBean.getAll().get(which).getNum());
+                            webView.loadUrl(HttpUtil.mNewUrl + "/api/trend?gid=" + mGouCaiBean.getAll()
+                                    .get(which)
+                                    .getNum());
                             mPlayName = mGouCaiBean.getAll().get(which).getName();
                             tvName.setText(mPlayName);
                         }
@@ -381,7 +401,8 @@ public class WebUrlActivity extends BaseActivity implements View.OnClickListener
     @Override
     public void onClick(View v)
     {
-        switch (v.getId()) {
+        switch (v.getId())
+        {
             case R.id.tv_again:
                 showLoadingDialog();
                 int i = mUrl.indexOf("gid=");
@@ -576,16 +597,36 @@ public class WebUrlActivity extends BaseActivity implements View.OnClickListener
     }
 
     @Override
-    public void finish() {
+    public void finish()
+    {
         super.finish();
-        if(mProgressbar!=null){
+        if (mProgressbar != null)
+        {
             mProgressbar.destroy();
             mProgressbar = null;
         }
-        if (null != webView) {
+        if (null != webView)
+        {
             webView.setWebChromeClient(null);
             webView.setWebViewClient(null);
             webView = null;
+        }
+    }
+
+    private void startAlipayActivity(String url)
+    {
+        Intent intent;
+        try
+        {
+            intent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME);
+            intent.addCategory(Intent.CATEGORY_BROWSABLE);
+            intent.setComponent(null);
+            startActivity(intent);
+            finish();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
         }
     }
 }
