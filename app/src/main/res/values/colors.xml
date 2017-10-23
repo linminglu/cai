@@ -54,4 +54,16 @@
     <color name="c_homepage_2">#FD7E16</color>
     <color name="c_homepage_3">#D91D37</color>
     <color name="c_homepage_4">#86C40E</color>
+
+    <!-- pk10数字对应的颜色 -->
+    <color name="c_rectangle_1">#FFFF00</color>
+    <color name="c_rectangle_2">#0089FF</color>
+    <color name="c_rectangle_3">#4D4D4D</color>
+    <color name="c_rectangle_4">#FF7300</color>
+    <color name="c_rectangle_5">#81FFFF</color>
+    <color name="c_rectangle_6">#5200FF</color>
+    <color name="c_rectangle_7">#B8B8B8</color>
+    <color name="c_rectangle_8">#FF0000</color>
+    <color name="c_rectangle_9">#760000</color>
+    <color name="c_rectangle_10">#28C200</color>
 </resources>

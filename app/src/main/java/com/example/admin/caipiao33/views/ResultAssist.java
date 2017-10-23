@@ -82,8 +82,9 @@ public class ResultAssist
                 }
                 String text = split[i];
                 tv.setText(text);
+                String num = mBuyRoomBean.getNum();
                 // 适配六 合 的情况
-                if (mBuyRoomBean.getNum().equals(MyBaseBuyAdapter.TYPE_SIX))
+                if (num.equals(MyBaseBuyAdapter.TYPE_SIX))
                 {
                     if (TypeSixAdapter.NUMBER_RED.contains(text))
                     {
@@ -100,6 +101,40 @@ public class ResultAssist
                     else
                     {
                         tv.setBackgroundDrawable(null);
+                    }
+                } else if (num.equals("52") || num.equals("9")) {
+                    // 适配pk10  52 - 三分PK10; 9 - 北京赛车(PK10)
+                    switch (text) {
+                        case "01":
+                            tv.setBackgroundResource(R.drawable.shape_rectangle_1);
+                            break;
+                        case "02":
+                            tv.setBackgroundResource(R.drawable.shape_rectangle_2);
+                            break;
+                        case "03":
+                            tv.setBackgroundResource(R.drawable.shape_rectangle_3);
+                            break;
+                        case "04":
+                            tv.setBackgroundResource(R.drawable.shape_rectangle_4);
+                            break;
+                        case "05":
+                            tv.setBackgroundResource(R.drawable.shape_rectangle_5);
+                            break;
+                        case "06":
+                            tv.setBackgroundResource(R.drawable.shape_rectangle_6);
+                            break;
+                        case "07":
+                            tv.setBackgroundResource(R.drawable.shape_rectangle_7);
+                            break;
+                        case "08":
+                            tv.setBackgroundResource(R.drawable.shape_rectangle_8);
+                            break;
+                        case "09":
+                            tv.setBackgroundResource(R.drawable.shape_rectangle_9);
+                            break;
+                        case "10":
+                            tv.setBackgroundResource(R.drawable.shape_rectangle_10);
+                            break;
                     }
                 }
                 layoutResult.addView(tv);
