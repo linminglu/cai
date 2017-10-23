@@ -112,32 +112,32 @@ public class ChangeBankActivity extends ToolbarActivity implements Toolbar.OnMen
             case R.id.btn_changebankcard:
                 if (StringUtils.isEmpty2(kaihubank))
                 {
-                    ToastUtil.show("请输入旧密码！");
+                    ToastUtil.show("请选择开户银行！");
                     return;
                 }
                 if (StringUtils.isEmpty2(changebankcardZhanghaoEt.getText().toString()))
                 {
-                    ToastUtil.show("请输入旧密码！");
+                    ToastUtil.show("请输入银行账号！");
                     return;
                 }
                 if (StringUtils.isEmpty2(changebankcardKaihurenEt.getText().toString()))
                 {
-                    ToastUtil.show("请输入旧密码！");
+                    ToastUtil.show("请输入开户人名称！");
                     return;
                 }
                 if (StringUtils.isEmpty2(changebankcardShengfenEt.getText().toString()))
                 {
-                    ToastUtil.show("请输入旧密码！");
+                    ToastUtil.show("请输入开户银行省份！");
                     return;
                 }
                 if (StringUtils.isEmpty2(changebankcardCityEt.getText().toString()))
                 {
-                    ToastUtil.show("请输入旧密码！");
+                    ToastUtil.show("请输入开户银行城市！");
                     return;
                 }
                 if (StringUtils.isEmpty2(changebankcardPasswordEt.getText().toString()))
                 {
-                    ToastUtil.show("请输入新密码！");
+                    ToastUtil.show("请输入提款密码！");
                     return;
                 }
                 if (kaihubank.equals("其他"))
