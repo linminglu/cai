@@ -1,6 +1,7 @@
 package com.example.admin.caipiao33.fragment.adapter;
 
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.SpannableString;
@@ -8,6 +9,7 @@ import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +53,14 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
      */
     private final List<String> afterList = Arrays.asList("27", "28");
 
+    /**
+     * 11 - 安徽快三
+     * 10 - 江苏快三
+     * 17 - 广西快三
+     */
+    private final List<String> quick3List = Arrays.asList("11", "10", "17");
 
+    private boolean isQuick3;
     private static final int COUNT = 4;
     protected BuyRoomBean mBuyRoomBean;
     protected LayoutInflater mInflater;
@@ -73,6 +82,7 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
         this.mInflater = inflater;
         this.mBuyRoomBean = bean;
         this.mType = type;
+        this.isQuick3 = quick3List.contains(mBuyRoomBean.getNum());
         updateData(bean);
     }
 
@@ -92,26 +102,34 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
         else if (afterList.contains(num))
         {
             String playName = bean.getPlayName();
-            if ("数字盘".equals(playName)) {
+            if ("数字盘".equals(playName))
+            {
                 creatDataNormal();
-            } else if (playName.startsWith("第") && playName.endsWith("球")) {
+            }
+            else if (playName.startsWith("第") && playName.endsWith("球"))
+            {
                 // 数据处理
                 List<BuyRoomBean.PlayDetailListBean> playDetailList = bean.getPlayDetailList();
                 BuyRoomBean.PlayDetailListBean result = new BuyRoomBean.PlayDetailListBean();
                 result.setName(playName);
-                for (BuyRoomBean.PlayDetailListBean playDetailListBean : playDetailList) {
+                for (BuyRoomBean.PlayDetailListBean playDetailListBean : playDetailList)
+                {
                     String name = playDetailListBean.getName();
-                    if (playName.equals(name)) {
+                    if (playName.equals(name))
+                    {
                         List<BuyRoomBean.PlayDetailListBean.ListBean> list = result.getList();
-                        if (null == list) {
+                        if (null == list)
+                        {
                             list = new ArrayList<>();
                             result.setList(list);
                         }
-                        List<BuyRoomBean.PlayDetailListBean.ListBean> list1 = playDetailListBean
-                                .getList();
-                        if (list1.size() >= 20) {
+                        List<BuyRoomBean.PlayDetailListBean.ListBean> list1 = playDetailListBean.getList();
+                        if (list1.size() >= 20)
+                        {
                             list.addAll(0, list1);
-                        } else {
+                        }
+                        else
+                        {
                             list.addAll(list1);
                         }
                     }
@@ -119,7 +137,9 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
                 mBuyRoomBean.getPlayDetailList().clear();
                 mBuyRoomBean.getPlayDetailList().add(result);
                 creatDataNormal();
-            } else {
+            }
+            else
+            {
                 creatDataAfter();
             }
         }
@@ -133,7 +153,8 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
     {
         String playName = mBuyRoomBean.getPlayName();
         boolean isNumberType = false;
-        if ("数字盘".equals(playName)) {
+        if ("数字盘".equals(playName))
+        {
             isNumberType = true;
         }
         int totalSize = mBuyRoomBean.getPlayDetailList().size();
@@ -186,7 +207,8 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
     {
         String playName = mBuyRoomBean.getPlayName();
         boolean isNumberType = false;
-        if ("数字盘".equals(playName)) {
+        if ("数字盘".equals(playName))
+        {
             isNumberType = true;
         }
         int totalSize = mBuyRoomBean.getPlayDetailList().size();
@@ -286,7 +308,8 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
     {
         String playName = mBuyRoomBean.getPlayName();
         boolean isNumberType = false;
-        if ("数字盘".equals(playName)) {
+        if ("数字盘".equals(playName))
+        {
             isNumberType = true;
         }
         int totalSize = mBuyRoomBean.getPlayDetailList().size();
@@ -586,7 +609,45 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
                 }
                 layout.setVisibility(View.VISIBLE);
                 layout.setTag(R.id.buy_data, listBean);
-                tvName.setText(listBean.getPlayName());
+                String playName = listBean.getPlayName();
+                if (isQuick3)
+                {
+                    SpannableString msp = new SpannableString(playName);
+                    Drawable rightDrawable = null;
+                    switch (playName)
+                    {
+                        case "1":
+                            rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_01);
+                            break;
+                        case "2":
+                            rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_02);
+                            break;
+                        case "3":
+                            rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_03);
+                            break;
+                        case "4":
+                            rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_04);
+                            break;
+                        case "5":
+                            rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_05);
+                            break;
+                        case "6":
+                            rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_06);
+                            break;
+                    }
+                    if (null != rightDrawable)
+                    {
+                        rightDrawable.setBounds(0, 0, rightDrawable.getIntrinsicWidth(), rightDrawable
+                                .getIntrinsicHeight());
+                        msp.setSpan(new ImageSpan(rightDrawable), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    }
+                    tvName.setText(msp);
+
+                }
+                else
+                {
+                    tvName.setText(playName);
+                }
                 tvOdds.setText(listBean.getBonus());
                 if (mCheckedList.contains(listBean))
                 {
@@ -596,8 +657,7 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
                 {
                     layout.setBackgroundResource(R.drawable.liuhecai_btn_weixuan_01);
                 }
-            }
-            convertView.setTag(R.id.buy_view_type, CHILD_VIEW_TYPE);
+            } convertView.setTag(R.id.buy_view_type, CHILD_VIEW_TYPE);
             return convertView;
         }
         else
@@ -675,12 +735,58 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
                         break;
                 }
                 layout.setVisibility(View.VISIBLE);
-                SpannableString ss = new SpannableString(listBean.getPlayName() + " " + listBean.getBonus());
-                int start = listBean.getPlayName().length() + 1;
-                ss.setSpan(new ForegroundColorSpan(Color.parseColor("#C30D23")), start, start + listBean
-                        .getBonus()
-                        .length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                tvName.setText(ss);
+
+
+                String playName = listBean.getPlayName();
+                if (isQuick3)
+                {
+                    SpannableString msp = new SpannableString(playName + " " + listBean.getBonus());
+                    int start = playName.length() + 1;
+                    msp.setSpan(new ForegroundColorSpan(Color.parseColor("#C30D23")), start, start + listBean
+                            .getBonus()
+                            .length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    Drawable rightDrawable = null;
+                    switch (playName)
+                    {
+                        case "1":
+                            rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_01);
+                            break;
+                        case "2":
+                            rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_02);
+                            break;
+                        case "3":
+                            rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_03);
+                            break;
+                        case "4":
+                            rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_04);
+                            break;
+                        case "5":
+                            rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_05);
+                            break;
+                        case "6":
+                            rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_06);
+                            break;
+                    }
+                    if (null != rightDrawable)
+                    {
+                        rightDrawable.setBounds(0, 0, rightDrawable.getIntrinsicWidth(), rightDrawable
+                                .getIntrinsicHeight());
+                        msp.setSpan(new ImageSpan(rightDrawable), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    }
+                    tvName.setText(msp);
+
+                }
+                else
+                {
+                    SpannableString ss = new SpannableString(playName + " " + listBean.getBonus());
+                    int start = playName.length() + 1;
+                    ss.setSpan(new ForegroundColorSpan(Color.parseColor("#C30D23")), start, start + listBean
+                            .getBonus()
+                            .length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    tvName.setText(ss);
+                }
+
+
                 etNum.setTag(R.id.buy_data, listBean);
                 if (mCheckedList.contains(listBean))
                 {
