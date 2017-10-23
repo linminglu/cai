@@ -1,6 +1,7 @@
 package com.example.admin.caipiao33.fragment;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -230,7 +231,10 @@ public class AliPayFragment extends BaseFragment implements View.OnClickListener
                                             .getMemberId() + "&type=2&payId=" + payAdapter.getBeanContents()
                                             .get(i)
                                             .getId() + "&amount=" + topupActivity.getTopupAmount() + "&bankName=&baseUrl=" + HttpUtil.mNewUrl;
-                                    toWebUrlActivity(url, "支付宝支付");
+                                    //                                    toWebUrlActivity(url, "支付宝支付");
+                                    final Uri uri = Uri.parse(url);
+                                    final Intent it = new Intent(Intent.ACTION_VIEW, uri);
+                                    startActivity(it);
                                     //                                    startActivity(intent);
                                 }
                             }
