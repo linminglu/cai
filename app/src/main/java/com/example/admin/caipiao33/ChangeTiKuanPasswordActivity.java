@@ -41,6 +41,8 @@ public class ChangeTiKuanPasswordActivity extends ToolbarActivity implements Too
     private int haspassword;
     private int fromtikuan = 0;
     private String[] passwordnums;
+    private String title;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -61,13 +63,19 @@ public class ChangeTiKuanPasswordActivity extends ToolbarActivity implements Too
         {
             changetikuanpasswordOpasswordEt.setText("1111");
             changetikuanpasswordOpasswordEt.setEnabled(false);
+            title = "设置提现密码";
         }
+        else
+        {
+            title = "修改提现密码";
+        }
+        toolbar.setTitle(title);
     }
 
     public void onCreateCustomToolBar(Toolbar toolbar)
     {
         super.onCreateCustomToolBar(toolbar);
-        toolbar.setTitle(R.string.s_setting_changetikuanpassword);
+        this.toolbar = toolbar;
         setSupportActionBar(toolbar);
         toolbar.setOnMenuItemClickListener(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
