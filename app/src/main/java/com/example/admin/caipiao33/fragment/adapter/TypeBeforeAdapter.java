@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.example.admin.caipiao33.R;
 import com.example.admin.caipiao33.bean.BuyRoomBean;
 import com.example.admin.caipiao33.fragment.QuickBuyFragment;
+import com.example.admin.caipiao33.utils.StringUtils;
 import com.example.admin.caipiao33.utils.ViewHolder;
 import com.example.admin.caipiao33.views.NumberInputFilter;
 
@@ -612,37 +613,8 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
                 String playName = listBean.getPlayName();
                 if (isQuick3)
                 {
-                    SpannableString msp = new SpannableString(playName);
-                    Drawable rightDrawable = null;
-                    switch (playName)
-                    {
-                        case "1":
-                            rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_01);
-                            break;
-                        case "2":
-                            rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_02);
-                            break;
-                        case "3":
-                            rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_03);
-                            break;
-                        case "4":
-                            rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_04);
-                            break;
-                        case "5":
-                            rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_05);
-                            break;
-                        case "6":
-                            rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_06);
-                            break;
-                    }
-                    if (null != rightDrawable)
-                    {
-                        rightDrawable.setBounds(0, 0, rightDrawable.getIntrinsicWidth(), rightDrawable
-                                .getIntrinsicHeight());
-                        msp.setSpan(new ImageSpan(rightDrawable), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                    }
+                    SpannableString msp = getQuick3NameString(playName, null);// 快捷这里bonus要是null
                     tvName.setText(msp);
-
                 }
                 else
                 {
@@ -740,41 +712,8 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
                 String playName = listBean.getPlayName();
                 if (isQuick3)
                 {
-                    SpannableString msp = new SpannableString(playName + " " + listBean.getBonus());
-                    int start = playName.length() + 1;
-                    msp.setSpan(new ForegroundColorSpan(Color.parseColor("#C30D23")), start, start + listBean
-                            .getBonus()
-                            .length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                    Drawable rightDrawable = null;
-                    switch (playName)
-                    {
-                        case "1":
-                            rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_01);
-                            break;
-                        case "2":
-                            rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_02);
-                            break;
-                        case "3":
-                            rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_03);
-                            break;
-                        case "4":
-                            rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_04);
-                            break;
-                        case "5":
-                            rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_05);
-                            break;
-                        case "6":
-                            rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_06);
-                            break;
-                    }
-                    if (null != rightDrawable)
-                    {
-                        rightDrawable.setBounds(0, 0, rightDrawable.getIntrinsicWidth(), rightDrawable
-                                .getIntrinsicHeight());
-                        msp.setSpan(new ImageSpan(rightDrawable), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                    }
+                    SpannableString msp = getQuick3NameString(playName, listBean.getBonus());
                     tvName.setText(msp);
-
                 }
                 else
                 {
@@ -970,6 +909,117 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
                 mCheckedList.add(listBean);
             }
         });
+    }
+
+    /**
+     * 利用bonus来区分是快捷还是自选
+     * @param playName
+     * @param bonus
+     */
+    private SpannableString getQuick3NameString(String playName, String bonus) {
+        SpannableString msp;
+        if (StringUtils.isEmpty(bonus)) {
+            // 快捷
+            msp = new SpannableString(playName);
+        } else {
+            // 自选
+            msp = new SpannableString(playName + " " + bonus);
+            int start = playName.length() + 1;
+            msp.setSpan(new ForegroundColorSpan(Color.parseColor("#C30D23")), start, start + bonus
+                    .length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+
+        Drawable rightDrawable = null;
+        switch (playName)
+        {
+            case "1":
+                rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_01);
+                rightDrawable.setBounds(0, 0, rightDrawable.getIntrinsicWidth(), rightDrawable
+                        .getIntrinsicHeight());
+                msp.setSpan(new ImageSpan(rightDrawable), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                break;
+            case "2":
+                rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_02);
+                rightDrawable.setBounds(0, 0, rightDrawable.getIntrinsicWidth(), rightDrawable
+                        .getIntrinsicHeight());
+                msp.setSpan(new ImageSpan(rightDrawable), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                break;
+            case "3":
+                rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_03);
+                rightDrawable.setBounds(0, 0, rightDrawable.getIntrinsicWidth(), rightDrawable
+                        .getIntrinsicHeight());
+                msp.setSpan(new ImageSpan(rightDrawable), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                break;
+            case "4":
+                rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_04);
+                rightDrawable.setBounds(0, 0, rightDrawable.getIntrinsicWidth(), rightDrawable
+                        .getIntrinsicHeight());
+                msp.setSpan(new ImageSpan(rightDrawable), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                break;
+            case "5":
+                rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_05);
+                rightDrawable.setBounds(0, 0, rightDrawable.getIntrinsicWidth(), rightDrawable
+                        .getIntrinsicHeight());
+                msp.setSpan(new ImageSpan(rightDrawable), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                break;
+            case "6":
+                rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_06);
+                rightDrawable.setBounds(0, 0, rightDrawable.getIntrinsicWidth(), rightDrawable
+                        .getIntrinsicHeight());
+                msp.setSpan(new ImageSpan(rightDrawable), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                break;
+            case "111":
+                rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_01);
+                rightDrawable.setBounds(0, 0, rightDrawable.getIntrinsicWidth(), rightDrawable
+                        .getIntrinsicHeight());
+                msp.setSpan(new ImageSpan(rightDrawable), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                msp.setSpan(new ImageSpan(rightDrawable), 1, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                msp.setSpan(new ImageSpan(rightDrawable), 2, 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                break;
+            case "222":
+                rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_02);
+                rightDrawable.setBounds(0, 0, rightDrawable.getIntrinsicWidth(), rightDrawable
+                        .getIntrinsicHeight());
+                msp.setSpan(new ImageSpan(rightDrawable), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                msp.setSpan(new ImageSpan(rightDrawable), 1, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                msp.setSpan(new ImageSpan(rightDrawable), 2, 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                break;
+            case "333":
+                rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_03);
+                rightDrawable.setBounds(0, 0, rightDrawable.getIntrinsicWidth(), rightDrawable
+                        .getIntrinsicHeight());
+                msp.setSpan(new ImageSpan(rightDrawable), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                msp.setSpan(new ImageSpan(rightDrawable), 1, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                msp.setSpan(new ImageSpan(rightDrawable), 2, 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                break;
+            case "444":
+                rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_04);
+                rightDrawable.setBounds(0, 0, rightDrawable.getIntrinsicWidth(), rightDrawable
+                        .getIntrinsicHeight());
+                msp.setSpan(new ImageSpan(rightDrawable), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                msp.setSpan(new ImageSpan(rightDrawable), 1, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                msp.setSpan(new ImageSpan(rightDrawable), 2, 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                break;
+            case "555":
+                rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_05);
+                rightDrawable.setBounds(0, 0, rightDrawable.getIntrinsicWidth(), rightDrawable
+                        .getIntrinsicHeight());
+                msp.setSpan(new ImageSpan(rightDrawable), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                msp.setSpan(new ImageSpan(rightDrawable), 1, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                msp.setSpan(new ImageSpan(rightDrawable), 2, 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                break;
+            case "666":
+                rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_06);
+                rightDrawable.setBounds(0, 0, rightDrawable.getIntrinsicWidth(), rightDrawable
+                        .getIntrinsicHeight());
+                msp.setSpan(new ImageSpan(rightDrawable), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                msp.setSpan(new ImageSpan(rightDrawable), 1, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                msp.setSpan(new ImageSpan(rightDrawable), 2, 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                break;
+            default:
+                break;
+        }
+        return msp;
     }
 
     @Override
