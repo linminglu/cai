@@ -1,5 +1,9 @@
 package com.example.admin.caipiao33.views;
 
+import android.graphics.drawable.Drawable;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ImageSpan;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
@@ -8,6 +12,7 @@ import android.widget.TextView;
 import com.example.admin.caipiao33.R;
 import com.example.admin.caipiao33.bean.BuyRoomBean;
 import com.example.admin.caipiao33.fragment.adapter.MyBaseBuyAdapter;
+import com.example.admin.caipiao33.fragment.adapter.TypeQuick3Adapter;
 import com.example.admin.caipiao33.fragment.adapter.TypeSixAdapter;
 import com.example.admin.caipiao33.utils.StringUtils;
 
@@ -136,6 +141,55 @@ public class ResultAssist
                             tv.setBackgroundResource(R.drawable.shape_rectangle_10);
                             break;
                     }
+                } else if (TypeQuick3Adapter.QUICK3List.contains(num)) {
+                    tv.setBackgroundDrawable(null);
+                    SpannableString msp = new SpannableString(text);
+                    switch (text)
+                    {
+                        case "1":
+                            Drawable drawable1 = mInflater.getContext()
+                                    .getResources()
+                                    .getDrawable(R.mipmap.touzi_01);
+                            drawable1.setBounds(0, 0, drawable1.getIntrinsicWidth(), drawable1.getIntrinsicHeight());
+                            msp.setSpan(new ImageSpan(drawable1), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                            break;
+                        case "2":
+                            Drawable drawable2 = mInflater.getContext()
+                                    .getResources()
+                                    .getDrawable(R.mipmap.touzi_02);
+                            drawable2.setBounds(0, 0, drawable2.getIntrinsicWidth(), drawable2.getIntrinsicHeight());
+                            msp.setSpan(new ImageSpan(drawable2), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                            break;
+                        case "3":
+                            Drawable drawable3 = mInflater.getContext()
+                                    .getResources()
+                                    .getDrawable(R.mipmap.touzi_03);
+                            drawable3.setBounds(0, 0, drawable3.getIntrinsicWidth(), drawable3.getIntrinsicHeight());
+                            msp.setSpan(new ImageSpan(drawable3), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                            break;
+                        case "4":
+                            Drawable drawable4 = mInflater.getContext()
+                                    .getResources()
+                                    .getDrawable(R.mipmap.touzi_04);
+                            drawable4.setBounds(0, 0, drawable4.getIntrinsicWidth(), drawable4.getIntrinsicHeight());
+                            msp.setSpan(new ImageSpan(drawable4), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                            break;
+                        case "5":
+                            Drawable drawable5 = mInflater.getContext()
+                                    .getResources()
+                                    .getDrawable(R.mipmap.touzi_05);
+                            drawable5.setBounds(0, 0, drawable5.getIntrinsicWidth(), drawable5.getIntrinsicHeight());
+                            msp.setSpan(new ImageSpan(drawable5), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                            break;
+                        case "6":
+                            Drawable drawable6 = mInflater.getContext()
+                                    .getResources()
+                                    .getDrawable(R.mipmap.touzi_05);
+                            drawable6.setBounds(0, 0, drawable6.getIntrinsicWidth(), drawable6.getIntrinsicHeight());
+                            msp.setSpan(new ImageSpan(drawable6), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                            break;
+                    }
+                    tv.setText(msp);
                 }
                 layoutResult.addView(tv);
             }

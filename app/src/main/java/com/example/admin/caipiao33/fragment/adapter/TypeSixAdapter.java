@@ -294,7 +294,7 @@ public class TypeSixAdapter extends TypeBeforeAdapter
         return convertView;
     }
 
-    private void initSelfContentView(View convertView)
+    public void initSelfContentView(View convertView)
     {
         InputFilter[] filters = {new NumberInputFilter()};
         final EditText etNum = ViewHolder.get(convertView, R.id.et_num);

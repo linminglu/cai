@@ -11,6 +11,7 @@ import com.example.admin.caipiao33.R;
 import com.example.admin.caipiao33.bean.BuyRoomBean;
 import com.example.admin.caipiao33.fragment.adapter.MyBaseBuyAdapter;
 import com.example.admin.caipiao33.fragment.adapter.TypeBeforeAdapter;
+import com.example.admin.caipiao33.fragment.adapter.TypeQuick3Adapter;
 import com.example.admin.caipiao33.fragment.adapter.TypeSix26Adapter;
 import com.example.admin.caipiao33.fragment.adapter.TypeSix27Adapter;
 import com.example.admin.caipiao33.fragment.adapter.TypeSix28Adapter;
@@ -106,6 +107,9 @@ public class QuickBuyFragment extends BaseFragment
                 adapter = new TypeSixAdapter(mInflater, mBuyRoomBean, mType);
             }
 
+        }
+        else if (TypeQuick3Adapter.QUICK3List.contains(num)) {
+            adapter = new TypeQuick3Adapter(mInflater, mBuyRoomBean, mType);
         }
         else
         {

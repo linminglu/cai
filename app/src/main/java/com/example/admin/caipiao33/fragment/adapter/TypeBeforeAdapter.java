@@ -54,14 +54,6 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
      */
     private final List<String> afterList = Arrays.asList("27", "28");
 
-    /**
-     * 11 - 安徽快三
-     * 10 - 江苏快三
-     * 17 - 广西快三
-     */
-    private final List<String> quick3List = Arrays.asList("11", "10", "17");
-
-    private boolean isQuick3;
     private static final int COUNT = 4;
     protected BuyRoomBean mBuyRoomBean;
     protected LayoutInflater mInflater;
@@ -83,7 +75,6 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
         this.mInflater = inflater;
         this.mBuyRoomBean = bean;
         this.mType = type;
-        this.isQuick3 = quick3List.contains(mBuyRoomBean.getNum());
         updateData(bean);
     }
 
@@ -611,15 +602,7 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
                 layout.setVisibility(View.VISIBLE);
                 layout.setTag(R.id.buy_data, listBean);
                 String playName = listBean.getPlayName();
-                if (isQuick3)
-                {
-                    SpannableString msp = getQuick3NameString(playName, null);// 快捷这里bonus要是null
-                    tvName.setText(msp);
-                }
-                else
-                {
-                    tvName.setText(playName);
-                }
+                tvName.setText(playName);
                 tvOdds.setText(listBean.getBonus());
                 if (mCheckedList.contains(listBean))
                 {
@@ -710,22 +693,12 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
 
 
                 String playName = listBean.getPlayName();
-                if (isQuick3)
-                {
-                    SpannableString msp = getQuick3NameString(playName, listBean.getBonus());
-                    tvName.setText(msp);
-                }
-                else
-                {
-                    SpannableString ss = new SpannableString(playName + " " + listBean.getBonus());
-                    int start = playName.length() + 1;
-                    ss.setSpan(new ForegroundColorSpan(Color.parseColor("#C30D23")), start, start + listBean
-                            .getBonus()
-                            .length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                    tvName.setText(ss);
-                }
-
-
+                SpannableString ss = new SpannableString(playName + " " + listBean.getBonus());
+                int start = playName.length() + 1;
+                ss.setSpan(new ForegroundColorSpan(Color.parseColor("#C30D23")), start, start + listBean
+                        .getBonus()
+                        .length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                tvName.setText(ss);
                 etNum.setTag(R.id.buy_data, listBean);
                 if (mCheckedList.contains(listBean))
                 {
@@ -746,7 +719,7 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
      *
      * @param convertView
      */
-    private void initSelfContentView(View convertView)
+    public void initSelfContentView(View convertView)
     {
         InputFilter[] filters = {new NumberInputFilter()};
         final EditText etNum1 = ViewHolder.get(convertView, R.id.et_num1);
@@ -909,117 +882,6 @@ public class TypeBeforeAdapter extends MyBaseBuyAdapter implements View.OnClickL
                 mCheckedList.add(listBean);
             }
         });
-    }
-
-    /**
-     * 利用bonus来区分是快捷还是自选
-     * @param playName
-     * @param bonus
-     */
-    private SpannableString getQuick3NameString(String playName, String bonus) {
-        SpannableString msp;
-        if (StringUtils.isEmpty(bonus)) {
-            // 快捷
-            msp = new SpannableString(playName);
-        } else {
-            // 自选
-            msp = new SpannableString(playName + " " + bonus);
-            int start = playName.length() + 1;
-            msp.setSpan(new ForegroundColorSpan(Color.parseColor("#C30D23")), start, start + bonus
-                    .length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        }
-
-        Drawable rightDrawable = null;
-        switch (playName)
-        {
-            case "1":
-                rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_01);
-                rightDrawable.setBounds(0, 0, rightDrawable.getIntrinsicWidth(), rightDrawable
-                        .getIntrinsicHeight());
-                msp.setSpan(new ImageSpan(rightDrawable), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                break;
-            case "2":
-                rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_02);
-                rightDrawable.setBounds(0, 0, rightDrawable.getIntrinsicWidth(), rightDrawable
-                        .getIntrinsicHeight());
-                msp.setSpan(new ImageSpan(rightDrawable), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                break;
-            case "3":
-                rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_03);
-                rightDrawable.setBounds(0, 0, rightDrawable.getIntrinsicWidth(), rightDrawable
-                        .getIntrinsicHeight());
-                msp.setSpan(new ImageSpan(rightDrawable), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                break;
-            case "4":
-                rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_04);
-                rightDrawable.setBounds(0, 0, rightDrawable.getIntrinsicWidth(), rightDrawable
-                        .getIntrinsicHeight());
-                msp.setSpan(new ImageSpan(rightDrawable), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                break;
-            case "5":
-                rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_05);
-                rightDrawable.setBounds(0, 0, rightDrawable.getIntrinsicWidth(), rightDrawable
-                        .getIntrinsicHeight());
-                msp.setSpan(new ImageSpan(rightDrawable), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                break;
-            case "6":
-                rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_06);
-                rightDrawable.setBounds(0, 0, rightDrawable.getIntrinsicWidth(), rightDrawable
-                        .getIntrinsicHeight());
-                msp.setSpan(new ImageSpan(rightDrawable), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                break;
-            case "111":
-                rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_01);
-                rightDrawable.setBounds(0, 0, rightDrawable.getIntrinsicWidth(), rightDrawable
-                        .getIntrinsicHeight());
-                msp.setSpan(new ImageSpan(rightDrawable), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                msp.setSpan(new ImageSpan(rightDrawable), 1, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                msp.setSpan(new ImageSpan(rightDrawable), 2, 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                break;
-            case "222":
-                rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_02);
-                rightDrawable.setBounds(0, 0, rightDrawable.getIntrinsicWidth(), rightDrawable
-                        .getIntrinsicHeight());
-                msp.setSpan(new ImageSpan(rightDrawable), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                msp.setSpan(new ImageSpan(rightDrawable), 1, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                msp.setSpan(new ImageSpan(rightDrawable), 2, 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                break;
-            case "333":
-                rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_03);
-                rightDrawable.setBounds(0, 0, rightDrawable.getIntrinsicWidth(), rightDrawable
-                        .getIntrinsicHeight());
-                msp.setSpan(new ImageSpan(rightDrawable), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                msp.setSpan(new ImageSpan(rightDrawable), 1, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                msp.setSpan(new ImageSpan(rightDrawable), 2, 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                break;
-            case "444":
-                rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_04);
-                rightDrawable.setBounds(0, 0, rightDrawable.getIntrinsicWidth(), rightDrawable
-                        .getIntrinsicHeight());
-                msp.setSpan(new ImageSpan(rightDrawable), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                msp.setSpan(new ImageSpan(rightDrawable), 1, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                msp.setSpan(new ImageSpan(rightDrawable), 2, 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                break;
-            case "555":
-                rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_05);
-                rightDrawable.setBounds(0, 0, rightDrawable.getIntrinsicWidth(), rightDrawable
-                        .getIntrinsicHeight());
-                msp.setSpan(new ImageSpan(rightDrawable), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                msp.setSpan(new ImageSpan(rightDrawable), 1, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                msp.setSpan(new ImageSpan(rightDrawable), 2, 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                break;
-            case "666":
-                rightDrawable = mInflater.getContext().getResources().getDrawable(R.mipmap.touzi_06);
-                rightDrawable.setBounds(0, 0, rightDrawable.getIntrinsicWidth(), rightDrawable
-                        .getIntrinsicHeight());
-                msp.setSpan(new ImageSpan(rightDrawable), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                msp.setSpan(new ImageSpan(rightDrawable), 1, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                msp.setSpan(new ImageSpan(rightDrawable), 2, 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                break;
-            default:
-                break;
-        }
-        return msp;
     }
 
     @Override
