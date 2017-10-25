@@ -133,8 +133,15 @@ public class KaiJiangFragment extends BaseFragment implements View.OnClickListen
                 {
 
                 }
-                intent.putExtra(Constants.EXTRA_TITLE, CaiZhongUtils.getCaiZhong(pid));
-                startActivity(intent);
+                if (pid == 9999)
+                {
+                    view.loadUrl(url);
+                }
+                else
+                {
+                    intent.putExtra(Constants.EXTRA_TITLE, CaiZhongUtils.getCaiZhong(pid));
+                    startActivity(intent);
+                }
                 return true;
             }
 

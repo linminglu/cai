@@ -126,6 +126,7 @@ public class ZouShiFragment extends BaseFragment implements View.OnClickListener
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url)
             {
+                view.loadUrl(url);
                 return true;
             }
 
