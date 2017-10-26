@@ -29,7 +29,7 @@ import java.util.List;
 
 public class TypeQuick3Adapter extends TypeBeforeAdapter
 {
-    private static int COUNT = 4;
+    private int COUNT = 4;
     /**
      * 11 - 安徽快三
      * 10 - 江苏快三
@@ -195,6 +195,30 @@ public class TypeQuick3Adapter extends TypeBeforeAdapter
                 break;
             case "56":
                 msp.setSpan(new ImageSpan(drawable5), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                msp.setSpan(new ImageSpan(drawable6), 1, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                break;
+            case "11":
+                msp.setSpan(new ImageSpan(drawable1), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                msp.setSpan(new ImageSpan(drawable1), 1, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            break;
+            case "22":
+                msp.setSpan(new ImageSpan(drawable2), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                msp.setSpan(new ImageSpan(drawable2), 1, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                break;
+            case "33":
+                msp.setSpan(new ImageSpan(drawable3), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                msp.setSpan(new ImageSpan(drawable3), 1, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                break;
+            case "44":
+                msp.setSpan(new ImageSpan(drawable4), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                msp.setSpan(new ImageSpan(drawable4), 1, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                break;
+            case "55":
+                msp.setSpan(new ImageSpan(drawable5), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                msp.setSpan(new ImageSpan(drawable5), 1, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                break;
+            case "66":
+                msp.setSpan(new ImageSpan(drawable6), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 msp.setSpan(new ImageSpan(drawable6), 1, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 break;
             default:

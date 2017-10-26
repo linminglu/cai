@@ -150,42 +150,42 @@ public class ResultAssist
                             Drawable drawable1 = mInflater.getContext()
                                     .getResources()
                                     .getDrawable(R.mipmap.touzi_01);
-                            drawable1.setBounds(0, 0, drawable1.getIntrinsicWidth(), drawable1.getIntrinsicHeight());
+                            drawable1.setBounds(0, 0, drawable1.getIntrinsicWidth()*4/5, drawable1.getIntrinsicHeight()*4/5);
                             msp.setSpan(new ImageSpan(drawable1), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                             break;
                         case "2":
                             Drawable drawable2 = mInflater.getContext()
                                     .getResources()
                                     .getDrawable(R.mipmap.touzi_02);
-                            drawable2.setBounds(0, 0, drawable2.getIntrinsicWidth(), drawable2.getIntrinsicHeight());
+                            drawable2.setBounds(0, 0, drawable2.getIntrinsicWidth()*4/5, drawable2.getIntrinsicHeight()*4/5);
                             msp.setSpan(new ImageSpan(drawable2), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                             break;
                         case "3":
                             Drawable drawable3 = mInflater.getContext()
                                     .getResources()
                                     .getDrawable(R.mipmap.touzi_03);
-                            drawable3.setBounds(0, 0, drawable3.getIntrinsicWidth(), drawable3.getIntrinsicHeight());
+                            drawable3.setBounds(0, 0, drawable3.getIntrinsicWidth()*4/5, drawable3.getIntrinsicHeight()*4/5);
                             msp.setSpan(new ImageSpan(drawable3), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                             break;
                         case "4":
                             Drawable drawable4 = mInflater.getContext()
                                     .getResources()
                                     .getDrawable(R.mipmap.touzi_04);
-                            drawable4.setBounds(0, 0, drawable4.getIntrinsicWidth(), drawable4.getIntrinsicHeight());
+                            drawable4.setBounds(0, 0, drawable4.getIntrinsicWidth()*4/5, drawable4.getIntrinsicHeight()*4/5);
                             msp.setSpan(new ImageSpan(drawable4), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                             break;
                         case "5":
                             Drawable drawable5 = mInflater.getContext()
                                     .getResources()
                                     .getDrawable(R.mipmap.touzi_05);
-                            drawable5.setBounds(0, 0, drawable5.getIntrinsicWidth(), drawable5.getIntrinsicHeight());
+                            drawable5.setBounds(0, 0, drawable5.getIntrinsicWidth()*4/5, drawable5.getIntrinsicHeight()*4/5);
                             msp.setSpan(new ImageSpan(drawable5), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                             break;
                         case "6":
                             Drawable drawable6 = mInflater.getContext()
                                     .getResources()
                                     .getDrawable(R.mipmap.touzi_05);
-                            drawable6.setBounds(0, 0, drawable6.getIntrinsicWidth(), drawable6.getIntrinsicHeight());
+                            drawable6.setBounds(0, 0, drawable6.getIntrinsicWidth()*4/5, drawable6.getIntrinsicHeight()*4/5);
                             msp.setSpan(new ImageSpan(drawable6), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                             break;
                     }
