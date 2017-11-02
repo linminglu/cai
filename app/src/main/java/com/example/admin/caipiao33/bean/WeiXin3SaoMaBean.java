@@ -22,6 +22,7 @@ public class WeiXin3SaoMaBean
     private String payUrl;
     private String errorTip;
     private String steps;
+    private int isSixFour;
 
     public String getAmount()
     {
@@ -81,5 +82,15 @@ public class WeiXin3SaoMaBean
     public void setSteps(String steps)
     {
         this.steps = steps;
+    }
+
+    public int getIsSixFour()
+    {
+        return isSixFour;
+    }
+
+    public void setIsSixFour(int isSixFour)
+    {
+        this.isSixFour = isSixFour;
     }
 }

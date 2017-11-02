@@ -101,7 +101,14 @@ public class WeiXin3SaoMaActivity extends ToolbarActivity implements Toolbar.OnM
                 }
                 else
                 {
-                    MyImageLoader.displayImage(result.getPayUrl(), weixin3saomaerweima, WeiXin3SaoMaActivity.this);
+                    if (result.getIsSixFour() == 1)
+                    {
+                        MyImageLoader.displayBase64Image(result.getPayUrl(), weixin3saomaerweima, WeiXin3SaoMaActivity.this);
+                    }
+                    else
+                    {
+                        MyImageLoader.displayImage(result.getPayUrl(), weixin3saomaerweima, WeiXin3SaoMaActivity.this);
+                    }
                 }
                 hideLoadingLayout();
             }

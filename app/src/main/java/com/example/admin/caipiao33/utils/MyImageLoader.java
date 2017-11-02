@@ -1,12 +1,14 @@
 package com.example.admin.caipiao33.utils;
 
 import android.content.Context;
+import android.util.Base64;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.example.admin.caipiao33.R;
+import com.example.admin.caipiao33.encryption.Base64Utils;
 
 import java.io.File;
 
@@ -26,6 +28,25 @@ public class MyImageLoader
         {
             Glide.with(context).load(uri).placeholder(R.mipmap.beijing).into(imageView);
             //            Picasso.with(context).load(uri).resize(250, 250).into(imageView);
+        }
+        else
+        {
+            imageView.setImageResource(R.mipmap.photo_error);
+        }
+    }
+
+    public static void displayBase64Image(String uri, ImageView imageView, Context context)
+    {
+        if (null == imageView)
+        {
+            return;
+        }
+        if (!StringUtils.isEmpty2(uri) && context != null)
+        {
+            Glide.with(context)
+                    .load(Base64.decode(uri, Base64.DEFAULT))
+                    .placeholder(R.mipmap.beijing)
+                    .into(imageView);
         }
         else
         {
