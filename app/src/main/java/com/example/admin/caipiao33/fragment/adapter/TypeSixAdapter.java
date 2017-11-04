@@ -18,7 +18,6 @@ import com.example.admin.caipiao33.views.NumberInputFilter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -215,7 +214,7 @@ public class TypeSixAdapter extends TypeBeforeAdapter
         if (null == convertView)
         {
             convertView = mInflater.inflate(R.layout.item_buy_self_select_six, null);
-            initSelfContentView(convertView);
+            initSixSelfContentView(convertView);
         }
         else
         {
@@ -223,7 +222,7 @@ public class TypeSixAdapter extends TypeBeforeAdapter
             if (null == tag || (int) tag != CHILD_VIEW_TYPE)
             {
                 convertView = mInflater.inflate(R.layout.item_buy_self_select_six, null);
-                initSelfContentView(convertView);
+                initSixSelfContentView(convertView);
             }
         }
         TextView tvNum = ViewHolder.get(convertView, R.id.tv_num);
@@ -294,7 +293,7 @@ public class TypeSixAdapter extends TypeBeforeAdapter
         return convertView;
     }
 
-    public void initSelfContentView(View convertView)
+    public void initSixSelfContentView(View convertView)
     {
         InputFilter[] filters = {new NumberInputFilter()};
         final EditText etNum = ViewHolder.get(convertView, R.id.et_num);
