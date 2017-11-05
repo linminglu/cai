@@ -103,7 +103,14 @@ public class Ali3SaoMaActivity extends ToolbarActivity implements Toolbar.OnMenu
                 }
                 else
                 {
-                    MyImageLoader.displayImage(result.getPayUrl(), ali3saomaerweima, Ali3SaoMaActivity.this);
+                    if (result.getIsSixFour() == 1)
+                    {
+                        MyImageLoader.displayBase64Image(result.getPayUrl(), ali3saomaerweima, Ali3SaoMaActivity.this);
+                    }
+                    else
+                    {
+                        MyImageLoader.displayImage(result.getPayUrl(), ali3saomaerweima, Ali3SaoMaActivity.this);
+                    }
                 }
                 hideLoadingLayout();
             }

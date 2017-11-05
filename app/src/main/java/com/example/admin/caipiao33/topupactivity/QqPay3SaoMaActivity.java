@@ -155,7 +155,14 @@ public class QqPay3SaoMaActivity extends ToolbarActivity implements Toolbar.OnMe
                 }
                 else
                 {
-                    MyImageLoader.displayImage(result.getPayUrl(), qq3saomaerweima, QqPay3SaoMaActivity.this);
+                    if (result.getIsSixFour() == 1)
+                    {
+                        MyImageLoader.displayBase64Image(result.getPayUrl(), qq3saomaerweima, QqPay3SaoMaActivity.this);
+                    }
+                    else
+                    {
+                        MyImageLoader.displayImage(result.getPayUrl(), qq3saomaerweima, QqPay3SaoMaActivity.this);
+                    }
                 }
                 hideLoadingLayout();
             }

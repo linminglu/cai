@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.example.admin.caipiao33"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 8
-        versionName "V1.8"
+        versionCode 10
+        versionName "V1.10"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         ndk {
@@ -68,9 +68,7 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
     compile files('src/main/libs/core-3.3.0.jar')
     compile project(':Pushlib')
-    compile files('src/main/libs/umeng-analytics-v5.5.3.jar')
     compile files('src/main/libs/umeng-analytics-v6.1.2.jar')
-    compile files('src/main/libs/utdid4all-1.0.4.jar')
 
     compile 'cn.jiguang.sdk:jpush:3.0.9'  // 此处以JPush 3.0.9 版本为例。
     compile 'cn.jiguang.sdk:jcore:1.1.7'  // 此处以JCore 1.1.7 版本为例。

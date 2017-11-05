@@ -22,6 +22,17 @@ public class Qq3SaoMaBean
     private String payUrl;
     private String errorTip;
     private String steps;
+    private int isSixFour;
+
+    public int getIsSixFour()
+    {
+        return isSixFour;
+    }
+
+    public void setIsSixFour(int isSixFour)
+    {
+        this.isSixFour = isSixFour;
+    }
 
     public String getAmount()
     {

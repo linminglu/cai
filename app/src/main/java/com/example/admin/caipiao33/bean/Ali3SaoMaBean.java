@@ -21,7 +21,19 @@ public class Ali3SaoMaBean
     private String orderNo;
     private String payUrl;
     private String errorTip;
+
+    public int getIsSixFour()
+    {
+        return isSixFour;
+    }
+
+    public void setIsSixFour(int isSixFour)
+    {
+        this.isSixFour = isSixFour;
+    }
+
     private String steps;
+    private int isSixFour;
 
     public String getAmount()
     {
