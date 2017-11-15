@@ -257,7 +257,7 @@ public class UserFragment extends BaseFragment implements View.OnClickListener, 
                 mPresenter.refreshData();
                 break;
             case R.id.user_fragment_app_tv:
-                toWebUrlActivity("https://m.cp89003.com/common/app/down", "手机APP");
+                toWebUrlActivity(HttpUtil.mNewUrl + "/common/app/down1", "手机APP");
                 break;
             case R.id.user_fragment_chongzhi_tv:
                 if (UserConfig.getInstance().getToken(mainActivity).getType() == 0)
