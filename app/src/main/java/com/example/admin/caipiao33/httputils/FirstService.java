@@ -24,4 +24,7 @@ public interface FirstService
 
     @GET("/")
     Call<String> getRepos(@QueryMap Map<String, String> options);
+
+    @GET("lottery_admin/{name}")
+    Call<String> getTestRepos(@Path("name") String name, @QueryMap Map<String, String> options);
 }

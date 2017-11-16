@@ -2,6 +2,7 @@ package com.example.admin.caipiao33.topupactivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,6 +12,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.admin.caipiao33.ChongZhiJiLuActivity;
 import com.example.admin.caipiao33.R;
 import com.example.admin.caipiao33.ToolbarActivity;
@@ -19,6 +22,7 @@ import com.example.admin.caipiao33.bean.QqPingTaiBean;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.httputils.MyResponseListener;
 import com.example.admin.caipiao33.utils.Constants;
+import com.example.admin.caipiao33.utils.ImageUtils;
 import com.example.admin.caipiao33.utils.MyImageLoader;
 import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.utils.TopupEvent;
@@ -27,6 +31,7 @@ import com.example.admin.caipiao33.views.LoadingLayout;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -215,6 +220,29 @@ public class QqPayPingTaiActivity extends ToolbarActivity implements Toolbar.OnM
                 initData();
             }
         });
+        qqpingtaiErweima.setOnLongClickListener(new View.OnLongClickListener()
+        {
+            @Override
+            public boolean onLongClick(View v)
+            {
+                showDialog("是否要保存当前页面图片到相册中？", new MaterialDialog.SingleButtonCallback()
+                {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which)
+                    {
+                        requestCameraPermission();
+                    }
+                }, new MaterialDialog.SingleButtonCallback()
+                {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which)
+                    {
+                        dialog.dismiss();
+                    }
+                });
+                return false;
+            }
+        });
     }
 
     @OnClick({R.id.qqpingtai_shangyibu, R.id.qqpingtai_woyizhifu})
@@ -229,6 +257,19 @@ public class QqPayPingTaiActivity extends ToolbarActivity implements Toolbar.OnM
                 toNext();
                 break;
         }
+    }
+
+
+    @Override
+    public void onPermissionsGranted(int i, List<String> list)
+    {
+        ImageUtils.GetandSaveCurrentImage(QqPayPingTaiActivity.this);
+    }
+
+    @Override
+    public void onPermissionsDenied(int i, List<String> list)
+    {
+
     }
 }
 

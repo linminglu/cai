@@ -18,10 +18,13 @@ import com.example.admin.caipiao33.application.MyApplication;
 import com.example.admin.caipiao33.bean.BaseUrlBean;
 import com.example.admin.caipiao33.utils.AppUtils;
 import com.example.admin.caipiao33.utils.Constants;
-import com.example.admin.caipiao33.utils.StringUtils;
 import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.views.LoadingLayout;
 import com.example.admin.caipiao33.wheelview.ProgressDialogBar;
+import com.lypeer.fcpermission.FcPermissions;
+import com.lypeer.fcpermission.impl.FcPermissionsCallbacks;
+
+import java.util.List;
 
 /**
  * 所有Activity的基类
@@ -29,7 +32,7 @@ import com.example.admin.caipiao33.wheelview.ProgressDialogBar;
  * 实现了首次加载数据显示隐藏LoadingLayout
  * 需要控制页面view的显示隐藏，需要重写getContentView，把页面的view返回给我
  */
-public class BaseActivity extends AppCompatActivity implements IBaseView
+public class BaseActivity extends AppCompatActivity implements IBaseView, FcPermissionsCallbacks
 {
 
     protected ProgressDialogBar progressDialogBar;
@@ -240,5 +243,29 @@ public class BaseActivity extends AppCompatActivity implements IBaseView
             }
         }
     };
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
+    {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        FcPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    public void requestCameraPermission()
+    {
+        FcPermissions.requestPermissions(this, getString(R.string.prompt_request_camara), FcPermissions.REQ_PER_CODE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms)
+    {
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms)
+    {
+
+    }
 
 }

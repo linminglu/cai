@@ -8,7 +8,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.example.admin.caipiao33.R;
-import com.example.admin.caipiao33.encryption.Base64Utils;
 
 import java.io.File;
 

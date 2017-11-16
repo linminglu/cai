@@ -77,7 +77,7 @@ public class HttpUtil
         builder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         builder.sslSocketFactory(sslContext.getSocketFactory());
         mNewUrl = url;
-        //        mNewUrl = "https://m.cp89001.com";
+        //        mNewUrl = "https://m.cp89001.com/";
         retrofit = new Retrofit.Builder().client(builder.build())
                 .baseUrl(url)
                 .addConverterFactory(MyGsonConverterFactory.create())
@@ -371,6 +371,7 @@ public class HttpUtil
         FirstService firstService = retrofit.create(FirstService.class);
         HashMap<String, String> params = CreateCode.getParams(null);
         call = firstService.getFirstRepos("index", params);
+        //        call = firstService.getTestRepos("android1", params);
         KLog.e("requestFirst: " + call.request().url().toString());
         postBase(call, null, null, BaseUrlBean.class, context, listener, null);
     }

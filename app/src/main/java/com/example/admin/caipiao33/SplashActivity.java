@@ -1,11 +1,16 @@
 package com.example.admin.caipiao33;
 
+import android.*;
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -14,9 +19,14 @@ import com.example.admin.caipiao33.bean.BaseUrlBean;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.httputils.MyResponseListener;
 import com.example.admin.caipiao33.utils.StringUtils;
+import com.example.admin.caipiao33.utils.ToastUtil;
+import com.lypeer.fcpermission.FcPermissions;
+import com.lypeer.fcpermission.impl.FcPermissionsCallbacks;
+
+import java.util.List;
 
 
-public class SplashActivity extends BaseActivity
+public class SplashActivity extends BaseActivity implements FcPermissionsCallbacks
 {
     private Handler handler = new Handler();
     private ImageView mImageView;
@@ -33,8 +43,8 @@ public class SplashActivity extends BaseActivity
         mImageView = (ImageView) findViewById(R.id.splash_iv);
 
         mImageView.setVisibility(View.VISIBLE);
-        requestBaseUrl();
-        handler.postDelayed(initRunnbale, 3000);
+
+        requestCameraPermission();
     }
 
     private void requestBaseUrl()
@@ -134,6 +144,28 @@ public class SplashActivity extends BaseActivity
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
         finish();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
+    {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        FcPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms)
+    {
+        requestBaseUrl();
+        handler.postDelayed(initRunnbale, 3000);
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms)
+    {
+        ToastUtil.show("没有授权权限，部分功能无法正常使用！");
+        requestBaseUrl();
+        handler.postDelayed(initRunnbale, 3000);
     }
 }
 
