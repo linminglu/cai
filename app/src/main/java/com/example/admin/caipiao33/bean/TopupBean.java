@@ -1,5 +1,7 @@
 package com.example.admin.caipiao33.bean;
 
+import java.util.List;
+
 /**
  * TopupBean
  */
@@ -8,23 +10,23 @@ public class TopupBean
 {
 
     /**
-     * amount : 22805.46
-     * rechargeTip : 为避免17:00-21:30高峰入款拥堵,彩票89建议各用户提前充值！
-     * payType : {"bank":"银行转账","wechat":"微信","alipay":"支付宝","qqpay":"QQ钱包","online":"网银支付"}
+     * amount : 12448.82
+     * rechargeTip : 为避免17:00－21:30高峰入款拥堵，建议各用户提前充值，谢谢！
+     * payType : [{"name":"银行转账","code":"bank"},{"name":"微信","code":"wechat"},{"name":"支付宝","code":"alipay"},{"name":"QQ钱包","code":"qqpay"},{"name":"网银支付","code":"online"},{"name":"其它","code":"other"}]
      * code : gavin
      */
 
-    private String amount;
+    private double amount;
     private String rechargeTip;
-    private PayTypeBean payType;
     private String code;
+    private List<PayTypeBean> payType;
 
-    public String getAmount()
+    public double getAmount()
     {
         return amount;
     }
 
-    public void setAmount(String amount)
+    public void setAmount(double amount)
     {
         this.amount = amount;
     }
@@ -39,16 +41,6 @@ public class TopupBean
         this.rechargeTip = rechargeTip;
     }
 
-    public PayTypeBean getPayType()
-    {
-        return payType;
-    }
-
-    public void setPayType(PayTypeBean payType)
-    {
-        this.payType = payType;
-    }
-
     public String getCode()
     {
         return code;
@@ -59,70 +51,44 @@ public class TopupBean
         this.code = code;
     }
 
+    public List<PayTypeBean> getPayType()
+    {
+        return payType;
+    }
+
+    public void setPayType(List<PayTypeBean> payType)
+    {
+        this.payType = payType;
+    }
+
     public static class PayTypeBean
     {
         /**
-         * bank : 银行转账
-         * wechat : 微信
-         * alipay : 支付宝
-         * qqpay : QQ钱包
-         * online : 网银支付
+         * name : 银行转账
+         * code : bank
          */
 
-        private String bank;
-        private String wechat;
-        private String alipay;
-        private String qqpay;
-        private String online;
+        private String name;
+        private String code;
 
-        public String getBank()
+        public String getName()
         {
-            return bank;
+            return name;
         }
 
-        public void setBank(String bank)
+        public void setName(String name)
         {
-            this.bank = bank;
+            this.name = name;
         }
 
-        public String getWechat()
+        public String getCode()
         {
-            return wechat;
+            return code;
         }
 
-        public void setWechat(String wechat)
+        public void setCode(String code)
         {
-            this.wechat = wechat;
-        }
-
-        public String getAlipay()
-        {
-            return alipay;
-        }
-
-        public void setAlipay(String alipay)
-        {
-            this.alipay = alipay;
-        }
-
-        public String getQqpay()
-        {
-            return qqpay;
-        }
-
-        public void setQqpay(String qqpay)
-        {
-            this.qqpay = qqpay;
-        }
-
-        public String getOnline()
-        {
-            return online;
-        }
-
-        public void setOnline(String online)
-        {
-            this.online = online;
+            this.code = code;
         }
     }
 }

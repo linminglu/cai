@@ -1,7 +1,6 @@
 package com.example.admin.caipiao33.topupactivity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,7 +19,7 @@ import com.example.admin.caipiao33.ChongZhiJiLuActivity;
 import com.example.admin.caipiao33.R;
 import com.example.admin.caipiao33.ToolbarActivity;
 import com.example.admin.caipiao33.WebUrlActivity;
-import com.example.admin.caipiao33.bean.Qq3SaoMaBean;
+import com.example.admin.caipiao33.bean.QqPingTaiBean;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.httputils.MyResponseListener;
 import com.example.admin.caipiao33.utils.Constants;
@@ -28,7 +27,6 @@ import com.example.admin.caipiao33.utils.ImageUtils;
 import com.example.admin.caipiao33.utils.MyImageLoader;
 import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.utils.TopupEvent;
-import com.example.admin.caipiao33.utils.ZXingUtils;
 import com.example.admin.caipiao33.views.LoadingLayout;
 
 import org.greenrobot.eventbus.EventBus;
@@ -40,37 +38,84 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-//微信第三方扫码
-public class QqPay3SaoMaActivity extends ToolbarActivity implements Toolbar.OnMenuItemClickListener
+
+public class OtherPingTaiActivity extends ToolbarActivity implements Toolbar.OnMenuItemClickListener
 {
-    @BindView(R.id.qq3saomadingdanhao)
-    TextView qq3saomadingdanhao;
-    @BindView(R.id.qq3saomaamount)
-    TextView qq3saomaamount;
-    @BindView(R.id.qq3saomaerweima)
-    ImageView qq3saomaerweima;
-    @BindView(R.id.qq3saomaerrortip)
-    TextView qq3saomaerrortip;
-    @BindView(R.id.qq3saomashangyibu)
-    Button qq3saomashangyibu;
-    @BindView(R.id.qq3saomawoyizhifu)
-    Button qq3saomawoyizhifu;
-    @BindView(R.id.qq3saomasteps)
-    WebView qq3saomasteps;
+    @BindView(R.id.qqpingtai_dingdanhao)
+    TextView qqpingtaiDingdanhao;
+    @BindView(R.id.qqpingtai_qqhao)
+    TextView qqpingtaiqqhao;
+    @BindView(R.id.qqpingtai_qqming)
+    TextView qqpingtaiqqming;
+    @BindView(R.id.qqpingtai_amount)
+    TextView qqpingtaiAmount;
+    @BindView(R.id.qqpingtai_tip)
+    TextView qqpingtaiTip;
+    @BindView(R.id.qqpingtai_erweima)
+    ImageView qqpingtaiErweima;
+    @BindView(R.id.qqpingtai_errortip)
+    TextView qqpingtaiErrortip;
+    @BindView(R.id.qqpingtai_shangyibu)
+    Button qqpingtaiShangyibu;
+    @BindView(R.id.qqpingtai_woyizhifu)
+    Button qqpingtaiWoyizhifu;
+    @BindView(R.id.qqpingtai_steps)
+    WebView qqpingtaiSteps;
+    private String name = "";
     private String topupamount;
     private String payId;
-    private Qq3SaoMaBean qq3SaoMaBean;
+    private QqPingTaiBean qqPingTaiBean;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_qq3saoma);
+        setContentView(R.layout.activity_qqpingtai);
         ButterKnife.bind(this);
+        name = getIntent().getStringExtra(Constants.EXTRA_TOPUP_NAME);
         topupamount = getIntent().getStringExtra(Constants.EXTRA_TOPUP_TOPUPAMOUNT);
         payId = getIntent().getStringExtra(Constants.EXTRA_TOPUP_PAYID);
+        toolbar.setTitle(name);
         initData();
         initView();
+    }
+
+    private void initData()
+    {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("payId", payId);
+        map.put("amount", topupamount);
+
+        HttpUtil.requestSecond("user", "rqqpayScanNext", map, QqPingTaiBean.class, OtherPingTaiActivity.this, new MyResponseListener<QqPingTaiBean>()
+        {
+            @Override
+            public void onSuccess(QqPingTaiBean result)
+            {
+                qqPingTaiBean = result;
+                qqpingtaiDingdanhao.setText(result.getOrderNo());
+                qqpingtaiqqhao.setText(result.getCode());
+                qqpingtaiqqming.setText(result.getName());
+                qqpingtaiAmount.setText(result.getAmount());
+                qqpingtaiTip.setText(result.getTip());
+                qqpingtaiErrortip.setText(result.getErrorTip());
+                qqpingtaiSteps.loadDataWithBaseURL("about:blank", result.getSteps(), "text/html", "utf-8", null);
+                MyImageLoader.displayImage(HttpUtil.mNewUrl + "/" + result.getImg(), qqpingtaiErweima, OtherPingTaiActivity.this);
+                hideLoadingLayout();
+            }
+
+            @Override
+            public void onFailed(int code, String msg)
+            {
+                ToastUtil.show(msg);
+                showLoadingLayoutError();
+            }
+
+            @Override
+            public void onFinish()
+            {
+            }
+        }, null);
     }
 
     @Override
@@ -86,12 +131,12 @@ public class QqPay3SaoMaActivity extends ToolbarActivity implements Toolbar.OnMe
         switch (item.getItemId())
         {
             case R.id.action_jilu: // 充值记录.
-                Intent intent = new Intent(QqPay3SaoMaActivity.this, ChongZhiJiLuActivity.class);
+                Intent intent = new Intent(OtherPingTaiActivity.this, ChongZhiJiLuActivity.class);
                 startActivity(intent);
                 break;
             case R.id.action_kefu: // 在线客服
                 showLoadingDialog();
-                HttpUtil.requestFirst("kefu", String.class, QqPay3SaoMaActivity.this, new MyResponseListener<String>()
+                HttpUtil.requestFirst("kefu", String.class, OtherPingTaiActivity.this, new MyResponseListener<String>()
                 {
                     @Override
                     public void onSuccess(String result)
@@ -127,78 +172,53 @@ public class QqPay3SaoMaActivity extends ToolbarActivity implements Toolbar.OnMe
         return false;
     }
 
-    // 跳转到网页
-    private void toWebUrlActivity(String url, String title)
+    private void toNext()
     {
-        Intent intent = new Intent(QqPay3SaoMaActivity.this, WebUrlActivity.class);
-        intent.putExtra(Constants.EXTRA_URL, url);
-        intent.putExtra(Constants.EXTRA_TITLE, title);
-        startActivity(intent);
-    }
+        showLoadingDialog(false);
 
-    private void initData()
-    {
         HashMap<String, String> map = new HashMap<>();
         map.put("payId", payId);
         map.put("amount", topupamount);
-        map.put("baseUrl", HttpUtil.mNewUrl);
+        map.put("orderNo", qqPingTaiBean.getOrderNo());
 
-        HttpUtil.requestThird("user", "recharge", "qqpayNext", map, Qq3SaoMaBean.class, QqPay3SaoMaActivity.this, new MyResponseListener<Qq3SaoMaBean>()
+        HttpUtil.requestSecond("user", "rqqpayScanSubmit", map, String.class, OtherPingTaiActivity.this, new MyResponseListener<String>()
         {
             @Override
-            public void onSuccess(Qq3SaoMaBean result)
+            public void onSuccess(String result)
             {
-                qq3SaoMaBean = result;
-                qq3saomadingdanhao.setText(result.getOrderNo());
-                qq3saomaamount.setText(result.getAmount());
-                qq3saomaerrortip.setText(result.getErrorTip());
-                //                qq3saomaerrortip.loadDataWithBaseURL("about:blank", result.getErrorTip(), "text/html", "utf-8", null);
-                qq3saomasteps.loadDataWithBaseURL("about:blank", result.getSteps(), "text/html", "utf-8", null);
-                if (result.getNeedDown().equals("0"))
-                {
-                    Bitmap bitmap = ZXingUtils.createQRImage(result.getPayUrl(), qq3saomaerweima.getWidth(), qq3saomaerweima
-                            .getHeight());
-                    qq3saomaerweima.setImageBitmap(bitmap);
-                }
-                else if (result.getNeedDown().equals("3"))
-                {
-                    final Uri uri = Uri.parse(result.getPayUrl());
-                    final Intent it = new Intent(Intent.ACTION_VIEW, uri);
-                    startActivity(it);
-                    finish();
-                }
-                else
-                {
-                    if (result.getIsSixFour() == 1)
-                    {
-                        MyImageLoader.displayBase64Image(result.getPayUrl(), qq3saomaerweima, QqPay3SaoMaActivity.this);
-                    }
-                    else
-                    {
-                        MyImageLoader.displayImage(result.getPayUrl(), qq3saomaerweima, QqPay3SaoMaActivity.this);
-                    }
-                }
-                hideLoadingLayout();
+                ToastUtil.show("提交成功，请稍后查询充值记录！");
+                finish();
+                EventBus.getDefault().post(new TopupEvent(""));
             }
 
             @Override
             public void onFailed(int code, String msg)
             {
                 ToastUtil.show(msg);
-                showLoadingLayoutError();
             }
 
             @Override
             public void onFinish()
             {
+                hideLoadingDialog();
             }
         }, null);
+    }
+
+    // 跳转到网页
+    private void toWebUrlActivity(String url, String title)
+    {
+        Intent intent = new Intent(OtherPingTaiActivity.this, WebUrlActivity.class);
+        intent.putExtra(Constants.EXTRA_URL, url);
+        intent.putExtra(Constants.EXTRA_TITLE, title);
+        startActivity(intent);
     }
 
     public void onCreateCustomToolBar(Toolbar toolbar)
     {
         super.onCreateCustomToolBar(toolbar);
-        toolbar.setTitle(R.string.s_qq_pingtaichongzhi);
+        this.toolbar = toolbar;
+        toolbar.setTitle(name);
         setSupportActionBar(toolbar);
         toolbar.setOnMenuItemClickListener(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -215,7 +235,7 @@ public class QqPay3SaoMaActivity extends ToolbarActivity implements Toolbar.OnMe
                 initData();
             }
         });
-        qq3saomaerweima.setOnLongClickListener(new View.OnLongClickListener()
+        qqpingtaiErweima.setOnLongClickListener(new View.OnLongClickListener()
         {
             @Override
             public boolean onLongClick(View v)
@@ -240,27 +260,25 @@ public class QqPay3SaoMaActivity extends ToolbarActivity implements Toolbar.OnMe
         });
     }
 
-
-    @OnClick({R.id.qq3saomashangyibu, R.id.qq3saomawoyizhifu})
+    @OnClick({R.id.qqpingtai_shangyibu, R.id.qqpingtai_woyizhifu})
     public void onViewClicked(View view)
     {
         switch (view.getId())
         {
-            case R.id.qq3saomashangyibu:
+            case R.id.qqpingtai_shangyibu:
                 finish();
                 break;
-            case R.id.qq3saomawoyizhifu:
-                ToastUtil.show("提交成功，请稍后查询充值记录！");
-                finish();
-                EventBus.getDefault().post(new TopupEvent(""));
+            case R.id.qqpingtai_woyizhifu:
+                toNext();
                 break;
         }
     }
 
+
     @Override
     public void onPermissionsGranted(int i, List<String> list)
     {
-        ImageUtils.GetandSaveCurrentImage(QqPay3SaoMaActivity.this);
+        ImageUtils.GetandSaveCurrentImage(OtherPingTaiActivity.this);
     }
 
     @Override

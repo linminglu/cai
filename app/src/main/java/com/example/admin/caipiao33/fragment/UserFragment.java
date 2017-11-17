@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.TintTypedArray;
@@ -299,7 +300,16 @@ public class UserFragment extends BaseFragment implements View.OnClickListener, 
                     @Override
                     public void onSuccess(String result)
                     {
-                        toWebUrlActivity(result, "在线客服");
+                        if (result.contains("#_WEBVIEW_#"))
+                        {
+                            final Uri uri = Uri.parse(result);
+                            final Intent it = new Intent(Intent.ACTION_VIEW, uri);
+                            startActivity(it);
+                        }
+                        else
+                        {
+                            toWebUrlActivity(result, "在线客服");
+                        }
                     }
 
                     @Override

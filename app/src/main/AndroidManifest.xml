@@ -334,6 +334,16 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
+            android:name="com.example.admin.caipiao33.topupactivity.OtherPingTaiActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="com.example.admin.caipiao33.topupactivity.Other3SaoMaActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
             android:name="com.example.admin.caipiao33.topupactivity.BankPayActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait">

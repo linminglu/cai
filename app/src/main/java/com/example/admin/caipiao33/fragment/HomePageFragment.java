@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -443,7 +444,16 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
     @Override
     public void updateServiceUrl(String url)
     {
-        toWebUrlActivity(url, "在线客服");
+        if (url.contains("#_WEBVIEW_#"))
+        {
+            final Uri uri = Uri.parse(url);
+            final Intent it = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(it);
+        }
+        else
+        {
+            toWebUrlActivity(url, "在线客服");
+        }
     }
 
     @Override

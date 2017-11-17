@@ -158,7 +158,16 @@ public class Ali3SaoMaActivity extends ToolbarActivity implements Toolbar.OnMenu
                     @Override
                     public void onSuccess(String result)
                     {
-                        toWebUrlActivity(result, "在线客服");
+                        if (result.contains("#_WEBVIEW_#"))
+                        {
+                            final Uri uri = Uri.parse(result);
+                            final Intent it = new Intent(Intent.ACTION_VIEW, uri);
+                            startActivity(it);
+                        }
+                        else
+                        {
+                            toWebUrlActivity(result, "在线客服");
+                        }
                     }
 
                     @Override

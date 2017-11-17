@@ -1,6 +1,7 @@
 package com.example.admin.caipiao33;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -19,6 +20,7 @@ import com.example.admin.caipiao33.contract.ITopupContract;
 import com.example.admin.caipiao33.fragment.AliPayFragment;
 import com.example.admin.caipiao33.fragment.BankPayFragment;
 import com.example.admin.caipiao33.fragment.OnLinePayFragment;
+import com.example.admin.caipiao33.fragment.OtherPayFragment;
 import com.example.admin.caipiao33.fragment.QqPayFragment;
 import com.example.admin.caipiao33.fragment.WeiXinPayFragment;
 import com.example.admin.caipiao33.httputils.HttpUtil;
@@ -95,50 +97,49 @@ public class TopupActivity extends ToolbarActivity implements Toolbar.OnMenuItem
         InputFilter[] filters = {new NumberInputFilter()};
         topupMoneyEt.setFilters(filters);
 
-        topupBuyVp.setOffscreenPageLimit(5);
-        topupBuyVp.setPageTransformer(true, new ZoomOutPageTransformer());
-        fragmentManager = getSupportFragmentManager();
-        topupBuyVp.setAdapter(new FragmentPagerAdapter(fragmentManager)
-        {
-
-            @Override
-            public Fragment getItem(int position)
-            {
-                Fragment ff = null;
-                switch (position)
-                {
-                    case 0:
-                        ff = new BankPayFragment();
-                        break;
-                    case 1:
-                        ff = new WeiXinPayFragment();
-                        break;
-                    case 2:
-                        ff = new AliPayFragment();
-                        break;
-                    case 3:
-                        ff = new QqPayFragment();
-                        break;
-                    case 4:
-                        ff = new OnLinePayFragment();
-                        break;
-                }
-                return ff;
-            }
-
-            @Override
-            public int getCount()
-            {
-                return mTitleArray.length;
-            }
-
-            @Override
-            public CharSequence getPageTitle(int position)
-            {
-                return mTitleArray[position];
-            }
-        });
-        topupBuyPsts.setViewPager(topupBuyVp);
+        //        topupBuyVp.setOffscreenPageLimit(5);
+        //        topupBuyVp.setPageTransformer(true, new ZoomOutPageTransformer());
+        //        fragmentManager = getSupportFragmentManager();
+        //        topupBuyVp.setAdapter(new FragmentPagerAdapter(fragmentManager)
+        //        {
+        //            @Override
+        //            public Fragment getItem(int position)
+        //            {
+        //                Fragment ff = null;
+        //                switch (position)
+        //                {
+        //                    case 0:
+        //                        ff = new BankPayFragment();
+        //                        break;
+        //                    case 1:
+        //                        ff = new WeiXinPayFragment();
+        //                        break;
+        //                    case 2:
+        //                        ff = new AliPayFragment();
+        //                        break;
+        //                    case 3:
+        //                        ff = new QqPayFragment();
+        //                        break;
+        //                    case 4:
+        //                        ff = new OnLinePayFragment();
+        //                        break;
+        //                }
+        //                return ff;
+        //            }
+        //
+        //            @Override
+        //            public int getCount()
+        //            {
+        //                return mTitleArray.length;
+        //            }
+        //
+        //            @Override
+        //            public CharSequence getPageTitle(int position)
+        //            {
+        //                return mTitleArray[position];
+        //            }
+        //        });
+        //        topupBuyPsts.setViewPager(topupBuyVp);
 
         mLoadingLayout = (LoadingLayout) findViewById(R.id.loadingLayout);
         mLoadingLayout.setOnReloadingListener(new LoadingLayout.OnReloadingListener()
@@ -176,7 +177,16 @@ public class TopupActivity extends ToolbarActivity implements Toolbar.OnMenuItem
                     @Override
                     public void onSuccess(String result)
                     {
-                        toWebUrlActivity(result, "在线客服");
+                        if (result.contains("#_WEBVIEW_#"))
+                        {
+                            final Uri uri = Uri.parse(result);
+                            final Intent it = new Intent(Intent.ACTION_VIEW, uri);
+                            startActivity(it);
+                        }
+                        else
+                        {
+                            toWebUrlActivity(result, "在线客服");
+                        }
                     }
 
                     @Override
@@ -212,10 +222,57 @@ public class TopupActivity extends ToolbarActivity implements Toolbar.OnMenuItem
     }
 
     @Override
-    public void updata(TopupBean result)
+    public void updata(final TopupBean result)
     {
         topupUsernameTv.setText(result.getCode());
         topupYueTv.setText(result.getAmount() + "元");
+        topupBuyVp.setOffscreenPageLimit(result.getPayType().size());
+        topupBuyVp.setPageTransformer(true, new ZoomOutPageTransformer());
+        fragmentManager = getSupportFragmentManager();
+        topupBuyVp.setAdapter(new FragmentPagerAdapter(fragmentManager)
+        {
+            @Override
+            public Fragment getItem(int position)
+            {
+                Fragment ff = null;
+                switch (result.getPayType().get(position).getCode())
+                {
+                    case "bank":
+                        ff = new BankPayFragment();
+                        break;
+                    case "wechat":
+                        ff = new WeiXinPayFragment();
+                        break;
+                    case "alipay":
+                        ff = new AliPayFragment();
+                        break;
+                    case "qqpay":
+                        ff = new QqPayFragment();
+                        break;
+                    case "online":
+                        ff = new OnLinePayFragment();
+                        break;
+                    case "other":
+                        ff = new OtherPayFragment();
+                        break;
+                }
+                return ff;
+            }
+
+            @Override
+            public int getCount()
+            {
+                return result.getPayType().size();
+            }
+
+            @Override
+            public CharSequence getPageTitle(int position)
+            {
+                return result.getPayType().get(position).getName();
+            }
+        });
+
+        topupBuyPsts.setViewPager(topupBuyVp);
     }
 
     @OnClick({R.id.topup_clear_tv, R.id.topup_100_tv, R.id.topup_500_tv, R.id.topup_1000_tv, R.id.topup_5000_tv, R.id.topup_10000_tv, R.id.topup_50000_tv})

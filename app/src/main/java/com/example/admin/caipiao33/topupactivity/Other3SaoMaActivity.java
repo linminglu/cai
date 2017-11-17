@@ -41,7 +41,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 //微信第三方扫码
-public class QqPay3SaoMaActivity extends ToolbarActivity implements Toolbar.OnMenuItemClickListener
+public class Other3SaoMaActivity extends ToolbarActivity implements Toolbar.OnMenuItemClickListener
 {
     @BindView(R.id.qq3saomadingdanhao)
     TextView qq3saomadingdanhao;
@@ -57,9 +57,11 @@ public class QqPay3SaoMaActivity extends ToolbarActivity implements Toolbar.OnMe
     Button qq3saomawoyizhifu;
     @BindView(R.id.qq3saomasteps)
     WebView qq3saomasteps;
+    private String name = "";
     private String topupamount;
     private String payId;
     private Qq3SaoMaBean qq3SaoMaBean;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -67,8 +69,10 @@ public class QqPay3SaoMaActivity extends ToolbarActivity implements Toolbar.OnMe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qq3saoma);
         ButterKnife.bind(this);
+        name = getIntent().getStringExtra(Constants.EXTRA_TOPUP_NAME);
         topupamount = getIntent().getStringExtra(Constants.EXTRA_TOPUP_TOPUPAMOUNT);
         payId = getIntent().getStringExtra(Constants.EXTRA_TOPUP_PAYID);
+        toolbar.setTitle(name);
         initData();
         initView();
     }
@@ -86,12 +90,12 @@ public class QqPay3SaoMaActivity extends ToolbarActivity implements Toolbar.OnMe
         switch (item.getItemId())
         {
             case R.id.action_jilu: // 充值记录.
-                Intent intent = new Intent(QqPay3SaoMaActivity.this, ChongZhiJiLuActivity.class);
+                Intent intent = new Intent(Other3SaoMaActivity.this, ChongZhiJiLuActivity.class);
                 startActivity(intent);
                 break;
             case R.id.action_kefu: // 在线客服
                 showLoadingDialog();
-                HttpUtil.requestFirst("kefu", String.class, QqPay3SaoMaActivity.this, new MyResponseListener<String>()
+                HttpUtil.requestFirst("kefu", String.class, Other3SaoMaActivity.this, new MyResponseListener<String>()
                 {
                     @Override
                     public void onSuccess(String result)
@@ -130,7 +134,7 @@ public class QqPay3SaoMaActivity extends ToolbarActivity implements Toolbar.OnMe
     // 跳转到网页
     private void toWebUrlActivity(String url, String title)
     {
-        Intent intent = new Intent(QqPay3SaoMaActivity.this, WebUrlActivity.class);
+        Intent intent = new Intent(Other3SaoMaActivity.this, WebUrlActivity.class);
         intent.putExtra(Constants.EXTRA_URL, url);
         intent.putExtra(Constants.EXTRA_TITLE, title);
         startActivity(intent);
@@ -143,7 +147,7 @@ public class QqPay3SaoMaActivity extends ToolbarActivity implements Toolbar.OnMe
         map.put("amount", topupamount);
         map.put("baseUrl", HttpUtil.mNewUrl);
 
-        HttpUtil.requestThird("user", "recharge", "qqpayNext", map, Qq3SaoMaBean.class, QqPay3SaoMaActivity.this, new MyResponseListener<Qq3SaoMaBean>()
+        HttpUtil.requestThird("user", "recharge", "qqpayNext", map, Qq3SaoMaBean.class, Other3SaoMaActivity.this, new MyResponseListener<Qq3SaoMaBean>()
         {
             @Override
             public void onSuccess(Qq3SaoMaBean result)
@@ -171,11 +175,11 @@ public class QqPay3SaoMaActivity extends ToolbarActivity implements Toolbar.OnMe
                 {
                     if (result.getIsSixFour() == 1)
                     {
-                        MyImageLoader.displayBase64Image(result.getPayUrl(), qq3saomaerweima, QqPay3SaoMaActivity.this);
+                        MyImageLoader.displayBase64Image(result.getPayUrl(), qq3saomaerweima, Other3SaoMaActivity.this);
                     }
                     else
                     {
-                        MyImageLoader.displayImage(result.getPayUrl(), qq3saomaerweima, QqPay3SaoMaActivity.this);
+                        MyImageLoader.displayImage(result.getPayUrl(), qq3saomaerweima, Other3SaoMaActivity.this);
                     }
                 }
                 hideLoadingLayout();
@@ -198,7 +202,8 @@ public class QqPay3SaoMaActivity extends ToolbarActivity implements Toolbar.OnMe
     public void onCreateCustomToolBar(Toolbar toolbar)
     {
         super.onCreateCustomToolBar(toolbar);
-        toolbar.setTitle(R.string.s_qq_pingtaichongzhi);
+        this.toolbar = toolbar;
+        toolbar.setTitle(name);
         setSupportActionBar(toolbar);
         toolbar.setOnMenuItemClickListener(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -260,7 +265,7 @@ public class QqPay3SaoMaActivity extends ToolbarActivity implements Toolbar.OnMe
     @Override
     public void onPermissionsGranted(int i, List<String> list)
     {
-        ImageUtils.GetandSaveCurrentImage(QqPay3SaoMaActivity.this);
+        ImageUtils.GetandSaveCurrentImage(Other3SaoMaActivity.this);
     }
 
     @Override
