@@ -83,6 +83,7 @@ public class QuickBuyFragment extends BaseFragment
         {
             return;
         }
+        // TODO 这里原来使用num判断是那种玩法类型，改用type需要注意
         String num = mBuyRoomBean.getNum();
         if (num.equals(MyBaseBuyAdapter.TYPE_SIX))
         {

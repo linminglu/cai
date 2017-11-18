@@ -37,17 +37,29 @@
         android:maxLines="1"
         />
 
-    <TextView
-        android:id="@+id/tv_result"
+    <LinearLayout
+        android:id="@+id/layout_result"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/red"
-        android:textSize="16sp"
-        android:layout_toRightOf="@+id/iv"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:layout_centerVertical="true"
-        android:text="1 2 3 "
-        android:drawableRight="@mipmap/index_pic_08"
-        />
+        android:layout_toRightOf="@+id/iv"
+        android:padding="5dp">
+
+    </LinearLayout>
+
+    <!--<TextView-->
+        <!--android:id="@+id/tv_result"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textColor="@color/red"-->
+        <!--android:textSize="16sp"-->
+        <!--android:layout_toRightOf="@+id/iv"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:text="1 2 3 "-->
+        <!--android:drawableRight="@mipmap/index_pic_08"-->
+        <!--/>-->
 
     <TextView
         android:id="@+id/tv_remain_index"

@@ -32,10 +32,22 @@ public class ResultAssist
     private TextView tvWait;
     private List<TextView> recyclerList = new ArrayList<>();
 
+    // TODO 参数bean实际只用到num用于判断type，改用时可以调整为type
     public ResultAssist(LayoutInflater layoutInflater, LinearLayout layoutResult, BuyRoomBean bean, String lastOpen)
     {
         this.mInflater = layoutInflater;
         this.layoutResult = layoutResult;
+        this.mBuyRoomBean = bean;
+        updateData(lastOpen);
+    }
+
+    public ResultAssist(LayoutInflater layoutInflater, LinearLayout layoutResult, BuyRoomBean bean, String lastOpen, boolean isList)
+    {
+        this.mInflater = layoutInflater;
+        this.layoutResult = layoutResult;
+        if (isList) {
+            layoutResult.removeAllViews();
+        }
         this.mBuyRoomBean = bean;
         updateData(lastOpen);
     }
@@ -87,6 +99,7 @@ public class ResultAssist
                 }
                 String text = split[i];
                 tv.setText(text);
+                // TODO 这里原来使用num判断是那种玩法类型，改用type需要注意
                 String num = mBuyRoomBean.getNum();
                 // 适配六 合 的情况
                 if (num.equals(MyBaseBuyAdapter.TYPE_SIX))

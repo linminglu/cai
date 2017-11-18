@@ -40,7 +40,9 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
 
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -61,6 +63,19 @@ public class HttpUtil
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         builder.sslSocketFactory(sslContext.getSocketFactory());
+        builder.addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request.Builder requestBuilder = original.newBuilder()
+                        .header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36");
+
+                Request request = requestBuilder.build();
+                return chain.proceed(request);
+            }
+        });
+
 
         retrofitBase = new Retrofit.Builder().client(builder.build())
                 .baseUrl(Constants.URL)
@@ -76,6 +91,18 @@ public class HttpUtil
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         builder.sslSocketFactory(sslContext.getSocketFactory());
+        builder.addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request.Builder requestBuilder = original.newBuilder()
+                        .header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36");
+
+                Request request = requestBuilder.build();
+                return chain.proceed(request);
+            }
+        });
         mNewUrl = url;
         //        mNewUrl = "https://m.cp89001.com/";
         retrofit = new Retrofit.Builder().client(builder.build())
@@ -370,7 +397,7 @@ public class HttpUtil
         Call<String> call;
         FirstService firstService = retrofit.create(FirstService.class);
         HashMap<String, String> params = CreateCode.getParams(null);
-        //        call = firstService.getFirstRepos("index", params);
+//                call = firstService.getFirstRepos("index", params);
         call = firstService.getTestRepos("android1", params);
         KLog.e("requestFirst: " + call.request().url().toString());
         postBase(call, null, null, BaseUrlBean.class, context, listener, null);
