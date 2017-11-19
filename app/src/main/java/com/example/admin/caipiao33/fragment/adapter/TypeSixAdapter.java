@@ -27,9 +27,9 @@ import java.util.List;
 public class TypeSixAdapter extends TypeBeforeAdapter
 {
     private static final int COUNT1 = 1;
-    public static final List<String> NUMBER_RED = Arrays.asList("01", "02", "07", "08", "12", "13", "18", "19", "23", "24", "29", "30", "34", "35", "40", "45", "46");
-    public static final List<String> NUMBER_BLUE = Arrays.asList("03", "04", "09", "10", "14", "15", "20", "25", "26", "31", "36", "37", "41", "42", "47", "48");
-    public static final List<String> NUMBER_GREEN = Arrays.asList("05", "06", "11", "16", "17", "21", "22", "27", "28", "32", "33", "38", "39", "43", "44", "49");
+    public static final List<String> NUMBER_RED = Arrays.asList("01", "02", "07", "08", "12", "13", "18", "19", "23", "24", "29", "30", "34", "35", "40", "45", "46", "1", "2", "7", "8");
+    public static final List<String> NUMBER_BLUE = Arrays.asList("03", "04", "09", "10", "14", "15", "20", "25", "26", "31", "36", "37", "41", "42", "47", "48", "3", "4", "9");
+    public static final List<String> NUMBER_GREEN = Arrays.asList("05", "06", "11", "16", "17", "21", "22", "27", "28", "32", "33", "38", "39", "43", "44", "49", "5", "6");
     private String mPlayName;
     private String mPlayId;
     // 是否当前类处理，false就交给父类处理
