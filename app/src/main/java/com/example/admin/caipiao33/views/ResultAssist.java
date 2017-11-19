@@ -8,13 +8,10 @@ import android.text.style.ImageSpan;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.admin.caipiao33.R;
 import com.example.admin.caipiao33.bean.BuyRoomBean;
-import com.example.admin.caipiao33.fragment.adapter.MyBaseBuyAdapter;
-import com.example.admin.caipiao33.fragment.adapter.TypeQuick3Adapter;
 import com.example.admin.caipiao33.fragment.adapter.TypeSixAdapter;
 import com.example.admin.caipiao33.utils.StringUtils;
 
