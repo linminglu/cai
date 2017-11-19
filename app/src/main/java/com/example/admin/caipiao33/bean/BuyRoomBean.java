@@ -16,7 +16,6 @@ public class BuyRoomBean implements Serializable
 {
 
 
-
     private String num;
     private String page;
     private String roomName;
@@ -27,6 +26,7 @@ public class BuyRoomBean implements Serializable
     private String lastPeriod;
     private String endTime;
     private String opentime;
+    private String type;
     private List<PlayDetailListBean> playDetailList;
     private List<PlayListBean> playList;
     private List<RoomListBean> roomList;
@@ -174,6 +174,16 @@ public class BuyRoomBean implements Serializable
     public void setSxNames(SxNamesBean sxNames)
     {
         this.sxNames = sxNames;
+    }
+
+    public String getType()
+    {
+        return type;
+    }
+
+    public void setType(String type)
+    {
+        this.type = type;
     }
 
     public static class PlayDetailListBean implements Serializable, Cloneable

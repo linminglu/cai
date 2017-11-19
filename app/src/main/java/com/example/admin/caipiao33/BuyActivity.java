@@ -169,7 +169,8 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
         buyPager.setNoScroll(false);
         if (num.equals(MyBaseBuyAdapter.TYPE_SIX))
         {
-            if (isTitleArrayChange) {
+            if (isTitleArrayChange)
+            {
                 isTitleArrayChange = false;
                 buyTab.notifyDataSetChanged();
             }
@@ -224,7 +225,7 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
         tvIndex.setText(bean.getLastPeriod() + "期");
         if (null == resultAssist)
         {
-            resultAssist = new ResultAssist(getLayoutInflater(), layoutResult, bean, bean.getLastOpen());
+            resultAssist = new ResultAssist(this, getLayoutInflater(), layoutResult, bean, bean.getLastOpen());
         }
         else
         {
@@ -324,7 +325,8 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
         tvIndex.setText(result.getLastPeriod() + "期");
         if (null == resultAssist)
         {
-            resultAssist = new ResultAssist(getLayoutInflater(), layoutResult, mBuyRoomBean, result.getLastOpen());
+            resultAssist = new ResultAssist(this, getLayoutInflater(), layoutResult, mBuyRoomBean, result
+                    .getLastOpen());
         }
         else
         {
@@ -603,7 +605,8 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
             }
             gridNumColumns = 1;
         }
-        else if (playName.equals("连肖连尾")) {
+        else if (playName.equals("连肖连尾"))
+        {
             if (null == checked)
             {
                 return;

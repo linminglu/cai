@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/parent"
+<RelativeLayout android:id="@+id/parent"
+                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp">
@@ -11,77 +11,77 @@
         android:layout_height="@dimen/homepage_hot_iv_height"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
-        android:layout_marginRight="10dp"/>
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"/>
 
     <TextView
+        android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/tv_title"
+        android:layout_toRightOf="@+id/iv"
+        android:maxLines="1"
         android:text="123"
         android:textColor="@color/black"
         android:textSize="16sp"
-        android:layout_toRightOf="@+id/iv"
-        android:maxLines="1"
         />
 
     <TextView
         android:id="@+id/tv_index"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:maxLines="1"
+        android:text="123"
         android:textColor="@color/red"
         android:textSize="16sp"
-        android:layout_alignParentRight="true"
-        android:text="123"
-        android:maxLines="1"
         />
 
     <LinearLayout
         android:id="@+id/layout_result"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
         android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/iv"
-        android:padding="5dp">
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="1dp">
 
     </LinearLayout>
 
     <!--<TextView-->
-        <!--android:id="@+id/tv_result"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:textColor="@color/red"-->
-        <!--android:textSize="16sp"-->
-        <!--android:layout_toRightOf="@+id/iv"-->
-        <!--android:layout_centerVertical="true"-->
-        <!--android:text="1 2 3 "-->
-        <!--android:drawableRight="@mipmap/index_pic_08"-->
-        <!--/>-->
+    <!--android:id="@+id/tv_result"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:textColor="@color/red"-->
+    <!--android:textSize="16sp"-->
+    <!--android:layout_toRightOf="@+id/iv"-->
+    <!--android:layout_centerVertical="true"-->
+    <!--android:text="1 2 3 "-->
+    <!--android:drawableRight="@mipmap/index_pic_08"-->
+    <!--/>-->
 
     <TextView
         android:id="@+id/tv_remain_index"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/iv"
+        android:layout_toRightOf="@+id/iv"
+        android:text="sdhfkl;skfdol"
         android:textColor="@color/middle_gray"
         android:textSize="13sp"
-        android:layout_toRightOf="@+id/iv"
-        android:layout_alignBottom="@+id/iv"
-        android:text="sdhfkl;skfdol"
         />
 
     <TextView
         android:id="@+id/tv_remain_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/iv"
+        android:layout_alignParentRight="true"
+        android:maxLines="1"
+        android:text="123"
         android:textColor="@color/middle_gray"
         android:textSize="16sp"
-        android:layout_alignParentRight="true"
-        android:layout_alignBottom="@+id/iv"
-        android:text="123"
-        android:maxLines="1"
         />
 
 </RelativeLayout>

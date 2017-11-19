@@ -397,7 +397,7 @@ public class HttpUtil
         Call<String> call;
         FirstService firstService = retrofit.create(FirstService.class);
         HashMap<String, String> params = CreateCode.getParams(null);
-//                call = firstService.getFirstRepos("index", params);
+        //        call = firstService.getFirstRepos("index", params);
         call = firstService.getTestRepos("android1", params);
         KLog.e("requestFirst: " + call.request().url().toString());
         postBase(call, null, null, BaseUrlBean.class, context, listener, null);

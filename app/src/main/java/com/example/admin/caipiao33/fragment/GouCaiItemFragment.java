@@ -469,8 +469,8 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
         TextView tvRemainIndex;
         @BindView(R.id.tv_remain_time)
         TextView tvRemainTime;
-//        @BindView(R.id.tv_result)
-//        TextView tvResult;
+        //        @BindView(R.id.tv_result)
+        //        TextView tvResult;
         @BindView(R.id.layout_result)
         LinearLayout layoutResult;
         ResultAssist resultAssist;
@@ -549,16 +549,16 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
             String lastOpen = dataBean.getLastOpen();
             // TODO 调整ResultAssist，BuyRoomBean对象这里没有，因为只是用到一个参数Num，所以就直接new一个代替
             BuyRoomBean bean = new BuyRoomBean();
-            bean.setNum(dataBean.getNum());
-            holder1.resultAssist = new ResultAssist(LayoutInflater.from(getContext()), holder1.layoutResult, bean, lastOpen, true);
-//            if (StringUtils.isEmpty(lastOpen))
-//            {
-//                holder1.tvResult.setText("等待开奖");
-//            }
-//            else
-//            {
-//                holder1.tvResult.setText(lastOpen);
-//            }
+            bean.setType(dataBean.getType());
+            holder1.resultAssist = new ResultAssist(getActivity(), LayoutInflater.from(getContext()), holder1.layoutResult, bean, lastOpen, true);
+            //            if (StringUtils.isEmpty(lastOpen))
+            //            {
+            //                holder1.tvResult.setText("等待开奖");
+            //            }
+            //            else
+            //            {
+            //                holder1.tvResult.setText(lastOpen);
+            //            }
             String endTime = dataBean.getEndTime();
             if (!StringUtils.isEmpty(endTime))
             {
