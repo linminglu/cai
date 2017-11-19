@@ -84,8 +84,8 @@ public class QuickBuyFragment extends BaseFragment
             return;
         }
         // TODO 这里原来使用num判断是那种玩法类型，改用type需要注意
-        String num = mBuyRoomBean.getNum();
-        if (num.equals(MyBaseBuyAdapter.TYPE_SIX))
+        String type = mBuyRoomBean.getType();
+        if (type.equals("xglhc"))
         {
             String playName = mBuyRoomBean.getPlayName();
             if (mType == TYPE_SELF_SELECT && playName.equals("自选不中"))
@@ -100,7 +100,8 @@ public class QuickBuyFragment extends BaseFragment
             {
                 adapter = new TypeSix6Adapter(mInflater, mBuyRoomBean, mType);
             }
-            else if (playName.equals("连肖连尾")) {
+            else if (playName.equals("连肖连尾"))
+            {
                 adapter = new TypeSix27Adapter(mInflater, mBuyRoomBean, mType);
             }
             else
@@ -109,7 +110,8 @@ public class QuickBuyFragment extends BaseFragment
             }
 
         }
-        else if (TypeQuick3Adapter.QUICK3List.contains(num)) {
+        else if (type.equals("k3"))
+        {
             adapter = new TypeQuick3Adapter(mInflater, mBuyRoomBean, mType);
         }
         else
