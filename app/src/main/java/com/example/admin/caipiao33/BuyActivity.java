@@ -722,7 +722,7 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
                 break;
             case R.id.action_new: // 最新开奖
                 Intent intent = new Intent(this, WebUrlActivity.class);
-                intent.putExtra(Constants.EXTRA_URL, HttpUtil.mNewUrl + "/api/draw/single?gid=" + mNumber + "&dayType=0");
+                intent.putExtra(Constants.EXTRA_URL, HttpUtil.mNewUrl + "/api/draw/single?gid=" + mNumber + "&dayType=");
                 intent.putExtra(Constants.EXTRA_TITLE, "最新开奖");
                 startActivity(intent);
                 break;
