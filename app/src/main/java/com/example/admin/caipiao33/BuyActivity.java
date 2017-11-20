@@ -9,6 +9,7 @@ import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.SpannableString;
@@ -34,6 +35,7 @@ import com.example.admin.caipiao33.utils.DateUtils;
 import com.example.admin.caipiao33.utils.ServiceTime;
 import com.example.admin.caipiao33.utils.StringUtils;
 import com.example.admin.caipiao33.utils.ToastUtil;
+import com.example.admin.caipiao33.utils.Tools;
 import com.example.admin.caipiao33.utils.UserConfig;
 import com.example.admin.caipiao33.views.ConfirmBuyDialog;
 import com.example.admin.caipiao33.views.LoadingLayout;
@@ -88,6 +90,8 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
     NoScrollViewPager buyPager;
     @BindView(R.id.tv_amount)
     TextView tvAmount;
+    @BindView(R.id.swipeRefreshLayout)
+    SwipeRefreshLayout swipeRefreshLayout;
     private String mNumber;
     private String mTitleStr;
     private String mRoomId;
@@ -147,6 +151,16 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
                 mPresenter.loadData(mNumber, mRoomId, mPlayId, mPlayId1);
             }
         });
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
+        {
+            @Override
+            public void onRefresh()
+            {
+                mPresenter.loadData(mNumber, mRoomId, mPlayId, mPlayId1);
+            }
+        });
+        Tools.setSwipeRefreshColor(swipeRefreshLayout);
     }
 
     @Override
@@ -165,6 +179,7 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
     public void updateHomePage(BuyRoomBean bean)
     {
         this.mBuyRoomBean = bean;
+        swipeRefreshLayout.setRefreshing(false);
         mTitleArray = getResources().getStringArray(R.array.s_array_buy);
         // 区配6合的连肖连尾
         String type = mBuyRoomBean.getType();
@@ -672,35 +687,36 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
             array.add(bean.getPlayName());
         }
         PopOPtions popOPtions = new PopOPtions();
-        popOPtions.init(this, array, new PopOPtions.OnItemSelectedListener() {
+        popOPtions.init(this, array, new PopOPtions.OnItemSelectedListener()
+        {
             @Override
-            public void onItemSelected(String s, int position) {
-                BuyRoomBean.PlayListBean playListBean = mBuyRoomBean.getPlayList()
-                        .get(position);
+            public void onItemSelected(String s, int position)
+            {
+                BuyRoomBean.PlayListBean playListBean = mBuyRoomBean.getPlayList().get(position);
                 mPlayId = playListBean.getPlayId();
                 mPlayId1 = playListBean.getPlayId1();
                 mPresenter.loadData(mNumber, mRoomId, mPlayId, mPlayId1);
             }
         });
         popOPtions.showPop(toolbar);
-//
-//        new MaterialDialog.Builder(this).title("玩法选择")
-//                .items(array)
-//                .positiveText(R.string.dialog_ok)
-//                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice()
-//                {
-//                    @Override
-//                    public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text)
-//                    {
-//                        if (which == -1)
-//                        {
-//                            return true;
-//                        }
-//
-//                        return true;
-//                    }
-//                })
-//                .show();
+        //
+        //        new MaterialDialog.Builder(this).title("玩法选择")
+        //                .items(array)
+        //                .positiveText(R.string.dialog_ok)
+        //                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice()
+        //                {
+        //                    @Override
+        //                    public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text)
+        //                    {
+        //                        if (which == -1)
+        //                        {
+        //                            return true;
+        //                        }
+        //
+        //                        return true;
+        //                    }
+        //                })
+        //                .show();
     }
 
     @Override
