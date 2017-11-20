@@ -48,6 +48,7 @@ public interface Constants
     String EXTRA_PLAY_ID1 = "extra_play_id1";
     String EXTRA_TOPUP_WEIXIN = "extra_topup_weixin";
     String EXTRA_TOPUP_TOPUPAMOUNT = "extra_topup_topupamount";
+    String EXTRA_TOPUP_NAME = "extra_topup_name";
     String EXTRA_TOPUP_PAYID = "extra_topup_payid";
     String EXTRA_BUY_RECORD_ID = "extra_buy_record_id";
     String EXTRA_BUY_GAME_ID = "extra_buy_game_id";
