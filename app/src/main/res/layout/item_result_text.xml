@@ -10,5 +10,5 @@
     android:gravity="center"
     android:text="34"
     android:textColor="@color/white"
-    android:textSize="14sp"/>
+    android:textSize="16sp"/>
 

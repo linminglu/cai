@@ -216,7 +216,7 @@ public class OtherPayFragment extends BaseFragment implements View.OnClickListen
                                             .getPayImg() + "/common/recharge/third?isH5=1&memberId=" + UserConfig
                                             .getInstance()
                                             .getToken(topupActivity)
-                                            .getMemberId() + "&type=7&payId=" + payAdapter.getBeanContents()
+                                            .getMemberId() + "&type=8&payId=" + payAdapter.getBeanContents()
                                             .get(i)
                                             .getId() + "&amount=" + topupActivity.getTopupAmount() + "&bankName=&baseUrl=" + HttpUtil.mNewUrl;
                                     final Uri uri = Uri.parse(url);

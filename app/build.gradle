@@ -11,11 +11,17 @@ android {
         versionName "V1.10"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-        ndk {
-            moduleName "p2pnative"
-            ldLibs "log"
-            //ldLibs "log", "z", "m"d
+//        ndk {
+//            moduleName "p2pnative"
+//            ldLibs "log"
+        //ldLibs "log", "z", "m"d
 //            abiFilters "armeabi", "armeabi-v7a", "x86"
+//        }
+
+        externalNativeBuild {
+            cmake {
+                cppFlags ""
+            }
         }
 
         manifestPlaceholders = [
@@ -42,6 +48,12 @@ android {
 //        }
     }
 
+    externalNativeBuild {
+        cmake {
+            path "CMakeLists.txt"
+        }
+    }
+
 
 }
 
@@ -55,7 +67,7 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.2.0'
     compile 'io.reactivex.rxjava2:rxjava:2.0.1'
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    compile 'com.google.code.gson:gson:2.7'
+    compile 'com.google.code.gson:gson:2.8.2'
     // KLog日志工具
     compile 'com.github.zhaokaiqiang.klog:library:1.5.0'
     compile 'com.afollestad.material-dialogs:core:0.9.4.5'
@@ -74,6 +86,6 @@ dependencies {
     compile 'cn.jiguang.sdk:jcore:1.1.7'  // 此处以JCore 1.1.7 版本为例。
 
     compile 'cn.jiguang.sdk:janalytics:1.1.1' // 此处以JAnalytics 1.1.1 版本为例。
-    compile 'cn.jiguang.sdk:jcore:1.1.2' // 此处以JCore 1.1.2 版本为例。
+    compile 'cn.jiguang.sdk:jcore:1.1.7' // 此处以JCore 1.1.7 版本为例。
     compile 'com.github.lypeer:FcPermissions:v0.0.1'
 }

@@ -226,7 +226,7 @@ public class TopupActivity extends ToolbarActivity implements Toolbar.OnMenuItem
     {
         topupUsernameTv.setText(result.getCode());
         topupYueTv.setText(result.getAmount() + "元");
-        topupBuyVp.setOffscreenPageLimit(result.getPayType().size());
+        topupBuyVp.setOffscreenPageLimit(result.getPayTypeList().size());
         topupBuyVp.setPageTransformer(true, new ZoomOutPageTransformer());
         fragmentManager = getSupportFragmentManager();
         topupBuyVp.setAdapter(new FragmentPagerAdapter(fragmentManager)
@@ -235,7 +235,7 @@ public class TopupActivity extends ToolbarActivity implements Toolbar.OnMenuItem
             public Fragment getItem(int position)
             {
                 Fragment ff = null;
-                switch (result.getPayType().get(position).getCode())
+                switch (result.getPayTypeList().get(position).getCode())
                 {
                     case "bank":
                         ff = new BankPayFragment();
@@ -262,13 +262,13 @@ public class TopupActivity extends ToolbarActivity implements Toolbar.OnMenuItem
             @Override
             public int getCount()
             {
-                return result.getPayType().size();
+                return result.getPayTypeList().size();
             }
 
             @Override
             public CharSequence getPageTitle(int position)
             {
-                return result.getPayType().get(position).getName();
+                return result.getPayTypeList().get(position).getName();
             }
         });
 

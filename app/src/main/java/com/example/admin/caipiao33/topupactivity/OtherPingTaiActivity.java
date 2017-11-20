@@ -87,7 +87,7 @@ public class OtherPingTaiActivity extends ToolbarActivity implements Toolbar.OnM
         map.put("payId", payId);
         map.put("amount", topupamount);
 
-        HttpUtil.requestSecond("user", "rqqpayScanNext", map, QqPingTaiBean.class, OtherPingTaiActivity.this, new MyResponseListener<QqPingTaiBean>()
+        HttpUtil.requestSecond("user", "rotherScanNext", map, QqPingTaiBean.class, OtherPingTaiActivity.this, new MyResponseListener<QqPingTaiBean>()
         {
             @Override
             public void onSuccess(QqPingTaiBean result)

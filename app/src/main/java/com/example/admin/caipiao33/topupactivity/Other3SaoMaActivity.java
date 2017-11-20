@@ -147,7 +147,7 @@ public class Other3SaoMaActivity extends ToolbarActivity implements Toolbar.OnMe
         map.put("amount", topupamount);
         map.put("baseUrl", HttpUtil.mNewUrl);
 
-        HttpUtil.requestThird("user", "recharge", "qqpayNext", map, Qq3SaoMaBean.class, Other3SaoMaActivity.this, new MyResponseListener<Qq3SaoMaBean>()
+        HttpUtil.requestThird("user", "recharge", "otherNext", map, Qq3SaoMaBean.class, Other3SaoMaActivity.this, new MyResponseListener<Qq3SaoMaBean>()
         {
             @Override
             public void onSuccess(Qq3SaoMaBean result)

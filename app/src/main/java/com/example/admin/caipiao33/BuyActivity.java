@@ -1,5 +1,6 @@
 package com.example.admin.caipiao33;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -164,10 +165,10 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
         this.mBuyRoomBean = bean;
         mTitleArray = getResources().getStringArray(R.array.s_array_buy);
         // 区配6合的连肖连尾
-        String num = mBuyRoomBean.getNum();
+        String type = mBuyRoomBean.getType();
         buyTab.setVisibility(View.VISIBLE);
         buyPager.setNoScroll(false);
-        if (num.equals(MyBaseBuyAdapter.TYPE_SIX))
+        if (type.equals("xglhc"))
         {
             if (isTitleArrayChange)
             {
@@ -273,7 +274,7 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
         }
         else
         {
-            List<Fragment> fragments = fragmentManager.getFragments();
+            @SuppressLint("RestrictedApi") List<Fragment> fragments = fragmentManager.getFragments();
             List<BuyRoomBean.PlayDetailListBean> playDetailList = new ArrayList<>();
             for (BuyRoomBean.PlayDetailListBean p : bean.getPlayDetailList())
             {
@@ -292,7 +293,7 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
             }
         }
         // 区分6 合 彩种
-        if (num.equals(MyBaseBuyAdapter.TYPE_SIX))
+        if (type.equals("xglhc"))
         {
             buyPager.setCurrentItem(0);
         }
@@ -377,7 +378,7 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
     public void submitSuccess()
     {
         ToastUtil.show("下注成功");
-        List<Fragment> fragments = fragmentManager.getFragments();
+        @SuppressLint("RestrictedApi") List<Fragment> fragments = fragmentManager.getFragments();
         for (Fragment fragment : fragments)
         {
             if (fragment instanceof QuickBuyFragment)
@@ -523,7 +524,7 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
         switch (view.getId())
         {
             case R.id.tv_clear: // 清空选项
-                List<Fragment> fragments = fragmentManager.getFragments();
+                @SuppressLint("RestrictedApi") List<Fragment> fragments = fragmentManager.getFragments();
                 for (Fragment fragment : fragments)
                 {
                     if (fragment instanceof QuickBuyFragment)
@@ -574,7 +575,8 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
         }
 
         int currentItem = buyPager.getCurrentItem();
-        QuickBuyFragment fragment = (QuickBuyFragment) fragmentManager.getFragments()
+        @SuppressLint("RestrictedApi") QuickBuyFragment fragment = (QuickBuyFragment) fragmentManager
+                .getFragments()
                 .get(currentItem);
         List<BuyRoomBean.PlayDetailListBean.ListBean> checked = fragment.getChecked();
         int gridNumColumns = 4;

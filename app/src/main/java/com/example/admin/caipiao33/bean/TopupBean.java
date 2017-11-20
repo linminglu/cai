@@ -12,14 +12,14 @@ public class TopupBean
     /**
      * amount : 12448.82
      * rechargeTip : 为避免17:00－21:30高峰入款拥堵，建议各用户提前充值，谢谢！
-     * payType : [{"name":"银行转账","code":"bank"},{"name":"微信","code":"wechat"},{"name":"支付宝","code":"alipay"},{"name":"QQ钱包","code":"qqpay"},{"name":"网银支付","code":"online"},{"name":"其它","code":"other"}]
      * code : gavin
+     * payTypeList : [{"name":"银行转账","code":"bank"},{"name":"微信","code":"wechat"},{"name":"支付宝","code":"alipay"},{"name":"QQ钱包","code":"qqpay"},{"name":"网银支付","code":"online"},{"name":"其它","code":"other"}]
      */
 
     private double amount;
     private String rechargeTip;
     private String code;
-    private List<PayTypeBean> payType;
+    private List<PayTypeListBean> payTypeList;
 
     public double getAmount()
     {
@@ -51,17 +51,17 @@ public class TopupBean
         this.code = code;
     }
 
-    public List<PayTypeBean> getPayType()
+    public List<PayTypeListBean> getPayTypeList()
     {
-        return payType;
+        return payTypeList;
     }
 
-    public void setPayType(List<PayTypeBean> payType)
+    public void setPayTypeList(List<PayTypeListBean> payTypeList)
     {
-        this.payType = payType;
+        this.payTypeList = payTypeList;
     }
 
-    public static class PayTypeBean
+    public static class PayTypeListBean
     {
         /**
          * name : 银行转账
@@ -82,8 +82,7 @@ public class TopupBean
         }
 
         public String getCode()
-        {
-            return code;
+        {            return code;
         }
 
         public void setCode(String code)
