@@ -1,27 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/md_divider_white"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:orientation="vertical"
     >
 
     <android.support.v7.widget.Toolbar
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/toolbar"
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:theme="@style/AppTheme.AppBarOverlay"
+        android:background="?attr/colorPrimary"
         android:gravity="center"
-        android:background="?attr/colorPrimary">
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:popupTheme="@style/OverflowMenu">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/s_goucai_dating"
             android:singleLine="true"
+            android:text="@string/s_goucai_dating"
             android:textColor="@color/white"
             android:textSize="20sp"
             />
@@ -42,11 +44,11 @@
             android:layout_weight="1"
             android:background="@drawable/radio_bg"
             android:button="@null"
-            android:gravity="center"
-            android:paddingLeft="0dp"
             android:checked="true"
             android:drawablePadding="3dp"
             android:drawableTop="@mipmap/goucai_all"
+            android:gravity="center"
+            android:paddingLeft="0dp"
             android:text="@string/s_goucai_all"
             android:textColor="@color/white"
             android:textSize="13sp"/>
@@ -58,9 +60,9 @@
             android:layout_weight="1"
             android:background="@drawable/radio_bg"
             android:button="@null"
+            android:drawableTop="@mipmap/goucai_gp"
             android:gravity="center"
             android:paddingLeft="0dp"
-            android:drawableTop="@mipmap/goucai_gp"
             android:text="@string/s_goucai_gp"
             android:textColor="@color/white"
             android:textSize="13sp"/>
@@ -72,9 +74,9 @@
             android:layout_weight="1"
             android:background="@drawable/radio_bg"
             android:button="@null"
+            android:drawableTop="@mipmap/goucai_dp"
             android:gravity="center"
             android:paddingLeft="0dp"
-            android:drawableTop="@mipmap/goucai_dp"
             android:text="@string/s_goucai_dp"
             android:textColor="@color/white"
             android:textSize="13sp"/>
@@ -90,9 +92,9 @@
 
     <com.example.admin.caipiao33.views.LoadingLayout
         android:id="@+id/loadingLayout"
-        android:layout_below="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
         android:visibility="visible">
 
     </com.example.admin.caipiao33.views.LoadingLayout>

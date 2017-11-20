@@ -157,6 +157,7 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
             finish();
             return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 

@@ -14,16 +14,17 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:gravity="center"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:popupTheme="@style/OverflowMenu">
 
         <TextView
             android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:padding="5dp"
             android:drawablePadding="5dp"
             android:drawableRight="@mipmap/top_zhong_sanjiao"
+            android:padding="5dp"
             android:singleLine="true"
             android:textColor="@color/white"
             android:textSize="20sp"
