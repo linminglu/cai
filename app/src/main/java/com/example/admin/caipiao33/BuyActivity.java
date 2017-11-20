@@ -39,6 +39,7 @@ import com.example.admin.caipiao33.views.ConfirmBuyDialog;
 import com.example.admin.caipiao33.views.LoadingLayout;
 import com.example.admin.caipiao33.views.NoScrollViewPager;
 import com.example.admin.caipiao33.views.PagerSlidingTabStrip;
+import com.example.admin.caipiao33.views.PopOPtions;
 import com.example.admin.caipiao33.views.ResultAssist;
 import com.example.admin.caipiao33.views.ZoomOutPageTransformer;
 
@@ -669,27 +670,36 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
         {
             array.add(bean.getPlayName());
         }
-        new MaterialDialog.Builder(this).title("玩法选择")
-                .items(array)
-                .positiveText(R.string.dialog_ok)
-                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice()
-                {
-                    @Override
-                    public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text)
-                    {
-                        if (which == -1)
-                        {
-                            return true;
-                        }
-                        BuyRoomBean.PlayListBean playListBean = mBuyRoomBean.getPlayList()
-                                .get(which);
-                        mPlayId = playListBean.getPlayId();
-                        mPlayId1 = playListBean.getPlayId1();
-                        mPresenter.loadData(mNumber, mRoomId, mPlayId, mPlayId1);
-                        return true;
-                    }
-                })
-                .show();
+        PopOPtions popOPtions = new PopOPtions();
+        popOPtions.init(this, array, new PopOPtions.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(String s, int position) {
+                BuyRoomBean.PlayListBean playListBean = mBuyRoomBean.getPlayList()
+                        .get(position);
+                mPlayId = playListBean.getPlayId();
+                mPlayId1 = playListBean.getPlayId1();
+                mPresenter.loadData(mNumber, mRoomId, mPlayId, mPlayId1);
+            }
+        });
+        popOPtions.showPop(toolbar);
+//
+//        new MaterialDialog.Builder(this).title("玩法选择")
+//                .items(array)
+//                .positiveText(R.string.dialog_ok)
+//                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice()
+//                {
+//                    @Override
+//                    public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text)
+//                    {
+//                        if (which == -1)
+//                        {
+//                            return true;
+//                        }
+//
+//                        return true;
+//                    }
+//                })
+//                .show();
     }
 
     @Override
