@@ -1,12 +1,13 @@
 package com.example.admin.caipiao33.fragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ExpandableListView;
+import android.widget.ListView;
 
 import com.example.admin.caipiao33.BaseFragment;
 import com.example.admin.caipiao33.R;
@@ -19,7 +20,6 @@ import com.example.admin.caipiao33.fragment.adapter.TypeSix27Adapter;
 import com.example.admin.caipiao33.fragment.adapter.TypeSix28Adapter;
 import com.example.admin.caipiao33.fragment.adapter.TypeSix6Adapter;
 import com.example.admin.caipiao33.fragment.adapter.TypeSixAdapter;
-import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.views.CusRefreshLayout;
 
 import java.util.List;
@@ -61,7 +61,10 @@ public class QuickBuyFragment extends BaseFragment
     public void setUserVisibleHint(boolean isVisibleToUser)
     {
         isvisible = isVisibleToUser;
-        //        refreshLayout.setMlvistop(true);//切换页面的时候默认是可以上下滑动的状态
+        if (listView != null && listViewCanScroll(listView))
+        {
+            refreshLayout.setMlvistop(true);//切换页面的时候默认是可以上下滑动的状态
+        }
         super.setUserVisibleHint(isVisibleToUser);
     }
 
@@ -219,6 +222,37 @@ public class QuickBuyFragment extends BaseFragment
     public List<BuyRoomBean.PlayDetailListBean.ListBean> getChecked()
     {
         return adapter.getCheckedList();
+    }
+
+    /**
+     * @Description: 判断ListView是否可以滑动，即ListView的Item是否显示在同一个屏幕内，不需要滑动就能全部显示。
+     * @author zlf
+     * @date 2016年01月09日 下午 15:06:08
+     */
+    @SuppressLint("NewApi")
+    public static boolean listViewCanScroll(ListView mListView)
+    {
+        boolean canScrollList = mListView.canScrollList(1);//Android自带的方法，好像不太管用。
+        boolean canScroll = false;
+        int childCount = mListView.getChildCount();//返回的是当前可见区域的 Item 的总数。
+        int count = mListView.getCount();//返回的是 ListView 的所有的 Item 的总数。
+        int firstVisiblePosition = mListView.getFirstVisiblePosition();
+        int lastVisibkePosition = mListView.getLastVisiblePosition();
+    /*
+     * 第一个可见的Item等于0，证明ListView是在最顶部，
+     *并且最后一个可见I的tem+1（Item是从0开始的）等于Item的总数的话，证明ListView在最底部
+     *如果一个ListView同时可以看见顶部和底部的话，证明该ListView是不可滑动的，即ListView的Item
+     *全在一个屏幕内，不需要滑动。
+     */
+        if (firstVisiblePosition == 0 && count == lastVisibkePosition + 1)
+        {
+            canScroll = false;
+        }
+        else
+        {
+            canScroll = true;
+        }
+        return canScroll;
     }
 }
 
