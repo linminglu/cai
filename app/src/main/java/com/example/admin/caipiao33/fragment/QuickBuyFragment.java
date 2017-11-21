@@ -1,9 +1,11 @@
 package com.example.admin.caipiao33.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ExpandableListView;
 
 import com.example.admin.caipiao33.BaseFragment;
@@ -17,6 +19,8 @@ import com.example.admin.caipiao33.fragment.adapter.TypeSix27Adapter;
 import com.example.admin.caipiao33.fragment.adapter.TypeSix28Adapter;
 import com.example.admin.caipiao33.fragment.adapter.TypeSix6Adapter;
 import com.example.admin.caipiao33.fragment.adapter.TypeSixAdapter;
+import com.example.admin.caipiao33.utils.ToastUtil;
+import com.example.admin.caipiao33.views.CusRefreshLayout;
 
 import java.util.List;
 
@@ -44,6 +48,8 @@ public class QuickBuyFragment extends BaseFragment
     private MyBaseBuyAdapter adapter;
     private int mType;
     private String mPlayId;
+    private boolean isvisible;
+    private static CusRefreshLayout refreshLayout;
 
 
     //若Fragement定义有带参构造函数，则一定要定义public的默认的构造函数
@@ -51,15 +57,24 @@ public class QuickBuyFragment extends BaseFragment
     {
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser)
+    {
+        isvisible = isVisibleToUser;
+        refreshLayout.setMlvistop(true);
+        super.setUserVisibleHint(isVisibleToUser);
+    }
+
     /**
      */
-    public static QuickBuyFragment newInstance(BuyRoomBean bean, int type)
+    public static QuickBuyFragment newInstance(BuyRoomBean bean, int type, CusRefreshLayout refreshLayout1)
     {
         QuickBuyFragment fragment = new QuickBuyFragment();
         Bundle args = new Bundle();
         args.putSerializable(PLAY_DETAIL_LIST_BEAN, bean);
         args.putInt(TYPE, type);
         fragment.setArguments(args);
+        refreshLayout = refreshLayout1;
         return fragment;
     }
 
@@ -125,6 +140,50 @@ public class QuickBuyFragment extends BaseFragment
         {
             listView.expandGroup(i);
         }
+
+        listView.setOnScrollListener(new AbsListView.OnScrollListener()
+        {
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
+            {
+                if (isvisible)
+                {
+                    if (firstVisibleItem == 0)
+                    {
+                        View firstVisibleItemView = listView.getChildAt(0);
+                        if (firstVisibleItemView != null && firstVisibleItemView.getTop() == 0)
+                        {
+                            refreshLayout.setMlvistop(false);
+                        }
+                    }
+                    else if ((firstVisibleItem + visibleItemCount) == totalItemCount)
+                    {
+                        refreshLayout.setMlvistop(true);
+                        View lastVisibleItemView = listView.getChildAt(listView.getChildCount() - 1);
+                        if (lastVisibleItemView != null && lastVisibleItemView.getBottom() == listView
+                                .getHeight())
+                        {
+                        }
+                    }
+                    else
+                    {
+                        refreshLayout.setMlvistop(true);
+                    }
+                }
+                else
+                {
+                    refreshLayout.setMlvistop(false);
+                }
+
+            }
+
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState)
+            {
+                //do nothing
+            }
+
+        });
     }
 
     @Override

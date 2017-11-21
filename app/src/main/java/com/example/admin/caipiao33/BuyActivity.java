@@ -35,9 +35,9 @@ import com.example.admin.caipiao33.utils.DateUtils;
 import com.example.admin.caipiao33.utils.ServiceTime;
 import com.example.admin.caipiao33.utils.StringUtils;
 import com.example.admin.caipiao33.utils.ToastUtil;
-import com.example.admin.caipiao33.utils.Tools;
 import com.example.admin.caipiao33.utils.UserConfig;
 import com.example.admin.caipiao33.views.ConfirmBuyDialog;
+import com.example.admin.caipiao33.views.CusRefreshLayout;
 import com.example.admin.caipiao33.views.LoadingLayout;
 import com.example.admin.caipiao33.views.NoScrollViewPager;
 import com.example.admin.caipiao33.views.PagerSlidingTabStrip;
@@ -91,7 +91,7 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
     @BindView(R.id.tv_amount)
     TextView tvAmount;
     @BindView(R.id.swipeRefreshLayout)
-    SwipeRefreshLayout swipeRefreshLayout;
+    CusRefreshLayout swipeRefreshLayout;
     private String mNumber;
     private String mTitleStr;
     private String mRoomId;
@@ -151,7 +151,6 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
                 mPresenter.loadData(mNumber, mRoomId, mPlayId, mPlayId1);
             }
         });
-
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
         {
             @Override
@@ -160,7 +159,6 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
                 mPresenter.loadData(mNumber, mRoomId, mPlayId, mPlayId1);
             }
         });
-        Tools.setSwipeRefreshColor(swipeRefreshLayout);
     }
 
     @Override
@@ -171,7 +169,6 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
             finish();
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -266,10 +263,10 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
                     switch (position)
                     {
                         case 0:
-                            ff = QuickBuyFragment.newInstance(mBuyRoomBean, QuickBuyFragment.TYPE_SELF_SELECT);
+                            ff = QuickBuyFragment.newInstance(mBuyRoomBean, QuickBuyFragment.TYPE_SELF_SELECT, swipeRefreshLayout);
                             break;
                         case 1:
-                            ff = QuickBuyFragment.newInstance(mBuyRoomBean, QuickBuyFragment.TYPE_QUICK);
+                            ff = QuickBuyFragment.newInstance(mBuyRoomBean, QuickBuyFragment.TYPE_QUICK, swipeRefreshLayout);
                             break;
                     }
                     return ff;

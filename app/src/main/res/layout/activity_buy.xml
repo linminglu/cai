@@ -14,8 +14,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:gravity="center"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        app:popupTheme="@style/OverflowMenu">
+        android:theme="@style/AppTheme.AppBarOverlay">
 
         <TextView
             android:id="@+id/toolbar_title"
@@ -32,19 +31,17 @@
 
     </android.support.v7.widget.Toolbar>
 
-    <android.support.v4.widget.SwipeRefreshLayout
+    <com.example.admin.caipiao33.views.CusRefreshLayout
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar"
-        android:addStatesFromChildren="true">
+        android:layout_above="@+id/bottomLinearLayout"
+        android:layout_below="@+id/toolbar">
 
         <ScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/bottomLinearLayout"
-            android:layout_below="@+id/toolbar"
             android:fillViewport="true">
 
             <RelativeLayout
@@ -182,7 +179,7 @@
             </RelativeLayout>
 
         </ScrollView>
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </com.example.admin.caipiao33.views.CusRefreshLayout>
 
     <LinearLayout
         android:id="@+id/bottomLinearLayout"
