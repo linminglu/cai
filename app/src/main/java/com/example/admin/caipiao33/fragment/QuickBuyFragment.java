@@ -61,7 +61,7 @@ public class QuickBuyFragment extends BaseFragment
     public void setUserVisibleHint(boolean isVisibleToUser)
     {
         isvisible = isVisibleToUser;
-        refreshLayout.setMlvistop(true);
+        refreshLayout.setMlvistop(true);//切换页面的时候默认是可以上下滑动的状态
         super.setUserVisibleHint(isVisibleToUser);
     }
 
