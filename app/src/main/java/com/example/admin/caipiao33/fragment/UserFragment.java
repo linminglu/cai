@@ -59,7 +59,6 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 import static com.example.admin.caipiao33.R.id.toolbar;
-import static com.umeng.analytics.pro.x.G;
 
 
 /**

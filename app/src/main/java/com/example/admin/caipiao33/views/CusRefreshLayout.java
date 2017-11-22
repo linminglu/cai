@@ -65,6 +65,7 @@ public class CusRefreshLayout extends SwipeRefreshLayout
                 {
                     return false;
                 }
+
                 //获取当前手的位置
 
                 float endY = ev.getY();

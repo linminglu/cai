@@ -18,7 +18,6 @@ import com.example.admin.caipiao33.application.MyApplication;
 import com.example.admin.caipiao33.bean.BaseUrlBean;
 import com.example.admin.caipiao33.utils.AppUtils;
 import com.example.admin.caipiao33.utils.Constants;
-import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.views.LoadingLayout;
 import com.example.admin.caipiao33.wheelview.ProgressDialogBar;
 import com.lypeer.fcpermission.FcPermissions;

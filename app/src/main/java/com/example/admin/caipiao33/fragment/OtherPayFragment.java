@@ -20,8 +20,6 @@ import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.httputils.MyResponseListener;
 import com.example.admin.caipiao33.topupactivity.Other3SaoMaActivity;
 import com.example.admin.caipiao33.topupactivity.OtherPingTaiActivity;
-import com.example.admin.caipiao33.topupactivity.QqPay3SaoMaActivity;
-import com.example.admin.caipiao33.topupactivity.QqPayPingTaiActivity;
 import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.utils.UserConfig;

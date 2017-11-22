@@ -1,7 +1,6 @@
 package com.example.admin.caipiao33.fragment.adapter;
 
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.SpannableString;
@@ -9,7 +8,6 @@ import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
-import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +18,6 @@ import android.widget.TextView;
 import com.example.admin.caipiao33.R;
 import com.example.admin.caipiao33.bean.BuyRoomBean;
 import com.example.admin.caipiao33.fragment.QuickBuyFragment;
-import com.example.admin.caipiao33.utils.StringUtils;
 import com.example.admin.caipiao33.utils.ViewHolder;
 import com.example.admin.caipiao33.views.NumberInputFilter;
 

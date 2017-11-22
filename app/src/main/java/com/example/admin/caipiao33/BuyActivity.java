@@ -21,13 +21,11 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.admin.caipiao33.bean.BuyRoomBean;
 import com.example.admin.caipiao33.bean.GouCaiBean;
 import com.example.admin.caipiao33.bean.TokenBean;
 import com.example.admin.caipiao33.contract.IBuyContract;
 import com.example.admin.caipiao33.fragment.QuickBuyFragment;
-import com.example.admin.caipiao33.fragment.adapter.MyBaseBuyAdapter;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.presenter.BuyPresenter;
 import com.example.admin.caipiao33.utils.Constants;

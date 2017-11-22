@@ -7,8 +7,6 @@ import android.os.Handler;
 
 import com.example.admin.caipiao33.BuildConfig;
 import com.example.admin.caipiao33.bean.BaseUrlBean;
-import com.example.admin.caipiao33.httputils.HttpUtil;
-import com.example.admin.caipiao33.httputils.MyResponseListener;
 import com.example.admin.caipiao33.utils.Global;
 import com.socks.library.KLog;
 
