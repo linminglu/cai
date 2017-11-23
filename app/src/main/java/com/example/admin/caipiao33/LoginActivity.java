@@ -1,6 +1,7 @@
 package com.example.admin.caipiao33;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.method.PasswordTransformationMethod;
@@ -17,6 +18,7 @@ import com.example.admin.caipiao33.contract.ILoginContract;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.httputils.MyResponseListener;
 import com.example.admin.caipiao33.presenter.LoginPresenter;
+import com.example.admin.caipiao33.topupactivity.BankPayActivity;
 import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.HomeEvent;
 import com.example.admin.caipiao33.utils.LoginEvent;
@@ -164,10 +166,17 @@ public class LoginActivity extends ToolbarActivity implements Toolbar.OnMenuItem
                     @Override
                     public void onSuccess(String result)
                     {
-                        Intent intent = new Intent(LoginActivity.this, WebUrlActivity.class);
-                        intent.putExtra(Constants.EXTRA_URL, result);
-                        intent.putExtra(Constants.EXTRA_TITLE, "在线客服");
-                        startActivity(intent);
+                        if (result.contains("#_WEBVIEW_#"))
+                        {
+                            result = result.replaceAll("#_WEBVIEW_#", "");
+                            final Uri uri = Uri.parse(result);
+                            final Intent it = new Intent(Intent.ACTION_VIEW, uri);
+                            startActivity(it);
+                        }
+                        else
+                        {
+                            toWebUrlActivity(result, "在线客服");
+                        }
                     }
 
                     @Override
@@ -204,6 +213,15 @@ public class LoginActivity extends ToolbarActivity implements Toolbar.OnMenuItem
             finish();
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    // 跳转到网页
+    private void toWebUrlActivity(String url, String title)
+    {
+        Intent intent = new Intent(LoginActivity.this, WebUrlActivity.class);
+        intent.putExtra(Constants.EXTRA_URL, url);
+        intent.putExtra(Constants.EXTRA_TITLE, title);
+        startActivity(intent);
     }
 
 

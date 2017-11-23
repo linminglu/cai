@@ -139,6 +139,7 @@ public class AliPingTaiActivity extends ToolbarActivity implements Toolbar.OnMen
                     {
                         if (result.contains("#_WEBVIEW_#"))
                         {
+                            result = result.replaceAll("#_WEBVIEW_#", "");
                             final Uri uri = Uri.parse(result);
                             final Intent it = new Intent(Intent.ACTION_VIEW, uri);
                             startActivity(it);

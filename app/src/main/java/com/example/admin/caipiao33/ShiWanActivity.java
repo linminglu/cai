@@ -1,6 +1,7 @@
 package com.example.admin.caipiao33;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -13,6 +14,7 @@ import com.example.admin.caipiao33.contract.IShiWanContract;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.httputils.MyResponseListener;
 import com.example.admin.caipiao33.presenter.ShiWanPresenter;
+import com.example.admin.caipiao33.topupactivity.WeiXin3SaoMaActivity;
 import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.HomeEvent;
 import com.example.admin.caipiao33.utils.LoginEvent;
@@ -113,10 +115,17 @@ public class ShiWanActivity extends ToolbarActivity implements Toolbar.OnMenuIte
                     @Override
                     public void onSuccess(String result)
                     {
-                        Intent intent = new Intent(ShiWanActivity.this, WebUrlActivity.class);
-                        intent.putExtra(Constants.EXTRA_URL, result);
-                        intent.putExtra(Constants.EXTRA_TITLE, "在线客服");
-                        startActivity(intent);
+                        if (result.contains("#_WEBVIEW_#"))
+                        {
+                            result = result.replaceAll("#_WEBVIEW_#", "");
+                            final Uri uri = Uri.parse(result);
+                            final Intent it = new Intent(Intent.ACTION_VIEW, uri);
+                            startActivity(it);
+                        }
+                        else
+                        {
+                            toWebUrlActivity(result, "在线客服");
+                        }
                     }
 
                     @Override
@@ -138,6 +147,15 @@ public class ShiWanActivity extends ToolbarActivity implements Toolbar.OnMenuIte
                 finish();
                 break;
         }
+    }
+
+    // 跳转到网页
+    private void toWebUrlActivity(String url, String title)
+    {
+        Intent intent = new Intent(ShiWanActivity.this, WebUrlActivity.class);
+        intent.putExtra(Constants.EXTRA_URL, url);
+        intent.putExtra(Constants.EXTRA_TITLE, title);
+        startActivity(intent);
     }
 }
 

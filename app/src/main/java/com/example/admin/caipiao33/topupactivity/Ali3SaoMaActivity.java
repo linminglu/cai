@@ -160,6 +160,7 @@ public class Ali3SaoMaActivity extends ToolbarActivity implements Toolbar.OnMenu
                     {
                         if (result.contains("#_WEBVIEW_#"))
                         {
+                            result = result.replaceAll("#_WEBVIEW_#", "");
                             final Uri uri = Uri.parse(result);
                             final Intent it = new Intent(Intent.ACTION_VIEW, uri);
                             startActivity(it);
