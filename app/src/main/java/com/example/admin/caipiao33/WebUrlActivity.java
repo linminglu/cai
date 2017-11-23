@@ -543,7 +543,14 @@ public class WebUrlActivity extends BaseActivity implements View.OnClickListener
     {
         if (item.getItemId() == android.R.id.home)
         {
-            finish();
+            if (webView.canGoBack())
+            {
+                webView.goBack();
+            }
+            else
+            {
+                finish();
+            }
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -616,6 +623,19 @@ public class WebUrlActivity extends BaseActivity implements View.OnClickListener
             webView.setWebChromeClient(null);
             webView.setWebViewClient(null);
             webView = null;
+        }
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        if (webView.canGoBack())
+        {
+            webView.goBack();
+        }
+        else
+        {
+            finish();
         }
     }
 

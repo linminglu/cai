@@ -80,6 +80,8 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
     TextView tvTime;
     @BindView(R.id.tv_index)
     TextView tvIndex;
+    @BindView(R.id.tv_trend)
+    TextView tvTrend;
     @BindView(R.id.layout_result)
     LinearLayout layoutResult;
     @BindView(R.id.buy_tab)
@@ -175,6 +177,14 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
     {
         this.mBuyRoomBean = bean;
         swipeRefreshLayout.setRefreshing(false);
+        if (bean.getType().equals("xglhc") || bean.getType().equals("pcdd"))
+        {
+            tvTrend.setText("历史开奖");
+        }
+        else
+        {
+            tvTrend.setText("  趋势  ");
+        }
         mTitleArray = getResources().getStringArray(R.array.s_array_buy);
         // 区配6合的连肖连尾
         String type = mBuyRoomBean.getType();
@@ -546,11 +556,23 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
                     }
                 }
                 break;
-            case R.id.tv_trend: // 历史开奖
+            case R.id.tv_trend: // 历史开奖 or 趋势
                 Intent webIntent = new Intent(this, WebUrlActivity.class);
-                webIntent.putExtra(Constants.EXTRA_URL, HttpUtil.mNewUrl + "/api/trend?gid=" + mNumber);
-                webIntent.putExtra(Constants.EXTRA_PLAY_NAME, mTitleStr);
-                webIntent.putExtra(Constants.EXTRA_TITLE, getString(R.string.s_trend));
+                if (mBuyRoomBean.getType().equals("xglhc") || mBuyRoomBean.getType().equals("pcdd"))
+                {
+                    webIntent.putExtra(Constants.EXTRA_URL, HttpUtil.mNewUrl + "/api/draw1?gid=" + mNumber);
+                    webIntent.putExtra(Constants.EXTRA_PLAY_NAME, mTitleStr);
+                    webIntent.putExtra(Constants.EXTRA_TITLE, mTitleStr + "的历史开奖");
+                }
+                else
+                {
+                    webIntent.putExtra(Constants.EXTRA_URL, HttpUtil.mNewUrl + "/api/trend?gid=" + mNumber);
+                    webIntent.putExtra(Constants.EXTRA_PLAY_NAME, mTitleStr);
+                    webIntent.putExtra(Constants.EXTRA_TITLE, mTitleStr + "的趋势");
+                }
+                //                webIntent.putExtra(Constants.EXTRA_URL, HttpUtil.mNewUrl + "/api/trend?gid=" + mNumber);
+                //                webIntent.putExtra(Constants.EXTRA_PLAY_NAME, mTitleStr);
+                //                webIntent.putExtra(Constants.EXTRA_TITLE, getString(R.string.s_trend));
                 startActivity(webIntent);
                 break;
             case R.id.tv_buy: // 投注
