@@ -445,6 +445,7 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
     {
         if (url.contains("#_WEBVIEW_#"))
         {
+            url = url.replaceAll("#_WEBVIEW_#", "");
             final Uri uri = Uri.parse(url);
             final Intent it = new Intent(Intent.ACTION_VIEW, uri);
             startActivity(it);
