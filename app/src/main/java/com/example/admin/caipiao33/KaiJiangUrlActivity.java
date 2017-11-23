@@ -29,6 +29,7 @@ public class KaiJiangUrlActivity extends ToolbarActivity implements Toolbar.OnMe
     private String mUrl;
     private String mTitle;
     private View layoutError;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -98,6 +99,7 @@ public class KaiJiangUrlActivity extends ToolbarActivity implements Toolbar.OnMe
             @Override
             public void onReceivedTitle(WebView view, String title)
             {
+                toolbar.setTitle(title);
                 super.onReceivedTitle(view, title);
             }
         });
@@ -106,6 +108,7 @@ public class KaiJiangUrlActivity extends ToolbarActivity implements Toolbar.OnMe
     public void onCreateCustomToolBar(Toolbar toolbar)
     {
         super.onCreateCustomToolBar(toolbar);
+        this.toolbar = toolbar;
         toolbar.setTitle(mTitle);
         setSupportActionBar(toolbar);
         toolbar.setOnMenuItemClickListener(this);
