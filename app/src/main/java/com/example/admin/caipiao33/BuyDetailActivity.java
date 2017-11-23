@@ -1,11 +1,13 @@
 package com.example.admin.caipiao33;
 
 import android.content.Intent;
+import android.net.http.SslError;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -82,6 +84,12 @@ public class BuyDetailActivity extends BaseActivity
                 mUrl = url;
                 view.loadUrl(url);
                 return true;
+            }
+
+            @Override
+            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error)
+            {
+                handler.proceed();
             }
 
             @Override

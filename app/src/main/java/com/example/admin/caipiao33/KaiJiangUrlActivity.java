@@ -1,11 +1,13 @@
 package com.example.admin.caipiao33;
 
 import android.content.Intent;
+import android.net.http.SslError;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -63,12 +65,19 @@ public class KaiJiangUrlActivity extends ToolbarActivity implements Toolbar.OnMe
             }
 
             @Override
+            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error)
+            {
+                handler.proceed();
+            }
+
+            @Override
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl)
             {
                 super.onReceivedError(view, errorCode, description, failingUrl);
                 layoutError.setVisibility(View.VISIBLE);
             }
         });
+
 
         webView.setWebChromeClient(new WebChromeClient()
         {

@@ -2,12 +2,14 @@ package com.example.admin.caipiao33;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.http.SslError;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.JsResult;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -123,6 +125,11 @@ public class WebActivity extends Activity
                 layoutError.setVisibility(View.VISIBLE);
             }
 
+            @Override
+            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error)
+            {
+                handler.proceed();
+            }
 
             public void onPageFinished(WebView view, String url)
             {
