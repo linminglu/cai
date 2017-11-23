@@ -23,7 +23,7 @@ import java.util.List;
 
 public class TypeSix26Adapter extends TypeBeforeAdapter
 {
-    private static final int COUNT = 4;
+    private static final int COUNT = 5;
 
     public TypeSix26Adapter(LayoutInflater inflater, BuyRoomBean bean, int type)
     {
@@ -182,6 +182,7 @@ public class TypeSix26Adapter extends TypeBeforeAdapter
             ViewHolder.get(convertView, R.id.layout2).setOnClickListener(this);
             ViewHolder.get(convertView, R.id.layout3).setOnClickListener(this);
             ViewHolder.get(convertView, R.id.layout4).setOnClickListener(this);
+            ViewHolder.get(convertView, R.id.layout5).setOnClickListener(this);
         }
         View layout1 = ViewHolder.get(convertView, R.id.layout1);
         TextView tvName1 = ViewHolder.get(convertView, R.id.tv_name1);
@@ -191,6 +192,8 @@ public class TypeSix26Adapter extends TypeBeforeAdapter
         TextView tvName3 = ViewHolder.get(convertView, R.id.tv_name3);
         View layout4 = ViewHolder.get(convertView, R.id.layout4);
         TextView tvName4 = ViewHolder.get(convertView, R.id.tv_name4);
+        View layout5 = ViewHolder.get(convertView, R.id.layout5);
+        TextView tvName5 = ViewHolder.get(convertView, R.id.tv_name5);
 
         layout1.setVisibility(View.INVISIBLE);
         layout1.setTag(R.id.buy_data, null);
@@ -200,6 +203,8 @@ public class TypeSix26Adapter extends TypeBeforeAdapter
         layout3.setTag(R.id.buy_data, null);
         layout4.setVisibility(View.INVISIBLE);
         layout4.setTag(R.id.buy_data, null);
+        layout5.setVisibility(View.INVISIBLE);
+        layout5.setTag(R.id.buy_data, null);
 
         List<BuyRoomBean.PlayDetailListBean.ListBean> listBeen = mDataList.get(groupPosition)
                 .getChildList()
@@ -226,6 +231,10 @@ public class TypeSix26Adapter extends TypeBeforeAdapter
                 case 3:
                     layout = layout4;
                     tvName = tvName4;
+                    break;
+                case 4:
+                    layout = layout5;
+                    tvName = tvName5;
                     break;
                 default:
                     break;
@@ -304,6 +313,7 @@ public class TypeSix26Adapter extends TypeBeforeAdapter
             case R.id.layout2:
             case R.id.layout3:
             case R.id.layout4:
+            case R.id.layout5:
                 BuyRoomBean.PlayDetailListBean.ListBean listBean = (BuyRoomBean.PlayDetailListBean.ListBean) v
                         .getTag(R.id.buy_data);
                 if (null == listBean)
