@@ -223,8 +223,9 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
         else
         {
             tvLeft.setText("");
+            tvRight.setText("");
             tvLeft.setBackgroundResource(R.mipmap.user);
-            tvRight.setText("签到");
+            tvRight.setBackgroundResource(R.mipmap.qiandao);
         }
     }
 
