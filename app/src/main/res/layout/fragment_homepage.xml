@@ -31,10 +31,11 @@
 
         <ImageView
             android:id="@+id/ic_logo"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
+            android:padding="5dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:scaleType="centerInside"
+            android:scaleType="fitXY"
             android:src="@mipmap/logo"
             />
 
