@@ -37,6 +37,8 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.admin.caipiao33.application.MyApplication;
 import com.example.admin.caipiao33.bean.BuyRoomBean;
 import com.example.admin.caipiao33.bean.GouCaiBean;
+import com.example.admin.caipiao33.bean.TokenBean;
+import com.example.admin.caipiao33.fragment.UserFragment;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.httputils.MyResponseListener;
 import com.example.admin.caipiao33.utils.Constants;
@@ -489,10 +491,21 @@ public class HongBaoActivity extends BaseActivity implements View.OnClickListene
                 }, null);
                 break;
             case R.id.tv_hongbaojilu:
-                Intent intent = new Intent(HongBaoActivity.this, WebUrlActivity.class);
-                intent.putExtra(Constants.EXTRA_URL, HttpUtil.mNewUrl + "/api/user/hbList");
-                intent.putExtra(Constants.EXTRA_TITLE, "我的红包记录");
-                startActivity(intent);
+                TokenBean token = UserConfig.getInstance().getToken(HongBaoActivity.this);
+                if (null == token || token.getIsLogin() == 0)
+                {
+                    // 未登录
+                    Intent intent = new Intent(HongBaoActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    //                    finish();
+                }
+                else
+                {
+                    Intent intent = new Intent(HongBaoActivity.this, WebUrlActivity.class);
+                    intent.putExtra(Constants.EXTRA_URL, HttpUtil.mNewUrl + "/api/user/hbList");
+                    intent.putExtra(Constants.EXTRA_TITLE, "我的红包记录");
+                    startActivity(intent);
+                }
                 break;
             default:
                 break;
@@ -680,6 +693,13 @@ public class HongBaoActivity extends BaseActivity implements View.OnClickListene
         }
     }
 
+    @Override
+    protected void onDestroy()
+    {
+        clearCookies(this);
+        super.onDestroy();
+    }
+
     /**
      * 设置Cookie
      *
@@ -693,6 +713,15 @@ public class HongBaoActivity extends BaseActivity implements View.OnClickListene
         CookieManager cookieManager = CookieManager.getInstance();
         cookieManager.setAcceptCookie(true);
         cookieManager.setCookie(url, cookie);//cookies是在HttpClient中获得的cookie
+        CookieSyncManager.getInstance().sync();
+    }
+
+    public void clearCookies(Context context)
+    {
+        CookieSyncManager.createInstance(context);
+        CookieManager cookieManager = CookieManager.getInstance();
+        cookieManager.removeAllCookie();
+        cookieManager.removeExpiredCookie();
         CookieSyncManager.getInstance().sync();
     }
 }

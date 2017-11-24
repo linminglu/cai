@@ -224,6 +224,7 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
         {
             // 未登录
             tvLeft.setBackgroundDrawable(null);
+            tvRight.setBackgroundDrawable(null);
             tvLeft.setText("登录");
             tvRight.setText("注册");
         }

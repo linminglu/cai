@@ -50,6 +50,7 @@ import com.example.admin.caipiao33.views.WebviewProgressBar;
 import com.socks.library.KLog;
 
 import java.io.File;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -120,8 +121,8 @@ public class WebUrlActivity extends BaseActivity implements View.OnClickListener
         webView = (WebView) findViewById(R.id.protocol_webView);
         if (!StringUtils.isEmpty2(UserConfig.getInstance().getTokenString(this)))
         {
-            synCookies(this, HttpUtil.mNewUrl, "loginToken=" + UserConfig.getInstance()
-                    .getTokenString(this));
+            synCookies(this, HttpUtil.mNewUrl, "loginToken=" + URLEncoder.encode(UserConfig.getInstance()
+                    .getTokenString(this)));
         }
         WebSettings settings = webView.getSettings();
         settings.setAllowFileAccess(true);// 设置允许访问文件数据
@@ -675,6 +676,13 @@ public class WebUrlActivity extends BaseActivity implements View.OnClickListener
         }
     }
 
+    @Override
+    protected void onDestroy()
+    {
+        clearCookies(this);
+        super.onDestroy();
+    }
+
     /**
      * 设置Cookie
      *
@@ -688,6 +696,15 @@ public class WebUrlActivity extends BaseActivity implements View.OnClickListener
         CookieManager cookieManager = CookieManager.getInstance();
         cookieManager.setAcceptCookie(true);
         cookieManager.setCookie(url, cookie);//cookies是在HttpClient中获得的cookie
+        CookieSyncManager.getInstance().sync();
+    }
+
+    public void clearCookies(Context context)
+    {
+        CookieSyncManager.createInstance(context);
+        CookieManager cookieManager = CookieManager.getInstance();
+        cookieManager.removeAllCookie();
+        cookieManager.removeExpiredCookie();
         CookieSyncManager.getInstance().sync();
     }
 }
