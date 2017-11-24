@@ -260,6 +260,16 @@
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
+    <com.example.admin.caipiao33.views.MyImageView
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerInParent="true"
+        android:background="@color/transparent"
+        android:scaleType="centerInside"/>
+
     <com.example.admin.caipiao33.views.LoadingLayout
         android:id="@+id/loadingLayout"
         android:layout_width="match_parent"

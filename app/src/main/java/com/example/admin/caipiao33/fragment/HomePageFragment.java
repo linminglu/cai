@@ -41,15 +41,19 @@ import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.presenter.HomePagePresenter;
 import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.HomeEvent;
+import com.example.admin.caipiao33.utils.ImageUtils;
 import com.example.admin.caipiao33.utils.LoginEvent;
 import com.example.admin.caipiao33.utils.MyImageLoader;
 import com.example.admin.caipiao33.utils.ResourcesUtil;
+import com.example.admin.caipiao33.utils.StringUtils;
 import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.utils.Tools;
 import com.example.admin.caipiao33.utils.UserConfig;
 import com.example.admin.caipiao33.utils.ViewHolder;
+import com.example.admin.caipiao33.views.DragFloatActionButton;
 import com.example.admin.caipiao33.views.GridView4ScrollView;
 import com.example.admin.caipiao33.views.LoadingLayout;
+import com.example.admin.caipiao33.views.MyImageView;
 import com.example.admin.caipiao33.views.ScrollingTextView;
 import com.example.admin.caipiao33.views.banner.ImageCycleViewListener;
 import com.example.admin.caipiao33.views.banner.MyBanner;
@@ -112,6 +116,8 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
     ImageView ivHomepage3;
     @BindView(R.id.iv_homepage_4)
     ImageView ivHomepage4;
+    @BindView(R.id.fab)
+    MyImageView fab;
     private MainActivity mainActivity;
     private LayoutInflater mInflater;
     private View parentView;
@@ -381,10 +387,39 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
 
 
     @Override
-    public void updateHomePage(HomePageBean bean)
+    public void updateHomePage(final HomePageBean bean)
     {
         /**设置数据*/
         myBanner.setImageResources(bean.getScrollImg(), mAdCycleViewListener);
+        if (bean.getHongBao() != null && !StringUtils.isEmpty2(bean.getHongBao().getImage()))
+        {
+            fab.setVisibility(View.VISIBLE);
+            if (!bean.getHongBao().getImage().startsWith("http"))
+            {
+                bean.getHongBao().setImage(HttpUtil.mNewUrl + "/" + bean.getHongBao().getImage());
+            }
+            MyImageLoader.displayImage(bean.getHongBao().getImage(), fab, getBaseActivity());
+            fab.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    if (!StringUtils.isEmpty2(bean.getHongBao().getUrl()))
+                    {
+                        if (!bean.getHongBao().getUrl().startsWith("http"))
+                        {
+                            bean.getHongBao()
+                                    .setUrl(HttpUtil.mNewUrl + "/" + bean.getHongBao().getUrl());
+                        }
+                        toWebUrlActivity(bean.getHongBao().getUrl(), bean.getHongBao().getTitle());
+                    }
+                }
+            });
+        }
+        else
+        {
+            fab.setVisibility(View.GONE);
+        }
         tvScroll.setText(bean.getScrollNotice());
         tvScroll.setEnabled(true);
         mTypeListBeanList = bean.getTypeList();
@@ -512,7 +547,7 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
     }
 
 
-    @OnClick({R.id.tv_scroll, R.id.ll_func_1, R.id.ll_func_2, R.id.ll_func_3, R.id.ll_func_4, R.id.myVerticalBanner, R.id.tv_left, R.id.tv_right})
+    @OnClick({R.id.tv_scroll, R.id.ll_func_1, R.id.ll_func_2, R.id.ll_func_3, R.id.ll_func_4, R.id.myVerticalBanner, R.id.tv_left, R.id.tv_right, R.id.fab})
     public void onViewClicked(View view)
     {
         switch (view.getId())
@@ -578,6 +613,9 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
                 break;
             case R.id.ll_func_4: // 在线客服
                 mPresenter.toAskService();
+                break;
+            case R.id.fab: // 在线客服
+                ToastUtil.show("点击了浮动按钮");
                 break;
             case R.id.myVerticalBanner:
                 toWebUrlActivity(HttpUtil.mNewUrl + "/api/win/list", "最新中奖榜");

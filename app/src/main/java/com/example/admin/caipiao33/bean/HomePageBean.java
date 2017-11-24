@@ -10,7 +10,6 @@ public class HomePageBean
 {
 
     /**
-     *
      * scrollNotice : 彩票89（易记域名cp89.com）购彩就上彩票89，下载彩票APP及完善个人资料即送18元并可提升尊享VIP高级服务，六合彩、时时彩赔率业界最高。
      * winList : [{"gid":"51","gname":"三分时时彩","User":"hhh***","WinAmount":"39.6"},{"gid":"51","gname":"三分时时彩","User":"c12***","WinAmount":"15.84"},{"gid":"51","gname":"三分时时彩","User":"hao***","WinAmount":"3.96"},{"gid":"51","gname":"三分时时彩","User":"137***","WinAmount":"170.28"},{"gid":"51","gname":"三分时时彩","User":"cql***","WinAmount":"98.0"},{"gid":"51","gname":"三分时时彩","User":"aol***","WinAmount":"1872.0","type":"r"},{"gid":"51","gname":"三分时时彩","User":"cha***","WinAmount":"19.6"},{"gid":"51","gname":"三分时时彩","User":"Nie***","WinAmount":"294.0"},{"gid":"51","gname":"三分时时彩","User":"131***","WinAmount":"79.2"},{"gid":"51","gname":"三分时时彩","User":"136***","WinAmount":"194.04"},{"gid":"51","gname":"三分时时彩","User":"353***","WinAmount":"198.0"},{"gid":"51","gname":"三分时时彩","User":"aaa***","WinAmount":"198.0"},{"gid":"51","gname":"三分时时彩","User":"cjb***","WinAmount":"78.4"},{"gid":"51","gname":"三分时时彩","User":"yyy***","WinAmount":"19.6"},{"gid":"51","gname":"三分时时彩","User":"190***","WinAmount":"3.96"},{"gid":"5","gname":"重庆时时彩","User":"123***","WinAmount":"9.8"},{"gid":"5","gname":"重庆时时彩","User":"ff0***","WinAmount":"19.6"},{"gid":"5","gname":"重庆时时彩","User":"win***","WinAmount":"9.8"},{"gid":"5","gname":"重庆时时彩","User":"w10***","WinAmount":"98.0"},{"gid":"5","gname":"重庆时时彩","User":"139***","WinAmount":"49.75"},{"gid":"5","gname":"重庆时时彩","User":"QZH***","WinAmount":"49.0"}]
      * scrollImg : ["https://tupian-cdn.com/uploadimg/15011292249780.jpg","https://tupian-cdn.com/uploadimg/14950236858790.jpg","https://tupian-cdn.com/uploadimg/14950236781590.jpg"]
@@ -18,6 +17,7 @@ public class HomePageBean
      */
 
     private String scrollNotice;
+    private HongBao hongBao;
     private List<WinListBean> winList;
     private List<String> scrollImg;
     private List<TypeListBean> typeList;
@@ -76,6 +76,16 @@ public class HomePageBean
     public void setPopNotice(PopNoticeBean popNotice)
     {
         this.popNotice = popNotice;
+    }
+
+    public HongBao getHongBao()
+    {
+        return hongBao;
+    }
+
+    public void setHongBao(HongBao hongBao)
+    {
+        this.hongBao = hongBao;
     }
 
     public static class WinListBean
@@ -246,6 +256,44 @@ public class HomePageBean
         public void setTime(String time)
         {
             this.time = time;
+        }
+    }
+
+    public static class HongBao
+    {
+
+        private String title;
+        private String image;
+        private String url;
+
+        public String getTitle()
+        {
+            return title;
+        }
+
+        public void setTitle(String title)
+        {
+            this.title = title;
+        }
+
+        public String getImage()
+        {
+            return image;
+        }
+
+        public void setImage(String image)
+        {
+            this.image = image;
+        }
+
+        public String getUrl()
+        {
+            return url;
+        }
+
+        public void setUrl(String url)
+        {
+            this.url = url;
         }
     }
 }

@@ -25,7 +25,11 @@ public class MyImageLoader
         }
         if (!StringUtils.isEmpty2(uri) && context != null)
         {
-            Glide.with(context).load(uri).placeholder(R.mipmap.beijing).into(imageView);
+            Glide.with(context)
+                    .load(uri)
+                    .placeholder(R.mipmap.beijing)
+                    .dontAnimate()
+                    .into(imageView);
             //            Picasso.with(context).load(uri).resize(250, 250).into(imageView);
         }
         else

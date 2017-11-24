@@ -2,6 +2,7 @@ package com.example.admin.caipiao33;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -19,6 +20,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.webkit.GeolocationPermissions;
 import android.webkit.SslErrorHandler;
 import android.webkit.ValueCallback;
@@ -40,7 +43,9 @@ import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.httputils.MyResponseListener;
 import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.FileManager;
+import com.example.admin.caipiao33.utils.StringUtils;
 import com.example.admin.caipiao33.utils.ToastUtil;
+import com.example.admin.caipiao33.utils.UserConfig;
 import com.example.admin.caipiao33.views.WebviewProgressBar;
 import com.socks.library.KLog;
 
@@ -113,7 +118,11 @@ public class WebUrlActivity extends BaseActivity implements View.OnClickListener
 
         KLog.e(mUrl);
         webView = (WebView) findViewById(R.id.protocol_webView);
-        webView.loadUrl(mUrl);
+        if (!StringUtils.isEmpty2(UserConfig.getInstance().getTokenString(this)))
+        {
+            synCookies(this, HttpUtil.mNewUrl, "loginToken=" + UserConfig.getInstance()
+                    .getTokenString(this));
+        }
         WebSettings settings = webView.getSettings();
         settings.setAllowFileAccess(true);// 设置允许访问文件数据
         settings.setDomStorageEnabled(true);
@@ -267,6 +276,7 @@ public class WebUrlActivity extends BaseActivity implements View.OnClickListener
                 }
             }, null);
         }
+        webView.loadUrl(mUrl);
     }
 
     @Override
@@ -654,5 +664,21 @@ public class WebUrlActivity extends BaseActivity implements View.OnClickListener
         {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 设置Cookie
+     *
+     * @param context
+     * @param url
+     * @param cookie  格式：uid=21233 如需设置多个，需要多次调用
+     */
+    public void synCookies(Context context, String url, String cookie)
+    {
+        CookieSyncManager.createInstance(context);
+        CookieManager cookieManager = CookieManager.getInstance();
+        cookieManager.setAcceptCookie(true);
+        cookieManager.setCookie(url, cookie);//cookies是在HttpClient中获得的cookie
+        CookieSyncManager.getInstance().sync();
     }
 }
