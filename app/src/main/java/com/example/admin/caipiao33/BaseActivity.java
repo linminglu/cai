@@ -5,6 +5,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -264,6 +266,17 @@ public class BaseActivity extends AppCompatActivity implements IBaseView, FcPerm
     @Override
     public void onPermissionsDenied(int requestCode, List<String> perms)
     {
+
+    }
+
+    @Override
+    public Resources getResources()
+    {
+        Resources res = super.getResources();
+        Configuration config = new Configuration();
+        config.setToDefaults();
+        res.updateConfiguration(config, res.getDisplayMetrics());
+        return res;
 
     }
 

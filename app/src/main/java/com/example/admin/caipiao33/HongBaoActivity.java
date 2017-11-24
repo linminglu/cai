@@ -48,6 +48,7 @@ import com.example.admin.caipiao33.views.WebviewProgressBar;
 import com.socks.library.KLog;
 
 import java.io.File;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -119,8 +120,8 @@ public class HongBaoActivity extends BaseActivity implements View.OnClickListene
         webView = (WebView) findViewById(R.id.protocol_webView);
         if (!StringUtils.isEmpty2(UserConfig.getInstance().getTokenString(this)))
         {
-            synCookies(this, HttpUtil.mNewUrl, "loginToken=" + UserConfig.getInstance()
-                    .getTokenString(this));
+            synCookies(this, HttpUtil.mNewUrl, "loginToken=" + URLEncoder.encode(UserConfig.getInstance()
+                    .getTokenString(this)));
         }
         WebSettings settings = webView.getSettings();
         settings.setAllowFileAccess(true);// 设置允许访问文件数据
@@ -138,19 +139,28 @@ public class HongBaoActivity extends BaseActivity implements View.OnClickListene
             public boolean shouldOverrideUrlLoading(WebView view, String url)
             {
                 mUrl = url;
-                if (url.contains("platformapi/startApp"))
+                if (url.contains("cp89://login"))
                 {
-                    startAlipayActivity(url);
-                    // android  6.0 两种方式获取intent都可以跳转支付宝成功,7.1测试不成功
-                }
-                else if ((Build.VERSION.SDK_INT > Build.VERSION_CODES.M) && (url.contains("platformapi") && url
-                        .contains("startApp")))
-                {
-                    startAlipayActivity(url);
+                    Intent intent = new Intent(HongBaoActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
                 else
                 {
-                    view.loadUrl(url);
+                    if (url.contains("platformapi/startApp"))
+                    {
+                        startAlipayActivity(url);
+                        // android  6.0 两种方式获取intent都可以跳转支付宝成功,7.1测试不成功
+                    }
+                    else if ((Build.VERSION.SDK_INT > Build.VERSION_CODES.M) && (url.contains("platformapi") && url
+                            .contains("startApp")))
+                    {
+                        startAlipayActivity(url);
+                    }
+                    else
+                    {
+                        view.loadUrl(url);
+                    }
                 }
                 return true;
             }

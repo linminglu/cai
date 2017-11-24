@@ -139,19 +139,28 @@ public class WebUrlActivity extends BaseActivity implements View.OnClickListener
             public boolean shouldOverrideUrlLoading(WebView view, String url)
             {
                 mUrl = url;
-                if (url.contains("platformapi/startApp"))
+                if (url.contains("cp89://login"))
                 {
-                    startAlipayActivity(url);
-                    // android  6.0 两种方式获取intent都可以跳转支付宝成功,7.1测试不成功
-                }
-                else if ((Build.VERSION.SDK_INT > Build.VERSION_CODES.M) && (url.contains("platformapi") && url
-                        .contains("startApp")))
-                {
-                    startAlipayActivity(url);
+                    Intent intent = new Intent(WebUrlActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
                 else
                 {
-                    view.loadUrl(url);
+                    if (url.contains("platformapi/startApp"))
+                    {
+                        startAlipayActivity(url);
+                        // android  6.0 两种方式获取intent都可以跳转支付宝成功,7.1测试不成功
+                    }
+                    else if ((Build.VERSION.SDK_INT > Build.VERSION_CODES.M) && (url.contains("platformapi") && url
+                            .contains("startApp")))
+                    {
+                        startAlipayActivity(url);
+                    }
+                    else
+                    {
+                        view.loadUrl(url);
+                    }
                 }
                 return true;
             }
