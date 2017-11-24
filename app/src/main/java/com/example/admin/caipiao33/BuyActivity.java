@@ -560,7 +560,7 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
                 Intent webIntent = new Intent(this, WebUrlActivity.class);
                 if (mBuyRoomBean.getType().equals("xglhc") || mBuyRoomBean.getType().equals("pcdd"))
                 {
-                    webIntent.putExtra(Constants.EXTRA_URL, HttpUtil.mNewUrl + "/api/draw1?gid=" + mNumber);
+                    webIntent.putExtra(Constants.EXTRA_URL, HttpUtil.mNewUrl + "/api/draw/single?gid=" + mNumber + "&dayType=");
                     webIntent.putExtra(Constants.EXTRA_PLAY_NAME, mTitleStr);
                     webIntent.putExtra(Constants.EXTRA_TITLE, mTitleStr + "的历史开奖");
                 }
