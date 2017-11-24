@@ -25,6 +25,7 @@ import com.example.admin.caipiao33.BuyRecordActivity;
 import com.example.admin.caipiao33.BuyWinRecordActivity;
 import com.example.admin.caipiao33.ChongZhiJiLuActivity;
 import com.example.admin.caipiao33.GeRenXiaoXiActivity;
+import com.example.admin.caipiao33.HongBaoActivity;
 import com.example.admin.caipiao33.MainActivity;
 import com.example.admin.caipiao33.QianDaoActivity;
 import com.example.admin.caipiao33.QianDaoJiLuActivity;
@@ -128,6 +129,8 @@ public class UserFragment extends BaseFragment implements View.OnClickListener, 
     ScrollView userFragmentSv;
     @BindView(R.id.user_fragment_geren_tishi_iv)
     ImageView userFragmentGerenTishiIv;
+    @BindView(R.id.user_fragment_wodehongbao_rl)
+    RelativeLayout userFragmentWodehongbaoRl;
     private MainActivity mainActivity;
     private LayoutInflater mInflater;
     private View parentView;
@@ -169,8 +172,8 @@ public class UserFragment extends BaseFragment implements View.OnClickListener, 
                 mPresenter.loadData();
             }
         });
-        TintTypedArray a = TintTypedArray.obtainStyledAttributes(mainActivity, null, android.support.v7.appcompat.R.styleable.ActionBar, android.support.v7.appcompat.R.attr.actionBarStyle, 0);
-        Drawable drawable = a.getDrawable(android.support.v7.appcompat.R.styleable.ActionBar_homeAsUpIndicator);
+        @SuppressLint("RestrictedApi") TintTypedArray a = TintTypedArray.obtainStyledAttributes(mainActivity, null, android.support.v7.appcompat.R.styleable.ActionBar, android.support.v7.appcompat.R.attr.actionBarStyle, 0);
+        @SuppressLint("RestrictedApi") Drawable drawable = a.getDrawable(android.support.v7.appcompat.R.styleable.ActionBar_homeAsUpIndicator);
         drawable.setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY);
         mToolbar.setNavigationIcon(drawable);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener()
@@ -246,7 +249,7 @@ public class UserFragment extends BaseFragment implements View.OnClickListener, 
         }
     }
 
-    @OnClick({R.id.user_fragment_app_tv, R.id.user_fragment_yue_tv, R.id.user_fragment_tixian_tv, R.id.user_fragment_kefu_tv, R.id.user_fragment_chongzhi_tv, R.id.user_fragment_qiandao_tv, R.id.user_fragment_tuijian_rl, R.id.user_fragment_gonggao_rl, R.id.user_fragment_touzhujilu_rl, R.id.user_fragment_zhongjiangjilu_rl, R.id.user_fragment_mingxi_rl, R.id.user_fragment_chongzhijilu_rl, R.id.user_fragment_tikuanjilu_rl, R.id.user_fragment_qiandaojilu_rl, R.id.user_fragment_geren_rl})
+    @OnClick({R.id.user_fragment_wodehongbao_rl, R.id.user_fragment_app_tv, R.id.user_fragment_yue_tv, R.id.user_fragment_tixian_tv, R.id.user_fragment_kefu_tv, R.id.user_fragment_chongzhi_tv, R.id.user_fragment_qiandao_tv, R.id.user_fragment_tuijian_rl, R.id.user_fragment_gonggao_rl, R.id.user_fragment_touzhujilu_rl, R.id.user_fragment_zhongjiangjilu_rl, R.id.user_fragment_mingxi_rl, R.id.user_fragment_chongzhijilu_rl, R.id.user_fragment_tikuanjilu_rl, R.id.user_fragment_qiandaojilu_rl, R.id.user_fragment_geren_rl})
     public void onViewClicked(View view)
     {
         Intent intent;
@@ -327,6 +330,13 @@ public class UserFragment extends BaseFragment implements View.OnClickListener, 
                 break;
             case R.id.user_fragment_tuijian_rl:
                 intent = new Intent(mainActivity, TuiJianActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.user_fragment_wodehongbao_rl:
+                //TODO
+                intent = new Intent(mainActivity, WebUrlActivity.class);
+                intent.putExtra(Constants.EXTRA_URL, HttpUtil.mNewUrl + "/api/user/hbList");
+                intent.putExtra(Constants.EXTRA_TITLE, "我的红包记录");
                 startActivity(intent);
                 break;
             case R.id.user_fragment_gonggao_rl:

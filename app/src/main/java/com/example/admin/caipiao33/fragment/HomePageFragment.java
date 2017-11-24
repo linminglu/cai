@@ -27,6 +27,7 @@ import com.example.admin.caipiao33.BaseFragment;
 import com.example.admin.caipiao33.BuyActivity;
 import com.example.admin.caipiao33.BuyRecordActivity;
 import com.example.admin.caipiao33.BuyRoomActivity;
+import com.example.admin.caipiao33.HongBaoActivity;
 import com.example.admin.caipiao33.LoginActivity;
 import com.example.admin.caipiao33.MainActivity;
 import com.example.admin.caipiao33.QianDaoActivity;
@@ -411,7 +412,10 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
                             bean.getHongBao()
                                     .setUrl(HttpUtil.mNewUrl + "/" + bean.getHongBao().getUrl());
                         }
-                        toWebUrlActivity(bean.getHongBao().getUrl(), bean.getHongBao().getTitle());
+                        Intent intent = new Intent(getActivity(), HongBaoActivity.class);
+                        intent.putExtra(Constants.EXTRA_URL, bean.getHongBao().getUrl());
+                        intent.putExtra(Constants.EXTRA_TITLE, bean.getHongBao().getTitle());
+                        startActivity(intent);
                     }
                 }
             });
