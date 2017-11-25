@@ -20,6 +20,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.admin.caipiao33.R;
 import com.example.admin.caipiao33.bean.BuyRoomBean;
 import com.example.admin.caipiao33.utils.FloatUtils;
+import com.example.admin.caipiao33.utils.StringUtils;
 import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.utils.ViewHolder;
 
@@ -148,9 +149,9 @@ public class ConfirmBuyDialog implements View.OnClickListener
         return num + "";
     }
 
-    public void show()
+    public void show(String title)
     {
-        new MaterialDialog.Builder(mContext).title("确认下注")
+        new MaterialDialog.Builder(mContext).title(title)
                 .customView(view, false)
                 .positiveText("下注")
                 .positiveColor(mContext.getResources().getColor(R.color.blue))

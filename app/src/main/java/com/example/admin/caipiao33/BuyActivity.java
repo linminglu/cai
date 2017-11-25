@@ -687,7 +687,7 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
             confirmBuyDialog.setGridNumColumns(gridNumColumns);
             confirmBuyDialog.updateUI(checked);
         }
-        confirmBuyDialog.show();
+        confirmBuyDialog.show("当前第" + mBuyRoomBean.getPeriod() + "期");
     }
 
     private void showOptionsDialog()
