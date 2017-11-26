@@ -2,10 +2,16 @@ package com.example.admin.caipiao33.presenter;
 
 import android.view.View;
 
+import com.example.admin.caipiao33.bean.AliPayBean;
 import com.example.admin.caipiao33.bean.GouCaiBean;
+import com.example.admin.caipiao33.bean.TypeBean;
 import com.example.admin.caipiao33.contract.IZouShiContract;
+import com.example.admin.caipiao33.fragment.adapter.AliPayAdapter;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.httputils.MyResponseListener;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.ArrayList;
 
 /**
  * Created by cxy on 2017/8/17
@@ -26,10 +32,12 @@ public class ZouShiPresenter implements IZouShiContract.Presenter
     public void loadData()
     {
         mView.showLoadingLayout4Ami(hideView);
-        baseRequest(new MyResponseListener<GouCaiBean>()
+        HttpUtil.requestSecond("trend", "typeList", null, new TypeToken<ArrayList<TypeBean>>()
+        {
+        }.getType(), mView.getBaseActivity(), new MyResponseListener<ArrayList<TypeBean>>()
         {
             @Override
-            public void onSuccess(GouCaiBean result)
+            public void onSuccess(ArrayList<TypeBean> result)
             {
                 mView.hideLoadingLayout4Ami(hideView);
                 mView.update(result);
@@ -44,18 +52,19 @@ public class ZouShiPresenter implements IZouShiContract.Presenter
             @Override
             public void onFinish()
             {
-
             }
-        });
+        }, null);
     }
 
     @Override
     public void refreshData()
     {
-        baseRequest(new MyResponseListener<GouCaiBean>()
+        HttpUtil.requestSecond("trend", "typeList", null, new TypeToken<ArrayList<TypeBean>>()
+        {
+        }.getType(), mView.getBaseActivity(), new MyResponseListener<ArrayList<TypeBean>>()
         {
             @Override
-            public void onSuccess(GouCaiBean result)
+            public void onSuccess(ArrayList<TypeBean> result)
             {
                 mView.update(result);
             }
@@ -69,13 +78,7 @@ public class ZouShiPresenter implements IZouShiContract.Presenter
             @Override
             public void onFinish()
             {
-
             }
-        });
-    }
-
-    private void baseRequest(MyResponseListener listener)
-    {
-        HttpUtil.requestFirst("hall", GouCaiBean.class, mView.getBaseActivity(), listener, null);
+        }, null);
     }
 }

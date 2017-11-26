@@ -97,6 +97,7 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
     private String mRoomId;
     private String mPlayId;
     private String mPlayId1;
+    private String mPeriod;//点开投注窗口的时候的期数
     private IBuyContract.Presenter mPresenter;
     private boolean isPause;
     private BuyRoomBean mBuyRoomBean;
@@ -607,7 +608,7 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
             startActivityForResult(intent, Constants.REQUEST_CODE_Main2_LOGIN);
             return;
         }
-
+        mPeriod = mBuyRoomBean.getPeriod();
         int currentItem = buyPager.getCurrentItem();
         @SuppressLint("RestrictedApi") QuickBuyFragment fragment = (QuickBuyFragment) fragmentManager
                 .getFragments()
@@ -677,8 +678,7 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
                                 .append(bean.getMoney())
                                 .append(";");
                     }
-                    mPresenter.submit(mBuyRoomBean.getNum(), mBuyRoomBean.getRoomId(), mBuyRoomBean.getPeriod(), sb
-                            .toString());
+                    mPresenter.submit(mBuyRoomBean.getNum(), mBuyRoomBean.getRoomId(), mPeriod, sb.toString());
                 }
             });
         }
@@ -687,7 +687,7 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
             confirmBuyDialog.setGridNumColumns(gridNumColumns);
             confirmBuyDialog.updateUI(checked);
         }
-        confirmBuyDialog.show("当前第" + mBuyRoomBean.getPeriod() + "期");
+        confirmBuyDialog.show("当前第" + mPeriod + "期");
     }
 
     private void showOptionsDialog()

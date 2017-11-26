@@ -30,8 +30,7 @@ import com.example.admin.caipiao33.BaseFragment;
 import com.example.admin.caipiao33.BuyActivity;
 import com.example.admin.caipiao33.MainActivity;
 import com.example.admin.caipiao33.R;
-import com.example.admin.caipiao33.WebUrlActivity;
-import com.example.admin.caipiao33.bean.GouCaiBean;
+import com.example.admin.caipiao33.bean.TypeBean;
 import com.example.admin.caipiao33.contract.IZouShiContract;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.presenter.ZouShiPresenter;
@@ -71,7 +70,7 @@ public class ZouShiFragment extends BaseFragment implements View.OnClickListener
     private LayoutInflater mInflater;
     private View parentView;
     private boolean isFirst = true;
-    private GouCaiBean mGouCaiBean;
+    private ArrayList<TypeBean> typeBeans;
     private IZouShiContract.Presenter mPresenter;
     private ArrayList<String> names;
     private boolean isError = false;
@@ -239,22 +238,20 @@ public class ZouShiFragment extends BaseFragment implements View.OnClickListener
     }
 
     @Override
-    public void update(GouCaiBean bean)
+    public void update(ArrayList<TypeBean> beans)
     {
-        if (bean != null)
+        if (beans != null)
         {
-            mGouCaiBean = bean;
-            zoushiWebView.loadUrl(HttpUtil.mNewUrl + "/api/trend?gid=" + bean.getAll()
-                    .get(0)
-                    .getNum());
-            mNumber = bean.getAll().get(0).getNum();
-            mTitleStr = bean.getAll().get(0).getName();
+            typeBeans = beans;
+            zoushiWebView.loadUrl(HttpUtil.mNewUrl + "/api/trend?gid=" + beans.get(0).getNum());
+            mNumber = beans.get(0).getNum();
+            mTitleStr = beans.get(0).getName();
             //            toolbarTitle.setText(bean.getAll().get(0).getName() + "的走势");
-            fragmentZoushiTitle.setText(bean.getAll().get(0).getName());
+            fragmentZoushiTitle.setText(beans.get(0).getName());
             names = new ArrayList<>();
-            for (int i = 0; i < mGouCaiBean.getAll().size(); i++)
+            for (int i = 0; i < beans.size(); i++)
             {
-                names.add(mGouCaiBean.getAll().get(i).getName());
+                names.add(beans.get(i).getName());
             }
         }
     }
@@ -293,7 +290,7 @@ public class ZouShiFragment extends BaseFragment implements View.OnClickListener
 
     private void showOptionsDialog()
     {
-        if (null == mGouCaiBean && null == names)
+        if (null == typeBeans && null == names)
         {
             return;
         }
@@ -308,13 +305,12 @@ public class ZouShiFragment extends BaseFragment implements View.OnClickListener
                     {
                         if (which != -1)
                         {
-                            zoushiWebView.loadUrl(HttpUtil.mNewUrl + "/api/trend?gid=" + mGouCaiBean
-                                    .getAll()
-                                    .get(which)
-                                    .getNum());
-                            mNumber = mGouCaiBean.getAll().get(which).getNum();
-                            mTitleStr = mGouCaiBean.getAll().get(which).getName();
-                            fragmentZoushiTitle.setText(mGouCaiBean.getAll().get(which).getName());
+                            zoushiWebView.loadUrl(HttpUtil.mNewUrl + "/api/trend?gid=" + typeBeans
+
+                                    .get(which).getNum());
+                            mNumber = typeBeans.get(which).getNum();
+                            mTitleStr = typeBeans.get(which).getName();
+                            fragmentZoushiTitle.setText(typeBeans.get(which).getName());
                             //                            toolbarTitle.setText(mGouCaiBean.getAll().get(which).getName() + "的走势");
                         }
                         return true;
