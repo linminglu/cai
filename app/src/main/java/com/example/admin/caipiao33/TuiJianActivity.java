@@ -133,7 +133,7 @@ public class TuiJianActivity extends ToolbarActivity implements Toolbar.OnMenuIt
             else
             {
                 buffer.append(result.getMySpread().getSpreadMember().get(i).getCode())
-                        .append("(风险)");
+                        .append("(风险)   ");
             }
         }
         tvTuijianHuiyuan.setText(buffer);
