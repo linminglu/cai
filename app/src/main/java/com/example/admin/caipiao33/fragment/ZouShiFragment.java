@@ -1,6 +1,7 @@
 package com.example.admin.caipiao33.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -20,17 +21,21 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.admin.caipiao33.BaseActivity;
 import com.example.admin.caipiao33.BaseFragment;
+import com.example.admin.caipiao33.BuyActivity;
 import com.example.admin.caipiao33.MainActivity;
 import com.example.admin.caipiao33.R;
+import com.example.admin.caipiao33.WebUrlActivity;
 import com.example.admin.caipiao33.bean.GouCaiBean;
 import com.example.admin.caipiao33.contract.IZouShiContract;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.presenter.ZouShiPresenter;
+import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.views.LoadingLayout;
 
@@ -56,6 +61,10 @@ public class ZouShiFragment extends BaseFragment implements View.OnClickListener
     SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
+    @BindView(R.id.fragment_zoushi_title)
+    TextView fragmentZoushiTitle;
+    @BindView(R.id.fragment_tubuy_btn)
+    Button fragmentTubuyBtn;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     private MainActivity mainActivity;
@@ -66,6 +75,11 @@ public class ZouShiFragment extends BaseFragment implements View.OnClickListener
     private IZouShiContract.Presenter mPresenter;
     private ArrayList<String> names;
     private boolean isError = false;
+    private String mNumber;
+    private String mTitleStr;
+    private String mRoomId;
+    private String mPlayId;
+    private String mPlayId1;
 
     //若Fragement定义有带参构造函数，则一定要定义public的默认的构造函数
     public ZouShiFragment()
@@ -190,13 +204,22 @@ public class ZouShiFragment extends BaseFragment implements View.OnClickListener
         unbinder.unbind();
     }
 
-    @OnClick({R.id.toolbar_title})
+    @OnClick({R.id.toolbar_title, R.id.fragment_tubuy_btn})
     public void onViewClicked(View view)
     {
         switch (view.getId())
         {
             case R.id.toolbar_title: // 玩法选择
                 showOptionsDialog();
+                break;
+            case R.id.fragment_tubuy_btn: // 玩法选择
+                Intent intent = new Intent(mainActivity, BuyActivity.class);
+                intent.putExtra(Constants.EXTRA_TITLE, mTitleStr);
+                intent.putExtra(Constants.EXTRA_NUMBER, mNumber);
+                intent.putExtra(Constants.EXTRA_ROOM_ID, "1");
+                intent.putExtra(Constants.EXTRA_PLAY_ID, "");
+                intent.putExtra(Constants.EXTRA_PLAY_ID1, "");
+                startActivity(intent);
                 break;
             default:
                 break;
@@ -224,7 +247,10 @@ public class ZouShiFragment extends BaseFragment implements View.OnClickListener
             zoushiWebView.loadUrl(HttpUtil.mNewUrl + "/api/trend?gid=" + bean.getAll()
                     .get(0)
                     .getNum());
-            toolbarTitle.setText(bean.getAll().get(0).getName() + "的走势");
+            mNumber = bean.getAll().get(0).getNum();
+            mTitleStr = bean.getAll().get(0).getName();
+            //            toolbarTitle.setText(bean.getAll().get(0).getName() + "的走势");
+            fragmentZoushiTitle.setText(bean.getAll().get(0).getName());
             names = new ArrayList<>();
             for (int i = 0; i < mGouCaiBean.getAll().size(); i++)
             {
@@ -286,7 +312,10 @@ public class ZouShiFragment extends BaseFragment implements View.OnClickListener
                                     .getAll()
                                     .get(which)
                                     .getNum());
-                            toolbarTitle.setText(mGouCaiBean.getAll().get(which).getName() + "的走势");
+                            mNumber = mGouCaiBean.getAll().get(which).getNum();
+                            mTitleStr = mGouCaiBean.getAll().get(which).getName();
+                            fragmentZoushiTitle.setText(mGouCaiBean.getAll().get(which).getName());
+                            //                            toolbarTitle.setText(mGouCaiBean.getAll().get(which).getName() + "的走势");
                         }
                         return true;
                     }

@@ -374,7 +374,7 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
         }
         catch (Exception e)
         {
-            tvLotteryTime.setText(openTime);
+            tvLotteryTime.setText("开奖时间：" + openTime);
         }
     }
 
