@@ -3,6 +3,7 @@
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:animateLayoutChanges="true"
                 android:padding="10dp">
 
     <ImageView
@@ -49,17 +50,18 @@
 
     </LinearLayout>
 
-    <!--<TextView-->
-    <!--android:id="@+id/tv_result"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:textColor="@color/red"-->
-    <!--android:textSize="16sp"-->
-    <!--android:layout_toRightOf="@+id/iv"-->
-    <!--android:layout_centerVertical="true"-->
-    <!--android:text="1 2 3 "-->
-    <!--android:drawableRight="@mipmap/index_pic_08"-->
-    <!--/>-->
+    <TextView
+        android:id="@+id/tv_loading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/iv"
+        android:drawableRight="@mipmap/index_pic_08"
+        android:text="正在努力加载中..."
+        android:textColor="@color/red"
+        android:textSize="16sp"
+        android:visibility="gone"
+        />
 
     <TextView
         android:id="@+id/tv_remain_index"

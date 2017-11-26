@@ -63,7 +63,7 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
     @BindView(R.id.swipeRefreshLayout)
     SwipeRefreshLayout swipeRefreshLayout;
     Unbinder unbinder;
-    private List<GouCaiBean.DataBean> mDataList;
+    private ArrayList<ResultAssist> assists = new ArrayList<>();
     private int mType;
     private MyGouCaiAdapter adapter;
     private boolean isCreate;
@@ -72,6 +72,7 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
     private boolean isPause;
     private DividerItemDecoration lineDecor;
     private DividerGridItemDecoration gridDecor;
+    private List<GouCaiBean.DataBean> mDataList;
 
     public GouCaiItemFragment()
     {
@@ -233,6 +234,8 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
         adapter = new MyGouCaiAdapter();
         grideAdapter = new MyGouCaiGrideAdapter();
         recyclerView.setAdapter(adapter);
+        //        recyclerView.setItemViewCacheSize(100);
+        //        recyclerView.getRecycledViewPool().setMaxRecycledViews(adapter.getItemViewType(0), 100);
         isCreate = true;
         lazyLoad();
         mPresenter = new GouCaiItemPresenter(this);
@@ -257,6 +260,7 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
 
     public void refreshRecyclerView()
     {
+        assists.clear();
         if (null == mGouCaiBean)
         {
             return;
@@ -340,7 +344,7 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
     @Override
     protected void lazyLoad()
     {
-        if (!isCreate || !isVisible)
+        if (!isCreate || !isVisible || recyclerView.getScrollState() != 0)
         {
             return;
         }
@@ -469,8 +473,8 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
         TextView tvRemainIndex;
         @BindView(R.id.tv_remain_time)
         TextView tvRemainTime;
-        //        @BindView(R.id.tv_result)
-        //        TextView tvResult;
+        @BindView(R.id.tv_loading)
+        TextView tvLoading;
         @BindView(R.id.layout_result)
         LinearLayout layoutResult;
         ResultAssist resultAssist;
@@ -550,7 +554,13 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
             // TODO 调整ResultAssist，BuyRoomBean对象这里没有，因为只是用到一个参数Num，所以就直接new一个代替
             BuyRoomBean bean = new BuyRoomBean();
             bean.setType(dataBean.getType());
-            holder1.resultAssist = new ResultAssist(getActivity(), LayoutInflater.from(getContext()), holder1.layoutResult, bean, lastOpen, true);
+            //            if (assists.size() <= position)
+            //            {
+
+
+            //                assists.add(resultAssist);
+            //            }
+            //            holder1.resultAssist = new ResultAssist(getActivity(), LayoutInflater.from(getContext()), holder1.layoutResult, bean, lastOpen, true);
             //            if (StringUtils.isEmpty(lastOpen))
             //            {
             //                holder1.tvResult.setText("等待开奖");
@@ -595,7 +605,18 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
                 }
 
             }
-
+            if (recyclerView.getScrollState() == 0)
+            {
+                holder1.resultAssist = new ResultAssist(getActivity(), LayoutInflater.from(getContext()), holder1.layoutResult, bean, lastOpen, true);
+                holder1.tvLoading.setVisibility(View.GONE);
+                holder1.layoutResult.setVisibility(View.VISIBLE);
+            }
+            else
+            {
+                holder1.tvLoading.setVisibility(View.VISIBLE);
+                holder1.layoutResult.setVisibility(View.GONE);
+                holder1.layoutResult.removeAllViews();
+            }
         }
 
         @Override

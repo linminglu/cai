@@ -265,7 +265,7 @@ public class ResultAssist
                         case "6":
                             Drawable drawable6 = mInflater.getContext()
                                     .getResources()
-                                    .getDrawable(R.mipmap.touzi_05);
+                                    .getDrawable(R.mipmap.touzi_06);
                             drawable6.setBounds(0, 0, drawable6.getIntrinsicWidth(), drawable6.getIntrinsicHeight());
                             msp.setSpan(new ImageSpan(drawable6), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                             break;
