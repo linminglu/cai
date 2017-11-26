@@ -78,6 +78,7 @@ public class GouCaiFragment extends BaseFragment implements IGouCaiContract.View
     private GouCaiBean mGouCaiBeant;
     public boolean isLinearLayout = true;
     public boolean isvisible;
+    public boolean isViewPagerScroll = false;
 
     //若Fragement定义有带参构造函数，则一定要定义public的默认的构造函数
     public GouCaiFragment()
@@ -217,13 +218,16 @@ public class GouCaiFragment extends BaseFragment implements IGouCaiContract.View
         fragmentAll = GouCaiItemFragment.newInstance(GouCaiItemFragment.TYPE_ALL);
         fragmentGP = GouCaiItemFragment.newInstance(GouCaiItemFragment.TYPE_GP);
         fragmentDP = GouCaiItemFragment.newInstance(GouCaiItemFragment.TYPE_DP);
+        fragmentAll.setGouCaiFragment(this);
+        fragmentGP.setGouCaiFragment(this);
+        fragmentDP.setGouCaiFragment(this);
         goucaiPager.setAdapter(new GouCaiPagerAdapter(getChildFragmentManager()));
         goucaiPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener()
         {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)
             {
-
+                isViewPagerScroll = true;
             }
 
             @Override
@@ -246,7 +250,7 @@ public class GouCaiFragment extends BaseFragment implements IGouCaiContract.View
             @Override
             public void onPageScrollStateChanged(int state)
             {
-
+                isViewPagerScroll = false;
             }
         });
     }
@@ -407,6 +411,16 @@ public class GouCaiFragment extends BaseFragment implements IGouCaiContract.View
         {
             fragmentDP.timerPause();
         }
+    }
+
+    public boolean isViewPagerScroll()
+    {
+        return isViewPagerScroll;
+    }
+
+    public void setViewPagerScroll(boolean viewPagerScroll)
+    {
+        isViewPagerScroll = viewPagerScroll;
     }
 }
 

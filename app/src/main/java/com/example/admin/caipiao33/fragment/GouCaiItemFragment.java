@@ -65,6 +65,7 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
     Unbinder unbinder;
     private ArrayList<ResultAssist> assists = new ArrayList<>();
     private int mType;
+    private GouCaiFragment gouCaiFragment;
     private MyGouCaiAdapter adapter;
     private boolean isCreate;
     private GouCaiBean mGouCaiBean;
@@ -344,7 +345,7 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
     @Override
     protected void lazyLoad()
     {
-        if (!isCreate || !isVisible || recyclerView.getScrollState() != 0)
+        if (!isCreate || !isVisible || recyclerView.getScrollState() != 0 || gouCaiFragment.isViewPagerScroll)
         {
             return;
         }
@@ -649,5 +650,15 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
         {
             return null == mDataList ? 0 : mDataList.size();
         }
+    }
+
+    public GouCaiFragment getGouCaiFragment()
+    {
+        return gouCaiFragment;
+    }
+
+    public void setGouCaiFragment(GouCaiFragment gouCaiFragment)
+    {
+        this.gouCaiFragment = gouCaiFragment;
     }
 }
