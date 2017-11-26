@@ -148,6 +148,8 @@
         <item>返点</item>
         <item>签到</item>
         <item>推荐</item>
+        <item>红包</item>
+        <item>其他</item>
     </string-array>
 
     <string-array name="s_array_mingxi_type_num">
@@ -160,6 +162,8 @@
         <item>6</item>
         <item>7</item>
         <item>8</item>
+        <item>9</item>
+        <item>10</item>
     </string-array>
 
     <string-array name="s_array_chongzhi_type">

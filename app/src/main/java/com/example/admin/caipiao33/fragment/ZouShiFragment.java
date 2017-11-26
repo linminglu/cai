@@ -28,8 +28,10 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.admin.caipiao33.BaseActivity;
 import com.example.admin.caipiao33.BaseFragment;
 import com.example.admin.caipiao33.BuyActivity;
+import com.example.admin.caipiao33.BuyRoomActivity;
 import com.example.admin.caipiao33.MainActivity;
 import com.example.admin.caipiao33.R;
+import com.example.admin.caipiao33.bean.BuyRoomBean;
 import com.example.admin.caipiao33.bean.TypeBean;
 import com.example.admin.caipiao33.contract.IZouShiContract;
 import com.example.admin.caipiao33.httputils.HttpUtil;
@@ -39,6 +41,7 @@ import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.views.LoadingLayout;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -212,13 +215,7 @@ public class ZouShiFragment extends BaseFragment implements View.OnClickListener
                 showOptionsDialog();
                 break;
             case R.id.fragment_tubuy_btn: // 玩法选择
-                Intent intent = new Intent(mainActivity, BuyActivity.class);
-                intent.putExtra(Constants.EXTRA_TITLE, mTitleStr);
-                intent.putExtra(Constants.EXTRA_NUMBER, mNumber);
-                intent.putExtra(Constants.EXTRA_ROOM_ID, "1");
-                intent.putExtra(Constants.EXTRA_PLAY_ID, "");
-                intent.putExtra(Constants.EXTRA_PLAY_ID1, "");
-                startActivity(intent);
+                mPresenter.requestRoomData(mNumber, mTitleStr);
                 break;
             default:
                 break;
@@ -253,6 +250,46 @@ public class ZouShiFragment extends BaseFragment implements View.OnClickListener
             {
                 names.add(beans.get(i).getName());
             }
+        }
+    }
+
+    @Override
+    public void toBuyRoom(BuyRoomBean bean, String title)
+    {
+        /**
+         * 两种情况
+         * room
+         *  -- 显示房间列表，再次选择一项进入page页面
+         * page
+         *  -- 立即购买页面
+         */
+
+        if (bean.getPage().equals("room"))
+        {
+            Intent intent = new Intent(getActivity(), BuyRoomActivity.class);
+            intent.putExtra(Constants.EXTRA_TITLE, title);
+            intent.putExtra(Constants.EXTRA_BUY_ROOM_BEAN, bean);
+            startActivity(intent);
+        }
+        else
+        {
+            String roomId = bean.getRoomId();
+            String playId = null;
+            String playId1 = null;
+            List<BuyRoomBean.PlayListBean> playList = bean.getPlayList();
+            if (null != playList && playList.size() > 0)
+            {
+                BuyRoomBean.PlayListBean playListBean = playList.get(0);
+                playId = playListBean.getPlayId();
+                playId1 = playListBean.getPlayId1();
+            }
+            Intent intent = new Intent(mainActivity, BuyActivity.class);
+            intent.putExtra(Constants.EXTRA_TITLE, title);
+            intent.putExtra(Constants.EXTRA_NUMBER, bean.getNum());
+            intent.putExtra(Constants.EXTRA_ROOM_ID, roomId);
+            intent.putExtra(Constants.EXTRA_PLAY_ID, playId);
+            intent.putExtra(Constants.EXTRA_PLAY_ID1, playId1);
+            startActivity(intent);
         }
     }
 

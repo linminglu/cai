@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -35,9 +37,23 @@ public class SplashActivity extends BaseActivity implements FcPermissionsCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        mImageView = (ImageView) findViewById(R.id.splash_iv);
-
-        mImageView.setVisibility(View.VISIBLE);
+        //        mImageView = (ImageView) findViewById(R.id.splash_iv);
+        final EditText url_et = (EditText) findViewById(R.id.url_et);
+        Button url_btn = (Button) findViewById(R.id.url_btn);
+        url_btn.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                if (!StringUtils.isEmpty2(url_et.getText().toString()))
+                {
+                    HttpUtil.changeBaseUrl(url_et.getText().toString());
+                }
+                requestBaseUrl();
+                handler.postDelayed(initRunnbale, 3000);
+            }
+        });
+        //        mImageView.setVisibility(View.VISIBLE);
 
         requestCameraPermission();
     }
@@ -151,16 +167,16 @@ public class SplashActivity extends BaseActivity implements FcPermissionsCallbac
     @Override
     public void onPermissionsGranted(int requestCode, List<String> perms)
     {
-        requestBaseUrl();
-        handler.postDelayed(initRunnbale, 3000);
+        //        requestBaseUrl();
+        //        handler.postDelayed(initRunnbale, 3000);
     }
 
     @Override
     public void onPermissionsDenied(int requestCode, List<String> perms)
     {
         ToastUtil.show("没有授权权限，部分功能无法正常使用！");
-        requestBaseUrl();
-        handler.postDelayed(initRunnbale, 3000);
+        //        requestBaseUrl();
+        //        handler.postDelayed(initRunnbale, 3000);
     }
 }
 

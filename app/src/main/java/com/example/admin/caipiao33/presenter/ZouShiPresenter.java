@@ -3,6 +3,7 @@ package com.example.admin.caipiao33.presenter;
 import android.view.View;
 
 import com.example.admin.caipiao33.bean.AliPayBean;
+import com.example.admin.caipiao33.bean.BuyRoomBean;
 import com.example.admin.caipiao33.bean.GouCaiBean;
 import com.example.admin.caipiao33.bean.TypeBean;
 import com.example.admin.caipiao33.contract.IZouShiContract;
@@ -12,6 +13,7 @@ import com.example.admin.caipiao33.httputils.MyResponseListener;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by cxy on 2017/8/17
@@ -78,6 +80,34 @@ public class ZouShiPresenter implements IZouShiContract.Presenter
             @Override
             public void onFinish()
             {
+            }
+        }, null);
+    }
+
+    @Override
+    public void requestRoomData(String num, final String title)
+    {
+        mView.showLoadingDialog();
+        HashMap<String, String> map = new HashMap<>();
+        map.put("gid", num);
+        HttpUtil.requestFirst("buy", map, BuyRoomBean.class, mView.getBaseActivity(), new MyResponseListener<BuyRoomBean>()
+        {
+            @Override
+            public void onSuccess(BuyRoomBean result)
+            {
+                mView.toBuyRoom(result, title);
+            }
+
+            @Override
+            public void onFailed(int code, String msg)
+            {
+                mView.showErrorMsg(msg);
+            }
+
+            @Override
+            public void onFinish()
+            {
+                mView.hideLoadingDialog();
             }
         }, null);
     }
