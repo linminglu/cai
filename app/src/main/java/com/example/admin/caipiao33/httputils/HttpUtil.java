@@ -63,9 +63,11 @@ public class HttpUtil
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         builder.sslSocketFactory(sslContext.getSocketFactory());
-        builder.addInterceptor(new Interceptor() {
+        builder.addInterceptor(new Interceptor()
+        {
             @Override
-            public okhttp3.Response intercept(Chain chain) throws IOException {
+            public okhttp3.Response intercept(Chain chain) throws IOException
+            {
                 Request original = chain.request();
 
                 Request.Builder requestBuilder = original.newBuilder()
@@ -91,9 +93,11 @@ public class HttpUtil
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         builder.sslSocketFactory(sslContext.getSocketFactory());
-        builder.addInterceptor(new Interceptor() {
+        builder.addInterceptor(new Interceptor()
+        {
             @Override
-            public okhttp3.Response intercept(Chain chain) throws IOException {
+            public okhttp3.Response intercept(Chain chain) throws IOException
+            {
                 Request original = chain.request();
 
                 Request.Builder requestBuilder = original.newBuilder()
@@ -390,10 +394,10 @@ public class HttpUtil
 
     public static void reConfirmUrl(Context context, final MyResponseListener listener)
     {
-        if (!StringUtils.isEmpty(mNewUrl))
-        {
-            return;
-        }
+        //        if (!StringUtils.isEmpty(mNewUrl))
+        //        {
+        //            return;
+        //        }
         Call<String> call;
         FirstService firstService = retrofit.create(FirstService.class);
         HashMap<String, String> params = CreateCode.getParams(null);

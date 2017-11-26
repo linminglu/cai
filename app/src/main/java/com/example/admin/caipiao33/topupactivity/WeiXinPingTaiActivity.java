@@ -95,7 +95,7 @@ public class WeiXinPingTaiActivity extends ToolbarActivity implements Toolbar.On
                 weixinpingtaiAmount.setText(result.getAmount());
                 weixinpingtaiTip.setText(result.getTip());
                 weixinpingtaiErrortip.setText(result.getErrorTip());
-                weixinpingtaiSteps.loadDataWithBaseURL("about:blank", result.getSteps(), "text/html", "utf-8", null);
+                weixinpingtaiSteps.loadDataWithBaseURL("about:blank", result.getStep(), "text/html", "utf-8", null);
                 MyImageLoader.displayImage(HttpUtil.mNewUrl + "/" + result.getImg(), weixinpingtaiErweima, WeiXinPingTaiActivity.this);
                 hideLoadingLayout();
             }

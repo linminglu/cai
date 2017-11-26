@@ -92,7 +92,7 @@ public class Ali3SaoMaActivity extends ToolbarActivity implements Toolbar.OnMenu
                 ali3saomaamount.setText(result.getAmount());
                 ali3saomaerrortip.setText(result.getErrorTip());
                 //                ali3saomaerrortip.loadDataWithBaseURL("about:blank", result.getErrorTip(), "text/html", "utf-8", null);
-                ali3saomasteps.loadDataWithBaseURL("about:blank", result.getSteps(), "text/html", "utf-8", null);
+                ali3saomasteps.loadDataWithBaseURL("about:blank", result.getStep(), "text/html", "utf-8", null);
                 if (result.getNeedDown().equals("0"))
                 {
                     Bitmap bitmap = ZXingUtils.createQRImage(result.getPayUrl(), ali3saomaerweima.getWidth(), ali3saomaerweima

@@ -14,7 +14,7 @@ public class WeiXinPingTaiBean
      * orderNo : 1503120468571744
      * name : 微信001
      * img : xx.png
-     * steps : 1.请自行截屏或保存二维码图片到相册，同时打开微信.....
+     * step : 1.请自行截屏或保存二维码图片到相册，同时打开微信.....
      * code : WX001
      * tip : 为方便客服入账,请在转账备注填写您的会员号,谢谢!
      * isShow : 1
@@ -26,7 +26,7 @@ public class WeiXinPingTaiBean
     private String orderNo;
     private String name;
     private String img;
-    private String steps;
+    private String step;
     private String code;
     private String tip;
     private String isShow;
@@ -91,14 +91,14 @@ public class WeiXinPingTaiBean
         this.img = img;
     }
 
-    public String getSteps()
+    public String getStep()
     {
-        return steps;
+        return step;
     }
 
-    public void setSteps(String steps)
+    public void setStep(String steps)
     {
-        this.steps = steps;
+        this.step = steps;
     }
 
     public String getCode()

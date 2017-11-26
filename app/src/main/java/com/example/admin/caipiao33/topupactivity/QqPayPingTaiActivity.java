@@ -95,7 +95,7 @@ public class QqPayPingTaiActivity extends ToolbarActivity implements Toolbar.OnM
                 qqpingtaiAmount.setText(result.getAmount());
                 qqpingtaiTip.setText(result.getTip());
                 qqpingtaiErrortip.setText(result.getErrorTip());
-                qqpingtaiSteps.loadDataWithBaseURL("about:blank", result.getSteps(), "text/html", "utf-8", null);
+                qqpingtaiSteps.loadDataWithBaseURL("about:blank", result.getStep(), "text/html", "utf-8", null);
                 MyImageLoader.displayImage(HttpUtil.mNewUrl + "/" + result.getImg(), qqpingtaiErweima, QqPayPingTaiActivity.this);
                 hideLoadingLayout();
             }

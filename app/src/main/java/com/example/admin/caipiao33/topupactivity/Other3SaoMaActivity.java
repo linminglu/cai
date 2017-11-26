@@ -158,7 +158,7 @@ public class Other3SaoMaActivity extends ToolbarActivity implements Toolbar.OnMe
                 qq3saomaamount.setText(result.getAmount());
                 qq3saomaerrortip.setText(result.getErrorTip());
                 //                qq3saomaerrortip.loadDataWithBaseURL("about:blank", result.getErrorTip(), "text/html", "utf-8", null);
-                qq3saomasteps.loadDataWithBaseURL("about:blank", result.getSteps(), "text/html", "utf-8", null);
+                qq3saomasteps.loadDataWithBaseURL("about:blank", result.getStep(), "text/html", "utf-8", null);
                 if (result.getNeedDown().equals("0"))
                 {
                     Bitmap bitmap = ZXingUtils.createQRImage(result.getPayUrl(), qq3saomaerweima.getWidth(), qq3saomaerweima

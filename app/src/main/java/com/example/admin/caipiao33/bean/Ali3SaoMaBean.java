@@ -32,7 +32,7 @@ public class Ali3SaoMaBean
         this.isSixFour = isSixFour;
     }
 
-    private String steps;
+    private String step;
     private int isSixFour;
 
     public String getAmount()
@@ -85,13 +85,13 @@ public class Ali3SaoMaBean
         this.errorTip = errorTip;
     }
 
-    public String getSteps()
+    public String getStep()
     {
-        return steps;
+        return step;
     }
 
-    public void setSteps(String steps)
+    public void setStep(String steps)
     {
-        this.steps = steps;
+        this.step = steps;
     }
 }

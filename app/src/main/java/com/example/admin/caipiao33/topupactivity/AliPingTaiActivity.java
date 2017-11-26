@@ -95,7 +95,7 @@ public class AliPingTaiActivity extends ToolbarActivity implements Toolbar.OnMen
                 alipingtaiAmount.setText(result.getAmount());
                 alipingtaiTip.setText(result.getTip());
                 alipingtaiErrortip.setText(result.getErrorTip());
-                alipingtaiSteps.loadDataWithBaseURL("about:blank", result.getSteps(), "text/html", "utf-8", null);
+                alipingtaiSteps.loadDataWithBaseURL("about:blank", result.getStep(), "text/html", "utf-8", null);
                 MyImageLoader.displayImage(HttpUtil.mNewUrl + "/" + result.getImg(), alipingtaiErweima, AliPingTaiActivity.this);
                 hideLoadingLayout();
             }

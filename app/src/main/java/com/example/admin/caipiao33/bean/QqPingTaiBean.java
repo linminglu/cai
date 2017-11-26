@@ -26,7 +26,7 @@ public class QqPingTaiBean
     private String orderNo;
     private String name;
     private String img;
-    private String steps;
+    private String step;
     private String code;
     private String tip;
     private String isShow;
@@ -91,14 +91,14 @@ public class QqPingTaiBean
         this.img = img;
     }
 
-    public String getSteps()
+    public String getStep()
     {
-        return steps;
+        return step;
     }
 
-    public void setSteps(String steps)
+    public void setStep(String steps)
     {
-        this.steps = steps;
+        this.step = steps;
     }
 
     public String getCode()

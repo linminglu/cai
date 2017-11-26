@@ -21,7 +21,7 @@ public class WeiXin3SaoMaBean
     private String orderNo;
     private String payUrl;
     private String errorTip;
-    private String steps;
+    private String step;
     private int isSixFour;
 
     public String getAmount()
@@ -74,14 +74,14 @@ public class WeiXin3SaoMaBean
         this.errorTip = errorTip;
     }
 
-    public String getSteps()
+    public String getStep()
     {
-        return steps;
+        return step;
     }
 
-    public void setSteps(String steps)
+    public void setStep(String steps)
     {
-        this.steps = steps;
+        this.step = steps;
     }
 
     public int getIsSixFour()

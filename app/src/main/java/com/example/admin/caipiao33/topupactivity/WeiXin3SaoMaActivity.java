@@ -90,7 +90,7 @@ public class WeiXin3SaoMaActivity extends ToolbarActivity implements Toolbar.OnM
                 weixin3saomaamount.setText(result.getAmount());
                 weixin3saomaerrortip.setText(result.getErrorTip());
                 //                weixin3saomaerrortip.loadDataWithBaseURL("about:blank", result.getErrorTip(), "text/html", "utf-8", null);
-                weixin3saomasteps.loadDataWithBaseURL("about:blank", result.getSteps(), "text/html", "utf-8", null);
+                weixin3saomasteps.loadDataWithBaseURL("about:blank", result.getStep(), "text/html", "utf-8", null);
                 if (result.getNeedDown().equals("0"))
                 {
                     Bitmap bitmap = ZXingUtils.createQRImage(result.getPayUrl(), weixin3saomaerweima
