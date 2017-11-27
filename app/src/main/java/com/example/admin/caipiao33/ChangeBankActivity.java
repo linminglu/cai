@@ -94,11 +94,21 @@ public class ChangeBankActivity extends ToolbarActivity implements Toolbar.OnMen
     public void updata(ChangeBankCardBean result)
     {
         kaihubank = result.getBankName();
-        changebankcardKaihuyinhangTv.setText(result.getBankName());
         changebankcardZhanghaoEt.setText(result.getAccountCode());
         changebankcardKaihurenEt.setText(result.getAccountName());
         changebankcardShengfenEt.setText(result.getProvice());
         changebankcardCityEt.setText(result.getCity());
+        if (result.getRemark().equals("other"))
+        {
+            changebankcardKaihuyinhangTv.setText("其他");
+            changebankcardOtherbankLl.setVisibility(View.VISIBLE);
+            changebankcardOtherbankEt.setText(result.getBankName());
+        }
+        else
+        {
+            changebankcardOtherbankLl.setVisibility(View.GONE);
+            changebankcardKaihuyinhangTv.setText(result.getBankName());
+        }
     }
 
     @OnClick({R.id.changebankcard_kaihuyinhang_tv, R.id.btn_changebankcard})
