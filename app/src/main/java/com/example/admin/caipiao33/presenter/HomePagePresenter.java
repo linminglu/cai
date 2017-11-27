@@ -71,7 +71,7 @@ public class HomePagePresenter implements IHomePageContract.Presenter
             @Override
             public void onSuccess(HomePageBean result)
             {
-                mView.updateHomePage(result);
+                mView.updateHomePage1(result);
             }
 
             @Override

@@ -487,6 +487,86 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
     }
 
     @Override
+    public void updateHomePage1(final HomePageBean bean)
+    {
+        /**设置数据*/
+        myBanner.setImageResources(bean.getScrollImg(), mAdCycleViewListener);
+        if (bean.getHongBao() != null && !StringUtils.isEmpty2(bean.getHongBao().getImage()))
+        {
+            fab.setVisibility(View.VISIBLE);
+            if (!bean.getHongBao().getImage().startsWith("http"))
+            {
+                bean.getHongBao().setImage(HttpUtil.mNewUrl + "/" + bean.getHongBao().getImage());
+            }
+            MyImageLoader.displayImage(bean.getHongBao().getImage(), fab, getBaseActivity());
+            fab.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    if (!StringUtils.isEmpty2(bean.getHongBao().getUrl()))
+                    {
+                        if (!bean.getHongBao().getUrl().startsWith("http"))
+                        {
+                            bean.getHongBao()
+                                    .setUrl(HttpUtil.mNewUrl + "/" + bean.getHongBao().getUrl());
+                        }
+                        Intent intent = new Intent(getActivity(), HongBaoActivity.class);
+                        intent.putExtra(Constants.EXTRA_URL, bean.getHongBao().getUrl());
+                        intent.putExtra(Constants.EXTRA_TITLE, bean.getHongBao().getTitle());
+                        startActivity(intent);
+                    }
+                }
+            });
+        }
+        else
+        {
+            fab.setVisibility(View.GONE);
+        }
+        tvScroll.setText(bean.getScrollNotice());
+        tvScroll.setEnabled(true);
+        mTypeListBeanList = bean.getTypeList();
+        if (null == adapter)
+        {
+            adapter = new MyAdapter(mTypeListBeanList);
+            gridView4ScrollView.setAdapter(adapter);
+        }
+        else
+        {
+            adapter.updateData(mTypeListBeanList);
+            adapter.notifyDataSetChanged();
+        }
+        List<HomePageBean.WinListBean> winList = bean.getWinList();
+        myVerticalBanner.setNewsData(winList);
+        HomePageBean.PopNoticeBean popNotice = bean.getPopNotice();
+        if (null != popNotice)
+        {
+            // 弹出提示框
+            View view = LayoutInflater.from(mainActivity)
+                    .inflate(R.layout.item_home_page_tips, null);
+            TextView tvTime = (TextView) view.findViewById(R.id.tv_time);
+            WebView tvContent = (WebView) view.findViewById(R.id.tv_content);
+            tvTime.setText(popNotice.getTime());
+            tvContent.loadData(popNotice.getContent(), "text/html; charset=UTF-8", null);
+            final String id = popNotice.getId();
+            new MaterialDialog.Builder(mainActivity).title(popNotice.getTitle())
+                    .customView(view, true)
+                    .positiveText("不再提示")
+                    .positiveColor(getResources().getColor(R.color.blue))
+                    .negativeText("知道了")
+                    .onPositive(new MaterialDialog.SingleButtonCallback()
+                    {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which)
+                        {
+                            mPresenter.noTip(id);
+                        }
+                    })
+                    .show();
+        }
+    }
+
+    @Override
     public void hideRefreshing()
     {
         swipeRefreshLayout.setRefreshing(false);
