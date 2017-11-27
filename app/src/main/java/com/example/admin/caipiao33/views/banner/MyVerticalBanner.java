@@ -89,8 +89,12 @@ public class MyVerticalBanner extends LinearLayout
             mAdvAdapter.notifyDataSetChanged();
             return;
         }
-        mAdvAdapter = new VerticalCycleAdapter(mContext, winList);
-        mAdvPager.setAdapter(mAdvAdapter);
+        else
+        {
+
+            mAdvAdapter = new VerticalCycleAdapter(mContext, winList);
+            mAdvPager.setAdapter(mAdvAdapter);
+        }
         try
         {
             Field mField = ViewPager.class.getDeclaredField("mScroller");

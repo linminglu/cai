@@ -250,8 +250,7 @@
                 <com.example.admin.caipiao33.views.banner.MyVerticalBanner
                     android:id="@+id/myVerticalBanner"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
+                    android:layout_height="300dp">
                 </com.example.admin.caipiao33.views.banner.MyVerticalBanner>
             </LinearLayout>
 

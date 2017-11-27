@@ -16,6 +16,7 @@ import java.util.List;
 public class HomePagePresenter implements IHomePageContract.Presenter
 {
     private final IHomePageContract.View mView;
+    private boolean isFirst = true;
 
     public HomePagePresenter(IHomePageContract.View view)
     {
@@ -25,19 +26,26 @@ public class HomePagePresenter implements IHomePageContract.Presenter
     @Override
     public void loadData()
     {
-        mView.showLoadingLayout();
+        if (isFirst)
+        {
+            mView.showLoadingLayout();
+        }
         baseRequest(new MyResponseListener<HomePageBean>()
         {
             @Override
             public void onSuccess(HomePageBean result)
             {
+                if (isFirst)
+                {
+                    isFirst = false;
+                    mView.hideLoadingLayout();
+                }
                 List<HomePageBean.TypeListBean> typeList = result.getTypeList();
                 if (null == typeList || typeList.size() == 0)
                 {
                     mView.showLoadingLayoutError();
                     return;
                 }
-                mView.hideLoadingLayout();
                 mView.updateHomePage(result);
             }
 

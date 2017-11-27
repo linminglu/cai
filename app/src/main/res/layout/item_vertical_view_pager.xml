@@ -13,14 +13,14 @@
         android:id="@+id/tv_left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:drawableLeft="@mipmap/index_jiangzhang"
         android:drawablePadding="5dp"
-        android:textSize="@dimen/d_win_text_size"
         android:padding="@dimen/d_win_text_padding"
         android:text="精华"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        android:textSize="@dimen/d_win_text_size"/>
 
     <TextView
         android:id="@+id/tv_center"
@@ -31,9 +31,9 @@
         android:layout_marginRight="5dp"
         android:maxLines="1"
         android:padding="@dimen/d_win_text_padding"
-        android:textSize="@dimen/d_win_text_size"
         android:text="213"
-        android:textColor="@color/red"/>
+        android:textColor="@color/red"
+        android:textSize="@dimen/d_win_text_size"/>
 
     <TextView
         android:id="@+id/tv_right"
@@ -41,6 +41,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:padding="@dimen/d_win_text_padding"
-        android:textSize="@dimen/d_win_text_size"
-        android:text="精华"/>
+        android:text="精华"
+        android:textSize="@dimen/d_win_text_size"/>
 </RelativeLayout>

@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
@@ -42,7 +43,6 @@ import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.presenter.HomePagePresenter;
 import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.HomeEvent;
-import com.example.admin.caipiao33.utils.ImageUtils;
 import com.example.admin.caipiao33.utils.LoginEvent;
 import com.example.admin.caipiao33.utils.MyImageLoader;
 import com.example.admin.caipiao33.utils.ResourcesUtil;
@@ -51,7 +51,6 @@ import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.utils.Tools;
 import com.example.admin.caipiao33.utils.UserConfig;
 import com.example.admin.caipiao33.utils.ViewHolder;
-import com.example.admin.caipiao33.views.DragFloatActionButton;
 import com.example.admin.caipiao33.views.GridView4ScrollView;
 import com.example.admin.caipiao33.views.LoadingLayout;
 import com.example.admin.caipiao33.views.MyImageView;
@@ -119,9 +118,12 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
     ImageView ivHomepage4;
     @BindView(R.id.fab)
     MyImageView fab;
+
+
     private MainActivity mainActivity;
     private LayoutInflater mInflater;
     private View parentView;
+    private View inflaterView;
     private IHomePageContract.Presenter mPresenter;
     private ImageCycleViewListener mAdCycleViewListener = new ImageCycleViewListener()
     {
@@ -205,7 +207,23 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
             }
         });
         Tools.setSwipeRefreshColor(swipeRefreshLayout);
-
+        parentView.getViewTreeObserver()
+                .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener()
+                {
+                    @Override
+                    public void onGlobalLayout()
+                    {
+                        ViewGroup.LayoutParams layoutParams = myVerticalBanner.getLayoutParams();
+                        if (null != layoutParams)
+                        {
+                            layoutParams.height = (tvCalc.getMeasuredHeight() + 2 * ResourcesUtil.getDip(getResources(), R.dimen.d_win_text_padding) + 2 * ResourcesUtil
+                                    .getDip(getResources(), R.dimen.d_win_text_layout_padding_top)) * 5;
+                            myVerticalBanner.setLayoutParams(layoutParams);
+                        }
+                        parentView.getViewTreeObserver()
+                                .removeGlobalOnLayoutListener(this);//得到后取消监听
+                    }
+                });
         Resources resources = getResources();
         final Drawable homepage1 = resources.getDrawable(R.mipmap.homepage_1);
         final Drawable homepage2 = resources.getDrawable(R.mipmap.homepage_2);
@@ -440,13 +458,6 @@ public class HomePageFragment extends BaseFragment implements IHomePageContract.
         }
         List<HomePageBean.WinListBean> winList = bean.getWinList();
         myVerticalBanner.setNewsData(winList);
-        ViewGroup.LayoutParams layoutParams = myVerticalBanner.getLayoutParams();
-        if (null != layoutParams)
-        {
-            layoutParams.height = (tvCalc.getMeasuredHeight() + 2 * ResourcesUtil.getDip(getResources(), R.dimen.d_win_text_padding) + 2 * ResourcesUtil
-                    .getDip(getResources(), R.dimen.d_win_text_layout_padding_top)) * 5;
-        }
-
         HomePageBean.PopNoticeBean popNotice = bean.getPopNotice();
         if (null != popNotice)
         {
