@@ -8,6 +8,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.admin.caipiao33.bean.TuiJianBean;
@@ -16,6 +18,8 @@ import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.presenter.TuiJianPresenter;
 import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.utils.UserConfig;
+import com.example.admin.caipiao33.utils.ViewHolder;
+import com.example.admin.caipiao33.views.GridView4ScrollView;
 import com.example.admin.caipiao33.views.LoadingLayout;
 import com.socks.library.KLog;
 
@@ -35,11 +39,14 @@ public class TuiJianActivity extends ToolbarActivity implements Toolbar.OnMenuIt
     TextView tvTuijianShouyi;
     @BindView(R.id.tv_tuijian_shuoming)
     TextView tvTuijianShuoming;
-    @BindView(R.id.tv_tuijian_huiyuan)
-    TextView tvTuijianHuiyuan;
+    //    @BindView(R.id.tv_tuijian_huiyuan)
+    //    TextView tvTuijianHuiyuan;
     @BindView(R.id.tv_tuijian_huiyuannum)
     TextView tvTuijianHuiYuannum;
+    @BindView(R.id.gv_tuijian_huiyuan)
+    GridView4ScrollView gvTuijianHuiyuan;
     private ITuiJianContract.Presenter mPresenter;
+    private TuiJianBean result;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -105,6 +112,7 @@ public class TuiJianActivity extends ToolbarActivity implements Toolbar.OnMenuIt
     @Override
     public void updata(TuiJianBean result)
     {
+        this.result = result;
         int id = 1;
         try
         {
@@ -122,21 +130,23 @@ public class TuiJianActivity extends ToolbarActivity implements Toolbar.OnMenuIt
         tvTuijianShuoming.setText("说明：每天的7点更新收益，如3号7点，会计算2号0点-24点之间的所有数据，然后增加您的收益。您的收益=推荐会员的有效投注额度总和÷100 x " + result
                 .getSpread() + "（转换率），小数部分四舍五入！（风险账号不参与收益计算）");
         tvTuijianHuiYuannum.setText("我的推荐会员（" + result.getMySpread().getSpreadCount() + "）");
-        StringBuffer buffer = new StringBuffer();
-        for (int i = 0; i < result.getMySpread().getSpreadMember().size(); i++)
-        {
-            if (result.getMySpread().getSpreadMember().get(i).getIsDanger() == 0)
-            {
-                buffer.append(result.getMySpread().getSpreadMember().get(i).getCode())
-                        .append("        ");
-            }
-            else
-            {
-                buffer.append(result.getMySpread().getSpreadMember().get(i).getCode())
-                        .append("(风险)   ");
-            }
-        }
-        tvTuijianHuiyuan.setText(buffer);
+        //        StringBuffer buffer = new StringBuffer();
+        //        for (int i = 0; i < result.getMySpread().getSpreadMember().size(); i++)
+        //        {
+        //            if (result.getMySpread().getSpreadMember().get(i).getIsDanger() == 0)
+        //            {
+        //                buffer.append(result.getMySpread().getSpreadMember().get(i).getCode())
+        //                        .append("        ");
+        //            }
+        //            else
+        //            {
+        //                buffer.append(result.getMySpread().getSpreadMember().get(i).getCode())
+        //                        .append("(风险)   ");
+        //            }
+        //        }
+        //        tvTuijianHuiyuan.setText(buffer);
+        MyAdapter adapter = new MyAdapter();
+        gvTuijianHuiyuan.setAdapter(adapter);
     }
 
     @OnClick(R.id.tv_tuijian_url)
@@ -150,6 +160,45 @@ public class TuiJianActivity extends ToolbarActivity implements Toolbar.OnMenuIt
                 cm.setText(tvTuijianUrl.getText());
                 ToastUtil.show("复制成功，可以发给朋友们了!");
                 break;
+        }
+    }
+
+    class MyAdapter extends BaseAdapter
+    {
+
+        @Override
+        public int getCount()
+        {
+            return result.getMySpread().getSpreadMember().size();
+        }
+
+        @Override
+        public Object getItem(int position)
+        {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position)
+        {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent)
+        {
+            if (null == convertView)
+            {
+                convertView = getLayoutInflater().inflate(R.layout.item_tuijian_name, null);
+            }
+            TextView tv1 = ViewHolder.get(convertView, R.id.tv1);
+            TextView tv2 = ViewHolder.get(convertView, R.id.tv2);
+            tv1.setText(result.getMySpread().getSpreadMember().get(position).getCode());
+            tv2.setVisibility(result.getMySpread()
+                    .getSpreadMember()
+                    .get(position)
+                    .getIsDanger() == 0 ? View.GONE : View.VISIBLE);
+            return convertView;
         }
     }
 }

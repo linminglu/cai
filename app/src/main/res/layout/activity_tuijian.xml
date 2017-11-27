@@ -10,140 +10,170 @@
         android:id="@+id/loadingLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         />
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/white"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:scrollbars="none">
 
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="1"
-            android:text="我的推荐ID："
-            android:textSize="16sp"/>
-
-        <TextView
-            android:id="@+id/tv_tuijian_id"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1"
-            android:gravity="right"
-            android:text="¥ 1.00"
-            android:textSize="16sp"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:orientation="vertical">
-
-
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginLeft="10dp"
-            android:gravity="center_vertical"
-            android:text="我的推荐地址："
-            android:textSize="16sp"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
 
-        <TextView
-            android:id="@+id/tv_tuijian_url"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="3dp"
-            android:textColor="@color/red"
-            android:textSize="14sp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="3dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="3dp"
-            android:text="点击复制完整地址给您的好友或者让您的好友在注册时填写您的推荐ID"
-            android:textSize="15sp"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal">
 
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginLeft="10dp"
-            android:gravity="center_vertical"
-            android:text="本月推荐收益："
-            android:textSize="16sp"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:text="我的推荐ID："
+                    android:textSize="16sp"/>
 
-        <TextView
-            android:id="@+id/tv_tuijian_shouyi"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="3dp"
-            android:text="¥ 1.00"
-            android:textColor="@color/red"
-            android:textSize="15sp"/>
+                <TextView
+                    android:id="@+id/tv_tuijian_id"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="¥ 1.00"
+                    android:textSize="16sp"/>
 
-        <TextView
-            android:id="@+id/tv_tuijian_shuoming"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="5dp"
-            android:text="说明：每天的7点更新收益，如3号7点，会计算2号0点-24点之间的所有数据，然后增加您的收益。您的收益=推荐会员的有效投注额度总和÷100 x 0.1（转换率），小数部分四舍五入！（风险账号不参与收益计算）"
-            android:textSize="15sp"/>
-    </LinearLayout>
+            </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
 
 
-        <TextView
-            android:id="@+id/tv_tuijian_huiyuannum"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_weight="1"
-            android:text="我的推荐会员："
-            android:textSize="16sp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_vertical"
+                    android:text="我的推荐地址："
+                    android:textSize="16sp"/>
 
-        <TextView
-            android:id="@+id/tv_tuijian_huiyuan"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_weight="1"
-            android:gravity="right"
-            android:text="¥ 1.00"
-            android:textSize="16sp"/>
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/tv_tuijian_url"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="3dp"
+                    android:textColor="@color/red"
+                    android:textSize="14sp"/>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="3dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="3dp"
+                    android:text="点击复制完整地址给您的好友或者让您的好友在注册时填写您的推荐ID"
+                    android:textSize="15sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_vertical"
+                    android:text="本月推荐收益："
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/tv_tuijian_shouyi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="3dp"
+                    android:text="¥ 1.00"
+                    android:textColor="@color/red"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:id="@+id/tv_tuijian_shuoming"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
+                    android:text="说明：每天的7点更新收益，如3号7点，会计算2号0点-24点之间的所有数据，然后增加您的收益。您的收益=推荐会员的有效投注额度总和÷100 x 0.1（转换率），小数部分四舍五入！（风险账号不参与收益计算）"
+                    android:textSize="15sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/tv_tuijian_huiyuannum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:text="我的推荐会员："
+                    android:textSize="16sp"/>
+
+                <!--<TextView-->
+                <!--android:id="@+id/tv_tuijian_huiyuan"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="0dp"-->
+                <!--android:layout_marginBottom="8dp"-->
+                <!--android:layout_marginLeft="10dp"-->
+                <!--android:layout_marginTop="5dp"-->
+                <!--android:layout_weight="1"-->
+                <!--android:gravity="right"-->
+                <!--android:text="¥ 1.00"-->
+                <!--android:textSize="16sp"/>-->
+
+
+                <com.example.admin.caipiao33.views.GridView4ScrollView
+                    android:id="@+id/gv_tuijian_huiyuan"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/white"
+                    android:cacheColorHint="#00000000"
+                    android:fadingEdge="none"
+                    android:fadingEdgeLength="0dp"
+                    android:horizontalSpacing="1dp"
+                    android:numColumns="3"
+                    android:scrollbars="none"
+                    android:verticalSpacing="1dp">
+                </com.example.admin.caipiao33.views.GridView4ScrollView>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
