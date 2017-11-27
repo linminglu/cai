@@ -78,7 +78,7 @@ public class WeiXinBankActivity extends ToolbarActivity implements Toolbar.OnMen
         map.put("payId", payId);
         map.put("amount", topupamount);
 
-        HttpUtil.requestSecond("user", "ralipayBankNext", map, AliBankBean.class, WeiXinBankActivity.this, new MyResponseListener<AliBankBean>()
+        HttpUtil.requestSecond("user", "rwechatBankNext", map, AliBankBean.class, WeiXinBankActivity.this, new MyResponseListener<AliBankBean>()
         {
             @Override
             public void onSuccess(AliBankBean result)
@@ -228,7 +228,7 @@ public class WeiXinBankActivity extends ToolbarActivity implements Toolbar.OnMen
         map.put("amount", topupamount);
         map.put("orderNo", aliBankBean.getOrderNo());
 
-        HttpUtil.requestSecond("user", "ralipayBankSubmit", map, String.class, WeiXinBankActivity.this, new MyResponseListener<String>()
+        HttpUtil.requestSecond("user", "rwechatBankSubmit", map, String.class, WeiXinBankActivity.this, new MyResponseListener<String>()
         {
             @Override
             public void onSuccess(String result)
