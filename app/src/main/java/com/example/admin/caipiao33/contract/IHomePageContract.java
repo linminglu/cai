@@ -15,8 +15,6 @@ public interface IHomePageContract
     {
         void updateHomePage(HomePageBean bean);
 
-        void updateHomePage1(HomePageBean bean);
-
         void hideRefreshing();
 
         void updateServiceUrl(String url);
