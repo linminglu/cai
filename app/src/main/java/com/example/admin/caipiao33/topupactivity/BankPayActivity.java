@@ -1,5 +1,7 @@
 package com.example.admin.caipiao33.topupactivity;
 
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -74,6 +76,7 @@ public class BankPayActivity extends ToolbarActivity implements Toolbar.OnMenuIt
     private String type = "1";
     private BankPayDetailBean bankPayDetailBean;
     private ArrayList<CheckBox> boxes = new ArrayList<>();
+    private ClipboardManager cm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -83,6 +86,7 @@ public class BankPayActivity extends ToolbarActivity implements Toolbar.OnMenuIt
         ButterKnife.bind(this);
         topupamount = getIntent().getStringExtra(Constants.EXTRA_TOPUP_TOPUPAMOUNT);
         payId = getIntent().getStringExtra(Constants.EXTRA_TOPUP_PAYID);
+        cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         initData();
         initView();
     }
@@ -256,13 +260,29 @@ public class BankPayActivity extends ToolbarActivity implements Toolbar.OnMenuIt
         });
     }
 
-    @OnClick({R.id.bankpay_shangyibu, R.id.bankpay_ok, R.id.bankpay_yinhangzhuanzhang_cb, R.id.bankpay_atmzidongguiyuanji_cb, R.id.bankpay_atmxianjinrukuan_cb, R.id.bankpay_yinhangguitaizhuanzhang_cb, R.id.bankpay_shoujiyinhangzhuanzhang_cb, R.id.bankpay_qita_cb})
+    @OnClick({R.id.bankpay_weixinhao_tv, R.id.bankpay_weixinming_tv, R.id.bankpay_zhanghao_tv, R.id.bankpay_wangdian_tv, R.id.bankpay_shangyibu, R.id.bankpay_ok, R.id.bankpay_yinhangzhuanzhang_cb, R.id.bankpay_atmzidongguiyuanji_cb, R.id.bankpay_atmxianjinrukuan_cb, R.id.bankpay_yinhangguitaizhuanzhang_cb, R.id.bankpay_shoujiyinhangzhuanzhang_cb, R.id.bankpay_qita_cb})
     public void onViewClicked(View view)
     {
         switch (view.getId())
         {
             case R.id.bankpay_shangyibu:
                 finish();
+                break;
+            case R.id.bankpay_weixinhao_tv:
+                cm.setText(bankpayWeixinhaoTv.getText());
+                ToastUtil.show("银行名称已经复制到剪切板");
+                break;
+            case R.id.bankpay_weixinming_tv:
+                cm.setText(bankpayWeixinmingTv.getText());
+                ToastUtil.show("收款人已经复制到剪切板");
+                break;
+            case R.id.bankpay_zhanghao_tv:
+                cm.setText(bankpayZhanghaoTv.getText());
+                ToastUtil.show("账号已经复制到剪切板");
+                break;
+            case R.id.bankpay_wangdian_tv:
+                cm.setText(bankpayWangdianTv.getText());
+                ToastUtil.show("开户网点已经复制到剪切板");
                 break;
             case R.id.bankpay_ok:
                 if (StringUtils.isEmpty2(bankpayNameEt.getText().toString()))

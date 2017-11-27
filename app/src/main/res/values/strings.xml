@@ -106,6 +106,7 @@
     <string name="s_topup">充值</string>
     <string name="s_weixin_tianjiahaoyou">微信添加好友</string>
     <string name="s_weixin_pingtaichongzhi">微信平台充值</string>
+    <string name="s_weixin_bank">微信银行卡转账</string>
     <string name="s_ali_tianjiahaoyou">支付宝添加好友</string>
     <string name="s_ali_pingtaichongzhi">支付宝充值</string>
     <string name="s_ali_bank">支付宝银行卡转账</string>

@@ -80,7 +80,8 @@ public class BankPayAdapter extends BaseAdapter
         CheckBox item_weixinpay_cb = ViewHolder.get(convertView, R.id.item_bankpay_cb);
         item_bankpay_bankname.setText("银行：" + beanContent.getBankName());
         item_bankpay_accountname.setText("收款人：" + beanContent.getAccountName());
-        item_bankpay_addr.setText("汇款资讯：" + beanContent.getBankAddr() + "\n" + beanContent.getAccountCode());
+        item_bankpay_addr.setText("汇款资讯：" + beanContent.getBankAddr() + "\n                    " + beanContent
+                .getAccountCode());
         item_weixinpay_cb.setChecked(beanContent.isSelete());
         return convertView;
     }

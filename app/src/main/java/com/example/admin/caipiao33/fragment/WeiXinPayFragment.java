@@ -18,6 +18,7 @@ import com.example.admin.caipiao33.bean.WeiXinPayBean;
 import com.example.admin.caipiao33.fragment.adapter.WeiXinPayAdapter;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.httputils.MyResponseListener;
+import com.example.admin.caipiao33.topupactivity.AliBankActivity;
 import com.example.admin.caipiao33.topupactivity.WeiXin3SaoMaActivity;
 import com.example.admin.caipiao33.topupactivity.WeiXinHaoYouActivity;
 import com.example.admin.caipiao33.topupactivity.WeiXinPingTaiActivity;
@@ -159,6 +160,24 @@ public class WeiXinPayFragment extends BaseFragment implements View.OnClickListe
                                 intent.putExtra(Constants.EXTRA_TOPUP_WEIXIN, payAdapter.getBeanContents()
                                         .get(i));
                                 startActivity(intent);
+                            }
+                            //跳转支付宝转账银行卡页面
+                            else if (payAdapter.getBeanContents().get(i).getPayType() == 5)
+                            {
+                                if (isCanNext(topupActivity.getTopupAmount(), payAdapter.getBeanContents()
+                                        .get(i)
+                                        .getPayMin(), payAdapter.getBeanContents()
+                                        .get(i)
+                                        .getPayMax()))
+                                {
+                                    intent = new Intent(topupActivity, AliBankActivity.class);
+                                    intent.putExtra(Constants.EXTRA_TOPUP_PAYID, payAdapter.getBeanContents()
+                                            .get(i)
+                                            .getId());
+                                    intent.putExtra(Constants.EXTRA_TOPUP_TOPUPAMOUNT, topupActivity
+                                            .getTopupAmount() + "");
+                                    startActivity(intent);
+                                }
                             }
                             //跳转微信平台支付页面
                             else

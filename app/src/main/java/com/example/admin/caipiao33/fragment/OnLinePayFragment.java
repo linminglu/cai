@@ -1,6 +1,7 @@
 package com.example.admin.caipiao33.fragment;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -153,7 +154,11 @@ public class OnLinePayFragment extends BaseFragment implements View.OnClickListe
                                     .getTopupAmount() + "&bankName=" + payAdapter.getBeanContents()
                                     .get(i)
                                     .getId() + "&baseUrl=" + HttpUtil.mNewUrl;
-                            toWebUrlActivity(url, "网银支付");
+
+                            final Uri uri = Uri.parse(url);
+                            final Intent it = new Intent(Intent.ACTION_VIEW, uri);
+                            startActivity(it);
+                            //                            toWebUrlActivity(url, "网银支付");
                         }
                     }
                 }

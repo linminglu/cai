@@ -34,7 +34,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class AliBankActivity extends ToolbarActivity implements Toolbar.OnMenuItemClickListener
+public class WeiXinBankActivity extends ToolbarActivity implements Toolbar.OnMenuItemClickListener
 {
     @BindView(R.id.alibank_dingdanhao)
     TextView alibankDingdanhao;
@@ -63,7 +63,7 @@ public class AliBankActivity extends ToolbarActivity implements Toolbar.OnMenuIt
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_alibank);
+        setContentView(R.layout.activity_weixinbank);
         ButterKnife.bind(this);
         topupamount = getIntent().getStringExtra(Constants.EXTRA_TOPUP_TOPUPAMOUNT);
         payId = getIntent().getStringExtra(Constants.EXTRA_TOPUP_PAYID);
@@ -78,7 +78,7 @@ public class AliBankActivity extends ToolbarActivity implements Toolbar.OnMenuIt
         map.put("payId", payId);
         map.put("amount", topupamount);
 
-        HttpUtil.requestSecond("user", "ralipayBankNext", map, AliBankBean.class, AliBankActivity.this, new MyResponseListener<AliBankBean>()
+        HttpUtil.requestSecond("user", "ralipayBankNext", map, AliBankBean.class, WeiXinBankActivity.this, new MyResponseListener<AliBankBean>()
         {
             @Override
             public void onSuccess(AliBankBean result)
@@ -110,7 +110,7 @@ public class AliBankActivity extends ToolbarActivity implements Toolbar.OnMenuIt
     public void onCreateCustomToolBar(Toolbar toolbar)
     {
         super.onCreateCustomToolBar(toolbar);
-        toolbar.setTitle(R.string.s_ali_bank);
+        toolbar.setTitle(R.string.s_weixin_bank);
         setSupportActionBar(toolbar);
         toolbar.setOnMenuItemClickListener(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -129,12 +129,12 @@ public class AliBankActivity extends ToolbarActivity implements Toolbar.OnMenuIt
         switch (item.getItemId())
         {
             case R.id.action_jilu: // 充值记录.
-                Intent intent = new Intent(AliBankActivity.this, ChongZhiJiLuActivity.class);
+                Intent intent = new Intent(WeiXinBankActivity.this, ChongZhiJiLuActivity.class);
                 startActivity(intent);
                 break;
             case R.id.action_kefu: // 在线客服
                 showLoadingDialog();
-                HttpUtil.requestFirst("kefu", String.class, AliBankActivity.this, new MyResponseListener<String>()
+                HttpUtil.requestFirst("kefu", String.class, WeiXinBankActivity.this, new MyResponseListener<String>()
                 {
                     @Override
                     public void onSuccess(String result)
@@ -174,7 +174,7 @@ public class AliBankActivity extends ToolbarActivity implements Toolbar.OnMenuIt
     // 跳转到网页
     private void toWebUrlActivity(String url, String title)
     {
-        Intent intent = new Intent(AliBankActivity.this, WebUrlActivity.class);
+        Intent intent = new Intent(WeiXinBankActivity.this, WebUrlActivity.class);
         intent.putExtra(Constants.EXTRA_URL, url);
         intent.putExtra(Constants.EXTRA_TITLE, title);
         startActivity(intent);
@@ -228,7 +228,7 @@ public class AliBankActivity extends ToolbarActivity implements Toolbar.OnMenuIt
         map.put("amount", topupamount);
         map.put("orderNo", aliBankBean.getOrderNo());
 
-        HttpUtil.requestSecond("user", "ralipayBankSubmit", map, String.class, AliBankActivity.this, new MyResponseListener<String>()
+        HttpUtil.requestSecond("user", "ralipayBankSubmit", map, String.class, WeiXinBankActivity.this, new MyResponseListener<String>()
         {
             @Override
             public void onSuccess(String result)
