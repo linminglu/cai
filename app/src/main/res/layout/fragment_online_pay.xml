@@ -23,4 +23,30 @@
         android:layout_height="40dp"
         android:layout_margin="5dp"
         android:text="立即充值"/>
+
+    <LinearLayout
+        android:id="@+id/notify_null_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="60dp"
+            android:src="@mipmap/jinggao"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="@string/s_not_message1"
+            android:textColor="@color/dark_gray"
+            android:textSize="16sp"
+            />
+    </LinearLayout>
 </LinearLayout>

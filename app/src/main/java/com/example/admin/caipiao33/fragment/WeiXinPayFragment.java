@@ -102,7 +102,9 @@ public class WeiXinPayFragment extends BaseFragment implements View.OnClickListe
             @Override
             public void onFailed(int code, String msg)
             {
-                //                ToastUtil.show(msg);
+                weixinPayLv.setVisibility(View.GONE);
+                weixinPayBtn.setVisibility(View.GONE);
+                mNotifyNullLayout.setVisibility(View.VISIBLE);
             }
 
             @Override

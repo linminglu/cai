@@ -40,6 +40,7 @@ public class OnLinePayFragment extends BaseFragment implements View.OnClickListe
     private TopupActivity topupActivity;
     private OnLinePayAdapter payAdapter;
     private OnLinePayBean onLinePayBean;
+    private View mNotifyNullLayout;
 
     public OnLinePayFragment()
     {
@@ -56,6 +57,7 @@ public class OnLinePayFragment extends BaseFragment implements View.OnClickListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View parentView = inflater.inflate(R.layout.fragment_online_pay, container, false);
+        mNotifyNullLayout = parentView.findViewById(R.id.notify_null_layout);
         mInflater = inflater;
         topupActivity = (TopupActivity) getActivity();
         unbinder = ButterKnife.bind(this, parentView);
@@ -71,6 +73,18 @@ public class OnLinePayFragment extends BaseFragment implements View.OnClickListe
             @Override
             public void onSuccess(OnLinePayBean result)
             {
+                if (null == result || result.getExpand().getBankList().size() == 0)
+                {
+                    onlinePayLv.setVisibility(View.GONE);
+                    onlinePayBtn.setVisibility(View.GONE);
+                    mNotifyNullLayout.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    onlinePayLv.setVisibility(View.VISIBLE);
+                    onlinePayBtn.setVisibility(View.VISIBLE);
+                    mNotifyNullLayout.setVisibility(View.GONE);
+                }
                 onLinePayBean = result;
                 result.getExpand().getBankList().get(0).setSelete(true);
                 payAdapter = new OnLinePayAdapter(result.getExpand()
@@ -82,7 +96,9 @@ public class OnLinePayFragment extends BaseFragment implements View.OnClickListe
             @Override
             public void onFailed(int code, String msg)
             {
-                //                ToastUtil.show(msg);
+                onlinePayLv.setVisibility(View.GONE);
+                onlinePayBtn.setVisibility(View.GONE);
+                mNotifyNullLayout.setVisibility(View.VISIBLE);
             }
 
             @Override

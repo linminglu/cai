@@ -103,7 +103,9 @@ public class AliPayFragment extends BaseFragment implements View.OnClickListener
             @Override
             public void onFailed(int code, String msg)
             {
-                //                ToastUtil.show(msg);
+                aliPayLv.setVisibility(View.GONE);
+                aliPayBtn.setVisibility(View.GONE);
+                mNotifyNullLayout.setVisibility(View.VISIBLE);
             }
 
             @Override

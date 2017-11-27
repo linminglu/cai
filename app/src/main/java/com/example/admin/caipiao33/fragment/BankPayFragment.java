@@ -98,7 +98,9 @@ public class BankPayFragment extends BaseFragment implements View.OnClickListene
             @Override
             public void onFailed(int code, String msg)
             {
-                //                ToastUtil.show(msg);
+                bankPayLv.setVisibility(View.GONE);
+                bankPayBtn.setVisibility(View.GONE);
+                mNotifyNullLayout.setVisibility(View.VISIBLE);
             }
 
             @Override

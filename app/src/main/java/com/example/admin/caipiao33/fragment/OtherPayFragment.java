@@ -101,7 +101,9 @@ public class OtherPayFragment extends BaseFragment implements View.OnClickListen
             @Override
             public void onFailed(int code, String msg)
             {
-                //                ToastUtil.show(msg);
+                qqPayLv.setVisibility(View.GONE);
+                qqPayBtn.setVisibility(View.GONE);
+                mNotifyNullLayout.setVisibility(View.VISIBLE);
             }
 
             @Override
