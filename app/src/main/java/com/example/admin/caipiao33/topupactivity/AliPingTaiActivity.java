@@ -10,7 +10,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -25,6 +27,7 @@ import com.example.admin.caipiao33.httputils.MyResponseListener;
 import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.ImageUtils;
 import com.example.admin.caipiao33.utils.MyImageLoader;
+import com.example.admin.caipiao33.utils.StringUtils;
 import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.utils.TopupEvent;
 import com.example.admin.caipiao33.views.LoadingLayout;
@@ -61,6 +64,10 @@ public class AliPingTaiActivity extends ToolbarActivity implements Toolbar.OnMen
     Button alipingtaiWoyizhifu;
     @BindView(R.id.alipingtai_steps)
     WebView alipingtaiSteps;
+    @BindView(R.id.alipingtai_name_et)
+    EditText alipingtai_name_et;
+    @BindView(R.id.alipingtai_name_ll)
+    LinearLayout alipingtai_name_ll;
     private String topupamount;
     private String payId;
     private AliPingTaiBean aliPingTaiBean;
@@ -89,6 +96,8 @@ public class AliPingTaiActivity extends ToolbarActivity implements Toolbar.OnMen
             public void onSuccess(AliPingTaiBean result)
             {
                 aliPingTaiBean = result;
+                alipingtai_name_ll.setVisibility(result.getIsShow()
+                        .equals("1") ? View.VISIBLE : View.GONE);
                 alipingtaiDingdanhao.setText(result.getOrderNo());
                 alipingtaialihao.setText(result.getCode());
                 alipingtaialiming.setText(result.getName());
@@ -177,6 +186,10 @@ public class AliPingTaiActivity extends ToolbarActivity implements Toolbar.OnMen
         map.put("payId", payId);
         map.put("amount", topupamount);
         map.put("orderNo", aliPingTaiBean.getOrderNo());
+        if (!StringUtils.isEmpty2(alipingtai_name_et.getText().toString()))
+        {
+            map.put("inBank", alipingtai_name_et.getText().toString());
+        }
 
         HttpUtil.requestSecond("user", "ralipayScanSubmit", map, String.class, AliPingTaiActivity.this, new MyResponseListener<String>()
         {

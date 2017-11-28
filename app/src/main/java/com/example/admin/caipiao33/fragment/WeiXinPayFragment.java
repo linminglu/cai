@@ -20,6 +20,7 @@ import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.httputils.MyResponseListener;
 import com.example.admin.caipiao33.topupactivity.AliBankActivity;
 import com.example.admin.caipiao33.topupactivity.WeiXin3SaoMaActivity;
+import com.example.admin.caipiao33.topupactivity.WeiXinBankActivity;
 import com.example.admin.caipiao33.topupactivity.WeiXinHaoYouActivity;
 import com.example.admin.caipiao33.topupactivity.WeiXinPingTaiActivity;
 import com.example.admin.caipiao33.utils.Constants;
@@ -170,7 +171,7 @@ public class WeiXinPayFragment extends BaseFragment implements View.OnClickListe
                                         .get(i)
                                         .getPayMax()))
                                 {
-                                    intent = new Intent(topupActivity, AliBankActivity.class);
+                                    intent = new Intent(topupActivity, WeiXinBankActivity.class);
                                     intent.putExtra(Constants.EXTRA_TOPUP_PAYID, payAdapter.getBeanContents()
                                             .get(i)
                                             .getId());

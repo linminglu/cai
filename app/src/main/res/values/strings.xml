@@ -22,6 +22,7 @@
     <string name="s_load_more_end">已经到底啦~</string>
     <string name="s_not_message">列表是空的！</string>
     <string name="s_not_message1">该支付方式未设置，给您带来的不便敬请谅解！\n 您可以选择其他的支付方式，谢谢！</string>
+    <string name="s_bank_tixing">提醒您：\n \n   1.请如实填写存入时间、存入金额、存款人姓名。 \n   2.每笔转账请提交一次。 \n   3.转账金额添加零头如5003.10，便于财务查收，加快到账速度。\n   4.转账完成后请保留单据作为核对凭证</string>
 
     <string name="main_tab_homepage">首页</string>
     <string name="main_tab_goucai">购彩</string>
