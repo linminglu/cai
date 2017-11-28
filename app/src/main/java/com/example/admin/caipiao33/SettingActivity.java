@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.example.admin.caipiao33.bean.SettingBean;
 import com.example.admin.caipiao33.contract.ISettingContract;
 import com.example.admin.caipiao33.presenter.SettingPresenter;
+import com.example.admin.caipiao33.utils.APKVersionCodeUtils;
 import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.utils.UserConfig;
@@ -38,6 +39,8 @@ public class SettingActivity extends ToolbarActivity implements Toolbar.OnMenuIt
     RelativeLayout settingTikuanmimaRl;
     @BindView(R.id.setting_yinhangka_tv)
     TextView settingYinhangkaTv;
+    @BindView(R.id.versionname_tv)
+    TextView versionname_tv;
     @BindView(R.id.setting_yinhangka_rl)
     RelativeLayout settingYinhangkaRl;
     @BindView(R.id.setting_guanyu_rl)
@@ -75,6 +78,7 @@ public class SettingActivity extends ToolbarActivity implements Toolbar.OnMenuIt
                 mPresenter.getSettingOp();
             }
         });
+        versionname_tv.setText("当前版本：" + APKVersionCodeUtils.getVerName(this));
     }
 
     @Override

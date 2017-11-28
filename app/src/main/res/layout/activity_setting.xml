@@ -285,6 +285,18 @@
                         android:layout_marginTop="15dp"
                         android:src="@mipmap/geren_guanyu"/>
 
+
+                    <TextView
+                        android:id="@+id/versionname_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/imageView5"
+                        android:layout_marginRight="5dp"
+                        android:layout_toLeftOf="@+id/imageView5"
+                        android:layout_toStartOf="@+id/imageView5"
+                        android:text="当前版本：V1.12"/>
+
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -295,6 +307,7 @@
                         android:textSize="16sp"/>
 
                     <ImageView
+                        android:id="@+id/imageView5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
