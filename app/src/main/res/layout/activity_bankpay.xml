@@ -10,7 +10,8 @@
     <com.example.admin.caipiao33.views.LoadingLayout
         android:id="@+id/loadingLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="gone">
     </com.example.admin.caipiao33.views.LoadingLayout>
 
     <ScrollView
@@ -357,6 +358,16 @@
                     android:text="我已转账"
                     android:textSize="14sp"/>
             </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/s_bank_tixing"
+                android:textColor="@color/red"
+                android:textSize="12sp"/>
         </LinearLayout>
     </ScrollView>
 

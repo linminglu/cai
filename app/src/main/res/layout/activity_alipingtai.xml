@@ -123,6 +123,38 @@
                     android:textSize="13sp"/>
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/alipingtai_name_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center_vertical"
+                    android:text="存款支付宝姓名："
+                    android:textSize="13sp"/>
+
+
+                <EditText
+                    android:id="@+id/alipingtai_name_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/liuhecai_btn_weixuan_01"
+                    android:gravity="center_vertical"
+                    android:hint="请输入姓名"
+                    android:inputType="text"
+                    android:maxLength="10"
+                    android:maxLines="1"
+                    android:textSize="13sp"
+                    />
+            </LinearLayout>
+
             <TextView
                 android:id="@+id/alipingtai_tip"
                 android:layout_width="match_parent"
@@ -146,7 +178,8 @@
                 android:layout_marginLeft="3dp"
                 android:layout_marginTop="5dp"
                 android:text="为更快到账，系统随机多加两位小数金额，实际充值金额以此为准，如遇无法充值请降低金额或点击上一步更换其他排序充值"
-                android:textSize="12sp"/>
+                android:textSize="12sp"
+                android:visibility="gone"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

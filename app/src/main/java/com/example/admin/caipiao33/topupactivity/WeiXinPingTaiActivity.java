@@ -10,7 +10,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -25,6 +27,7 @@ import com.example.admin.caipiao33.httputils.MyResponseListener;
 import com.example.admin.caipiao33.utils.Constants;
 import com.example.admin.caipiao33.utils.ImageUtils;
 import com.example.admin.caipiao33.utils.MyImageLoader;
+import com.example.admin.caipiao33.utils.StringUtils;
 import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.utils.TopupEvent;
 import com.example.admin.caipiao33.views.LoadingLayout;
@@ -61,6 +64,10 @@ public class WeiXinPingTaiActivity extends ToolbarActivity implements Toolbar.On
     Button weixinpingtaiWoyizhifu;
     @BindView(R.id.weixinpingtai_steps)
     WebView weixinpingtaiSteps;
+    @BindView(R.id.weixinpingtai_name_ll)
+    LinearLayout weixinpingtai_name_ll;
+    @BindView(R.id.weixinpingtai_name_et)
+    EditText weixinpingtai_name_et;
     private String topupamount;
     private String payId;
     private WeiXinPingTaiBean weiXinPingTaiBean;
@@ -89,6 +96,8 @@ public class WeiXinPingTaiActivity extends ToolbarActivity implements Toolbar.On
             public void onSuccess(WeiXinPingTaiBean result)
             {
                 weiXinPingTaiBean = result;
+                weixinpingtai_name_ll.setVisibility(result.getIsShow()
+                        .equals("1") ? View.VISIBLE : View.GONE);
                 weixinpingtaiDingdanhao.setText(result.getOrderNo());
                 weixinpingtaiWeixinhao.setText(result.getCode());
                 weixinpingtaiWeixinming.setText(result.getName());
@@ -177,6 +186,10 @@ public class WeiXinPingTaiActivity extends ToolbarActivity implements Toolbar.On
         map.put("payId", payId);
         map.put("amount", topupamount);
         map.put("orderNo", weiXinPingTaiBean.getOrderNo());
+        if (!StringUtils.isEmpty2(weixinpingtai_name_et.getText().toString()))
+        {
+            map.put("inBank", weixinpingtai_name_et.getText().toString());
+        }
 
         HttpUtil.requestSecond("user", "rwechatScanSubmit", map, String.class, WeiXinPingTaiActivity.this, new MyResponseListener<String>()
         {
