@@ -241,6 +241,7 @@ public class WeiXinBankActivity extends ToolbarActivity implements Toolbar.OnMen
                 ToastUtil.show("提交成功，请稍后查询充值记录！");
                 finish();
                 EventBus.getDefault().post(new TopupEvent(""));
+
             }
 
             @Override
