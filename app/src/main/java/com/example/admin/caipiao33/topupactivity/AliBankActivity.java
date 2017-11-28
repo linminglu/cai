@@ -21,6 +21,7 @@ import com.example.admin.caipiao33.bean.AliBankBean;
 import com.example.admin.caipiao33.httputils.HttpUtil;
 import com.example.admin.caipiao33.httputils.MyResponseListener;
 import com.example.admin.caipiao33.utils.Constants;
+import com.example.admin.caipiao33.utils.StringUtils;
 import com.example.admin.caipiao33.utils.ToastUtil;
 import com.example.admin.caipiao33.utils.TopupEvent;
 import com.example.admin.caipiao33.views.LoadingLayout;
@@ -227,6 +228,10 @@ public class AliBankActivity extends ToolbarActivity implements Toolbar.OnMenuIt
         map.put("payId", payId);
         map.put("amount", topupamount);
         map.put("orderNo", aliBankBean.getOrderNo());
+        if (!StringUtils.isEmpty2(alibankNameEt.getText().toString()))
+        {
+            map.put("inBank", alibankNameEt.getText().toString());
+        }
 
         HttpUtil.requestSecond("user", "ralipayBankSubmit", map, String.class, AliBankActivity.this, new MyResponseListener<String>()
         {
