@@ -169,6 +169,10 @@ public class MainActivity extends BaseActivity
     protected void onNewIntent(Intent intent)
     {
         super.onNewIntent(intent);
+        if (intent != null && intent.getBooleanExtra("actionhome", false))
+        {
+            switchCenter(HomePageFragment.class);
+        }
         setIntent(intent);
     }
 

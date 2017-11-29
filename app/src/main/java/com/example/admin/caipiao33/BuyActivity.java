@@ -268,14 +268,16 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
                 @Override
                 public Fragment getItem(int position)
                 {
-                    Fragment ff = null;
+                    QuickBuyFragment ff = null;
                     switch (position)
                     {
                         case 0:
-                            ff = QuickBuyFragment.newInstance(mBuyRoomBean, QuickBuyFragment.TYPE_SELF_SELECT, swipeRefreshLayout);
+                            ff = QuickBuyFragment.newInstance(mBuyRoomBean, QuickBuyFragment.TYPE_SELF_SELECT);
+                            ff.setRefreshLayout(swipeRefreshLayout);
                             break;
                         case 1:
-                            ff = QuickBuyFragment.newInstance(mBuyRoomBean, QuickBuyFragment.TYPE_QUICK, swipeRefreshLayout);
+                            ff = QuickBuyFragment.newInstance(mBuyRoomBean, QuickBuyFragment.TYPE_QUICK);
+                            ff.setRefreshLayout(swipeRefreshLayout);
                             break;
                     }
                     return ff;
@@ -751,6 +753,7 @@ public class BuyActivity extends BaseActivity implements IBuyContract.View, Tool
             case R.id.action_home: // 首页
                 Intent mainIntent = new Intent(this, MainActivity.class);
                 mainIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                mainIntent.putExtra("actionhome", true);
                 startActivity(mainIntent);
                 break;
             case R.id.action_record: // 投注记录

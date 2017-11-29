@@ -49,7 +49,7 @@ public class QuickBuyFragment extends BaseFragment
     private int mType;
     private String mPlayId;
     private boolean isvisible;
-    private static CusRefreshLayout refreshLayout;
+    private CusRefreshLayout refreshLayout;
 
 
     //若Fragement定义有带参构造函数，则一定要定义public的默认的构造函数
@@ -61,23 +61,32 @@ public class QuickBuyFragment extends BaseFragment
     public void setUserVisibleHint(boolean isVisibleToUser)
     {
         isvisible = isVisibleToUser;
-        if (listView != null && listViewCanScroll(listView))
+        if (listView != null && listViewCanScroll(listView) && refreshLayout != null)
         {
             refreshLayout.setMlvistop(true);//切换页面的时候默认是可以上下滑动的状态
         }
         super.setUserVisibleHint(isVisibleToUser);
     }
 
+    public CusRefreshLayout getRefreshLayout()
+    {
+        return refreshLayout;
+    }
+
+    public void setRefreshLayout(CusRefreshLayout refreshLayout)
+    {
+        this.refreshLayout = refreshLayout;
+    }
+
     /**
      */
-    public static QuickBuyFragment newInstance(BuyRoomBean bean, int type, CusRefreshLayout refreshLayout1)
+    public static QuickBuyFragment newInstance(BuyRoomBean bean, int type)
     {
         QuickBuyFragment fragment = new QuickBuyFragment();
         Bundle args = new Bundle();
         args.putSerializable(PLAY_DETAIL_LIST_BEAN, bean);
         args.putInt(TYPE, type);
         fragment.setArguments(args);
-        refreshLayout = refreshLayout1;
         return fragment;
     }
 
@@ -154,14 +163,17 @@ public class QuickBuyFragment extends BaseFragment
                     if (firstVisibleItem == 0)
                     {
                         View firstVisibleItemView = listView.getChildAt(0);
-                        if (firstVisibleItemView != null && firstVisibleItemView.getTop() == 0)
+                        if (firstVisibleItemView != null && firstVisibleItemView.getTop() == 0 && refreshLayout != null)
                         {
                             refreshLayout.setMlvistop(false);
                         }
                     }
                     else if ((firstVisibleItem + visibleItemCount) == totalItemCount)
                     {
-                        refreshLayout.setMlvistop(true);
+                        if (refreshLayout != null)
+                        {
+                            refreshLayout.setMlvistop(true);
+                        }
                         View lastVisibleItemView = listView.getChildAt(listView.getChildCount() - 1);
                         if (lastVisibleItemView != null && lastVisibleItemView.getBottom() == listView
                                 .getHeight())
@@ -170,12 +182,18 @@ public class QuickBuyFragment extends BaseFragment
                     }
                     else
                     {
-                        refreshLayout.setMlvistop(true);
+                        if (refreshLayout != null)
+                        {
+                            refreshLayout.setMlvistop(true);
+                        }
                     }
                 }
                 else
                 {
-                    refreshLayout.setMlvistop(false);
+                    if (refreshLayout != null)
+                    {
+                        refreshLayout.setMlvistop(false);
+                    }
                 }
 
             }

@@ -11,18 +11,18 @@ android {
         versionName "V1.15"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-//        ndk {
-//            moduleName "p2pnative"
-//            ldLibs "log"
-        //ldLibs "log", "z", "m"d
+        ndk {
+            moduleName "p2pnative"
+            ldLibs "log"
+            //ldLibs "log", "z", "m"d
 //            abiFilters "armeabi", "armeabi-v7a", "x86"
-//        }
-
-        externalNativeBuild {
-            cmake {
-                cppFlags ""
-            }
         }
+
+//        externalNativeBuild {
+//            cmake {
+//                cppFlags ""
+//            }
+//        }
 
         manifestPlaceholders = [
                 JPUSH_PKGNAME: applicationId,
@@ -48,11 +48,11 @@ android {
 //        }
     }
 
-    externalNativeBuild {
-        cmake {
-            path "CMakeLists.txt"
-        }
-    }
+//    externalNativeBuild {
+//        cmake {
+//            path "CMakeLists.txt"
+//        }
+//    }
 }
 
 dependencies {
