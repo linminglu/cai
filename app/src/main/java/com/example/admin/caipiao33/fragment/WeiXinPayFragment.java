@@ -148,100 +148,105 @@ public class WeiXinPayFragment extends BaseFragment implements View.OnClickListe
         switch (v.getId())
         {
             case R.id.weixin_pay_btn: //下一步
-                for (int i = 0; i < payAdapter.getBeanContents().size(); i++)
+                if (payAdapter.getBeanContents() != null)
                 {
-                    if (payAdapter.getBeanContents().get(i).isSelete())
+                    for (int i = 0; i < payAdapter.getBeanContents().size(); i++)
                     {
-                        if (!payAdapter.getBeanContents().get(i).getCode().equals("#scan#"))
+                        if (payAdapter.getBeanContents().get(i).isSelete())
                         {
-                            //跳转添加好友页面
-                            if (payAdapter.getBeanContents().get(i).getPayType() == 3)
+                            if (!payAdapter.getBeanContents().get(i).getCode().equals("#scan#"))
                             {
-                                intent = new Intent(topupActivity, WeiXinHaoYouActivity.class);
-                                intent.putExtra(Constants.EXTRA_TOPUP_WEIXIN, payAdapter.getBeanContents()
-                                        .get(i));
-                                startActivity(intent);
-                            }
-                            //跳转支付宝转账银行卡页面
-                            else if (payAdapter.getBeanContents().get(i).getPayType() == 5)
-                            {
-                                if (isCanNext(topupActivity.getTopupAmount(), payAdapter.getBeanContents()
-                                        .get(i)
-                                        .getPayMin(), payAdapter.getBeanContents()
-                                        .get(i)
-                                        .getPayMax()))
+                                //跳转添加好友页面
+                                if (payAdapter.getBeanContents().get(i).getPayType() == 3)
                                 {
-                                    intent = new Intent(topupActivity, WeiXinBankActivity.class);
-                                    intent.putExtra(Constants.EXTRA_TOPUP_PAYID, payAdapter.getBeanContents()
-                                            .get(i)
-                                            .getId());
-                                    intent.putExtra(Constants.EXTRA_TOPUP_TOPUPAMOUNT, topupActivity
-                                            .getTopupAmount() + "");
+                                    intent = new Intent(topupActivity, WeiXinHaoYouActivity.class);
+                                    intent.putExtra(Constants.EXTRA_TOPUP_WEIXIN, payAdapter.getBeanContents()
+                                            .get(i));
                                     startActivity(intent);
                                 }
+                                //跳转支付宝转账银行卡页面
+                                else if (payAdapter.getBeanContents().get(i).getPayType() == 5)
+                                {
+                                    if (isCanNext(topupActivity.getTopupAmount(), payAdapter.getBeanContents()
+                                            .get(i)
+                                            .getPayMin(), payAdapter.getBeanContents()
+                                            .get(i)
+                                            .getPayMax()))
+                                    {
+                                        intent = new Intent(topupActivity, WeiXinBankActivity.class);
+                                        intent.putExtra(Constants.EXTRA_TOPUP_PAYID, payAdapter.getBeanContents()
+                                                .get(i)
+                                                .getId());
+                                        intent.putExtra(Constants.EXTRA_TOPUP_TOPUPAMOUNT, topupActivity
+                                                .getTopupAmount() + "");
+                                        startActivity(intent);
+                                    }
+                                }
+                                //跳转微信平台支付页面
+                                else
+                                {
+                                    if (isCanNext(topupActivity.getTopupAmount(), payAdapter.getBeanContents()
+                                            .get(i)
+                                            .getPayMin(), payAdapter.getBeanContents()
+                                            .get(i)
+                                            .getPayMax()))
+                                    {
+                                        intent = new Intent(topupActivity, WeiXinPingTaiActivity.class);
+                                        intent.putExtra(Constants.EXTRA_TOPUP_PAYID, payAdapter.getBeanContents()
+                                                .get(i)
+                                                .getId());
+                                        intent.putExtra(Constants.EXTRA_TOPUP_TOPUPAMOUNT, topupActivity
+                                                .getTopupAmount() + "");
+                                        startActivity(intent);
+                                    }
+                                }
                             }
-                            //跳转微信平台支付页面
+                            //跳转第三方支付页面
+                            //                        else if (payAdapter.getBeanContents().get(i).getType() == 2)
                             else
                             {
-                                if (isCanNext(topupActivity.getTopupAmount(), payAdapter.getBeanContents()
-                                        .get(i)
-                                        .getPayMin(), payAdapter.getBeanContents()
-                                        .get(i)
-                                        .getPayMax()))
+                                if (payAdapter.getBeanContents().get(i).getType() == 1)//第三方扫码
                                 {
-                                    intent = new Intent(topupActivity, WeiXinPingTaiActivity.class);
-                                    intent.putExtra(Constants.EXTRA_TOPUP_PAYID, payAdapter.getBeanContents()
+                                    if (isCanNext(topupActivity.getTopupAmount(), payAdapter.getBeanContents()
                                             .get(i)
-                                            .getId());
-                                    intent.putExtra(Constants.EXTRA_TOPUP_TOPUPAMOUNT, topupActivity
-                                            .getTopupAmount() + "");
-                                    startActivity(intent);
+                                            .getPayMin(), payAdapter.getBeanContents()
+                                            .get(i)
+                                            .getPayMax()))
+                                    {
+                                        intent = new Intent(topupActivity, WeiXin3SaoMaActivity.class);
+                                        intent.putExtra(Constants.EXTRA_TOPUP_PAYID, payAdapter.getBeanContents()
+                                                .get(i)
+                                                .getId());
+                                        intent.putExtra(Constants.EXTRA_TOPUP_TOPUPAMOUNT, topupActivity
+                                                .getTopupAmount() + "");
+                                        startActivity(intent);
+                                    }
                                 }
-                            }
-                        }
-                        //跳转第三方支付页面
-                        //                        else if (payAdapter.getBeanContents().get(i).getType() == 2)
-                        else
-                        {
-                            if (payAdapter.getBeanContents().get(i).getType() == 1)//第三方扫码
-                            {
-                                if (isCanNext(topupActivity.getTopupAmount(), payAdapter.getBeanContents()
+                                else if (payAdapter.getBeanContents()
                                         .get(i)
-                                        .getPayMin(), payAdapter.getBeanContents()
-                                        .get(i)
-                                        .getPayMax()))
+                                        .getType() == 2)//第三方跳转WEB
                                 {
-                                    intent = new Intent(topupActivity, WeiXin3SaoMaActivity.class);
-                                    intent.putExtra(Constants.EXTRA_TOPUP_PAYID, payAdapter.getBeanContents()
+                                    if (isCanNext(topupActivity.getTopupAmount(), payAdapter.getBeanContents()
                                             .get(i)
-                                            .getId());
-                                    intent.putExtra(Constants.EXTRA_TOPUP_TOPUPAMOUNT, topupActivity
-                                            .getTopupAmount() + "");
-                                    startActivity(intent);
-                                }
-                            }
-                            else if (payAdapter.getBeanContents().get(i).getType() == 2)//第三方跳转WEB
-                            {
-                                if (isCanNext(topupActivity.getTopupAmount(), payAdapter.getBeanContents()
-                                        .get(i)
-                                        .getPayMin(), payAdapter.getBeanContents()
-                                        .get(i)
-                                        .getPayMax()))
-                                {
-                                    String url = payAdapter.getBeanContents()
+                                            .getPayMin(), payAdapter.getBeanContents()
                                             .get(i)
-                                            .getPayImg() + "/common/recharge/third?isH5=1&memberId=" + UserConfig
-                                            .getInstance()
-                                            .getToken(topupActivity)
-                                            .getMemberId() + "&type=1&payId=" + payAdapter.getBeanContents()
-                                            .get(i)
-                                            .getId() + "&amount=" + topupActivity.getTopupAmount() + "&bankName=&baseUrl=" + HttpUtil.mNewUrl;
+                                            .getPayMax()))
+                                    {
+                                        String url = payAdapter.getBeanContents()
+                                                .get(i)
+                                                .getPayImg() + "/common/recharge/third?isH5=1&memberId=" + UserConfig
+                                                .getInstance()
+                                                .getToken(topupActivity)
+                                                .getMemberId() + "&type=1&payId=" + payAdapter.getBeanContents()
+                                                .get(i)
+                                                .getId() + "&amount=" + topupActivity.getTopupAmount() + "&bankName=&baseUrl=" + HttpUtil.mNewUrl;
 
-                                    final Uri uri = Uri.parse(url);
-                                    final Intent it = new Intent(Intent.ACTION_VIEW, uri);
-                                    startActivity(it);
-                                    //                                    toWebUrlActivity(url, "微信支付");
-                                    //                                    startActivity(intent);
+                                        final Uri uri = Uri.parse(url);
+                                        final Intent it = new Intent(Intent.ACTION_VIEW, uri);
+                                        startActivity(it);
+                                        //                                    toWebUrlActivity(url, "微信支付");
+                                        //                                    startActivity(intent);
+                                    }
                                 }
                             }
                         }

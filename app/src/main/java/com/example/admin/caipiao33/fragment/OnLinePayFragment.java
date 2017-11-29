@@ -140,25 +140,28 @@ public class OnLinePayFragment extends BaseFragment implements View.OnClickListe
         switch (v.getId())
         {
             case R.id.online_pay_btn: //下一步
-                for (int i = 0; i < payAdapter.getBeanContents().size(); i++)
+                if (payAdapter.getBeanContents() != null)
                 {
-                    if (payAdapter.getBeanContents().get(i).isSelete())
+                    for (int i = 0; i < payAdapter.getBeanContents().size(); i++)
                     {
-                        if (isCanNext(topupActivity.getTopupAmount(), onLinePayBean.getMinAmount(), onLinePayBean
-                                .getMaxAmount()))
+                        if (payAdapter.getBeanContents().get(i).isSelete())
                         {
-                            String url = onLinePayBean.getPayUrl() + "/common/recharge/third?isH5=1&memberId=" + UserConfig
-                                    .getInstance()
-                                    .getToken(topupActivity)
-                                    .getMemberId() + "&type=4&payId=" + onLinePayBean.getId() + "&amount=" + topupActivity
-                                    .getTopupAmount() + "&bankName=" + payAdapter.getBeanContents()
-                                    .get(i)
-                                    .getId() + "&baseUrl=" + HttpUtil.mNewUrl;
+                            if (isCanNext(topupActivity.getTopupAmount(), onLinePayBean.getMinAmount(), onLinePayBean
+                                    .getMaxAmount()))
+                            {
+                                String url = onLinePayBean.getPayUrl() + "/common/recharge/third?isH5=1&memberId=" + UserConfig
+                                        .getInstance()
+                                        .getToken(topupActivity)
+                                        .getMemberId() + "&type=4&payId=" + onLinePayBean.getId() + "&amount=" + topupActivity
+                                        .getTopupAmount() + "&bankName=" + payAdapter.getBeanContents()
+                                        .get(i)
+                                        .getId() + "&baseUrl=" + HttpUtil.mNewUrl;
 
-                            final Uri uri = Uri.parse(url);
-                            final Intent it = new Intent(Intent.ACTION_VIEW, uri);
-                            startActivity(it);
-                            //                            toWebUrlActivity(url, "网银支付");
+                                final Uri uri = Uri.parse(url);
+                                final Intent it = new Intent(Intent.ACTION_VIEW, uri);
+                                startActivity(it);
+                                //                            toWebUrlActivity(url, "网银支付");
+                            }
                         }
                     }
                 }
