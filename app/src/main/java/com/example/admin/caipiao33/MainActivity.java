@@ -171,7 +171,7 @@ public class MainActivity extends BaseActivity
         super.onNewIntent(intent);
         if (intent != null && intent.getBooleanExtra("actionhome", false))
         {
-            switchCenter(HomePageFragment.class);
+            tabSwitchCenter(HomePageFragment.class);
         }
         setIntent(intent);
     }
