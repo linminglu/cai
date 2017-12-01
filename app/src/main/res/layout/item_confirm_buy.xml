@@ -32,6 +32,7 @@
             android:background="@drawable/liuhecai_btn_weixuan_01"
             android:gravity="center_vertical"
             android:inputType="number"
+            android:maxLength="8"
             android:maxLines="1"
             android:paddingLeft="10dp"
             />

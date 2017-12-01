@@ -119,7 +119,15 @@ public class ConfirmBuyDialog implements View.OnClickListener
                 for (BuyRoomBean.PlayDetailListBean.ListBean bean : checkedList)
                 {
                     bean.setMoney(s1);
-                    int capital = Integer.valueOf(bean.getMoney());
+                    int capital = 0;
+                    try
+                    {
+                        capital = Integer.valueOf(bean.getMoney());
+                    }
+                    catch (Exception e)
+                    {
+                        capital = 0;
+                    }
                     float bonus = Float.valueOf(bean.getBonus());
                     totalCapital += capital;
                     totalWinMoney += capital * bonus;
