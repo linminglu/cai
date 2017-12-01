@@ -1,6 +1,7 @@
 package com.example.admin.caipiao33.fragment;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -250,7 +251,14 @@ public class QuickBuyFragment extends BaseFragment
     @SuppressLint("NewApi")
     public static boolean listViewCanScroll(ListView mListView)
     {
-        boolean canScrollList = mListView.canScrollList(1);//Android自带的方法，好像不太管用。
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+        {
+            boolean canScrollList = mListView.canScrollList(1);//Android自带的方法，好像不太管用。
+        }
+        else
+        {
+            return true;
+        }
         boolean canScroll = false;
         int childCount = mListView.getChildCount();//返回的是当前可见区域的 Item 的总数。
         int count = mListView.getCount();//返回的是 ListView 的所有的 Item 的总数。

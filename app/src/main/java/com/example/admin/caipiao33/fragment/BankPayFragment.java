@@ -141,20 +141,23 @@ public class BankPayFragment extends BaseFragment implements View.OnClickListene
         switch (v.getId())
         {
             case R.id.bank_pay_btn: //下一步
-                for (int i = 0; i < payAdapter.getBeanContents().size(); i++)
+                if (payAdapter.getBeanContents() != null)
                 {
-                    if (payAdapter.getBeanContents().get(i).isSelete())
+                    for (int i = 0; i < payAdapter.getBeanContents().size(); i++)
                     {
-                        if (isCanNext(topupActivity.getTopupAmount(), payAdapter.getBeanContents()
-                                .get(i)
-                                .getPayMin(), payAdapter.getBeanContents().get(i).getPayMax()))
+                        if (payAdapter.getBeanContents().get(i).isSelete())
                         {
-                            intent = new Intent(topupActivity, BankPayActivity.class);
-                            intent.putExtra(Constants.EXTRA_TOPUP_PAYID, payAdapter.getBeanContents()
+                            if (isCanNext(topupActivity.getTopupAmount(), payAdapter.getBeanContents()
                                     .get(i)
-                                    .getId());
-                            intent.putExtra(Constants.EXTRA_TOPUP_TOPUPAMOUNT, topupActivity.getTopupAmount() + "");
-                            startActivity(intent);
+                                    .getPayMin(), payAdapter.getBeanContents().get(i).getPayMax()))
+                            {
+                                intent = new Intent(topupActivity, BankPayActivity.class);
+                                intent.putExtra(Constants.EXTRA_TOPUP_PAYID, payAdapter.getBeanContents()
+                                        .get(i)
+                                        .getId());
+                                intent.putExtra(Constants.EXTRA_TOPUP_TOPUPAMOUNT, topupActivity.getTopupAmount() + "");
+                                startActivity(intent);
+                            }
                         }
                     }
                 }

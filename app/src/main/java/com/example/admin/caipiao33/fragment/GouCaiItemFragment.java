@@ -182,7 +182,7 @@ public class GouCaiItemFragment extends LazyFragment implements IGouCaiItemContr
     public void timerResume()
     {
         GouCaiFragment pf = (GouCaiFragment) getParentFragment();
-        if (!pf.isvisible)
+        if (pf == null || !pf.isvisible)
         {
             return;
         }
