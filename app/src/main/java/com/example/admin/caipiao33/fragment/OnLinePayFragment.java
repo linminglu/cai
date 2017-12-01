@@ -165,6 +165,7 @@ public class OnLinePayFragment extends BaseFragment implements View.OnClickListe
                                 final Uri uri = Uri.parse(url);
                                 final Intent it = new Intent(Intent.ACTION_VIEW, uri);
                                 startActivity(it);
+
                                 //                            toWebUrlActivity(url, "网银支付");
                             }
                         }
