@@ -74,7 +74,7 @@ public class OnLinePayFragment extends BaseFragment implements View.OnClickListe
             @Override
             public void onSuccess(OnLinePayBean result)
             {
-                if (null == result || result.getExpand().getBankList().size() == 0)
+                if (null == result)
                 {
                     onlinePayLv.setVisibility(View.GONE);
                     onlinePayBtn.setVisibility(View.GONE);
@@ -87,11 +87,15 @@ public class OnLinePayFragment extends BaseFragment implements View.OnClickListe
                     mNotifyNullLayout.setVisibility(View.GONE);
                 }
                 onLinePayBean = result;
-                result.getExpand().getBankList().get(0).setSelete(true);
-                payAdapter = new OnLinePayAdapter(result.getExpand()
-                        .getBankList(), mInflater, onlinePayLv, topupActivity);
-                onlinePayLv.setAdapter(payAdapter);
-                payAdapter.notifyDataSetChanged();
+                if (result.getExpand().getBankList() != null && result.getExpand()
+                        .getBankList()
+                        .size() > 0)
+                {
+                    payAdapter = new OnLinePayAdapter(result.getExpand()
+                            .getBankList(), mInflater, onlinePayLv, topupActivity);
+                    onlinePayLv.setAdapter(payAdapter);
+                    payAdapter.notifyDataSetChanged();
+                }
             }
 
             @Override
@@ -140,26 +144,46 @@ public class OnLinePayFragment extends BaseFragment implements View.OnClickListe
         switch (v.getId())
         {
             case R.id.online_pay_btn: //下一步
-                for (int i = 0; i < payAdapter.getBeanContents().size(); i++)
+                if (payAdapter != null && payAdapter.getBeanContents() != null && payAdapter.getBeanContents()
+                        .size() > 0)
                 {
-                    if (payAdapter.getBeanContents().get(i).isSelete())
+                    for (int i = 0; i < payAdapter.getBeanContents().size(); i++)
                     {
-                        if (isCanNext(topupActivity.getTopupAmount(), onLinePayBean.getMinAmount(), onLinePayBean
-                                .getMaxAmount()))
+                        if (payAdapter.getBeanContents().get(i).isSelete())
                         {
-                            String url = onLinePayBean.getPayUrl() + "/common/recharge/third?isH5=1&memberId=" + UserConfig
-                                    .getInstance()
-                                    .getToken(topupActivity)
-                                    .getMemberId() + "&type=4&payId=" + onLinePayBean.getId() + "&amount=" + topupActivity
-                                    .getTopupAmount() + "&bankName=" + payAdapter.getBeanContents()
-                                    .get(i)
-                                    .getId() + "&baseUrl=" + HttpUtil.mNewUrl;
+                            if (isCanNext(topupActivity.getTopupAmount(), onLinePayBean.getMinAmount(), onLinePayBean
+                                    .getMaxAmount()))
+                            {
+                                String url = onLinePayBean.getPayUrl() + "/common/recharge/third?isH5=1&memberId=" + UserConfig
+                                        .getInstance()
+                                        .getToken(topupActivity)
+                                        .getMemberId() + "&type=4&payId=" + onLinePayBean.getId() + "&amount=" + topupActivity
+                                        .getTopupAmount() + "&bankName=" + payAdapter.getBeanContents()
+                                        .get(i)
+                                        .getId() + "&baseUrl=" + HttpUtil.mNewUrl;
 
-                            final Uri uri = Uri.parse(url);
-                            final Intent it = new Intent(Intent.ACTION_VIEW, uri);
-                            startActivity(it);
-                            //                            toWebUrlActivity(url, "网银支付");
+                                final Uri uri = Uri.parse(url);
+                                final Intent it = new Intent(Intent.ACTION_VIEW, uri);
+                                startActivity(it);
+                                //                            toWebUrlActivity(url, "网银支付");
+                            }
                         }
+                    }
+                }
+                else if (onLinePayBean != null)
+                {
+                    if (isCanNext(topupActivity.getTopupAmount(), onLinePayBean.getMinAmount(), onLinePayBean
+                            .getMaxAmount()))
+                    {
+                        String url = onLinePayBean.getPayUrl() + "/common/recharge/third?isH5=1&memberId=" + UserConfig
+                                .getInstance()
+                                .getToken(topupActivity)
+                                .getMemberId() + "&type=4&payId=" + onLinePayBean.getId() + "&amount=" + topupActivity
+                                .getTopupAmount() + "&baseUrl=" + HttpUtil.mNewUrl;
+
+                        final Uri uri = Uri.parse(url);
+                        final Intent it = new Intent(Intent.ACTION_VIEW, uri);
+                        startActivity(it);
                     }
                 }
                 break;
